@@ -1,4 +1,4 @@
-executed: '2025-01-04T01:08:50.800Z'
+executed: '2025-01-04T01:10:00.803Z'
 results:
   - code: apis-json-specification-aid-info
     message: There is an aid.
@@ -328,3 +328,29 @@ results:
       end:
         line: 38
         character: 28
+  - code: apis-json-common-info
+    message: There is an common property.
+    path:
+      - common
+    severity: 2
+    range:
+      start:
+        line: 39
+        character: 7
+      end:
+        line: 42
+        character: 27
+  - code: apis-json-apis-properties-url-info
+    message: Property URLs Are Valid
+    path:
+      - common
+      - '0'
+      - url
+    severity: 2
+    range:
+      start:
+        line: 41
+        character: 9
+      end:
+        line: 41
+        character: 72
