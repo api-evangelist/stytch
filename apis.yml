@@ -1,8 +1,20 @@
 aid: stytch
 url: https://raw.githubusercontent.com/api-search/stytch/refs/heads/main/apis.yml
 apis:
-  - aid: stytch:stytch
-    name: Stytch
+  - aid: stytch:stytch-b2b-api
+    name: Stytch B2B API
+    tags:
+      - API
+    humanURL: https://stytch.com/docs/api
+    properties:
+      - url: https://stytch.com/docs/api
+        type: Documentation
+    description: >-
+      Stytchs B2B API is designed to address the unique authentication and user
+      management needs of organization-based applications at every stage of
+      growth.
+  - aid: stytch:stytch-b2b-api
+    name: Stytch Consumer
     tags:
       - API
     humanURL: https://stytch.com/docs/api
@@ -13,7 +25,7 @@ apis:
       Java / Kotlin / JVM. Also check the API reference for documentation.
       Explore the details of our authentication API and start building your
       login page with flexible magic link, password, and one-time passcode
-      authentication solutions.
+      authentication solutions.      
 name: Stytch
 tags:
   - Authentication
