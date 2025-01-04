@@ -17,15 +17,22 @@ apis:
 name: Stytch
 tags:
   - Authentication
-type: Index
+type: Contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-15'
-modified: '2024-11-15'
-position: Consumer
+modified: '2025-01-03'
+position: Consuming
 description: >-
-  Reliable. Stytch has built scalable infrastructure to support your growth. We
-  ensure 99.999% uptime SLAs with a multi-region, highly resilient design.
+  Stytch is a company that specializes in providing secure and seamless
+  authentication solutions for businesses. Their platform allows companies to
+  easily integrate passwordless authentication methods such as SMS and email
+  codes, magic links, and biometric verification into their applications. By
+  eliminating the need for passwords, Stytch helps improve user experience,
+  prevent account takeovers, and increase security for both businesses and their
+  customers. With Stytch, companies can streamline their login processes and
+  build trust with users by offering a more convenient and secure authentication
+  experience.
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
