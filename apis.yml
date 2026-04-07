@@ -3,8 +3,7 @@ url: https://raw.githubusercontent.com/api-search/stytch/refs/heads/main/apis.ym
 apis:
   - aid: stytch:stytch-b2b-api
     name: Stytch B2B API
-    tags:
-      - API
+    tags: []
     humanURL: https://stytch.com/docs/api
     properties:
       - url: https://stytch.com/docs/api
@@ -15,8 +14,7 @@ apis:
       growth.
   - aid: stytch:stytch-b2b-api
     name: Stytch Consumer
-    tags:
-      - API
+    tags: []
     humanURL: https://stytch.com/docs/api
     properties:
       - url: https://stytch.com/docs/api
