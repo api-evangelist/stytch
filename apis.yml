@@ -10,7 +10,7 @@ apis:
       - url: https://stytch.com/docs/api
         type: Documentation
     description: >-
-      Stytchs B2B API is designed to address the unique authentication and user
+      Stytchs B2B API is designed to address the unique authentication and user
       management needs of organization-based applications at every stage of
       growth.
   - aid: stytch:stytch-b2b-api
