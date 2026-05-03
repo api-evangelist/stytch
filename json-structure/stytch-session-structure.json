@@ -1,0 +1,57 @@
+{
+  "name": "Session",
+  "description": "Stytch session object returned after successful authentication.",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "Unique session identifier (prefix: session-)"
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The authenticated user's ID"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session was created"
+    },
+    "last_accessed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session was last validated"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the session expires"
+    },
+    "attributes": {
+      "type": "object",
+      "description": "Session attributes including IP and user agent",
+      "properties": {
+        "ip_address": { "type": "string" },
+        "user_agent": { "type": "string" }
+      }
+    },
+    "authentication_factors": {
+      "type": "array",
+      "description": "List of authentication factors that created or extended this session",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["magic_link", "otp", "oauth", "password", "totp", "webauthn_registration", "sso"]
+          },
+          "delivery_method": { "type": "string" },
+          "last_authenticated_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    },
+    "custom_claims": {
+      "type": "object",
+      "description": "Custom JWT claims added to the session JWT"
+    }
+  }
+}

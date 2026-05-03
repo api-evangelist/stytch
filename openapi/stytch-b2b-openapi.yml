@@ -1,0 +1,609 @@
+openapi: 3.1.0
+info:
+  title: Stytch B2B Authentication API
+  description: >-
+    Stytch's B2B API provides authentication and user management for organization-based applications.
+    Supports multi-tenancy with Organizations and Members, SSO (SAML/OIDC), magic links, OTP,
+    OAuth, and organization discovery.
+  version: "1.0.0"
+  contact:
+    name: Stytch Support
+    url: https://stytch.com/docs/b2b
+  termsOfService: https://stytch.com/terms
+servers:
+  - url: https://test.stytch.com/v1/b2b
+    description: Test environment
+  - url: https://api.stytch.com/v1/b2b
+    description: Production environment
+
+security:
+  - basicAuth: []
+
+tags:
+  - name: Organizations
+    description: Manage B2B organizations (tenants)
+  - name: Members
+    description: Manage organization members
+  - name: Magic Links
+    description: Email magic link authentication for B2B
+  - name: OTP
+    description: One-time passcode authentication
+  - name: SSO
+    description: SAML and OIDC single sign-on
+  - name: Sessions
+    description: B2B session management
+  - name: Discovery
+    description: Organization discovery and login flow
+
+paths:
+  /organizations:
+    post:
+      operationId: createOrganization
+      summary: Create Organization
+      description: Create a new B2B organization (tenant).
+      tags:
+        - Organizations
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - organization_name
+              properties:
+                organization_name:
+                  type: string
+                  description: Display name of the organization
+                organization_slug:
+                  type: string
+                  description: URL-safe identifier for the organization
+                allowed_domains:
+                  type: array
+                  items:
+                    type: string
+                  description: Domains allowed to join this organization
+                sso_jit_provisioning:
+                  type: string
+                  enum: [ALL_ALLOWED, RESTRICTED, NOT_ALLOWED]
+      responses:
+        '200':
+          description: Organization created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '400':
+          description: Bad request
+
+  /organizations/{organization_id}:
+    get:
+      operationId: getOrganization
+      summary: Get Organization
+      description: Retrieve an organization by ID.
+      tags:
+        - Organizations
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Organization found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationResponse'
+        '404':
+          description: Organization not found
+    put:
+      operationId: updateOrganization
+      summary: Update Organization
+      description: Update an organization's settings.
+      tags:
+        - Organizations
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                organization_name:
+                  type: string
+                allowed_domains:
+                  type: array
+                  items:
+                    type: string
+                sso_jit_provisioning:
+                  type: string
+      responses:
+        '200':
+          description: Organization updated
+    delete:
+      operationId: deleteOrganization
+      summary: Delete Organization
+      description: Delete an organization and all its members.
+      tags:
+        - Organizations
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Organization deleted
+
+  /organizations/{organization_id}/members:
+    get:
+      operationId: listMembers
+      summary: List Members
+      description: List all members of an organization.
+      tags:
+        - Members
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: limit
+          in: query
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Members list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMembersResponse'
+    post:
+      operationId: createMember
+      summary: Create Member
+      description: Create a new member in an organization.
+      tags:
+        - Members
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email_address
+              properties:
+                email_address:
+                  type: string
+                  format: email
+                name:
+                  type: string
+                trusted_metadata:
+                  type: object
+                untrusted_metadata:
+                  type: object
+      responses:
+        '200':
+          description: Member created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberResponse'
+
+  /organizations/{organization_id}/members/{member_id}:
+    get:
+      operationId: getMember
+      summary: Get Member
+      description: Retrieve a member by ID.
+      tags:
+        - Members
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: member_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberResponse'
+    delete:
+      operationId: deleteMember
+      summary: Delete Member
+      description: Delete a member from an organization.
+      tags:
+        - Members
+      parameters:
+        - name: organization_id
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: member_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Member deleted
+
+  /magic_links/email/send:
+    post:
+      operationId: sendB2BMagicLinkByEmail
+      summary: Send B2B Magic Link By Email
+      description: Send a magic link to a member's email address.
+      tags:
+        - Magic Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email_address
+                - organization_id
+              properties:
+                email_address:
+                  type: string
+                  format: email
+                organization_id:
+                  type: string
+                login_redirect_url:
+                  type: string
+                signup_redirect_url:
+                  type: string
+                login_expiration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Magic link sent
+
+  /magic_links/authenticate:
+    post:
+      operationId: authenticateB2BMagicLink
+      summary: Authenticate B2B Magic Link
+      description: Authenticate a member using a magic link token.
+      tags:
+        - Magic Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - magic_links_token
+              properties:
+                magic_links_token:
+                  type: string
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/B2BAuthenticateResponse'
+
+  /sessions/authenticate:
+    post:
+      operationId: authenticateB2BSession
+      summary: Authenticate B2B Session
+      description: Validate and authenticate a B2B session.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_token:
+                  type: string
+                session_jwt:
+                  type: string
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Session valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/B2BAuthenticateResponse'
+
+  /sessions/revoke:
+    post:
+      operationId: revokeB2BSession
+      summary: Revoke B2B Session
+      description: Revoke an active B2B member session.
+      tags:
+        - Sessions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id:
+                  type: string
+                session_token:
+                  type: string
+      responses:
+        '200':
+          description: Session revoked
+
+  /sso/connections:
+    get:
+      operationId: listSSOConnections
+      summary: List SSO Connections
+      description: List all SSO connections (SAML and OIDC) for an organization.
+      tags:
+        - SSO
+      parameters:
+        - name: organization_id
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: SSO connections list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SSOConnectionsResponse'
+
+  /sso/saml:
+    post:
+      operationId: createSAMLConnection
+      summary: Create SAML Connection
+      description: Create a new SAML SSO connection for an organization.
+      tags:
+        - SSO
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - organization_id
+              properties:
+                organization_id:
+                  type: string
+                idp_metadata_url:
+                  type: string
+                  description: URL to the IdP metadata XML
+                display_name:
+                  type: string
+      responses:
+        '200':
+          description: SAML connection created
+
+  /discovery/organizations:
+    post:
+      operationId: discoverOrganizations
+      summary: Discover Organizations
+      description: Discover organizations a user can join or log into based on their email.
+      tags:
+        - Discovery
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - intermediate_session_token
+              properties:
+                intermediate_session_token:
+                  type: string
+                  description: Token from an intermediate authentication step
+      responses:
+        '200':
+          description: Organizations discovered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiscoverOrganizationsResponse'
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: "Use your Stytch project_id as username and secret as password"
+
+  schemas:
+    Organization:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Unique organization identifier (prefix: organization-)
+        organization_name:
+          type: string
+        organization_slug:
+          type: string
+        allowed_domains:
+          type: array
+          items:
+            type: string
+        sso_jit_provisioning:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Member:
+      type: object
+      properties:
+        organization_id:
+          type: string
+        member_id:
+          type: string
+        email_address:
+          type: string
+          format: email
+        name:
+          type: string
+        status:
+          type: string
+          enum: [active, invited, deleted]
+        roles:
+          type: array
+          items:
+            type: string
+        trusted_metadata:
+          type: object
+        untrusted_metadata:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+
+    B2BSession:
+      type: object
+      properties:
+        member_session_id:
+          type: string
+        member_id:
+          type: string
+        organization_id:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        last_accessed_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+        authentication_factors:
+          type: array
+          items:
+            type: object
+
+    OrganizationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        organization:
+          $ref: '#/components/schemas/Organization'
+        status_code:
+          type: integer
+
+    MemberResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        member:
+          $ref: '#/components/schemas/Member'
+        organization:
+          $ref: '#/components/schemas/Organization'
+        status_code:
+          type: integer
+
+    ListMembersResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        organization:
+          $ref: '#/components/schemas/Organization'
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        status_code:
+          type: integer
+
+    B2BAuthenticateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        member_id:
+          type: string
+        organization_id:
+          type: string
+        member:
+          $ref: '#/components/schemas/Member'
+        organization:
+          $ref: '#/components/schemas/Organization'
+        session_token:
+          type: string
+        session_jwt:
+          type: string
+        member_session:
+          $ref: '#/components/schemas/B2BSession'
+        status_code:
+          type: integer
+
+    SSOConnectionsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        saml_connections:
+          type: array
+          items:
+            type: object
+        oidc_connections:
+          type: array
+          items:
+            type: object
+        status_code:
+          type: integer
+
+    DiscoverOrganizationsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        email_address:
+          type: string
+        discovered_organizations:
+          type: array
+          items:
+            type: object
+        status_code:
+          type: integer

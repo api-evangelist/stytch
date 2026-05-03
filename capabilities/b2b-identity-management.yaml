@@ -1,0 +1,201 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Stytch B2B Identity Management"
+  description: >-
+    Unified capability for B2B identity and access management workflows. Combines Stytch's B2B API
+    for organization creation, member management, SSO configuration, and session management.
+    Used by SaaS platform developers building multi-tenant authentication.
+  tags:
+    - Stytch
+    - Authentication
+    - B2B
+    - Identity Management
+    - SSO
+    - Multi-Tenant
+    - SaaS
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      STYTCH_PROJECT_ID: STYTCH_PROJECT_ID
+      STYTCH_SECRET: STYTCH_SECRET
+
+capability:
+  consumes:
+    - import: stytch-b2b
+      location: ./shared/b2b-auth.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: stytch-b2b-identity-api
+      description: "Unified REST API for Stytch B2B identity and access management."
+      resources:
+        - path: /v1/organizations
+          name: organizations
+          description: "Organization (tenant) management"
+          operations:
+            - method: POST
+              name: create-organization
+              description: "Create a B2B organization"
+              call: "stytch-b2b.create-organization"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/organizations/{organization_id}
+          name: organization
+          description: "Individual organization"
+          operations:
+            - method: GET
+              name: get-organization
+              description: "Get an organization"
+              call: "stytch-b2b.get-organization"
+              with:
+                organization_id: "rest.organization_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/organizations/{organization_id}/members
+          name: members
+          description: "Organization member management"
+          operations:
+            - method: GET
+              name: list-members
+              description: "List members"
+              call: "stytch-b2b.list-members"
+              with:
+                organization_id: "rest.organization_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-member
+              description: "Invite a member"
+              call: "stytch-b2b.create-member"
+              with:
+                organization_id: "rest.organization_id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/magic-links/send
+          name: b2b-magic-links
+          description: "B2B magic link authentication"
+          operations:
+            - method: POST
+              name: send-b2b-magic-link
+              description: "Send a magic link to a member"
+              call: "stytch-b2b.send-b2b-magic-link"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/sso/connections
+          name: sso-connections
+          description: "SSO connection management"
+          operations:
+            - method: GET
+              name: list-sso-connections
+              description: "List SSO connections for an organization"
+              call: "stytch-b2b.list-sso-connections"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9081
+      namespace: stytch-b2b-identity-mcp
+      transport: http
+      description: "MCP server for AI-assisted Stytch B2B identity management."
+      tools:
+        - name: create-organization
+          description: "Create a new Stytch B2B organization (tenant) for a SaaS customer"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "stytch-b2b.create-organization"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-organization
+          description: "Retrieve a Stytch B2B organization by ID"
+          hints:
+            readOnly: true
+          call: "stytch-b2b.get-organization"
+          with:
+            organization_id: "tools.organization_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-members
+          description: "List members of a Stytch B2B organization"
+          hints:
+            readOnly: true
+          call: "stytch-b2b.list-members"
+          with:
+            organization_id: "tools.organization_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-member
+          description: "Invite a new member to a Stytch B2B organization"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "stytch-b2b.create-member"
+          with:
+            organization_id: "tools.organization_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-member
+          description: "Remove a member from a Stytch B2B organization"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "stytch-b2b.delete-member"
+          with:
+            organization_id: "tools.organization_id"
+            member_id: "tools.member_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: send-b2b-magic-link
+          description: "Send a Stytch magic link to authenticate a B2B organization member"
+          hints:
+            readOnly: false
+            destructive: false
+          call: "stytch-b2b.send-b2b-magic-link"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: authenticate-b2b-session
+          description: "Validate a Stytch B2B member session token"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "stytch-b2b.authenticate-b2b-session"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-sso-connections
+          description: "List SSO (SAML/OIDC) connections for a Stytch B2B organization"
+          hints:
+            readOnly: true
+          call: "stytch-b2b.list-sso-connections"
+          with:
+            organization_id: "tools.organization_id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: discover-organizations
+          description: "Discover Stytch B2B organizations a user can access"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "stytch-b2b.discover-organizations"
+          outputParameters:
+            - type: object
+              mapping: "$."

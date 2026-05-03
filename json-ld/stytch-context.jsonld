@@ -1,0 +1,74 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "stytch": "https://stytch.com/vocab#",
+    "name": "schema:name",
+    "description": "schema:description",
+    "email": "schema:email",
+    "identifier": "schema:identifier",
+    "Person": "schema:Person",
+    "Organization": "schema:Organization",
+    "User": {
+      "@id": "stytch:User",
+      "@type": "schema:Person"
+    },
+    "Member": {
+      "@id": "stytch:Member",
+      "@type": "schema:Person"
+    },
+    "B2BOrganization": {
+      "@id": "stytch:Organization",
+      "@type": "schema:Organization"
+    },
+    "Session": {
+      "@id": "stytch:Session"
+    },
+    "AuthenticationFactor": {
+      "@id": "stytch:AuthenticationFactor"
+    },
+    "MagicLink": {
+      "@id": "stytch:MagicLink"
+    },
+    "OTP": {
+      "@id": "stytch:OTP"
+    },
+    "SSOConnection": {
+      "@id": "stytch:SSOConnection"
+    },
+    "userId": {
+      "@id": "stytch:userId",
+      "@type": "schema:identifier"
+    },
+    "memberId": {
+      "@id": "stytch:memberId",
+      "@type": "schema:identifier"
+    },
+    "organizationId": {
+      "@id": "stytch:organizationId",
+      "@type": "schema:identifier"
+    },
+    "sessionToken": {
+      "@id": "stytch:sessionToken"
+    },
+    "sessionJwt": {
+      "@id": "stytch:sessionJwt"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    },
+    "expiresAt": {
+      "@id": "stytch:expiresAt",
+      "@type": "schema:DateTime"
+    },
+    "verifiedEmail": {
+      "@id": "stytch:verifiedEmail",
+      "@type": "schema:email"
+    },
+    "passwordless": {
+      "@id": "stytch:passwordless",
+      "@type": "schema:Boolean"
+    }
+  }
+}

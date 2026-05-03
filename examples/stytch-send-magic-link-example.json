@@ -1,0 +1,25 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.stytch.com/v1/magic_links/email/send",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "jane.doe@example.com",
+      "login_magic_link_url": "https://app.example.com/authenticate",
+      "signup_magic_link_url": "https://app.example.com/welcome",
+      "login_expiration_minutes": 60
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "request-id-test-b856b0db-c2b9-4b2d-b8b8-a6e2cfc87654",
+      "user_id": "user-test-d28e1c89-a3ad-4c28-8756-cf2afe39d9ac",
+      "email_id": "email-test-55b0b9e6-da9a-4e09-86f0-d5aae1a0f8a0",
+      "status_code": 200
+    }
+  }
+}

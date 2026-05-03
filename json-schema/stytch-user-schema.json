@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stytch.com/schemas/consumer-user",
+  "title": "Stytch Consumer User",
+  "description": "Represents a Stytch consumer user with passwordless authentication credentials.",
+  "type": "object",
+  "required": ["user_id", "status"],
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Unique identifier (prefix: user-)",
+      "pattern": "^user-",
+      "example": "user-test-d28e1c89-a3ad-4c28-8756-cf2afe39d9ac"
+    },
+    "name": {
+      "type": "object",
+      "description": "User's display name",
+      "properties": {
+        "first_name": { "type": "string" },
+        "middle_name": { "type": "string" },
+        "last_name": { "type": "string" }
+      }
+    },
+    "emails": {
+      "type": "array",
+      "description": "Verified and unverified email addresses",
+      "items": {
+        "type": "object",
+        "properties": {
+          "email_id": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "verified": { "type": "boolean" }
+        }
+      }
+    },
+    "phone_numbers": {
+      "type": "array",
+      "description": "Verified and unverified phone numbers",
+      "items": {
+        "type": "object",
+        "properties": {
+          "phone_id": { "type": "string" },
+          "phone_number": { "type": "string" },
+          "verified": { "type": "boolean" }
+        }
+      }
+    },
+    "providers": {
+      "type": "array",
+      "description": "OAuth providers connected to this user",
+      "items": {
+        "type": "object",
+        "properties": {
+          "oauth_user_registration_id": { "type": "string" },
+          "provider_subject": { "type": "string" },
+          "provider_type": { "type": "string", "enum": ["Google", "Apple", "Microsoft", "GitHub", "Facebook", "Discord", "Gitlab"] }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "deleted"],
+      "description": "User account status"
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "description": "Server-settable metadata. Not accessible by end users."
+    },
+    "untrusted_metadata": {
+      "type": "object",
+      "description": "Client-settable metadata. Can be written from the client SDK."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp of user creation"
+    }
+  }
+}

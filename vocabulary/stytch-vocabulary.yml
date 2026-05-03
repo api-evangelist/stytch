@@ -1,0 +1,168 @@
+name: Stytch
+description: >-
+  Vocabulary of key terms, concepts, and objects used across the Stytch authentication platform.
+  Covers passwordless authentication, session management, B2B multi-tenancy, and identity infrastructure.
+version: "1.0"
+created: "2026-05-02"
+modified: "2026-05-02"
+tags:
+  - Authentication
+  - Identity
+  - Passwordless
+  - B2B
+
+terms:
+  - term: Magic Link
+    definition: >-
+      An email containing a one-click authentication link that logs in or signs up a user
+      without requiring a password. The link contains a time-limited token and redirects
+      to the application after clicking. Expires after a configurable duration.
+    category: Authentication Method
+    tags:
+      - Passwordless
+      - Email
+
+  - term: OTP (One-Time Passcode)
+    definition: >-
+      A short numeric code (typically 6 digits) sent to a user via SMS, email, or WhatsApp.
+      Valid for a single use within a short time window. Stytch supports SMS OTP, email OTP,
+      and WhatsApp OTP.
+    category: Authentication Method
+    tags:
+      - Passwordless
+      - OTP
+
+  - term: Session Token
+    definition: >-
+      An opaque string returned after successful authentication. Used in server-side requests
+      to identify the authenticated user. Pairs with a Session JWT for client-side use.
+    category: Session Management
+    tags:
+      - Sessions
+      - Security
+
+  - term: Session JWT
+    definition: >-
+      A JSON Web Token (JWT) representing the user's session. Contains claims about the user,
+      organization (B2B), and authentication factors. Can be validated locally without a
+      network call to Stytch.
+    category: Session Management
+    tags:
+      - Sessions
+      - JWT
+
+  - term: User
+    definition: >-
+      A Stytch Consumer user record identified by user_id (prefix: user-). Stores email addresses,
+      phone numbers, name, and metadata. Created automatically on first login.
+    category: Core Object
+    tags:
+      - Consumer
+      - Identity
+
+  - term: Member
+    definition: >-
+      A Stytch B2B user within an Organization. Identified by member_id (prefix: member-).
+      Has roles, a status (active, invited, deleted), and belongs to exactly one organization.
+    category: Core Object (B2B)
+    tags:
+      - B2B
+      - Identity
+
+  - term: Organization
+    definition: >-
+      A B2B tenant in Stytch. Represents a customer company or workspace. Contains members,
+      SSO configurations, and access policies. Identified by organization_id (prefix: organization-).
+    category: Core Object (B2B)
+    tags:
+      - B2B
+      - Multi-Tenant
+
+  - term: SSO (Single Sign-On)
+    definition: >-
+      Authentication through an enterprise identity provider (IdP). Stytch B2B supports SAML 2.0
+      and OIDC protocols. Connections are configured per organization and can be used for
+      just-in-time (JIT) member provisioning.
+    category: Authentication Method
+    tags:
+      - SSO
+      - SAML
+      - OIDC
+      - B2B
+
+  - term: TOTP (Time-Based One-Time Password)
+    definition: >-
+      An authenticator app-based second factor. Users register a TOTP device (Google Authenticator,
+      Authy, etc.) and use 6-digit rotating codes to authenticate. Stytch Consumer only.
+    category: Authentication Method
+    tags:
+      - TOTP
+      - MFA
+
+  - term: WebAuthn
+    definition: >-
+      Browser-native biometric and hardware key authentication (passkeys, fingerprint, Face ID,
+      hardware security keys). Stytch implements the W3C WebAuthn standard for phishing-resistant authentication.
+    category: Authentication Method
+    tags:
+      - WebAuthn
+      - Biometrics
+      - Passkeys
+
+  - term: OAuth
+    definition: >-
+      Social login via OAuth 2.0 providers (Google, Apple, Microsoft, GitHub, etc.). Users
+      click a provider button and authorize access. Stytch handles the OAuth flow and
+      creates or links a user record.
+    category: Authentication Method
+    tags:
+      - OAuth
+      - Social Login
+
+  - term: Project ID
+    definition: >-
+      The public identifier for a Stytch project. Used as the username in HTTP Basic authentication.
+      Format: project-live-xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx (live) or project-test-xxx (test).
+    category: API Concept
+    tags:
+      - API Keys
+      - Authentication
+
+  - term: Secret
+    definition: >-
+      The private API key for a Stytch project. Used as the password in HTTP Basic authentication.
+      Never expose in client-side code. Must be rotated if compromised.
+    category: API Concept
+    tags:
+      - API Keys
+      - Security
+
+  - term: JIT Provisioning
+    definition: >-
+      Just-In-Time automatic member creation when a user authenticates via SSO for the first
+      time. Configurable per organization. Avoids manual invitation workflows.
+    category: B2B Feature
+    tags:
+      - SSO
+      - Provisioning
+      - B2B
+
+  - term: Intermediate Session Token
+    definition: >-
+      A short-lived token issued during the B2B organization discovery flow when a user
+      has authenticated but hasn't yet selected which organization to log into.
+    category: B2B Feature
+    tags:
+      - B2B
+      - Discovery
+      - Sessions
+
+  - term: Authentication Factor
+    definition: >-
+      A record of how a user authenticated in the current session. Stored in the session
+      object. Includes the method (magic_link, otp, sso), the factor type, and timestamp.
+      Multi-factor sessions include multiple factors.
+    category: Session Concept
+    tags:
+      - MFA
+      - Sessions

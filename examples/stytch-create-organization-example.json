@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.stytch.com/v1/b2b/organizations",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "organization_name": "Acme Corp",
+      "organization_slug": "acme-corp",
+      "allowed_domains": ["acme.com"],
+      "sso_jit_provisioning": "ALL_ALLOWED"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "request-id-test-a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "organization": {
+        "organization_id": "organization-test-07971b06-ac8b-4cdb-9c15-63b17e653931",
+        "organization_name": "Acme Corp",
+        "organization_slug": "acme-corp",
+        "allowed_domains": ["acme.com"],
+        "sso_jit_provisioning": "ALL_ALLOWED",
+        "created_at": "2026-05-02T10:00:00Z",
+        "updated_at": "2026-05-02T10:00:00Z"
+      },
+      "status_code": 200
+    }
+  }
+}

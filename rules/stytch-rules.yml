@@ -1,0 +1,84 @@
+extends: spectral:oas
+rules:
+  stytch-operation-id-required:
+    description: All Stytch API operations must have an operationId
+    message: "Operation at '{{path}}' is missing operationId"
+    given: "$.paths[*][get,post,put,patch,delete]"
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+
+  stytch-operation-id-camel-case:
+    description: Stytch operationIds use camelCase
+    message: "operationId '{{value}}' should use camelCase"
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]+$"
+
+  stytch-tags-required:
+    description: All operations must include at least one tag
+    message: "Operation '{{path}}' must include tags"
+    given: "$.paths[*][get,post,put,patch,delete]"
+    severity: warn
+    then:
+      field: tags
+      function: truthy
+
+  stytch-auth-basic:
+    description: Stytch APIs use Basic auth (project_id + secret)
+    message: "API must define basicAuth security scheme"
+    given: "$.components.securitySchemes"
+    severity: error
+    then:
+      field: basicAuth
+      function: truthy
+
+  stytch-response-200:
+    description: All operations must define a 200 response
+    message: "Operation must define a 200 response"
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    severity: warn
+    then:
+      field: "200"
+      function: truthy
+
+  stytch-servers-defined:
+    description: API must define servers including test and production
+    message: "API must define servers"
+    given: "$"
+    severity: error
+    then:
+      field: servers
+      function: truthy
+
+  stytch-request-body-for-post:
+    description: POST operations should define a requestBody
+    message: "POST operation at '{{path}}' should include a requestBody"
+    given: "$.paths[*].post"
+    severity: warn
+    then:
+      field: requestBody
+      function: truthy
+
+  stytch-no-trailing-slash:
+    description: API paths must not end with a trailing slash
+    message: "Path '{{property}}' must not end with /"
+    given: "$.paths[*]~"
+    severity: warn
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  stytch-description-required:
+    description: Operations should have a description
+    message: "Operation at '{{path}}' should have a description"
+    given: "$.paths[*][get,post,put,patch,delete]"
+    severity: hint
+    then:
+      field: description
+      function: truthy

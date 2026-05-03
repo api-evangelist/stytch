@@ -1,0 +1,639 @@
+openapi: 3.1.0
+info:
+  title: Stytch Consumer Authentication API
+  description: >-
+    Stytch's Consumer API provides passwordless and password-based authentication methods
+    for consumer-facing applications. Includes magic links, one-time passcodes (OTP),
+    OAuth, TOTP, crypto wallets, biometrics, and traditional passwords.
+  version: "1.0.0"
+  contact:
+    name: Stytch Support
+    url: https://stytch.com/docs/support
+  termsOfService: https://stytch.com/terms
+servers:
+  - url: https://test.stytch.com/v1
+    description: Test environment
+  - url: https://api.stytch.com/v1
+    description: Production environment
+
+security:
+  - basicAuth: []
+
+tags:
+  - name: Magic Links
+    description: Email magic link authentication
+  - name: OTP
+    description: One-time passcode authentication via SMS, email, or WhatsApp
+  - name: OAuth
+    description: OAuth 2.0 social login providers
+  - name: Passwords
+    description: Traditional password-based authentication
+  - name: Sessions
+    description: Session management and validation
+  - name: Users
+    description: User record management
+  - name: TOTP
+    description: Time-based one-time password (authenticator app) authentication
+  - name: WebAuthn
+    description: Biometric and hardware key authentication
+
+paths:
+  /magic_links/email/send:
+    post:
+      operationId: sendMagicLinkByEmail
+      summary: Send Magic Link By Email
+      description: Send a magic link to the user's email address for authentication.
+      tags:
+        - Magic Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: The user's email address
+                login_magic_link_url:
+                  type: string
+                  description: URL to redirect after magic link click
+                signup_magic_link_url:
+                  type: string
+                  description: URL to redirect for new users
+                login_expiration_minutes:
+                  type: integer
+                  description: Expiration time in minutes (default 60)
+                signup_expiration_minutes:
+                  type: integer
+                  description: Expiration time for signup links
+      responses:
+        '200':
+          description: Magic link sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendMagicLinkResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+
+  /magic_links/authenticate:
+    post:
+      operationId: authenticateMagicLink
+      summary: Authenticate Magic Link
+      description: Authenticate a user using the token from a magic link.
+      tags:
+        - Magic Links
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+              properties:
+                token:
+                  type: string
+                  description: The token from the magic link URL
+                session_duration_minutes:
+                  type: integer
+                  description: Session duration in minutes
+                session_jwt:
+                  type: string
+                  description: Existing session JWT to extend
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+        '401':
+          description: Invalid or expired token
+
+  /otps/sms/send:
+    post:
+      operationId: sendOTPBySMS
+      summary: Send OTP By SMS
+      description: Send a one-time passcode to the user's phone number via SMS.
+      tags:
+        - OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - phone_number
+              properties:
+                phone_number:
+                  type: string
+                  description: Phone number in E.164 format
+                expiration_minutes:
+                  type: integer
+                  description: OTP expiration time in minutes
+      responses:
+        '200':
+          description: OTP sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendOTPResponse'
+        '400':
+          description: Bad request
+
+  /otps/email/send:
+    post:
+      operationId: sendOTPByEmail
+      summary: Send OTP By Email
+      description: Send a one-time passcode to the user's email address.
+      tags:
+        - OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                expiration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: OTP sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendOTPResponse'
+
+  /otps/authenticate:
+    post:
+      operationId: authenticateOTP
+      summary: Authenticate OTP
+      description: Authenticate a user using a one-time passcode.
+      tags:
+        - OTP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - method_id
+                - code
+              properties:
+                method_id:
+                  type: string
+                  description: The phone or email method ID from the send response
+                code:
+                  type: string
+                  description: The one-time passcode
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+        '401':
+          description: Invalid or expired code
+
+  /sessions:
+    get:
+      operationId: getSessions
+      summary: Get Sessions
+      description: Get all active sessions for a user.
+      tags:
+        - Sessions
+      parameters:
+        - name: user_id
+          in: query
+          required: true
+          schema:
+            type: string
+          description: The user ID to fetch sessions for
+      responses:
+        '200':
+          description: Sessions retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSessionsResponse'
+
+  /sessions/authenticate:
+    post:
+      operationId: authenticateSession
+      summary: Authenticate Session
+      description: Authenticate and validate a session token or JWT.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_token:
+                  type: string
+                  description: The opaque session token
+                session_jwt:
+                  type: string
+                  description: The session JWT
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Session is valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+        '401':
+          description: Invalid or expired session
+
+  /sessions/revoke:
+    post:
+      operationId: revokeSession
+      summary: Revoke Session
+      description: Revoke an active user session.
+      tags:
+        - Sessions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id:
+                  type: string
+                session_token:
+                  type: string
+                session_jwt:
+                  type: string
+      responses:
+        '200':
+          description: Session revoked successfully
+
+  /users:
+    get:
+      operationId: searchUsers
+      summary: Search Users
+      description: Search for users with optional filters.
+      tags:
+        - Users
+      parameters:
+        - name: limit
+          in: query
+          schema:
+            type: integer
+          description: Max results per page
+        - name: cursor
+          in: query
+          schema:
+            type: string
+          description: Pagination cursor
+      responses:
+        '200':
+          description: Users found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchUsersResponse'
+
+  /users/{user_id}:
+    get:
+      operationId: getUser
+      summary: Get User
+      description: Retrieve a user record by ID.
+      tags:
+        - Users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The user ID
+      responses:
+        '200':
+          description: User found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    put:
+      operationId: updateUser
+      summary: Update User
+      description: Update a user's profile attributes.
+      tags:
+        - Users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: object
+                  properties:
+                    first_name:
+                      type: string
+                    last_name:
+                      type: string
+                attributes:
+                  type: object
+                trusted_metadata:
+                  type: object
+                untrusted_metadata:
+                  type: object
+      responses:
+        '200':
+          description: User updated
+    delete:
+      operationId: deleteUser
+      summary: Delete User
+      description: Delete a user and all their associated authentication data.
+      tags:
+        - Users
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User deleted
+
+  /passwords:
+    post:
+      operationId: createUserWithPassword
+      summary: Create User With Password
+      description: Create a new user with an email and password.
+      tags:
+        - Passwords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: User created and authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+
+  /passwords/authenticate:
+    post:
+      operationId: authenticatePassword
+      summary: Authenticate Password
+      description: Authenticate a user with email and password.
+      tags:
+        - Passwords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                session_duration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Authentication successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticateResponse'
+        '401':
+          description: Invalid credentials
+
+  /passwords/reset_by_email/start:
+    post:
+      operationId: startPasswordResetByEmail
+      summary: Start Password Reset By Email
+      description: Initiate a password reset by sending a reset email to the user.
+      tags:
+        - Passwords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+                reset_password_redirect_url:
+                  type: string
+                reset_password_expiration_minutes:
+                  type: integer
+      responses:
+        '200':
+          description: Password reset email sent
+
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: "Use your Stryker project_id as username and secret as password"
+
+  schemas:
+    User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: Unique user identifier (prefix: user-)
+        email:
+          type: string
+          format: email
+        emails:
+          type: array
+          items:
+            type: object
+            properties:
+              email_id:
+                type: string
+              email:
+                type: string
+              verified:
+                type: boolean
+        phone_numbers:
+          type: array
+          items:
+            type: object
+            properties:
+              phone_id:
+                type: string
+              phone_number:
+                type: string
+              verified:
+                type: boolean
+        name:
+          type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+        trusted_metadata:
+          type: object
+        untrusted_metadata:
+          type: object
+        created_at:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [active, deleted]
+
+    Session:
+      type: object
+      properties:
+        session_id:
+          type: string
+        user_id:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+        last_accessed_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+        attributes:
+          type: object
+        authentication_factors:
+          type: array
+          items:
+            type: object
+
+    AuthenticateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        user_id:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        session_token:
+          type: string
+        session_jwt:
+          type: string
+        session:
+          $ref: '#/components/schemas/Session'
+        status_code:
+          type: integer
+
+    SendMagicLinkResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        user_id:
+          type: string
+        email_id:
+          type: string
+        status_code:
+          type: integer
+
+    SendOTPResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        user_id:
+          type: string
+        phone_id:
+          type: string
+        email_id:
+          type: string
+        status_code:
+          type: integer
+
+    GetSessionsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Session'
+        status_code:
+          type: integer
+
+    SearchUsersResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        results_metadata:
+          type: object
+          properties:
+            total:
+              type: integer
+            next_cursor:
+              type: string
+        status_code:
+          type: integer

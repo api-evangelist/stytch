@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://stytch.com/schemas/b2b-organization",
+  "title": "Stytch B2B Organization",
+  "description": "Represents a Stytch B2B organization (tenant) for multi-tenant applications.",
+  "type": "object",
+  "required": ["organization_id", "organization_name"],
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Unique identifier (prefix: organization-)",
+      "pattern": "^organization-",
+      "example": "organization-test-07971b06-ac8b-4cdb-9c15-63b17e653931"
+    },
+    "organization_name": {
+      "type": "string",
+      "description": "Display name of the organization"
+    },
+    "organization_slug": {
+      "type": "string",
+      "description": "URL-safe identifier used in hosted login pages",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "allowed_domains": {
+      "type": "array",
+      "description": "Email domains allowed to join this organization via self-service",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sso_jit_provisioning": {
+      "type": "string",
+      "description": "Just-in-time provisioning policy for SSO",
+      "enum": ["ALL_ALLOWED", "RESTRICTED", "NOT_ALLOWED"]
+    },
+    "email_allowed_domains": {
+      "type": "array",
+      "description": "Domains allowed for email-based authentication",
+      "items": {
+        "type": "string"
+      }
+    },
+    "auth_methods": {
+      "type": "string",
+      "description": "Allowed authentication methods for this organization",
+      "enum": ["ALL_ALLOWED", "RESTRICTED"]
+    },
+    "mfa_policy": {
+      "type": "string",
+      "description": "MFA enforcement policy",
+      "enum": ["OPTIONAL", "REQUIRED_FOR_ALL"]
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "description": "Server-settable metadata"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
