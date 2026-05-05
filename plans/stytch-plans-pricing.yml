@@ -1,0 +1,118 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Stytch
+providerId: stytch
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Identity
+  - Authentication
+  - Fraud Prevention
+description: 'Stytch pay-as-you-go: 10K MAU free + 5 SSO/SCIM connections + 1K M2M tokens included.'
+sources:
+  - https://stytch.com/pricing
+plans:
+  - id: stytch-payg
+    name: Pay As You Go
+    type: usage-based
+    description: $0/month base; 10K MAUs included.
+    entries:
+      - label: Base
+        name: base
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: MAUs included
+        name: mau_free
+        type: quota
+        metric: MAU
+        limit: 10000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: SSO / SCIM connections included
+        name: conns_free
+        type: quota
+        metric: connection
+        limit: 5
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: M2M tokens included
+        name: m2m_free
+        type: quota
+        metric: token
+        limit: 1000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Additional connection
+        name: conn_extra
+        type: metered
+        metric: connection
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '125.00'
+        userMultiplied: false
+      - label: Fraud prevention per fingerprint
+        name: fingerprint
+        type: metered
+        metric: fingerprint
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.005'
+        userMultiplied: false
+      - label: Fraud prevention free
+        name: fingerprint_free
+        type: quota
+        metric: fingerprint
+        limit: 10000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Full auth suite
+      - name: Volume discounts on MAU
+      - name: Brand customization $99 one-time
+  - id: stytch-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Custom pricing.
+    entries:
+      - label: Annual (custom)
+        name: annual
+        type: subscription
+        metric: year
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: false
+    elements:
+      - name: Discounted volume rates
+      - name: 99.99% uptime SLA
+      - name: Dedicated Slack support
+      - name: HIPAA/BAA
+      - name: Advanced fraud protection
+      - name: Migration support
+      - name: Enterprise SLA
