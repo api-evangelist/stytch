@@ -14,7 +14,7 @@ apis:
       - url: https://stytch.com/docs/api
         type: Documentation
       - url: https://stytch.com/docs/api/reference/library/overview
-        type: API Reference
+        type: APIReference
       - url: openapi/stytch-consumer-openapi.yml
         type: OpenAPI
     description: Stytch's Consumer API provides passwordless and password-based authentication for consumer-facing
@@ -33,7 +33,7 @@ apis:
       - url: https://stytch.com/docs/b2b
         type: Documentation
       - url: https://stytch.com/docs/b2b/api/overview
-        type: API Reference
+        type: APIReference
       - url: openapi/stytch-b2b-openapi.yml
         type: OpenAPI
     description: Stytch's B2B API provides authentication and identity management for organization-based
@@ -46,7 +46,7 @@ tags:
   - Passwordless
   - Security
   - Developer Tools
-type: Contract
+kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-15'
@@ -67,9 +67,9 @@ common:
   - url: https://stytch.com/docs
     type: Documentation
   - url: https://stytch.com/docs/api
-    type: API Reference
+    type: APIReference
   - url: https://app.stytch.com/register
-    type: Sign Up
+    type: SignUp
   - url: https://app.stytch.com
     type: Portal
   - url: https://stytch.com/docs/guides/authentication
@@ -81,13 +81,13 @@ common:
   - url: https://stytch.com/pricing
     type: Pricing
   - url: https://stytch.com/privacy
-    type: Privacy Policy
+    type: PrivacyPolicy
   - url: https://stytch.com/terms
-    type: Terms of Service
+    type: TermsOfService
   - url: https://stytch.com/docs/guides/webhooks
     type: Webhooks
   - url: https://github.com/stytchauth
-    type: GitHub Organization
+    type: GitHubOrganization
   - url: https://www.postman.com/stytch/stytch-public-workspace/overview
     type: Postman Workspace
   - url: https://github.com/stytchauth/stytch-node
@@ -103,7 +103,7 @@ common:
   - url: https://github.com/stytchauth/stytch-php
     type: PHP SDK
   - url: https://status.stytch.com
-    type: Status
+    type: StatusPage
   - url: https://stytch.com/blog
     type: Blog
   - url: rules/stytch-rules.yml
