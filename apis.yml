@@ -17,9 +17,7 @@ apis:
         type: APIReference
       - url: openapi/stytch-consumer-openapi.yml
         type: OpenAPI
-    description: Stytch's Consumer API provides passwordless and password-based authentication for consumer-facing
-      applications. Supports magic links, SMS/email OTP, OAuth social login, TOTP (authenticator apps),
-      WebAuthn (biometrics/passkeys), and session management.
+    description: Stytch's Consumer API provides passwordless and password-based authentication for consumer-facing applications. Supports magic links, SMS/email OTP, OAuth social login, TOTP (authenticator apps), WebAuthn (biometrics/passkeys), and session management.
   - aid: stytch:stytch-b2b-api
     name: Stytch B2B Authentication API
     tags:
@@ -36,9 +34,7 @@ apis:
         type: APIReference
       - url: openapi/stytch-b2b-openapi.yml
         type: OpenAPI
-    description: Stytch's B2B API provides authentication and identity management for organization-based
-      SaaS applications. Supports multi-tenancy with Organizations and Members, SSO via SAML and OIDC,
-      magic links, OTP, OAuth, and organization discovery flows.
+    description: Stytch's B2B API provides authentication and identity management for organization-based SaaS applications. Supports multi-tenancy with Organizations and Members, SSO via SAML and OIDC, magic links, OTP, OAuth, and organization discovery flows.
 name: Stytch
 tags:
   - Authentication
@@ -50,13 +46,9 @@ kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-15'
-modified: '2026-05-04'
+modified: '2026-05-19'
 position: Consuming
-description: Stytch is a company that specializes in providing secure and seamless authentication solutions
-  for businesses. Their platform allows companies to integrate passwordless authentication methods such
-  as magic links, SMS and email OTP, OAuth, TOTP, WebAuthn, and biometrics. Stytch offers both a Consumer
-  API for end-user authentication and a B2B API for multi-tenant SaaS applications with organization management,
-  SSO, and role-based access control.
+description: Stytch is a company that specializes in providing secure and seamless authentication solutions for businesses. Their platform allows companies to integrate passwordless authentication methods such as magic links, SMS and email OTP, OAuth, TOTP, WebAuthn, and biometrics. Stytch offers both a Consumer API for end-user authentication and a B2B API for multi-tenant SaaS applications with organization management, SSO, and role-based access control.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
@@ -147,3 +139,6 @@ common:
     sources:
       - https://stytch.com/pricing
     updated: '2026-05-04'
+  - name: MCP Server
+    url: https://github.com/stytchauth/mcp-stytch-consumer-todo-list
+    type: MCPServer
