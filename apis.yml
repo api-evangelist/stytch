@@ -54,6 +54,8 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/stytch
   - url: https://stytch.com
     type: Website
   - url: https://stytch.com/docs
