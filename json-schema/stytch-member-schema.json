@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stytch/main/json-schema/stytch-member-schema.json",
+  "title": "Stytch B2B Member",
+  "description": "A user (Member) inside a Stytch B2B Organization. Members carry roles, status, and references to the SSO / OAuth / Password factors used to authenticate them.",
+  "type": "object",
+  "required": ["member_id", "organization_id", "email_address", "status"],
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "description": "Stytch identifier for the member (prefix: member-).",
+      "examples": ["member-test-1a2b3c4d-5678-90ab-cdef-1234567890ab"]
+    },
+    "organization_id": {
+      "type": "string",
+      "description": "Identifier of the owning Organization."
+    },
+    "email_address": { "type": "string", "format": "email" },
+    "name": { "type": "string" },
+    "status": {
+      "type": "string",
+      "enum": ["active", "invited", "pending", "deleted"]
+    },
+    "is_breakglass": {
+      "type": "boolean",
+      "description": "If true, this member can bypass SSO-only enforcement (emergency access)."
+    },
+    "trusted_metadata": { "type": "object" },
+    "untrusted_metadata": { "type": "object" },
+    "mfa_enrolled": { "type": "boolean" },
+    "mfa_phone_number": { "type": "string" },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "role_id": { "type": "string" },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": { "type": "string", "enum": ["direct_assignment", "sso_connection", "scim_connection", "email_assignment", "external_assignment"] },
+                "details": { "type": "object" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "email_address_verified": { "type": "boolean" },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

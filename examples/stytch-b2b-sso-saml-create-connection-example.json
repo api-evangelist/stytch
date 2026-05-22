@@ -1,0 +1,23 @@
+{
+  "title": "Createconnection",
+  "endpoint": "POST /v1/b2b/sso/saml/{organization_id}",
+  "description": "Create a new SAML Connection.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/sso/saml/{organization_id}",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "display_name": "<display_name>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

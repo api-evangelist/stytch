@@ -1,0 +1,33 @@
+{
+  "title": "Loginorsignup",
+  "endpoint": "POST /v1/b2b/magic_links/email/login_or_signup",
+  "description": "Send either a login or signup magic link to a Member. A new, pending, or invited Member will receive a signup Email Magic Link. Members will have a `pending` status until they successfully authenticate. An active Member will receive a login Email Magic Link.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/magic_links/email/login_or_signup",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "organization_id": "<organization_id>",
+      "email_address": "<email_address>",
+      "login_redirect_url": "<login_redirect_url>",
+      "signup_redirect_url": "<signup_redirect_url>",
+      "pkce_code_challenge": "<pkce_code_challenge>",
+      "login_template_id": "<login_template_id>",
+      "signup_template_id": "<signup_template_id>",
+      "login_expiration_minutes": 3600,
+      "signup_expiration_minutes": 3600
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "member_id": "example-value",
+      "member_created": true,
+      "status_code": 200
+    }
+  }
+}

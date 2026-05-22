@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stytch/main/json-schema/stytch-m2m-client-schema.json",
+  "title": "Stytch M2M Client",
+  "description": "A machine-to-machine OAuth 2.0 client used for service-to-service authentication via the client_credentials grant. Each client mints short-lived JWT access tokens scoped to a defined set of resources.",
+  "type": "object",
+  "required": ["client_id", "scopes"],
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "Identifier used in OAuth token requests."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "Returned only at creation and rotation.",
+      "writeOnly": true
+    },
+    "client_name": {
+      "type": "string"
+    },
+    "client_description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive"]
+    },
+    "scopes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Scopes minted into the access token JWT (e.g. read:invoices, write:invoices)."
+    },
+    "trusted_metadata": { "type": "object" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "next_rotation_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp marking the start of an in-progress secret rotation."
+    }
+  }
+}

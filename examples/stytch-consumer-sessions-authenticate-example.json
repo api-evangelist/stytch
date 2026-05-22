@@ -1,0 +1,28 @@
+{
+  "title": "Authenticate",
+  "endpoint": "POST /v1/sessions/authenticate",
+  "description": "Authenticate a session token or session JWT and retrieve associated session data. If `session_duration_minutes` is included, update the lifetime of the session to be that many minutes from now. All timestamps are formatted according to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29",
+  "request": {
+    "method": "POST",
+    "path": "/v1/sessions/authenticate",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "session_token": "<session_token>",
+      "session_duration_minutes": 3600,
+      "session_jwt": "<session_jwt>",
+      "session_custom_claims": {}
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "session_token": "example-value",
+      "session_jwt": "example-value",
+      "status_code": 200
+    }
+  }
+}

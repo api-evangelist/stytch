@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stytch B2B Enterprise SSO & SCIM Provisioning
+  description: >-
+    Stand up enterprise-ready login for a B2B SaaS — create an Organization, configure SAML or OIDC
+    SSO connections, enable SCIM directory sync, and let admins manage the whole thing from Stytch's
+    embeddable admin portal. This capability composes the SSO connection CRUD, SCIM connection CRUD,
+    Member create / search, and Discovery flow used after a user authenticates against an IdP that
+    maps to multiple organizations.
+  tags:
+    - Stytch
+    - B2B
+    - SSO
+    - SAML
+    - OIDC
+    - SCIM
+    - Provisioning
+    - Multi-Tenant
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+  - namespace: env
+    keys:
+      STYTCH_PROJECT_ID: STYTCH_PROJECT_ID
+      STYTCH_SECRET: STYTCH_SECRET
+capability:
+  consumes:
+    - type: http
+      namespace: stytch-b2b
+      baseUri: https://api.stytch.com/v1/b2b
+      description: Stytch B2B — Organizations, SSO (SAML/OIDC), SCIM, Members, and Discovery.
+      authentication:
+        type: basic
+        username: '{{STYTCH_PROJECT_ID}}'
+        password: '{{STYTCH_SECRET}}'
+      resources:
+        - name: organization-create
+          path: /organizations
+          description: Create a B2B tenant (Organization) that will own its members, SSO connections, and policies.
+          operations:
+            - name: create-org
+              method: POST
+              outputRawFormat: json
+              outputParameters:
+                - name: organization_id
+                  type: string
+                  value: $.organization.organization_id
+              body:
+                type: json
+                data:
+                  organization_name: '{{tools.organization_name}}'
+                  organization_slug: '{{tools.organization_slug}}'
+        - name: sso-saml-create
+          path: /sso/saml/{organization_id}
+          description: Create a SAML SSO connection for an organization. The returned audience_uri and acs_url are configured in the customer's IdP.
+          operations:
+            - name: create-saml
+              method: POST
+              outputRawFormat: json
+        - name: sso-oidc-create
+          path: /sso/oidc/{organization_id}
+          description: Create an OIDC SSO connection for an organization.
+          operations:
+            - name: create-oidc
+              method: POST
+              outputRawFormat: json
+        - name: scim-create
+          path: /scim/{organization_id}
+          description: Provision a SCIM connection so the customer's IdP can push directory updates (create/update/disable members + groups).
+          operations:
+            - name: create-scim
+              method: POST
+              outputRawFormat: json
+        - name: members-create
+          path: /organizations/{organization_id}/members
+          description: Invite or create a member (manual provisioning path when SCIM/JIT isn't in use).
+          operations:
+            - name: create-member
+              method: POST
+              outputRawFormat: json
+              body:
+                type: json
+                data:
+                  email_address: '{{tools.email_address}}'
+                  name: '{{tools.name}}'
+        - name: discovery
+          path: /discovery/organizations
+          description: After authenticating with SSO / Magic Link, list the organizations the user is eligible to join, then exchange the intermediate session for an org-scoped session.
+          operations:
+            - name: list-discovered
+              method: POST
+              outputRawFormat: json
+  workflow:
+    - step: provision-tenant
+      description: Create the customer's Organization and seed an admin Member.
+      uses: create-org
+    - step: configure-sso
+      description: Create a SAML or OIDC connection; pass the returned audience_uri / acs_url back to the customer to set up in their IdP.
+      uses: create-saml
+    - step: enable-scim
+      description: For customers requesting directory sync, enable SCIM and share the bearer token + endpoint URL with their IdP admin.
+      uses: create-scim
+    - step: discover-and-login
+      description: When a user authenticates via SSO / Magic Link, run Discovery to pick the right organization, then exchange the intermediate session for an org-scoped session.
+      uses: list-discovered

@@ -1,0 +1,34 @@
+{
+  "title": "Loginorcreate",
+  "endpoint": "POST /v1/magic_links/email/login_or_create",
+  "description": "Send either a login or signup Magic Link to the User based on if the email is associated with a User already. A new or pending User will receive a signup Magic Link. An active User will receive a login Magic Link. For more information on how to control the status your Users are created in see the `c",
+  "request": {
+    "method": "POST",
+    "path": "/v1/magic_links/email/login_or_create",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "<email>",
+      "login_magic_link_url": "<login_magic_link_url>",
+      "signup_magic_link_url": "<signup_magic_link_url>",
+      "login_expiration_minutes": 3600,
+      "signup_expiration_minutes": 3600,
+      "login_template_id": "<login_template_id>",
+      "signup_template_id": "<signup_template_id>",
+      "create_user_as_pending": true,
+      "code_challenge": "<code_challenge>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "user_id": "example-value",
+      "email_id": "example-value",
+      "user_created": true,
+      "status_code": 200
+    }
+  }
+}

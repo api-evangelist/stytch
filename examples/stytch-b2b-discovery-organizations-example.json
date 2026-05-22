@@ -1,0 +1,28 @@
+{
+  "title": "List",
+  "endpoint": "POST /v1/b2b/discovery/organizations",
+  "description": "List all possible organization relationships connected to a [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/discovery/organizations",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "intermediate_session_token": "<intermediate_session_token>",
+      "session_token": "<session_token>",
+      "session_jwt": "<session_jwt>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "email_address": "example-value",
+      "discovered_organizations": [],
+      "status_code": 200,
+      "organization_id_hint": "example-value"
+    }
+  }
+}

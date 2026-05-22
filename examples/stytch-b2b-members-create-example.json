@@ -1,0 +1,33 @@
+{
+  "title": "Create",
+  "endpoint": "POST /v1/b2b/organizations/{organization_id}/members",
+  "description": "Creates a Member. An `organization_id` and `email_address` are required.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/organizations/{organization_id}/members",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email_address": "<email_address>",
+      "name": "<name>",
+      "trusted_metadata": {},
+      "untrusted_metadata": {},
+      "create_member_as_pending": true,
+      "is_breakglass": true,
+      "mfa_phone_number": "<mfa_phone_number>",
+      "mfa_enrolled": true,
+      "roles": [],
+      "external_id": "<external_id>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "member_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "title": "Create",
+  "endpoint": "POST /pwa/v3/projects",
+  "description": "Create creates a project, including both a live and test environment.",
+  "request": {
+    "method": "POST",
+    "path": "/pwa/v3/projects",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "name": "<name>",
+      "project_slug": "<project_slug>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

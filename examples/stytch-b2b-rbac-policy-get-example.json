@@ -1,0 +1,20 @@
+{
+  "title": "Policy",
+  "endpoint": "GET /v1/b2b/rbac/policy",
+  "description": "Get the active RBAC Policy for your current Stytch Project. An RBAC Policy is the canonical document that stores all defined Resources and Roles within your RBAC permissioning model.",
+  "request": {
+    "method": "GET",
+    "path": "/v1/b2b/rbac/policy",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/draft/2024-12/schema",
+  "title": "Stytch Connected App Structure",
+  "description": "Logical structure of a Stytch Connected App client, the surface used to give external tools, AI agents, and MCP servers scoped OAuth access to a Stytch-protected product.",
+  "type": "object",
+  "properties": {
+    "client": {
+      "type": "object",
+      "description": "Identity fields stored on the Connected App.",
+      "properties": {
+        "client_id": { "type": "string" },
+        "client_type": { "type": "string", "enum": ["public", "confidential"] },
+        "client_name": { "type": "string" },
+        "client_description": { "type": "string" },
+        "logo_url": { "type": "string" }
+      }
+    },
+    "oauth_config": {
+      "type": "object",
+      "description": "OAuth 2.0 / OIDC parameters honored by Stytch's Authorization Endpoint.",
+      "properties": {
+        "redirect_urls": { "type": "array", "items": { "type": "string" } },
+        "post_logout_redirect_urls": { "type": "array", "items": { "type": "string" } },
+        "scopes": { "type": "array", "items": { "type": "string" } },
+        "access_token_expiry_minutes": { "type": "integer" },
+        "refresh_token_expiry_minutes": { "type": "integer" }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "description": "Mutation surface — create, update, search, delete — plus rotation events.",
+      "properties": {
+        "created_at": { "type": "string" },
+        "updated_at": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "revoked"] }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "trusted_metadata": { "type": "object" },
+        "untrusted_metadata": { "type": "object" }
+      }
+    }
+  }
+}

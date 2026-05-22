@@ -1,0 +1,33 @@
+{
+  "title": "Create",
+  "endpoint": "POST /v1/users",
+  "description": "Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other operations within Stytch. An `email` or a `phone_number` is required.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/users",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "email": "<email>",
+      "phone_number": "<phone_number>",
+      "create_user_as_pending": true,
+      "trusted_metadata": {},
+      "untrusted_metadata": {},
+      "external_id": "<external_id>",
+      "roles": []
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "user_id": "example-value",
+      "email_id": "example-value",
+      "status": "example-value",
+      "phone_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

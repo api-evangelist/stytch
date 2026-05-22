@@ -1,0 +1,32 @@
+{
+  "title": "Create",
+  "endpoint": "POST /v1/connected_apps/clients",
+  "description": "Creates a new Connected App. If the Connected App `client_type` is `first_party` or `third_party` a `client_secret` is returned.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/connected_apps/clients",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "client_name": "<client_name>",
+      "client_description": "<client_description>",
+      "redirect_urls": [],
+      "full_access_allowed": true,
+      "access_token_expiry_minutes": 3600,
+      "access_token_custom_audience": "<access_token_custom_audience>",
+      "access_token_template_content": "<access_token_template_content>",
+      "post_logout_redirect_urls": [],
+      "logo_url": "<logo_url>",
+      "bypass_consent_for_offline_access": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

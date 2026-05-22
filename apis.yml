@@ -8,8 +8,15 @@ apis:
       - Passwordless
       - Magic Links
       - OTP
+      - OAuth
+      - WebAuthn
+      - Passkeys
       - Consumer
+      - M2M
+      - Connected Apps
+      - Fraud
     humanURL: https://stytch.com/docs/api
+    baseURL: https://api.stytch.com
     properties:
       - url: https://stytch.com/docs/api
         type: Documentation
@@ -17,16 +24,28 @@ apis:
         type: APIReference
       - url: openapi/stytch-consumer-openapi.yml
         type: OpenAPI
-    description: Stytch's Consumer API provides passwordless and password-based authentication for consumer-facing applications. Supports magic links, SMS/email OTP, OAuth social login, TOTP (authenticator apps), WebAuthn (biometrics/passkeys), and session management.
+      - url: https://github.com/stytchauth/stytch-openapi
+        type: OpenAPISource
+    description: >-
+      Stytch's Consumer API for end-user authentication. Covers Magic Links, SMS / email / WhatsApp OTP,
+      OAuth social login, Passwords, TOTP, WebAuthn / Passkeys, Crypto Wallets, Sessions, Users, plus the
+      M2M (client credentials) surface, Connected Apps (OAuth provider for third-party tools, AI agents,
+      and MCP servers), Fraud / Device Fingerprinting, Impersonation, IDP introspection, and Consumer RBAC.
   - aid: stytch:stytch-b2b-api
     name: Stytch B2B Authentication API
     tags:
       - Authentication
       - B2B
       - SSO
+      - SAML
+      - OIDC
+      - SCIM
       - Multi-Tenant
       - Organizations
+      - RBAC
+      - Connected Apps
     humanURL: https://stytch.com/docs/b2b
+    baseURL: https://api.stytch.com/v1/b2b
     properties:
       - url: https://stytch.com/docs/b2b
         type: Documentation
@@ -34,113 +53,241 @@ apis:
         type: APIReference
       - url: openapi/stytch-b2b-openapi.yml
         type: OpenAPI
-    description: Stytch's B2B API provides authentication and identity management for organization-based SaaS applications. Supports multi-tenancy with Organizations and Members, SSO via SAML and OIDC, magic links, OTP, OAuth, and organization discovery flows.
+      - url: https://github.com/stytchauth/stytch-openapi
+        type: OpenAPISource
+    description: >-
+      Stytch's B2B API for multi-tenant SaaS authentication. Covers Organizations, Members, SSO (SAML and
+      OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM directory sync, TOTP, Recovery
+      Codes, Passwords, Impersonation, and the B2B IDP surface used by Connected Apps.
+  - aid: stytch:stytch-management-api
+    name: Stytch Management API
+    tags:
+      - Management
+      - Configuration
+      - Projects
+      - Secrets
+      - RBAC
+      - SDKConfig
+    humanURL: https://stytch.com/docs/workspace-management-api
+    baseURL: https://management.stytch.com
+    properties:
+      - url: https://stytch.com/docs/workspace-management-api
+        type: Documentation
+      - url: openapi/stytch-management-openapi.yml
+        type: OpenAPI
+      - url: https://github.com/stytchauth/stytch-management-openapi
+        type: OpenAPISource
+      - url: https://github.com/stytchauth/terraform-provider-stytch
+        type: TerraformProvider
+      - url: https://github.com/stytchauth/stytch-management-node
+        type: SDK
+      - url: https://github.com/stytchauth/stytch-management-go
+        type: SDK
+      - url: https://github.com/stytchauth/stytch-management-python
+        type: SDK
+    description: >-
+      Stytch's Workspace Management API (management.stytch.com) for programmatic configuration —
+      projects, environments, secrets, redirect URLs, allowed country codes, RBAC policies, email
+      templates, JWT templates, event log streaming, public tokens, trusted token profiles, and
+      Consumer / B2B SDK configuration. Backs the Terraform provider and the language-specific
+      management SDKs.
 name: Stytch
 tags:
   - Authentication
   - Identity
   - Passwordless
   - Security
+  - B2B
+  - Connected Apps
+  - MCP
+  - AI Agents
   - Developer Tools
 kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-15'
-modified: '2026-05-19'
+modified: '2026-05-22'
 position: Consuming
-description: Stytch is a company that specializes in providing secure and seamless authentication solutions for businesses. Their platform allows companies to integrate passwordless authentication methods such as magic links, SMS and email OTP, OAuth, TOTP, WebAuthn, and biometrics. Stytch offers both a Consumer API for end-user authentication and a B2B API for multi-tenant SaaS applications with organization management, SSO, and role-based access control.
+description: >-
+  Stytch is an authentication and identity infrastructure provider. Its Consumer and B2B APIs cover
+  passwordless authentication (Magic Links, OTP, OAuth, WebAuthn / Passkeys, TOTP), enterprise SSO
+  (SAML / OIDC) and SCIM, sessions, M2M client-credentials tokens, and Device Fingerprinting / fraud
+  defense. Connected Apps lets a Stytch-secured product act as an OAuth 2.0 / OIDC Authorization
+  Server for third-party integrations, desktop apps, AI agents, and MCP servers — a posture Stytch
+  describes as "agent-ready". A separate Management API plus a Terraform provider handle workspace
+  configuration as code.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: Website
+    url: https://stytch.com
+  - type: Documentation
+    url: https://stytch.com/docs
+  - type: APIReference
+    url: https://stytch.com/docs/api
+  - type: SignUp
+    url: https://app.stytch.com/register
+  - type: Portal
+    url: https://app.stytch.com
+  - type: Authentication
+    url: https://stytch.com/docs/guides/authentication
+  - type: Sessions
+    url: https://stytch.com/docs/guides/sessions
+  - type: ConnectedApps
+    url: https://stytch.com/docs/guides/connected-apps/overview
+  - type: MCPServer
+    url: https://github.com/stytchauth/mcp-stytch-consumer-todo-list
+  - type: AIAgentDetection
+    url: https://github.com/stytchauth/is-agent
+  - type: SDKs
+    url: https://stytch.com/docs/sdks
+  - type: Pricing
+    url: https://stytch.com/pricing
+  - type: PrivacyPolicy
+    url: https://stytch.com/privacy
+  - type: TermsOfService
+    url: https://stytch.com/terms
+  - type: Webhooks
+    url: https://stytch.com/docs/guides/webhooks
+  - type: GitHubOrganization
+    url: https://github.com/stytchauth
+  - type: PostmanWorkspace
+    url: https://www.postman.com/stytch/stytch-public-workspace/overview
   - type: LinkedIn
     url: https://www.linkedin.com/company/stytch
-  - url: https://stytch.com
-    type: Website
-  - url: https://stytch.com/docs
-    type: Documentation
-  - url: https://stytch.com/docs/api
-    type: APIReference
-  - url: https://app.stytch.com/register
-    type: SignUp
-  - url: https://app.stytch.com
-    type: Portal
-  - url: https://stytch.com/docs/guides/authentication
-    type: Authentication
-  - url: https://stytch.com/docs/guides/sessions
-    type: Sessions
-  - url: https://stytch.com/docs/sdks
-    type: SDKs
-  - url: https://stytch.com/pricing
-    type: Pricing
-  - url: https://stytch.com/privacy
-    type: PrivacyPolicy
-  - url: https://stytch.com/terms
-    type: TermsOfService
-  - url: https://stytch.com/docs/guides/webhooks
-    type: Webhooks
-  - url: https://github.com/stytchauth
-    type: GitHubOrganization
-  - url: https://www.postman.com/stytch/stytch-public-workspace/overview
-    type: Postman Workspace
-  - url: https://github.com/stytchauth/stytch-node
-    type: Node.js SDK
-  - url: https://github.com/stytchauth/stytch-python
-    type: Python SDK
-  - url: https://github.com/stytchauth/stytch-java
-    type: Java SDK
-  - url: https://github.com/stytchauth/stytch-go
-    type: Go SDK
-  - url: https://github.com/stytchauth/stytch-ruby
-    type: Ruby SDK
-  - url: https://github.com/stytchauth/stytch-php
-    type: PHP SDK
-  - url: https://status.stytch.com
-    type: StatusPage
-  - url: https://stytch.com/blog
-    type: Blog
-  - url: rules/stytch-rules.yml
-    type: Spectral Rules
-  - url: capabilities/passwordless-authentication.yaml
-    type: Naftiko Capability
-  - url: capabilities/b2b-identity-management.yaml
-    type: Naftiko Capability
-  - url: vocabulary/stytch-vocabulary.yml
-    type: Vocabulary
-  - url: json-schema/stytch-user-schema.json
-    type: JSON Schema
-  - url: json-schema/stytch-organization-schema.json
-    type: JSON Schema
-  - url: json-structure/stytch-session-structure.json
-    type: JSON Structure
-  - url: json-ld/stytch-context.jsonld
-    type: JSON-LD Context
-  - url: examples/stytch-send-magic-link-example.json
-    type: Example
-  - url: examples/stytch-create-organization-example.json
-    type: Example
+  - type: Node.js SDK
+    url: https://github.com/stytchauth/stytch-node
+  - type: Python SDK
+    url: https://github.com/stytchauth/stytch-python
+  - type: Java SDK
+    url: https://github.com/stytchauth/stytch-java
+  - type: Go SDK
+    url: https://github.com/stytchauth/stytch-go
+  - type: Ruby SDK
+    url: https://github.com/stytchauth/stytch-ruby
+  - type: PHP SDK
+    url: https://github.com/stytchauth/stytch-php
+  - type: .NET SDK
+    url: https://github.com/stytchauth/stytch-dotnet
+  - type: Rust SDK
+    url: https://github.com/stytchauth/stytch-rust
+  - type: iOS SDK
+    url: https://github.com/stytchauth/stytch-ios
+  - type: Android SDK
+    url: https://github.com/stytchauth/stytch-android
+  - type: Browser SDK
+    url: https://github.com/stytchauth/stytch-browser
+  - type: Mobile SDK
+    url: https://github.com/stytchauth/stytch-mobile
+  - type: CLI
+    url: https://github.com/stytchauth/stytch-cli
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: ManagementSDK
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: OSS Library
+    url: https://github.com/stytchauth/samlshield
+  - type: StatusPage
+    url: https://status.stytch.com
+  - type: Blog
+    url: https://stytch.com/blog
+  - type: Spectral Rules
+    url: rules/stytch-rules.yml
+  - type: Naftiko Capability
+    url: capabilities/passwordless-authentication.yaml
+  - type: Naftiko Capability
+    url: capabilities/b2b-identity-management.yaml
+  - type: Naftiko Capability
+    url: capabilities/b2b-sso-scim-provisioning.yaml
+  - type: Naftiko Capability
+    url: capabilities/connected-apps-mcp-authorization.yaml
+  - type: Naftiko Capability
+    url: capabilities/m2m-service-authentication.yaml
+  - type: Naftiko Capability
+    url: capabilities/fraud-device-intelligence.yaml
+  - type: Vocabulary
+    url: vocabulary/stytch-vocabulary.yml
+  - type: JSON Schema
+    url: json-schema/stytch-user-schema.json
+  - type: JSON Schema
+    url: json-schema/stytch-organization-schema.json
+  - type: JSON Schema
+    url: json-schema/stytch-member-schema.json
+  - type: JSON Schema
+    url: json-schema/stytch-connected-app-schema.json
+  - type: JSON Schema
+    url: json-schema/stytch-m2m-client-schema.json
+  - type: JSON Structure
+    url: json-structure/stytch-session-structure.json
+  - type: JSON Structure
+    url: json-structure/stytch-connected-app-structure.json
+  - type: JSON-LD Context
+    url: json-ld/stytch-context.jsonld
+  - type: Example
+    url: examples/stytch-send-magic-link-example.json
+  - type: Example
+    url: examples/stytch-create-organization-example.json
+  - type: Example
+    url: examples/stytch-consumer-magic-links-login-or-create-example.json
+  - type: Example
+    url: examples/stytch-consumer-otps-sms-send-example.json
+  - type: Example
+    url: examples/stytch-consumer-oauth-authenticate-example.json
+  - type: Example
+    url: examples/stytch-consumer-sessions-authenticate-example.json
+  - type: Example
+    url: examples/stytch-consumer-webauthn-register-start-example.json
+  - type: Example
+    url: examples/stytch-consumer-connected-apps-create-example.json
+  - type: Example
+    url: examples/stytch-consumer-fingerprint-lookup-example.json
+  - type: Example
+    url: examples/stytch-consumer-users-create-example.json
+  - type: Example
+    url: examples/stytch-b2b-organizations-create-example.json
+  - type: Example
+    url: examples/stytch-b2b-members-create-example.json
+  - type: Example
+    url: examples/stytch-b2b-sso-saml-create-connection-example.json
+  - type: Example
+    url: examples/stytch-b2b-discovery-organizations-example.json
+  - type: Example
+    url: examples/stytch-b2b-magic-links-email-login-or-signup-example.json
+  - type: Example
+    url: examples/stytch-b2b-sessions-authenticate-example.json
+  - type: Example
+    url: examples/stytch-b2b-rbac-policy-get-example.json
+  - type: Example
+    url: examples/stytch-management-create-project-example.json
+  - type: Example
+    url: examples/stytch-management-create-redirect-url-example.json
+  - type: Plans
+    url: plans/stytch-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/stytch-rate-limits.yml
+  - type: FinOps
+    url: finops/stytch-finops.yml
   - type: Features
     data:
-      - Pay As You Go base $0; 10K MAUs included
-      - 5 SSO/SCIM connections included; $125/mo per additional
-      - 1K M2M tokens included
-      - Fraud prevention 10K fingerprints free; $0.005 per additional
-      - 'Brand customization + Stytch removal: $99 one-time'
-      - 'Enterprise: 99.99% SLA, HIPAA/BAA, dedicated support'
-      - 'Authentication: passwords, magic links, OAuth, biometrics, SSO'
-      - B2B SaaS Authentication API (Organizations + RBAC)
-      - Consumer Authentication API
-      - 'Default API rate limit: 100 req/sec/project'
+      - One integration for authentication, authorization, and security, making your app "enterprise-ready and agent-ready" (stytch.com)
+      - Consumer Authentication API (Magic Links, OTP, OAuth, Passwords, TOTP, WebAuthn / Passkeys, Crypto Wallets, Sessions, Users)
+      - B2B Authentication API (Organizations, Members, SSO SAML/OIDC, SCIM, Discovery, RBAC, Magic Links, OTP, OAuth, Sessions)
+      - Connected Apps — turn your product into an OAuth 2.0 / OIDC Authorization Server for third-party integrations, AI agents, and MCP servers
+      - MCP server demos (mcp-stytch-consumer-todo-list, stytch-connected-apps-b2b-demo, mcp-stytch-b2b-okr-manager) on the GitHub org
+      - is-agent SDK for detecting AI agents / bots client-side
+      - M2M client credentials with short-lived JWTs and secret rotation
+      - Device Fingerprinting (DFP), verdict reasons, adaptive MFA, fraud rules
+      - Workspace Management API (management.stytch.com) and Terraform provider for config-as-code
+      - SDKs for Node, Python, Go, Ruby, Java/Kotlin, PHP, .NET, Rust, iOS, Android, Browser, Mobile
+      - SAML Shield open-source library to harden SAML assertion validation
+      - Pay-as-you-go pricing — $0 base, 10K MAUs + AI agents included, 5 SSO/SCIM included ($125/mo additional), 1K M2M tokens, 10K fingerprints free ($0.005 thereafter)
+      - Enterprise tier — 99.99% SLA, HIPAA/BAA, dedicated Slack support, custom volume pricing
       - Webhooks for auth events
-      - Bearer token + API keys (project-scoped)
-      - OAuth 2.0 + OIDC + SAML
-      - MFA (TOTP, SMS, biometric, security keys)
-      - Device Fingerprinting for fraud prevention
-      - M2M token issuance for service-to-service auth
+      - Default API rate limit ~100 req/sec/project
     sources:
+      - https://stytch.com
       - https://stytch.com/pricing
-    updated: '2026-05-04'
-  - name: MCP Server
-    url: https://github.com/stytchauth/mcp-stytch-consumer-todo-list
-    type: MCPServer
+      - https://github.com/stytchauth
+    updated: '2026-05-22'

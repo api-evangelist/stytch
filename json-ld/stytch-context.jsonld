@@ -36,6 +36,31 @@
     "SSOConnection": {
       "@id": "stytch:SSOConnection"
     },
+    "SCIMConnection": {
+      "@id": "stytch:SCIMConnection"
+    },
+    "ConnectedApp": {
+      "@id": "stytch:ConnectedApp",
+      "@type": "schema:SoftwareApplication"
+    },
+    "MCPServerClient": {
+      "@id": "stytch:MCPServerClient",
+      "@type": "schema:SoftwareApplication"
+    },
+    "M2MClient": {
+      "@id": "stytch:M2MClient",
+      "@type": "schema:SoftwareApplication"
+    },
+    "AIAgent": {
+      "@id": "stytch:AIAgent",
+      "@type": "schema:SoftwareApplication"
+    },
+    "DeviceFingerprint": {
+      "@id": "stytch:DeviceFingerprint"
+    },
+    "FraudVerdict": {
+      "@id": "stytch:FraudVerdict"
+    },
     "userId": {
       "@id": "stytch:userId",
       "@type": "schema:identifier"
@@ -69,6 +94,27 @@
     "passwordless": {
       "@id": "stytch:passwordless",
       "@type": "schema:Boolean"
+    },
+    "clientId": {
+      "@id": "stytch:clientId",
+      "@type": "schema:identifier"
+    },
+    "scopes": {
+      "@id": "stytch:scopes"
+    },
+    "redirectUrls": {
+      "@id": "stytch:redirectUrls"
+    },
+    "telemetryId": {
+      "@id": "stytch:telemetryId",
+      "@type": "schema:identifier"
+    },
+    "visitorId": {
+      "@id": "stytch:visitorId",
+      "@type": "schema:identifier"
+    },
+    "verdictAction": {
+      "@id": "stytch:verdictAction"
     }
   }
 }

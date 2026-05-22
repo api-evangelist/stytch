@@ -1,7 +1,36 @@
 extends: spectral:oas
+documentationUrl: https://stytch.com/docs/api
 rules:
+  stytch-info-contact:
+    description: API info must declare a contact pointing at Stytch docs.
+    message: "info.contact must be defined"
+    given: "$.info"
+    severity: warn
+    then:
+      field: contact
+      function: truthy
+
+  stytch-servers-defined:
+    description: API must declare api.stytch.com (production) and test.stytch.com (test) servers.
+    message: "API must define servers"
+    given: "$"
+    severity: error
+    then:
+      field: servers
+      function: truthy
+
+  stytch-server-https:
+    description: All Stytch API servers must use HTTPS.
+    message: "Server URL '{{value}}' must use https://"
+    given: "$.servers[*].url"
+    severity: error
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
   stytch-operation-id-required:
-    description: All Stytch API operations must have an operationId
+    description: Every operation must declare an operationId.
     message: "Operation at '{{path}}' is missing operationId"
     given: "$.paths[*][get,post,put,patch,delete]"
     severity: error
@@ -10,7 +39,7 @@ rules:
       function: truthy
 
   stytch-operation-id-camel-case:
-    description: Stytch operationIds use camelCase
+    description: operationIds use camelCase (no underscores or hyphens).
     message: "operationId '{{value}}' should use camelCase"
     given: "$.paths[*][get,post,put,patch,delete].operationId"
     severity: warn
@@ -19,8 +48,18 @@ rules:
       functionOptions:
         match: "^[a-z][a-zA-Z0-9]+$"
 
+  stytch-summary-title-case:
+    description: Operation summary should use Title Case.
+    message: "Operation summary '{{value}}' should be Title Case"
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    severity: hint
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
   stytch-tags-required:
-    description: All operations must include at least one tag
+    description: Every operation must include at least one tag.
     message: "Operation '{{path}}' must include tags"
     given: "$.paths[*][get,post,put,patch,delete]"
     severity: warn
@@ -28,17 +67,17 @@ rules:
       field: tags
       function: truthy
 
-  stytch-auth-basic:
-    description: Stytch APIs use Basic auth (project_id + secret)
-    message: "API must define basicAuth security scheme"
-    given: "$.components.securitySchemes"
-    severity: error
+  stytch-description-required:
+    description: Operations should include a description.
+    message: "Operation at '{{path}}' should have a description"
+    given: "$.paths[*][get,post,put,patch,delete]"
+    severity: hint
     then:
-      field: basicAuth
+      field: description
       function: truthy
 
-  stytch-response-200:
-    description: All operations must define a 200 response
+  stytch-200-response:
+    description: All operations must define a 200 response.
     message: "Operation must define a 200 response"
     given: "$.paths[*][get,post,put,patch,delete].responses"
     severity: warn
@@ -46,17 +85,30 @@ rules:
       field: "200"
       function: truthy
 
-  stytch-servers-defined:
-    description: API must define servers including test and production
-    message: "API must define servers"
-    given: "$"
-    severity: error
+  stytch-no-trailing-slash:
+    description: API paths must not end with a trailing slash.
+    message: "Path '{{property}}' must not end with /"
+    given: "$.paths"
+    severity: warn
     then:
-      field: servers
-      function: truthy
+      field: "@key"
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  stytch-snake-case-fields:
+    description: Stytch JSON fields are snake_case (no camelCase top-level properties).
+    message: "Schema property '{{property}}' should be snake_case"
+    given: "$.components.schemas[*].properties"
+    severity: hint
+    then:
+      field: "@key"
+      function: pattern
+      functionOptions:
+        notMatch: "[A-Z]"
 
   stytch-request-body-for-post:
-    description: POST operations should define a requestBody
+    description: POST operations should define a requestBody.
     message: "POST operation at '{{path}}' should include a requestBody"
     given: "$.paths[*].post"
     severity: warn
@@ -64,21 +116,19 @@ rules:
       field: requestBody
       function: truthy
 
-  stytch-no-trailing-slash:
-    description: API paths must not end with a trailing slash
-    message: "Path '{{property}}' must not end with /"
-    given: "$.paths[*]~"
-    severity: warn
+  stytch-auth-basic-or-bearer:
+    description: APIs must declare HTTP Basic (project + secret) or Bearer security.
+    message: "components.securitySchemes must include basic / bearer auth"
+    given: "$.components.securitySchemes"
+    severity: error
     then:
-      function: pattern
-      functionOptions:
-        notMatch: "/$"
+      function: truthy
 
-  stytch-description-required:
-    description: Operations should have a description
-    message: "Operation at '{{path}}' should have a description"
-    given: "$.paths[*][get,post,put,patch,delete]"
+  stytch-status-code-in-response:
+    description: Standard Stytch responses include a top-level status_code integer.
+    message: "Response schema should declare status_code"
+    given: "$.components.schemas[?(@.type=='object' && @.properties)].properties"
     severity: hint
     then:
-      field: description
+      field: status_code
       function: truthy

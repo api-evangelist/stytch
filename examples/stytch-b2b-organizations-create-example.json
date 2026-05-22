@@ -1,0 +1,42 @@
+{
+  "title": "Create",
+  "endpoint": "POST /v1/b2b/organizations",
+  "description": "Creates an Organization. An `organization_name` and a unique `organization_slug` are required.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/organizations",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "organization_name": "<organization_name>",
+      "organization_slug": "<organization_slug>",
+      "organization_logo_url": "<organization_logo_url>",
+      "trusted_metadata": {},
+      "organization_external_id": "<organization_external_id>",
+      "sso_jit_provisioning": "<sso_jit_provisioning>",
+      "email_allowed_domains": [],
+      "email_jit_provisioning": "<email_jit_provisioning>",
+      "email_invites": "<email_invites>",
+      "auth_methods": "<auth_methods>",
+      "allowed_auth_methods": [],
+      "mfa_policy": "<mfa_policy>",
+      "rbac_email_implicit_role_assignments": [],
+      "mfa_methods": "<mfa_methods>",
+      "allowed_mfa_methods": [],
+      "oauth_tenant_jit_provisioning": "<oauth_tenant_jit_provisioning>",
+      "allowed_oauth_tenants": {},
+      "claimed_email_domains": [],
+      "allowed_first_party_connected_apps": [],
+      "allowed_third_party_connected_apps": []
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

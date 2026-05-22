@@ -2,9 +2,9 @@ name: Stytch
 description: >-
   Vocabulary of key terms, concepts, and objects used across the Stytch authentication platform.
   Covers passwordless authentication, session management, B2B multi-tenancy, and identity infrastructure.
-version: "1.0"
+version: "1.1"
 created: "2026-05-02"
-modified: "2026-05-02"
+modified: "2026-05-22"
 tags:
   - Authentication
   - Identity
@@ -166,3 +166,101 @@ terms:
     tags:
       - MFA
       - Sessions
+
+  - term: Connected App
+    definition: >-
+      An OAuth 2.0 / OIDC client registered under a Stytch project so an external tool — a
+      third-party integration, desktop app, AI agent, or MCP server — can request scoped,
+      user-consented access to the product Stytch protects. Connected Apps make the Stytch-secured
+      product itself act as an Authorization Server.
+    category: Authorization
+    tags:
+      - Connected Apps
+      - OAuth
+      - OIDC
+      - MCP
+      - AI Agents
+
+  - term: MCP Server Client
+    definition: >-
+      A specific kind of Connected App — a Model Context Protocol server registered as a public
+      OAuth client (with PKCE) so AI agents can obtain scoped tokens to call your tools.
+    category: Authorization
+    tags:
+      - MCP
+      - AI Agents
+      - Connected Apps
+
+  - term: M2M Client
+    definition: >-
+      A machine-to-machine OAuth 2.0 client. Holds a client_id + client_secret pair and a set
+      of scopes; exchanges them for short-lived JWT access tokens via the client_credentials
+      grant. Used for service-to-service auth and headless automation.
+    category: Authorization
+    tags:
+      - M2M
+      - OAuth
+      - Client Credentials
+
+  - term: Discovery Flow
+    definition: >-
+      The B2B authentication path where a user first authenticates (via Magic Link, OAuth, or
+      SSO) and is then offered the list of organizations they may join. Concludes by exchanging
+      an intermediate session token for an org-scoped session.
+    category: B2B Feature
+    tags:
+      - B2B
+      - Discovery
+      - Multi-Tenant
+
+  - term: SCIM Connection
+    definition: >-
+      A per-organization SCIM 2.0 endpoint Stytch exposes so an enterprise customer's IdP can
+      push directory updates — create / update / disable members and groups. Complements SAML
+      / OIDC SSO with automated provisioning and deprovisioning.
+    category: B2B Feature
+    tags:
+      - SCIM
+      - Provisioning
+      - B2B
+
+  - term: Device Fingerprint
+    definition: >-
+      A telemetry signal collected by Stytch's DFP browser / mobile SDK. The server-side
+      fingerprint lookup turns a telemetry_id into a verdict (allow / challenge / block) plus
+      a visitor_id and verdict reasons used for adaptive MFA.
+    category: Fraud & Risk
+    tags:
+      - Fraud
+      - Device Fingerprinting
+      - Bot Detection
+
+  - term: Verdict Action
+    definition: >-
+      The Stytch fraud system's recommended action for a request — typically allow, challenge,
+      or block. Drives adaptive MFA / step-up logic and Connected Apps consent decisions.
+    category: Fraud & Risk
+    tags:
+      - Fraud
+      - Adaptive MFA
+
+  - term: Impersonation
+    definition: >-
+      A controlled flow that lets staff act as a User or Member to debug or support a customer
+      account. Impersonation sessions are tagged distinctly so they can be audited and revoked
+      separately from normal sessions.
+    category: Operations
+    tags:
+      - Support
+      - Auditing
+
+  - term: Management API
+    definition: >-
+      Stytch's programmatic configuration surface (host management.stytch.com) for projects,
+      environments, secrets, RBAC policies, JWT templates, email templates, event log
+      streaming, public tokens, and trusted token profiles. Separate from the runtime auth
+      API at api.stytch.com.
+    category: API Concept
+    tags:
+      - Management
+      - Configuration

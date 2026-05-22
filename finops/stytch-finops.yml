@@ -4,7 +4,7 @@ schema: https://www.finops.org/framework/
 provider: Stytch
 providerId: stytch
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-22'
 reconciled: true
 tags:
   - FinOps
@@ -44,6 +44,14 @@ meters:
   - name: fraud_fingerprints
     unit: fingerprint
     aggregation: sum
+  - name: connected_app_clients
+    unit: client
+    aggregation: max
+    description: Registered OAuth / OIDC clients (third-party integrations, AI agents, MCP servers) under the project.
+  - name: ai_agents
+    unit: agent-MAU
+    aggregation: max
+    description: AI agents counted toward MAU, per Stytch's published pricing surface that meters "monthly active users and AI agents".
 principles:
   - name: Visibility
     description: Track Stytch consumption monthly.

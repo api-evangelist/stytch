@@ -1,0 +1,28 @@
+{
+  "title": "Authenticate",
+  "endpoint": "POST /v1/b2b/sessions/authenticate",
+  "description": "Authenticates a Session and updates its lifetime by the specified `session_duration_minutes`. If the `session_duration_minutes` is not specified, a Session will not be extended. This endpoint requires either a `session_jwt` or `session_token` be included in the request. It will return an error if bo",
+  "request": {
+    "method": "POST",
+    "path": "/v1/b2b/sessions/authenticate",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "session_token": "<session_token>",
+      "session_duration_minutes": 3600,
+      "session_jwt": "<session_jwt>",
+      "session_custom_claims": {}
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "session_token": "example-value",
+      "session_jwt": "example-value",
+      "status_code": 200
+    }
+  }
+}

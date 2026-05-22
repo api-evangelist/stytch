@@ -1,0 +1,27 @@
+{
+  "title": "Lookup",
+  "endpoint": "POST /v1/fingerprint/lookup",
+  "description": "Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID()` function.",
+  "request": {
+    "method": "POST",
+    "path": "/v1/fingerprint/lookup",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "telemetry_id": "<telemetry_id>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "telemetry_id": "example-value",
+      "created_at": "example-value",
+      "expires_at": "example-value",
+      "status_code": 200,
+      "raw_signals": {}
+    }
+  }
+}

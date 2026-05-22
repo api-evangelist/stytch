@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/stytch/main/json-schema/stytch-connected-app-schema.json",
+  "title": "Stytch Connected App (OAuth Client)",
+  "description": "An OAuth 2.0 / OIDC client registered under a Stytch project. Connected Apps back third-party integrations, desktop apps, AI agents, and MCP servers that need scoped, user-consented access to the host application.",
+  "type": "object",
+  "required": ["client_id", "client_name", "client_type"],
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "Stable identifier for the Connected App client. Format: connected-app-live-<uuid> or connected-app-test-<uuid>.",
+      "examples": ["connected-app-live-12345678-90ab-cdef-1234-567890abcdef"]
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Human-readable name displayed on Stytch's consent screen.",
+      "examples": ["Acme MCP Server"]
+    },
+    "client_type": {
+      "type": "string",
+      "enum": ["public", "confidential"],
+      "description": "OAuth client type. Public clients (e.g. desktop / SPA / MCP server distributed to end users) must use PKCE; confidential clients hold a client_secret."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "Returned only at creation / rotation for confidential clients.",
+      "writeOnly": true
+    },
+    "redirect_urls": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "Allowed OAuth redirect URIs."
+    },
+    "scopes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Scopes the Connected App is allowed to request (e.g. openid, profile, email, plus custom resource scopes)."
+    },
+    "logo_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Logo shown on the consent screen."
+    },
+    "client_description": {
+      "type": "string",
+      "description": "Short description shown on the consent screen, useful for explaining what an AI agent will do with the granted access."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "description": "Server-only metadata about the client; never visible to end users."
+    },
+    "access_token_expiry_minutes": {
+      "type": "integer",
+      "description": "Lifetime of issued access tokens, in minutes."
+    },
+    "refresh_token_expiry_minutes": {
+      "type": "integer",
+      "description": "Lifetime of issued refresh tokens, in minutes."
+    },
+    "post_logout_redirect_urls": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" }
+    },
+    "created_at": { "type": "string", "format": "date-time" }
+  }
+}

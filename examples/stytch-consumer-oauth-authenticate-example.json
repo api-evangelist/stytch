@@ -1,0 +1,36 @@
+{
+  "title": "Authenticate",
+  "endpoint": "POST /v1/oauth/authenticate",
+  "description": "Authenticate a User given a `token`. This endpoint verifies that the user completed the OAuth flow by verifying that the token is valid and hasn't expired. To initiate a Stytch session for the user while authenticating their OAuth token, include `session_duration_minutes`; a session with the identit",
+  "request": {
+    "method": "POST",
+    "path": "/v1/oauth/authenticate",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "token": "<token>",
+      "session_token": "<session_token>",
+      "session_duration_minutes": 3600,
+      "session_jwt": "<session_jwt>",
+      "session_custom_claims": {},
+      "code_verifier": "<code_verifier>",
+      "telemetry_id": "<telemetry_id>"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "user_id": "example-value",
+      "provider_subject": "example-value",
+      "provider_type": "example-value",
+      "session_token": "example-value",
+      "session_jwt": "example-value",
+      "reset_sessions": true,
+      "oauth_user_registration_id": "example-value",
+      "status_code": 200
+    }
+  }
+}

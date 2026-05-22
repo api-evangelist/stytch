@@ -1,0 +1,108 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stytch Connected Apps & MCP Authorization
+  description: >-
+    Treat your Stytch-secured product as an OAuth 2.0 / OIDC Authorization Server so external clients —
+    desktop apps, AI agents, MCP servers, and third-party integrations — can request scoped, user-consented
+    access to it. This capability composes the Connected Apps client lifecycle (create, search, update,
+    delete clients), the OAuth Authorization endpoint flow, token issuance, IDP introspection, and the
+    Consumer / B2B session checks that gate user consent.
+  tags:
+    - Stytch
+    - Connected Apps
+    - OAuth
+    - OIDC
+    - MCP
+    - AI Agents
+    - Authorization
+    - Consumer
+    - B2B
+  created: '2026-05-22'
+  modified: '2026-05-22'
+binds:
+  - namespace: env
+    keys:
+      STYTCH_PROJECT_ID: STYTCH_PROJECT_ID
+      STYTCH_SECRET: STYTCH_SECRET
+capability:
+  consumes:
+    - type: http
+      namespace: stytch-connected-apps
+      baseUri: https://api.stytch.com/v1
+      description: Stytch Connected Apps — register OAuth clients (including MCP server clients) under your project, issue tokens, and introspect identity.
+      authentication:
+        type: basic
+        username: '{{STYTCH_PROJECT_ID}}'
+        password: '{{STYTCH_SECRET}}'
+      resources:
+        - name: connected-app-create
+          path: /connected_apps/clients
+          description: Register a new Connected App (OAuth/OIDC client) — public or confidential — backing a desktop tool, web integration, AI agent, or MCP server.
+          operations:
+            - name: create-client
+              method: POST
+              outputRawFormat: json
+              outputParameters:
+                - name: client_id
+                  type: string
+                  value: $.connected_app.client_id
+              body:
+                type: json
+                data:
+                  client_name: '{{tools.client_name}}'
+                  client_type: '{{tools.client_type}}'
+                  redirect_urls:
+                    - '{{tools.redirect_url}}'
+        - name: connected-app-get
+          path: /connected_apps/clients/{client_id}
+          description: Retrieve a Connected App's configuration, scopes, and trusted metadata.
+          operations:
+            - name: get-client
+              method: GET
+              outputRawFormat: json
+        - name: connected-app-update
+          path: /connected_apps/clients/{client_id}
+          description: Update redirect URLs, allowed scopes, or rotate client metadata.
+          operations:
+            - name: update-client
+              method: PUT
+              outputRawFormat: json
+        - name: connected-app-delete
+          path: /connected_apps/clients/{client_id}
+          description: Revoke a Connected App / MCP server client.
+          operations:
+            - name: delete-client
+              method: DELETE
+              outputRawFormat: json
+        - name: connected-app-search
+          path: /connected_apps/clients/search
+          description: Search all registered Connected Apps under a project — useful for auditing AI agent and MCP server clients.
+          operations:
+            - name: search-clients
+              method: POST
+              outputRawFormat: json
+        - name: idp-introspect
+          path: /idp/introspect
+          description: Introspect a token issued by Stytch acting as an Identity Provider — used by Connected App clients and MCP servers to validate access tokens.
+          operations:
+            - name: introspect-token
+              method: POST
+              outputRawFormat: json
+              body:
+                type: json
+                data:
+                  token: '{{tools.token}}'
+                  client_id: '{{tools.client_id}}'
+  workflow:
+    - step: register-mcp-client
+      description: Register the MCP server (or AI agent) as a Connected App under your Stytch project, declaring redirect URLs and scopes.
+      uses: connected-app-create
+    - step: authorize-user
+      description: Redirect end users to Stytch's Authorization Endpoint so they can review and consent to the agent's requested scopes.
+      external: 'https://api.stytch.com/v1/public/{{STYTCH_PROJECT_ID}}/oauth2/authorize'
+    - step: introspect-token
+      description: When the MCP server / agent presents a Stytch-issued token, validate it server-side via IDP introspection before granting tool access.
+      uses: idp-introspect
+    - step: audit-clients
+      description: Periodically search Connected Apps to inventory which agents, MCP servers, and integrations have active access.
+      uses: connected-app-search

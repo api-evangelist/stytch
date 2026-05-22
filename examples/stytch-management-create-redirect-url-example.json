@@ -1,0 +1,25 @@
+{
+  "title": "Create",
+  "endpoint": "POST /pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+  "description": "Create creates a redirect URL for an environment.",
+  "request": {
+    "method": "POST",
+    "path": "/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+    "headers": {
+      "Authorization": "Basic <base64(project_id:secret)>",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "url": "<url>",
+      "valid_types": [],
+      "do_not_promote_defaults": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "request_id": "example-value",
+      "status_code": 200
+    }
+  }
+}
