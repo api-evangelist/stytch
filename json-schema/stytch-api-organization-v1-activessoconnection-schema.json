@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_ActiveSSOConnection",
+  "title": "api_organization_v1_ActiveSSOConnection",
+  "type": "object",
+  "properties": {
+    "connection_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific SSO `connection_id` for a Member."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "identity_provider": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connection_id",
+    "display_name",
+    "identity_provider"
+  ]
+}

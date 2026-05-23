@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_B2BConfig",
+  "title": "pwa_sdk_v3_B2BConfig",
+  "type": "object",
+  "properties": {
+    "basic": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BBasicConfig"
+    },
+    "sessions": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BSessionsConfig"
+    },
+    "magic_links": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BMagicLinksConfig"
+    },
+    "oauth": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BOAuthConfig"
+    },
+    "totps": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BTOTPsConfig"
+    },
+    "sso": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BSSOConfig"
+    },
+    "otps": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BOTPsConfig"
+    },
+    "dfppa": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BDFPPAConfig"
+    },
+    "passwords": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BPasswordsConfig"
+    },
+    "cookies": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BCookiesConfig"
+    }
+  }
+}

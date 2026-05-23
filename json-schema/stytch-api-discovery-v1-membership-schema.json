@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_discovery_v1_Membership",
+  "title": "api_discovery_v1_Membership",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "Either `active_member`, `pending_member`, `invited_member`, `eligible_to_join_by_email_domain`, or `eligible_to_join_by_oauth_tenant`"
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An object containing additional metadata about the membership, if available."
+    },
+    "member": {
+      "$ref": "#/components/schemas/api_organization_v1_Member",
+      "description": "The [Member object](https://stytch.com/docs/b2b/api/member-object) if one already exists, or null if one does not."
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

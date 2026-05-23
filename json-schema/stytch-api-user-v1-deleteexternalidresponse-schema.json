@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_DeleteExternalIdResponse",
+  "title": "api_user_v1_DeleteExternalIdResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "user": {
+      "$ref": "#/components/schemas/api_user_v1_User"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "user_id",
+    "user",
+    "status_code"
+  ]
+}

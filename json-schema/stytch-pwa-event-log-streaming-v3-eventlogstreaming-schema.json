@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_EventLogStreaming",
+  "title": "pwa_event_log_streaming_v3_EventLogStreaming",
+  "type": "object",
+  "properties": {
+    "destination_type": {
+      "$ref": "#/components/schemas/pwa_event_log_streaming_v3_DestinationType"
+    },
+    "destination_config": {
+      "$ref": "#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig"
+    },
+    "streaming_status": {
+      "$ref": "#/components/schemas/pwa_event_log_streaming_v3_StreamingStatus"
+    }
+  }
+}

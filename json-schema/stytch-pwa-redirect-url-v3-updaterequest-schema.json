@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_redirect_url_v3_UpdateRequest",
+  "title": "pwa_redirect_url_v3_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "valid_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_redirect_url_v3_UrlType"
+      }
+    },
+    "do_not_promote_defaults": {
+      "type": "boolean"
+    }
+  },
+  "description": "Request type"
+}

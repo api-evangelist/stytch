@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_TextAlignment",
+  "title": "pwa_email_template_v3_TextAlignment",
+  "type": "string",
+  "enum": [
+    "LEFT",
+    "CENTER"
+  ]
+}

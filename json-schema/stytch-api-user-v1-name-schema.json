@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_Name",
+  "title": "api_user_v1_Name",
+  "type": "object",
+  "properties": {
+    "first_name": {
+      "type": "string",
+      "description": "The first name of the user."
+    },
+    "middle_name": {
+      "type": "string",
+      "description": "The middle name(s) of the user."
+    },
+    "last_name": {
+      "type": "string",
+      "description": "The last name of the user."
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_NetworkProperties",
+  "title": "api_fraud_v1_NetworkProperties",
+  "type": "object",
+  "properties": {
+    "ip_address": {
+      "type": "string",
+      "description": "The IP address of the client."
+    },
+    "asn": {
+      "$ref": "#/components/schemas/api_fraud_v1_ASNProperties",
+      "description": "Information about the network's ASN (Autonomous System Number)."
+    },
+    "ip_geolocation": {
+      "$ref": "#/components/schemas/api_fraud_v1_IPGeoProperties",
+      "description": "Information about the geolocation of the user's IP address."
+    },
+    "is_proxy": {
+      "type": "boolean",
+      "description": "Whether the user is using a proxy."
+    },
+    "is_vpn": {
+      "type": "boolean",
+      "description": "Whether the user is using a VPN."
+    }
+  },
+  "required": [
+    "ip_address",
+    "asn",
+    "ip_geolocation",
+    "is_proxy",
+    "is_vpn"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_M2MSearchQuery",
+  "title": "api_m2m_v1_M2MSearchQuery",
+  "type": "object",
+  "properties": {
+    "operator": {
+      "$ref": "#/components/schemas/api_m2m_v1_M2MSearchQueryOperator",
+      "description": "The action to perform on the operands. The accepted value are:\n\n  `AND` \u2013 all the operand values provided must match.\n  \n  `OR` \u2013 the operator will return any matches to at least one of the operand values you supply."
+    },
+    "operands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      },
+      "description": "An array of operand objects that contains all of the filters and values to apply to your search search query."
+    }
+  },
+  "required": [
+    "operator",
+    "operands"
+  ]
+}

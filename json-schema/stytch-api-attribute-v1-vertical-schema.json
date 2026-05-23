@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_attribute_v1_Vertical",
+  "title": "api_attribute_v1_Vertical",
+  "type": "string",
+  "enum": [
+    "ALL",
+    "CONSUMER",
+    "B2B"
+  ]
+}

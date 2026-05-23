@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_DomainInformation",
+  "title": "api_fraud_v1_DomainInformation",
+  "type": "object",
+  "properties": {
+    "has_mx_or_a_record": {
+      "type": "boolean",
+      "description": "Whether the email has appropriate DNS records to deliver a message."
+    },
+    "is_disposable_domain": {
+      "type": "boolean",
+      "description": "Whether the email domain is known to be disposable."
+    }
+  },
+  "required": [
+    "has_mx_or_a_record",
+    "is_disposable_domain"
+  ]
+}

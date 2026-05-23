@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_OAuthAccessTokenExchangeFactor",
+  "title": "api_session_v1_OAuthAccessTokenExchangeFactor",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "The ID of the Connected App client."
+    }
+  },
+  "required": [
+    "client_id"
+  ]
+}

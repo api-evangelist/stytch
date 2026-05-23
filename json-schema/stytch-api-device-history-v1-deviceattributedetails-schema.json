@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_device_history_v1_DeviceAttributeDetails",
+  "title": "api_device_history_v1_DeviceAttributeDetails",
+  "type": "object",
+  "properties": {
+    "is_new": {
+      "type": "boolean",
+      "description": "Whether this `ip_geo_country` has been seen before for this user."
+    },
+    "first_seen_at": {
+      "type": "string",
+      "description": "When this `ip_geo_country` was first seen for this user. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "last_seen_at": {
+      "type": "string",
+      "description": "When this `ip_geo_country` was last seen for this user. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    }
+  },
+  "required": [
+    "is_new"
+  ]
+}

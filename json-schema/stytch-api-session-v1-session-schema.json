@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_Session",
+  "title": "api_session_v1_Session",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "A unique identifier for a specific Session."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of the affected User."
+    },
+    "authentication_factors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_session_v1_AuthenticationFactor"
+      },
+      "description": "An array of different authentication factors that comprise a Session."
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "started_at": {
+      "type": "string",
+      "description": "The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "last_accessed_at": {
+      "type": "string",
+      "description": "The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "attributes": {
+      "$ref": "#/components/schemas/api_attribute_v1_Attributes",
+      "description": "Provided attributes help with fraud detection."
+    },
+    "custom_claims": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate call."
+    }
+  },
+  "required": [
+    "session_id",
+    "user_id",
+    "authentication_factors",
+    "roles"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_fingerprint_LookupRequest",
+  "title": "api_fraud_v1_fraud_fingerprint_LookupRequest",
+  "type": "object",
+  "properties": {
+    "telemetry_id": {
+      "type": "string",
+      "description": "The telemetry ID associated with the fingerprint getting looked up."
+    },
+    "external_metadata": {
+      "$ref": "#/components/schemas/api_fraud_v1_Metadata",
+      "description": "External identifiers that you wish to associate with the given telemetry ID. You will be able to search for fingerprint results by these identifiers in the DFP analytics dashboard. External metadata fields may not exceed 65 characters. They may only contain alphanumerics and the characters `_` `-` `+` `.` or `@`."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "telemetry_id"
+  ]
+}

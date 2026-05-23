@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_RuleType",
+  "title": "api_fraud_v1_RuleType",
+  "type": "string",
+  "enum": [
+    "VISITOR_ID",
+    "BROWSER_ID",
+    "VISITOR_FINGERPRINT",
+    "BROWSER_FINGERPRINT",
+    "HARDWARE_FINGERPRINT",
+    "NETWORK_FINGERPRINT",
+    "CIDR_BLOCK",
+    "ASN",
+    "COUNTRY_CODE"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_trusted_token_profile_v3_GetPEMFileResponse",
+  "title": "pwa_trusted_token_profile_v3_GetPEMFileResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "pem_file": {
+      "$ref": "#/components/schemas/pwa_trusted_token_profile_v3_PEMFile"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "pem_file",
+    "status_code"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_rbac_v3_Resource",
+  "title": "pwa_rbac_v3_Resource",
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "available_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "resource_id",
+    "description",
+    "available_actions"
+  ]
+}

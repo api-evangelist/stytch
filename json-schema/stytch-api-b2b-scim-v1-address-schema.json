@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_Address",
+  "title": "api_b2b_scim_v1_Address",
+  "type": "object",
+  "properties": {
+    "formatted": {
+      "type": "string"
+    },
+    "street_address": {
+      "type": "string"
+    },
+    "locality": {
+      "type": "string"
+    },
+    "region": {
+      "type": "string"
+    },
+    "postal_code": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "primary": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "formatted",
+    "street_address",
+    "locality",
+    "region",
+    "postal_code",
+    "country",
+    "type",
+    "primary"
+  ]
+}

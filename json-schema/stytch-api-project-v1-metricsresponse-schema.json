@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_project_v1_MetricsResponse",
+  "title": "api_project_v1_MetricsResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_project_v1_ProjectMetric"
+      }
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "project_id",
+    "metrics",
+    "status_code"
+  ]
+}

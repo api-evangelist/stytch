@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_CustomRole",
+  "title": "api_organization_v1_CustomRole",
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_organization_v1_CustomRolePermission"
+      }
+    }
+  },
+  "required": [
+    "role_id",
+    "description",
+    "permissions"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_redirect_url_v3_CreateRequest",
+  "title": "pwa_redirect_url_v3_CreateRequest",
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string"
+    },
+    "valid_types": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_redirect_url_v3_UrlType"
+      }
+    },
+    "do_not_promote_defaults": {
+      "type": "boolean"
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "url"
+  ]
+}

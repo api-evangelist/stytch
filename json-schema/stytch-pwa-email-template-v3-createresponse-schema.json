@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_CreateResponse",
+  "title": "pwa_email_template_v3_CreateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "email_template": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_EmailTemplate"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "email_template",
+    "status_code"
+  ]
+}

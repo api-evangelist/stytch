@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_application_v3_CreateResponse",
+  "title": "pwa_application_v3_CreateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "project": {
+      "$ref": "#/components/schemas/pwa_application_v3_Project"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "project",
+    "status_code"
+  ]
+}

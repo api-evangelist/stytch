@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_M2MSearchQueryOperator",
+  "title": "api_m2m_v1_M2MSearchQueryOperator",
+  "type": "string",
+  "enum": [
+    "OR",
+    "AND"
+  ]
+}

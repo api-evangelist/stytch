@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_SCIMAttributes",
+  "title": "api_b2b_scim_v1_SCIMAttributes",
+  "type": "object",
+  "properties": {
+    "user_name": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "external_id": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean"
+    },
+    "groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Group"
+      }
+    },
+    "display_name": {
+      "type": "string"
+    },
+    "nick_name": {
+      "type": "string"
+    },
+    "profile_url": {
+      "type": "string"
+    },
+    "user_type": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "preferred_language": {
+      "type": "string"
+    },
+    "locale": {
+      "type": "string"
+    },
+    "timezone": {
+      "type": "string"
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Email"
+      }
+    },
+    "phone_numbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_PhoneNumber"
+      }
+    },
+    "addresses": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Address"
+      }
+    },
+    "ims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_IMs"
+      }
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Photo"
+      }
+    },
+    "entitlements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Entitlement"
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_Role"
+      }
+    },
+    "x509certificates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_X509Certificate"
+      }
+    },
+    "name": {
+      "$ref": "#/components/schemas/api_b2b_scim_v1_Name"
+    },
+    "enterprise_extension": {
+      "$ref": "#/components/schemas/api_b2b_scim_v1_EnterpriseExtension"
+    }
+  },
+  "required": [
+    "user_name",
+    "id",
+    "external_id",
+    "active",
+    "groups",
+    "display_name",
+    "nick_name",
+    "profile_url",
+    "user_type",
+    "title",
+    "preferred_language",
+    "locale",
+    "timezone",
+    "emails",
+    "phone_numbers",
+    "addresses",
+    "ims",
+    "photos",
+    "entitlements",
+    "roles",
+    "x509certificates"
+  ]
+}

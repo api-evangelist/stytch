@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_crypto_wallet_v1_SIWEParamsResponse",
+  "title": "api_crypto_wallet_v1_SIWEParamsResponse",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "The domain that requested the crypto wallet signature."
+    },
+    "uri": {
+      "type": "string",
+      "description": "An RFC 3986 URI referring to the resource that is the subject of the signing."
+    },
+    "chain_id": {
+      "type": "string",
+      "description": "The EIP-155 Chain ID to which the session is bound."
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": " A list of information or references to information the user wishes to have resolved as part of authentication. Every resource must be an RFC 3986 URI."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "issued_at": {
+      "type": "string",
+      "description": "The time when the message was generated. All timestamps in our API conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "message_request_id": {
+      "type": "string",
+      "description": "A system-specific identifier that may be used to uniquely refer to the sign-in request."
+    }
+  },
+  "required": [
+    "domain",
+    "uri",
+    "chain_id",
+    "resources",
+    "status_code"
+  ]
+}

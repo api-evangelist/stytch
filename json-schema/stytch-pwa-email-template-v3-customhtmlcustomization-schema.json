@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization",
+  "title": "pwa_email_template_v3_CustomHTMLCustomization",
+  "type": "object",
+  "properties": {
+    "template_type": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_TemplateType"
+    },
+    "html_content": {
+      "type": "string"
+    },
+    "plaintext_content": {
+      "type": "string"
+    },
+    "subject": {
+      "type": "string"
+    }
+  }
+}

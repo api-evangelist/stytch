@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_sso_oidc_UpdateConnectionRequest",
+  "title": "api_sso_v1_sso_oidc_UpdateConnectionRequest",
+  "type": "object",
+  "properties": {
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "The OAuth2.0 client ID used to authenticate login attempts. This will be provided by the IdP."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "The secret belonging to the OAuth2.0 client used to authenticate login attempts. This will be provided by the IdP."
+    },
+    "issuer": {
+      "type": "string",
+      "description": "A case-sensitive `https://` URL that uniquely identifies the IdP. This will be provided by the IdP."
+    },
+    "authorization_url": {
+      "type": "string",
+      "description": "The location of the URL that starts an OAuth login at the IdP. This will be provided by the IdP."
+    },
+    "token_url": {
+      "type": "string",
+      "description": "The location of the URL that issues OAuth2.0 access tokens and OIDC ID tokens. This will be provided by the IdP."
+    },
+    "userinfo_url": {
+      "type": "string",
+      "description": "The location of the IDP's [UserInfo Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo). This will be provided by the IdP."
+    },
+    "jwks_url": {
+      "type": "string",
+      "description": "The location of the IdP's JSON Web Key Set, used to verify credentials issued by the IdP. This will be provided by the IdP."
+    },
+    "identity_provider": {
+      "$ref": "#/components/schemas/api_sso_v1_UpdateConnectionRequestIdentityProvider",
+      "description": "Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`, `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`, `rippling`, `salesforce`, `shibboleth`, or `generic`.\n\nSpecifying a known provider allows Stytch to handle any provider-specific logic."
+    },
+    "custom_scopes": {
+      "type": "string",
+      "description": "Include a space-separated list of custom scopes that you'd like to include. Note that this list must be URL encoded, e.g. the spaces must be expressed as %20."
+    },
+    "attribute_mapping": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An object that represents the attributes used to identify a Member. This object will map the IdP-defined User attributes to Stytch-specific values, which will appear on the member's Trusted Metadata."
+    }
+  },
+  "description": "Request type"
+}

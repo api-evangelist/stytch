@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_discovery_v1_DiscoveredOrganization",
+  "title": "api_discovery_v1_DiscoveredOrganization",
+  "type": "object",
+  "properties": {
+    "member_authenticated": {
+      "type": "boolean",
+      "description": "Indicates whether the Member has all of the factors needed to fully authenticate to this Organization. If false, the Member may need to complete an MFA step or complete a different primary authentication flow. See the `primary_required` and `mfa_required` fields for more details on each."
+    },
+    "organization": {
+      "$ref": "#/components/schemas/api_organization_v1_Organization",
+      "description": "The [Organization object](https://stytch.com/docs/b2b/api/organization-object)."
+    },
+    "membership": {
+      "$ref": "#/components/schemas/api_discovery_v1_Membership",
+      "description": "Information about the membership."
+    },
+    "primary_required": {
+      "$ref": "#/components/schemas/api_b2b_session_v1_PrimaryRequired",
+      "description": "Information about the primary authentication requirements of the Organization."
+    },
+    "mfa_required": {
+      "$ref": "#/components/schemas/api_b2b_mfa_v1_MfaRequired",
+      "description": "Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA."
+    }
+  },
+  "required": [
+    "member_authenticated"
+  ]
+}

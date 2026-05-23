@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_CryptoWallet",
+  "title": "api_user_v1_CryptoWallet",
+  "type": "object",
+  "properties": {
+    "crypto_wallet_id": {
+      "type": "string",
+      "description": "The unique ID for a crypto wallet"
+    },
+    "crypto_wallet_address": {
+      "type": "string",
+      "description": "The actual blockchain address of the User's crypto wallet."
+    },
+    "crypto_wallet_type": {
+      "type": "string",
+      "description": "The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    }
+  },
+  "required": [
+    "crypto_wallet_id",
+    "crypto_wallet_address",
+    "crypto_wallet_type",
+    "verified"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_ResultsMetadata",
+  "title": "api_user_v1_ResultsMetadata",
+  "type": "object",
+  "properties": {
+    "total": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1."
+    },
+    "next_cursor": {
+      "type": "string",
+      "description": "The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field."
+    }
+  },
+  "required": [
+    "total"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_fingerprint_LookupResponse",
+  "title": "api_fraud_v1_fraud_fingerprint_LookupResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "telemetry_id": {
+      "type": "string",
+      "description": "The telemetry ID associated with the fingerprint getting looked up."
+    },
+    "fingerprints": {
+      "$ref": "#/components/schemas/api_fraud_v1_Fingerprints",
+      "description": "A Stytch fingerprint consists of the following identifiers:"
+    },
+    "verdict": {
+      "$ref": "#/components/schemas/api_fraud_v1_Verdict",
+      "description": "The metadata associated with each fingerprint"
+    },
+    "external_metadata": {
+      "$ref": "#/components/schemas/api_fraud_v1_Metadata",
+      "description": "External identifiers that you wish to associate with the given telemetry ID. You will be able to search for fingerprint results by these identifiers in the DFP analytics dashboard. External metadata fields may not exceed 65 characters. They may only contain alphanumerics and the characters `_` `-` `+` `.` or `@`."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The time when the fingerprint was taken. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "The timestamp when the fingerprint expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    },
+    "properties": {
+      "$ref": "#/components/schemas/api_fraud_v1_Properties",
+      "description": "Additional information about the user's browser and network."
+    },
+    "raw_signals": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The raw device attributes, such as screen size, that were collected by the Device Fingerprinting product to generate the fingerprints and verdict. You must be specifically enabled for the raw signals feature to see this field. You can find documentation for the specific fields in the [guides](https://stytch.com/docs/fraud/guides/device-fingerprinting/reference/raw-signals)."
+    }
+  },
+  "required": [
+    "request_id",
+    "telemetry_id",
+    "fingerprints",
+    "verdict",
+    "external_metadata",
+    "created_at",
+    "expires_at",
+    "status_code"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_OrganizationConnectedAppActiveMember",
+  "title": "api_organization_v1_OrganizationConnectedAppActiveMember",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Member."
+    },
+    "granted_scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Scopes that were granted at the completion of the last authorization flow."
+    }
+  },
+  "required": [
+    "member_id",
+    "granted_scopes"
+  ]
+}

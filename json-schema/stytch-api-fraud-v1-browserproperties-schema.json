@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_BrowserProperties",
+  "title": "api_fraud_v1_BrowserProperties",
+  "type": "object",
+  "properties": {
+    "user_agent": {
+      "type": "string",
+      "description": "The user agent of the user's browser."
+    }
+  },
+  "required": [
+    "user_agent"
+  ]
+}

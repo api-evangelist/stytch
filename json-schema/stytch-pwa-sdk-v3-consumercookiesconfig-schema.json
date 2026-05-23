@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerCookiesConfig",
+  "title": "pwa_sdk_v3_ConsumerCookiesConfig",
+  "type": "object",
+  "properties": {
+    "http_only": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerCookiesConfigHttpOnly"
+    }
+  },
+  "required": [
+    "http_only"
+  ]
+}

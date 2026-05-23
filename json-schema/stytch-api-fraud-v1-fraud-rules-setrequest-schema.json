@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_rules_SetRequest",
+  "title": "api_fraud_v1_fraud_rules_SetRequest",
+  "type": "object",
+  "properties": {
+    "action": {
+      "$ref": "#/components/schemas/api_fraud_v1_RuleAction",
+      "description": "The action that should be returned by a fingerprint lookup for that identifier with a `RULE_MATCH` reason. The following values are valid: `ALLOW`, `BLOCK`, `CHALLENGE`, or `NONE`. For country codes, `ALLOW` actions are not allowed. If a `NONE` action is specified, it will clear the stored rule."
+    },
+    "visitor_id": {
+      "type": "string",
+      "description": "The visitor ID we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "browser_id": {
+      "type": "string",
+      "description": "The browser ID we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "visitor_fingerprint": {
+      "type": "string",
+      "description": "The visitor fingerprint we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "browser_fingerprint": {
+      "type": "string",
+      "description": "The browser fingerprint we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "hardware_fingerprint": {
+      "type": "string",
+      "description": "The hardware fingerprint we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "network_fingerprint": {
+      "type": "string",
+      "description": "The network fingerprint we want to set a rule for. Only one identifier can be specified in the request."
+    },
+    "expires_in_minutes": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of minutes until this rule expires. If no `expires_in_minutes` is specified, then the rule is kept permanently."
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description for the rule."
+    },
+    "cidr_block": {
+      "type": "string",
+      "description": "The CIDR block we want to set a rule for. You may pass either an IP address or a CIDR block. The CIDR block prefix must be between 16 and 32, inclusive. If an end user's IP address is within this CIDR block, this rule will be applied. Only one identifier can be specified in the request."
+    },
+    "country_code": {
+      "type": "string",
+      "description": "The country code we want to set a rule for. The country code must be a valid ISO 3166-1 alpha-2 code. You may not set `ALLOW` rules for country codes. Only one identifier can be specified in the request."
+    },
+    "asn": {
+      "type": "string",
+      "description": "The ASN we want to set a rule for. The ASN must be the string representation of an integer between 0 and 4294967295, inclusive. Only one identifier can be specified in the request."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "action"
+  ]
+}

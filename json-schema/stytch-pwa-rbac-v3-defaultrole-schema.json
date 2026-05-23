@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_rbac_v3_DefaultRole",
+  "title": "pwa_rbac_v3_DefaultRole",
+  "type": "object",
+  "properties": {
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Permission"
+      }
+    }
+  },
+  "required": [
+    "permissions"
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_DatadogConfigMasked",
+  "title": "pwa_event_log_streaming_v3_DatadogConfigMasked",
+  "type": "object",
+  "properties": {
+    "api_key_last_four": {
+      "type": "string"
+    },
+    "site": {
+      "$ref": "#/components/schemas/pwa_event_log_streaming_v3_DatadogSite"
+    }
+  },
+  "required": [
+    "api_key_last_four"
+  ]
+}

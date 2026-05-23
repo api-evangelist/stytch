@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_SAMLGroupImplicitRoleAssignment",
+  "title": "api_sso_v1_SAMLGroupImplicitRoleAssignment",
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "type": "string"
+    },
+    "group": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "role_id",
+    "group"
+  ]
+}

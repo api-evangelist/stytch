@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerSessionsConfig",
+  "title": "pwa_sdk_v3_ConsumerSessionsConfig",
+  "type": "object",
+  "properties": {
+    "max_session_duration_minutes": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "max_session_duration_minutes"
+  ]
+}

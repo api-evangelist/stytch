@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_consumer_rbac_v1_PolicyRole",
+  "title": "api_consumer_rbac_v1_PolicyRole",
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "type": "string",
+      "description": "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  The `stytch_user` `role_id` is predefined by Stytch.\n  Check out the [RBAC guide](https://stytch.com/docs/guides/rbac/overview) for a more detailed explanation.\n  "
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the RBAC Role."
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_consumer_rbac_v1_PolicyRolePermission"
+      },
+      "description": "A list of permissions that link a [Resource](https://stytch.com/docs/api/rbac-resource-object) to a list of actions."
+    }
+  },
+  "required": [
+    "role_id",
+    "description",
+    "permissions"
+  ]
+}

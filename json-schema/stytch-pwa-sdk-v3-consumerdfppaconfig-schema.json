@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerDFPPAConfig",
+  "title": "pwa_sdk_v3_ConsumerDFPPAConfig",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_DFPPASetting"
+    },
+    "on_challenge": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_DFPPAOnChallengeAction"
+    }
+  }
+}

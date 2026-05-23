@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerMagicLinksConfig",
+  "title": "pwa_sdk_v3_ConsumerMagicLinksConfig",
+  "type": "object",
+  "properties": {
+    "login_or_create_enabled": {
+      "type": "boolean"
+    },
+    "send_enabled": {
+      "type": "boolean"
+    },
+    "pkce_required": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "login_or_create_enabled",
+    "send_enabled",
+    "pkce_required"
+  ]
+}

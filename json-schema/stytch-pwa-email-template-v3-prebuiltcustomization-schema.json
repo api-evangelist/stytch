@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_PrebuiltCustomization",
+  "title": "pwa_email_template_v3_PrebuiltCustomization",
+  "type": "object",
+  "properties": {
+    "button_border_radius": {
+      "type": "number",
+      "format": "float"
+    },
+    "button_color": {
+      "type": "string"
+    },
+    "button_text_color": {
+      "type": "string"
+    },
+    "font_family": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_FontFamily"
+    },
+    "text_alignment": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_TextAlignment"
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_Email",
+  "title": "api_user_v1_Email",
+  "type": "object",
+  "properties": {
+    "email_id": {
+      "type": "string",
+      "description": "The unique ID of a specific email address."
+    },
+    "email": {
+      "type": "string",
+      "description": "The email address."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    }
+  },
+  "required": [
+    "email_id",
+    "email",
+    "verified"
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_idp_v1_idp_oauth_AuthorizeStartResponse",
+  "title": "api_idp_v1_idp_oauth_AuthorizeStartResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of the affected User."
+    },
+    "user": {
+      "$ref": "#/components/schemas/api_user_v1_User",
+      "description": "The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details."
+    },
+    "client": {
+      "$ref": "#/components/schemas/api_connectedapps_v1_ConnectedAppPublic"
+    },
+    "consent_required": {
+      "type": "boolean",
+      "description": "Whether the user must provide explicit consent for the authorization request."
+    },
+    "scope_results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_idp_v1_ScopeResult"
+      },
+      "description": "Details about each requested scope."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "user_id",
+    "user",
+    "client",
+    "consent_required",
+    "scope_results",
+    "status_code"
+  ]
+}

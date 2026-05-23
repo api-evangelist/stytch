@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_User",
+  "title": "api_user_v1_User",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of the affected User."
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_Email"
+      },
+      "description": "An array of email objects for the User."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the User. The possible values are `pending` and `active`."
+    },
+    "phone_numbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_PhoneNumber"
+      },
+      "description": "An array of phone number objects linked to the User."
+    },
+    "webauthn_registrations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_WebAuthnRegistration"
+      },
+      "description": "An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API."
+    },
+    "providers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_OAuthProvider"
+      },
+      "description": "An array of OAuth `provider` objects linked to the User."
+    },
+    "totps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_TOTP"
+      },
+      "description": "An array containing a list of all TOTP instances for a given User in the Stytch API."
+    },
+    "crypto_wallets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_CryptoWallet"
+      },
+      "description": "An array contains a list of all crypto wallets for a given User in the Stytch API."
+    },
+    "biometric_registrations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_BiometricRegistration"
+      },
+      "description": "An array that contains a list of all biometric registrations for a given User in the Stytch API."
+    },
+    "is_locked": {
+      "type": "boolean",
+      "description": "Whether the User is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information."
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+    },
+    "name": {
+      "$ref": "#/components/schemas/api_user_v1_Name",
+      "description": "The name of the User. Each field in the `name` object is optional."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "password": {
+      "$ref": "#/components/schemas/api_user_v1_Password",
+      "description": "The password object is returned for users with a password."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details."
+    },
+    "untrusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details."
+    },
+    "external_id": {
+      "type": "string",
+      "description": "An identifier that can be used in most API calls where a `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within the project."
+    },
+    "lock_created_at": {
+      "type": "string",
+      "description": "When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "lock_expires_at": {
+      "type": "string",
+      "description": "When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    }
+  },
+  "required": [
+    "user_id",
+    "emails",
+    "status",
+    "phone_numbers",
+    "webauthn_registrations",
+    "providers",
+    "totps",
+    "crypto_wallets",
+    "biometric_registrations",
+    "is_locked",
+    "roles"
+  ]
+}

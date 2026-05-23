@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_m2m_clients_UpdateRequest",
+  "title": "api_m2m_v1_m2m_clients_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "client_name": {
+      "type": "string",
+      "description": "A human-readable name for the client."
+    },
+    "client_description": {
+      "type": "string",
+      "description": "A human-readable description for the client."
+    },
+    "status": {
+      "$ref": "#/components/schemas/api_m2m_v1_UpdateRequestStatus",
+      "description": "The status of the client - either `active` or `inactive`."
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of scopes assigned to the client."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details."
+    }
+  },
+  "description": "Request type"
+}

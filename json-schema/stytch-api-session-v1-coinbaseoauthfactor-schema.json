@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_CoinbaseOAuthFactor",
+  "title": "api_session_v1_CoinbaseOAuthFactor",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "provider_subject": {
+      "type": "string"
+    },
+    "email_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "provider_subject"
+  ]
+}

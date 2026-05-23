@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_trusted_token_profile_v3_CreateRequest",
+  "title": "pwa_trusted_token_profile_v3_CreateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "pem_files": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "can_jit_provision": {
+      "type": "boolean"
+    },
+    "jwks_url": {
+      "type": "string"
+    },
+    "attribute_mapping": {
+      "type": "string"
+    },
+    "public_key_type": {
+      "$ref": "#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType"
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "name",
+    "audience",
+    "issuer",
+    "pem_files",
+    "can_jit_provision"
+  ]
+}

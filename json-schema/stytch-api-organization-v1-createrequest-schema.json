@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_CreateRequest",
+  "title": "api_organization_v1_CreateRequest",
+  "type": "object",
+  "properties": {
+    "organization_name": {
+      "type": "string",
+      "description": "The name of the Organization. Must be between 1 and 128 characters in length."
+    },
+    "organization_slug": {
+      "type": "string",
+      "description": "The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience."
+    },
+    "organization_logo_url": {
+      "type": "string",
+      "description": "The image URL of the Organization logo."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An arbitrary JSON object for storing application-specific data or identity-provider-specific data."
+    },
+    "organization_external_id": {
+      "type": "string",
+      "description": "An identifier that can be used in API calls wherever a organization_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within a project, but may be reused across different projects in the same workspace."
+    },
+    "sso_jit_provisioning": {
+      "type": "string",
+      "description": "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` \u2013 only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` \u2013 disable JIT provisioning via SSO.\n  "
+    },
+    "email_allowed_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list."
+    },
+    "email_jit_provisioning": {
+      "type": "string",
+      "description": "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` \u2013 only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` \u2013 the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  "
+    },
+    "email_invites": {
+      "type": "string",
+      "description": "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 any new Member can be invited to join via email.\n \n  `RESTRICTED` \u2013 only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` \u2013 disable email invites.\n  "
+    },
+    "auth_methods": {
+      "type": "string",
+      "description": "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` \u2013 only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+    },
+    "allowed_auth_methods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  "
+    },
+    "mfa_policy": {
+      "type": "string",
+      "description": "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` \u2013 All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` \u2013 The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  "
+    },
+    "rbac_email_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment"
+      },
+      "description": "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment."
+    },
+    "mfa_methods": {
+      "type": "string",
+      "description": "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` \u2013 only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+    },
+    "allowed_mfa_methods": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  "
+    },
+    "oauth_tenant_jit_provisioning": {
+      "type": "string",
+      "description": "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` \u2013 only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` \u2013 the default setting, disables JIT provisioning by OAuth Tenant.\n  "
+    },
+    "allowed_oauth_tenants": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are \"slack\", \"hubspot\", and \"github\"."
+    },
+    "claimed_email_domains": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of email domains that are claimed by the Organization."
+    },
+    "first_party_connected_apps_allowed_type": {
+      "$ref": "#/components/schemas/api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType",
+      "description": "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` \u2013 only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` \u2013 no first party Connected Apps are permitted.\n  "
+    },
+    "allowed_first_party_connected_apps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`."
+    },
+    "third_party_connected_apps_allowed_type": {
+      "$ref": "#/components/schemas/api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType",
+      "description": "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` \u2013 the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` \u2013 only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` \u2013 no third party Connected Apps are permitted.\n  "
+    },
+    "allowed_third_party_connected_apps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "organization_name"
+  ]
+}

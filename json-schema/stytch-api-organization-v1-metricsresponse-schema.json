@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_MetricsResponse",
+  "title": "api_organization_v1_MetricsResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "member_count": {
+      "type": "integer",
+      "format": "int32",
+      "minimum": 0
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "member_count",
+    "status_code"
+  ]
+}

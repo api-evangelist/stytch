@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_Properties",
+  "title": "api_fraud_v1_Properties",
+  "type": "object",
+  "properties": {
+    "network_properties": {
+      "$ref": "#/components/schemas/api_fraud_v1_NetworkProperties"
+    },
+    "browser_properties": {
+      "$ref": "#/components/schemas/api_fraud_v1_BrowserProperties"
+    }
+  },
+  "required": [
+    "network_properties",
+    "browser_properties"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_GetConsumerConfigRequest",
+  "title": "pwa_sdk_v3_GetConsumerConfigRequest",
+  "type": "object",
+  "properties": {},
+  "description": "Request type"
+}

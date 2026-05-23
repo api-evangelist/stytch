@@ -1,0 +1,3993 @@
+{
+  "provider": "Stytch",
+  "providerId": "stytch",
+  "kind": "json-structure",
+  "description": "Structural overview of the Stytch API surface; extracted from openapi/.",
+  "schemaCount": 311,
+  "operationCount": 97,
+  "schemas": [
+    {
+      "name": "api_b2b_idp_v1_ScopeResult",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "scope",
+        "description",
+        "is_grantable"
+      ]
+    },
+    {
+      "name": "api_b2b_idp_v1_b2b_idp_oauth_AuthorizeRequest",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "consent_granted",
+        "scopes",
+        "client_id",
+        "redirect_uri",
+        "response_type"
+      ]
+    },
+    {
+      "name": "api_b2b_idp_v1_b2b_idp_oauth_AuthorizeResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "redirect_uri",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_idp_v1_b2b_idp_oauth_AuthorizeStartRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "client_id",
+        "redirect_uri",
+        "response_type",
+        "scopes"
+      ]
+    },
+    {
+      "name": "api_b2b_idp_v1_b2b_idp_oauth_AuthorizeStartResponse",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "client",
+        "consent_required",
+        "scope_results",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_impersonation_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "impersonation_token"
+      ]
+    },
+    {
+      "name": "api_b2b_impersonation_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 12,
+      "required": [
+        "request_id",
+        "member_id",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "magic_links_token"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_AuthenticateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_magic_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 16,
+      "required": [
+        "request_id",
+        "member_id",
+        "method_id",
+        "reset_sessions",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_InviteRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_magic_v1_LoginOrSignupRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_magic_v1_SendRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_discovery_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "discovery_magic_links_token"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_discovery_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "intermediate_session_token",
+        "email_address",
+        "discovered_organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_InviteRequest",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "organization_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_InviteResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignupRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "organization_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignupResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_created",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_discovery_SendRequest",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_magic_v1_b2b_magic_links_email_discovery_SendResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_mfa_v1_MemberOptions",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "mfa_phone_number",
+        "totp_registration_id"
+      ]
+    },
+    {
+      "name": "api_b2b_mfa_v1_MfaRequired",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "api_b2b_oauth_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "oauth_token"
+      ]
+    },
+    {
+      "name": "api_b2b_oauth_v1_AuthenticateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_oauth_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 18,
+      "required": [
+        "request_id",
+        "member_id",
+        "provider_subject",
+        "provider_type",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization_id",
+        "organization",
+        "reset_sessions",
+        "member_authenticated",
+        "intermediate_session_token",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_oauth_v1_ProviderValues",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "scopes"
+      ]
+    },
+    {
+      "name": "api_b2b_oauth_v1_b2b_oauth_discovery_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "discovery_oauth_token"
+      ]
+    },
+    {
+      "name": "api_b2b_oauth_v1_b2b_oauth_discovery_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "intermediate_session_token",
+        "email_address",
+        "discovered_organizations",
+        "provider_type",
+        "provider_tenant_id",
+        "provider_tenant_ids",
+        "full_name",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_AuthenticateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_otp_v1_LoginOrSignupRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_otp_v1_SendRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "organization_id",
+        "email_address",
+        "code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "request_id",
+        "member_id",
+        "method_id",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_LoginOrSignupRequest",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "organization_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_LoginOrSignupResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_created",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_discovery_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "email_address",
+        "code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_discovery_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "intermediate_session_token",
+        "email_address",
+        "discovered_organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_discovery_SendRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_email_discovery_SendResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_sms_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "organization_id",
+        "member_id",
+        "code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_sms_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "session_token",
+        "session_jwt",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_sms_SendRequest",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "organization_id",
+        "member_id"
+      ]
+    },
+    {
+      "name": "api_b2b_otp_v1_b2b_otp_sms_SendResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "organization_id",
+        "email_address",
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_AuthenticateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_password_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "request_id",
+        "member_id",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_LudsFeedback",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "has_lower_case",
+        "has_upper_case",
+        "has_digit",
+        "has_symbol",
+        "missing_complexity",
+        "missing_characters"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_MigrateRequest",
+      "type": "object",
+      "propertyCount": 18,
+      "required": [
+        "email_address",
+        "hash",
+        "hash_type",
+        "organization_id"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_MigrateRequestHashType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_password_v1_MigrateResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_created",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_ResetRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_password_v1_ResetStartRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_password_v1_StrengthCheckRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_StrengthCheckResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "valid_password",
+        "score",
+        "breached_password",
+        "strength_policy",
+        "breach_detection_on_create",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_ZxcvbnFeedback",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "warning",
+        "suggestions"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "email_address",
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "email_address",
+        "intermediate_session_token",
+        "discovered_organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_email_ResetRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "password_reset_token",
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_email_ResetResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "intermediate_session_token",
+        "email_address",
+        "discovered_organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartRequest",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_RequireResetRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_RequireResetResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_ResetRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "password_reset_token",
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_ResetResponse",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_email_id",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_ResetStartRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "organization_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_email_ResetStartResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_email_id",
+        "member",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_existing_password_ResetRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "email_address",
+        "existing_password",
+        "new_password",
+        "organization_id"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_existing_password_ResetResponse",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_session_ResetRequest",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "organization_id",
+        "password"
+      ]
+    },
+    {
+      "name": "api_b2b_password_v1_b2b_passwords_session_ResetResponse",
+      "type": "object",
+      "propertyCount": 12,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "session_token",
+        "session_jwt",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_OrgPolicy",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "roles"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_Policy",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "roles",
+        "resources",
+        "scopes"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyResource",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "resource_id",
+        "description",
+        "actions"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyRole",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "role_id",
+        "description",
+        "permissions"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyRolePermission",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "resource_id",
+        "actions"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyScope",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "scope",
+        "description",
+        "permissions"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_PolicyScopePermission",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "resource_id",
+        "actions"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_b2b_rbac_organizations_GetOrgPolicyResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "org_policy",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "org_policy"
+      ]
+    },
+    {
+      "name": "api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "org_policy",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_recovery_codes_v1_GetResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "recovery_codes",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_recovery_codes_v1_RecoverRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "organization_id",
+        "member_id",
+        "recovery_code"
+      ]
+    },
+    {
+      "name": "api_b2b_recovery_codes_v1_RecoverResponse",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "session_token",
+        "session_jwt",
+        "recovery_codes_remaining",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_recovery_codes_v1_RotateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "organization_id",
+        "member_id"
+      ]
+    },
+    {
+      "name": "api_b2b_recovery_codes_v1_RotateResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "recovery_codes",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Address",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "formatted",
+        "street_address",
+        "locality",
+        "region",
+        "postal_code",
+        "country",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_CreateRequestIdentityProvider",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_Email",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_EnterpriseExtension",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "employee_number",
+        "cost_center",
+        "division",
+        "department",
+        "organization"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Entitlement",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Group",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "value",
+        "display"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_IMs",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Manager",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "ref",
+        "display_name"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Name",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "formatted",
+        "family_name",
+        "given_name",
+        "middle_name",
+        "honorific_prefix",
+        "honorific_suffix"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_PhoneNumber",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Photo",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_Role",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMAttributes",
+      "type": "object",
+      "propertyCount": 23,
+      "required": [
+        "user_name",
+        "id",
+        "external_id",
+        "active",
+        "groups",
+        "display_name",
+        "nick_name",
+        "profile_url",
+        "user_type",
+        "title",
+        "preferred_language",
+        "locale",
+        "timezone",
+        "emails",
+        "phone_numbers",
+        "addresses",
+        "ims",
+        "photos",
+        "entitlements",
+        "roles",
+        "x509certificates"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMConnection",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "status",
+        "display_name",
+        "identity_provider",
+        "base_url",
+        "bearer_token_last_four",
+        "scim_group_implicit_role_assignments",
+        "next_bearer_token_last_four"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMConnectionWithNextToken",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "status",
+        "display_name",
+        "base_url",
+        "identity_provider",
+        "bearer_token_last_four",
+        "next_bearer_token",
+        "scim_group_implicit_role_assignments"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMConnectionWithToken",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "status",
+        "display_name",
+        "identity_provider",
+        "base_url",
+        "bearer_token",
+        "scim_group_implicit_role_assignments"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMGroup",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "group_id",
+        "group_name",
+        "organization_id",
+        "connection_id"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "role_id",
+        "group_id",
+        "group_name"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_UpdateRequestIdentityProvider",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_X509Certificate",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "value",
+        "type",
+        "primary"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_CreateRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_CreateResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_DeleteResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "connection_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "scim_groups",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_GetResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateCancelRequest",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateCancelResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateCompleteRequest",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateCompleteResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateStartRequest",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_UpdateRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "api_b2b_scim_v1_b2b_scim_connection_UpdateResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_AttestRequest",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "profile_id",
+        "token"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_AttestResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "member_id",
+        "member_session",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "api_b2b_session_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "request_id",
+        "member_session",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_AuthorizationCheck",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "organization_id",
+        "resource_id",
+        "action"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_AuthorizationVerdict",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "authorized",
+        "granting_roles"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_ExchangeAccessTokenRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "access_token"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_ExchangeAccessTokenResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "member_id",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_ExchangeRequest",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "organization_id"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_ExchangeRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_b2b_session_v1_ExchangeResponse",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "request_id",
+        "member_id",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "member_authenticated",
+        "intermediate_session_token",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_GetJWKSResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "keys",
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_GetResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "member_sessions",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_MemberSession",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "member_session_id",
+        "member_id",
+        "started_at",
+        "last_accessed_at",
+        "expires_at",
+        "authentication_factors",
+        "organization_id",
+        "roles",
+        "organization_slug"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_MigrateRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "session_token",
+        "organization_id"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_MigrateResponse",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "request_id",
+        "member_id",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_PrimaryRequired",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "allowed_auth_methods"
+      ]
+    },
+    {
+      "name": "api_b2b_session_v1_RevokeRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "api_b2b_session_v1_RevokeResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "organization_id",
+        "member_id",
+        "code"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "session_token",
+        "session_jwt",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_CreateRequest",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "organization_id",
+        "member_id"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_CreateResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "member_id",
+        "totp_registration_id",
+        "secret",
+        "qr_code",
+        "recovery_codes",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_MigrateRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "organization_id",
+        "member_id",
+        "secret",
+        "recovery_codes"
+      ]
+    },
+    {
+      "name": "api_b2b_totp_v1_MigrateResponse",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "totp_registration_id",
+        "recovery_codes",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_connectedapps_v1_ConnectedAppPublic",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "client_id",
+        "client_name",
+        "client_description",
+        "client_type"
+      ]
+    },
+    {
+      "name": "api_device_history_v1_DeviceAttributeDetails",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "is_new"
+      ]
+    },
+    {
+      "name": "api_device_history_v1_DeviceInfo",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "visitor_id"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_CreateRequestFirstPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_discovery_v1_CreateRequestThirdPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_discovery_v1_DiscoveredOrganization",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "member_authenticated"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_ExchangeRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_discovery_v1_Membership",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_discovery_ListRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "api_discovery_v1_discovery_ListResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "email_address",
+        "discovered_organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_discovery_intermediate_sessions_ExchangeRequest",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "intermediate_session_token",
+        "organization_id"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_discovery_intermediate_sessions_ExchangeResponse",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "request_id",
+        "member_id",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "member_authenticated",
+        "intermediate_session_token",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_discovery_organizations_CreateRequest",
+      "type": "object",
+      "propertyCount": 25,
+      "required": [
+        "intermediate_session_token"
+      ]
+    },
+    {
+      "name": "api_discovery_v1_discovery_organizations_CreateResponse",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "request_id",
+        "member_id",
+        "session_token",
+        "session_jwt",
+        "member",
+        "organization",
+        "member_authenticated",
+        "intermediate_session_token",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_ActiveSCIMConnection",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "connection_id",
+        "display_name",
+        "bearer_token_last_four"
+      ]
+    },
+    {
+      "name": "api_organization_v1_ActiveSSOConnection",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "connection_id",
+        "display_name",
+        "identity_provider"
+      ]
+    },
+    {
+      "name": "api_organization_v1_ConnectedAppsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "connected_apps",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_CreateRequest",
+      "type": "object",
+      "propertyCount": 22,
+      "required": [
+        "organization_name"
+      ]
+    },
+    {
+      "name": "api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_CreateResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_CustomRole",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "role_id",
+        "description",
+        "permissions"
+      ]
+    },
+    {
+      "name": "api_organization_v1_CustomRolePermission",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "resource_id",
+        "actions"
+      ]
+    },
+    {
+      "name": "api_organization_v1_DeleteExternalIdResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_DeleteResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "organization_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_EmailImplicitRoleAssignment",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "domain",
+        "role_id"
+      ]
+    },
+    {
+      "name": "api_organization_v1_GetConnectedAppResponse",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "connected_app_id",
+        "name",
+        "description",
+        "client_type",
+        "active_members",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_GetResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_GithubProviderInfo",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "provider_subject",
+        "provider_tenant_ids",
+        "access_token",
+        "scopes"
+      ]
+    },
+    {
+      "name": "api_organization_v1_HubspotProviderInfo",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "provider_subject",
+        "provider_tenant_id",
+        "access_token",
+        "access_token_expires_in",
+        "scopes"
+      ]
+    },
+    {
+      "name": "api_organization_v1_Member",
+      "type": "object",
+      "propertyCount": 27,
+      "required": [
+        "organization_id",
+        "member_id",
+        "email_address",
+        "status",
+        "name",
+        "sso_registrations",
+        "is_breakglass",
+        "member_password_id",
+        "oauth_registrations",
+        "email_address_verified",
+        "mfa_phone_number_verified",
+        "is_admin",
+        "totp_registration_id",
+        "retired_email_addresses",
+        "is_locked",
+        "mfa_enrolled",
+        "mfa_phone_number",
+        "default_mfa_method",
+        "roles"
+      ]
+    },
+    {
+      "name": "api_organization_v1_MemberConnectedApp",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "connected_app_id",
+        "name",
+        "description",
+        "client_type",
+        "scopes_granted"
+      ]
+    },
+    {
+      "name": "api_organization_v1_MemberRole",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "role_id",
+        "sources"
+      ]
+    },
+    {
+      "name": "api_organization_v1_MemberRoleSource",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "name": "api_organization_v1_MetricsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "member_count",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_OAuthRegistration",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "provider_type",
+        "provider_subject",
+        "member_oauth_registration_id"
+      ]
+    },
+    {
+      "name": "api_organization_v1_OIDCProviderInfo",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "provider_subject",
+        "id_token",
+        "access_token",
+        "access_token_expires_in",
+        "scopes",
+        "connection_id"
+      ]
+    },
+    {
+      "name": "api_organization_v1_Organization",
+      "type": "object",
+      "propertyCount": 30,
+      "required": [
+        "organization_id",
+        "organization_name",
+        "organization_logo_url",
+        "organization_slug",
+        "sso_jit_provisioning",
+        "sso_jit_provisioning_allowed_connections",
+        "sso_active_connections",
+        "email_allowed_domains",
+        "email_jit_provisioning",
+        "email_invites",
+        "auth_methods",
+        "allowed_auth_methods",
+        "mfa_policy",
+        "rbac_email_implicit_role_assignments",
+        "mfa_methods",
+        "allowed_mfa_methods",
+        "oauth_tenant_jit_provisioning",
+        "claimed_email_domains",
+        "first_party_connected_apps_allowed_type",
+        "allowed_first_party_connected_apps",
+        "third_party_connected_apps_allowed_type",
+        "allowed_third_party_connected_apps",
+        "custom_roles"
+      ]
+    },
+    {
+      "name": "api_organization_v1_OrganizationConnectedApp",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "connected_app_id",
+        "name",
+        "description",
+        "client_type"
+      ]
+    },
+    {
+      "name": "api_organization_v1_OrganizationConnectedAppActiveMember",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "member_id",
+        "granted_scopes"
+      ]
+    },
+    {
+      "name": "api_organization_v1_ResultsMetadata",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "total"
+      ]
+    },
+    {
+      "name": "api_organization_v1_RetiredEmail",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "email_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_organization_v1_SCIMRegistration",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "connection_id",
+        "registration_id"
+      ]
+    },
+    {
+      "name": "api_organization_v1_SSORegistration",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "connection_id",
+        "external_id",
+        "registration_id"
+      ]
+    },
+    {
+      "name": "api_organization_v1_SearchQuery",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "operator",
+        "operands"
+      ]
+    },
+    {
+      "name": "api_organization_v1_SearchQueryOperator",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_SearchRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_SearchResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "organizations",
+        "results_metadata",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_SlackProviderInfo",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "provider_subject",
+        "provider_tenant_id",
+        "access_token",
+        "scopes",
+        "bot_access_token",
+        "bot_scopes"
+      ]
+    },
+    {
+      "name": "api_organization_v1_StartEmailUpdateRequestDeliveryMethod",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_StartEmailUpdateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_UpdateRequest",
+      "type": "object",
+      "propertyCount": 24,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_UpdateRequestFirstPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_UpdateRequestThirdPartyConnectedAppsAllowedType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_UpdateResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_CreateRequest",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_CreateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_DeleteExternalIdResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_DeleteMFAPhoneNumberResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_DeletePasswordResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_DeleteResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "member_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_DeleteTOTPResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_GetConnectedAppsResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "connected_apps",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_GetResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_OIDCProvidersResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "registrations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_ReactivateRequest",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_organizations_members_ReactivateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_SearchRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "organization_ids"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_SearchResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "members",
+        "results_metadata",
+        "organizations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_StartEmailUpdateRequest",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_StartEmailUpdateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_UnlinkRetiredEmailRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_organizations_members_UnlinkRetiredEmailResponse",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "request_id",
+        "member_id",
+        "organization_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_UpdateRequest",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_organizations_members_UpdateResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "member_id",
+        "member",
+        "organization",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_connected_apps_RevokeRequest",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_organization_v1_organizations_members_connected_apps_RevokeResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_oauth_providers_GithubResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "provider_type",
+        "registrations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_oauth_providers_GoogleResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "provider_type",
+        "provider_subject",
+        "id_token",
+        "scopes",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_oauth_providers_HubspotResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "provider_type",
+        "registrations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_oauth_providers_MicrosoftResponse",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "request_id",
+        "provider_type",
+        "provider_subject",
+        "access_token",
+        "access_token_expires_in",
+        "id_token",
+        "scopes",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_organization_v1_organizations_members_oauth_providers_SlackResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "provider_type",
+        "registrations",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_password_v1_Argon2Config",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "salt",
+        "iteration_amount",
+        "memory",
+        "threads",
+        "key_length"
+      ]
+    },
+    {
+      "name": "api_password_v1_MD5Config",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "prepend_salt",
+        "append_salt"
+      ]
+    },
+    {
+      "name": "api_password_v1_PBKDF2Config",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "salt",
+        "iteration_amount",
+        "key_length",
+        "algorithm"
+      ]
+    },
+    {
+      "name": "api_password_v1_SHA1Config",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "prepend_salt",
+        "append_salt"
+      ]
+    },
+    {
+      "name": "api_password_v1_SHA512Config",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "prepend_salt",
+        "append_salt"
+      ]
+    },
+    {
+      "name": "api_password_v1_ScryptConfig",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "salt",
+        "n_parameter",
+        "r_parameter",
+        "p_parameter",
+        "key_length"
+      ]
+    },
+    {
+      "name": "api_session_v1_AmazonOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_AppleOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_AuthenticationFactor",
+      "type": "object",
+      "propertyCount": 46,
+      "required": [
+        "type",
+        "delivery_method"
+      ]
+    },
+    {
+      "name": "api_session_v1_AuthenticationFactorDeliveryMethod",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_session_v1_AuthenticationFactorType",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_session_v1_AuthenticatorAppFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "totp_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_BiometricFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "biometric_registration_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_BitbucketOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_CoinbaseOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_CryptoWalletFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "crypto_wallet_id",
+        "crypto_wallet_address",
+        "crypto_wallet_type"
+      ]
+    },
+    {
+      "name": "api_session_v1_DiscordOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_EmailFactor",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "email_id",
+        "email_address"
+      ]
+    },
+    {
+      "name": "api_session_v1_EmbeddableMagicLinkFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "embedded_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_FacebookOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_FigmaOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_GitLabOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_GithubOAuthExchangeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "email_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_GithubOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_GoogleOAuthExchangeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "email_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_GoogleOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_HubspotOAuthExchangeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "email_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_HubspotOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_ImpersonatedFactor",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "impersonator_id",
+        "impersonator_email_address"
+      ]
+    },
+    {
+      "name": "api_session_v1_InstagramOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_JWK",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "kty",
+        "use",
+        "key_ops",
+        "alg",
+        "kid",
+        "x5c",
+        "x5tS256",
+        "n",
+        "e"
+      ]
+    },
+    {
+      "name": "api_session_v1_LinkedInOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_MicrosoftOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_OAuthAccessTokenExchangeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "client_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_OIDCSSOFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_id",
+        "external_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_PhoneNumberFactor",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "phone_id",
+        "phone_number"
+      ]
+    },
+    {
+      "name": "api_session_v1_RecoveryCodeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "totp_recovery_code_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_SAMLSSOFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_id",
+        "external_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_SalesforceOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_ShopifyOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_SlackOAuthExchangeFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "email_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_SlackOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_SnapchatOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_SpotifyOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_SteamOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_TikTokOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_TrustedAuthTokenFactor",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "token_id"
+      ]
+    },
+    {
+      "name": "api_session_v1_TwitchOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_TwitterOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_session_v1_WebAuthnFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "webauthn_registration_id",
+        "domain"
+      ]
+    },
+    {
+      "name": "api_session_v1_YahooOAuthFactor",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "id",
+        "provider_subject"
+      ]
+    },
+    {
+      "name": "api_sso_v1_AuthenticateRequest",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "sso_token"
+      ]
+    },
+    {
+      "name": "api_sso_v1_AuthenticateRequestLocale",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_AuthenticateResponse",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "request_id",
+        "member_id",
+        "organization_id",
+        "member",
+        "session_token",
+        "session_jwt",
+        "reset_session",
+        "organization",
+        "intermediate_session_token",
+        "member_authenticated",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_Connection",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "external_organization_id",
+        "external_connection_id",
+        "display_name",
+        "status",
+        "external_connection_implicit_role_assignments",
+        "external_group_implicit_role_assignments"
+      ]
+    },
+    {
+      "name": "api_sso_v1_ConnectionImplicitRoleAssignment",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "role_id"
+      ]
+    },
+    {
+      "name": "api_sso_v1_CreateConnectionRequestIdentityProvider",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_DeleteConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "connection_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_EncryptionPrivateKey",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "private_key_id",
+        "private_key"
+      ]
+    },
+    {
+      "name": "api_sso_v1_GetConnectionsResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "request_id",
+        "saml_connections",
+        "oidc_connections",
+        "external_connections",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_GroupImplicitRoleAssignment",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "role_id",
+        "group"
+      ]
+    },
+    {
+      "name": "api_sso_v1_OIDCConnection",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "status",
+        "display_name",
+        "redirect_url",
+        "client_id",
+        "client_secret",
+        "issuer",
+        "authorization_url",
+        "token_url",
+        "userinfo_url",
+        "jwks_url",
+        "identity_provider",
+        "custom_scopes"
+      ]
+    },
+    {
+      "name": "api_sso_v1_SAMLConnection",
+      "type": "object",
+      "propertyCount": 20,
+      "required": [
+        "organization_id",
+        "connection_id",
+        "status",
+        "idp_entity_id",
+        "display_name",
+        "idp_sso_url",
+        "acs_url",
+        "audience_uri",
+        "signing_certificates",
+        "verification_certificates",
+        "encryption_private_keys",
+        "saml_connection_implicit_role_assignments",
+        "saml_group_implicit_role_assignments",
+        "alternative_audience_uri",
+        "identity_provider",
+        "nameid_format",
+        "alternative_acs_url",
+        "idp_initiated_auth_disabled",
+        "allow_gateway_callback"
+      ]
+    },
+    {
+      "name": "api_sso_v1_SAMLConnectionImplicitRoleAssignment",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "role_id"
+      ]
+    },
+    {
+      "name": "api_sso_v1_SAMLGroupImplicitRoleAssignment",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "role_id",
+        "group"
+      ]
+    },
+    {
+      "name": "api_sso_v1_UpdateConnectionRequestIdentityProvider",
+      "type": "string",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_X509Certificate",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "certificate_id",
+        "certificate",
+        "issuer"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_external_CreateConnectionRequest",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "external_organization_id",
+        "external_connection_id"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_external_CreateConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_external_UpdateConnectionRequest",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_sso_external_UpdateConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_oidc_CreateConnectionRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_sso_oidc_CreateConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_oidc_UpdateConnectionRequest",
+      "type": "object",
+      "propertyCount": 11,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_sso_oidc_UpdateConnectionResponse",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_CreateConnectionRequest",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_sso_saml_CreateConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_DeleteEncryptionPrivateKeyResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "private_key_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_DeleteVerificationCertificateResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "certificate_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_UpdateByURLRequest",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "metadata_url"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_UpdateByURLResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    },
+    {
+      "name": "api_sso_v1_sso_saml_UpdateConnectionRequest",
+      "type": "object",
+      "propertyCount": 15,
+      "required": []
+    },
+    {
+      "name": "api_sso_v1_sso_saml_UpdateConnectionResponse",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "request_id",
+        "status_code"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_GetGroups",
+      "summary": "Getgroups",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_Update",
+      "summary": "Update",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_Delete",
+      "summary": "Delete",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_RotateStart",
+      "summary": "Rotatestart",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_RotateComplete",
+      "summary": "Rotatecomplete",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_RotateCancel",
+      "summary": "Rotatecancel",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/scim/{organization_id}/connection",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_Get",
+      "summary": "Get",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/scim/{organization_id}/connection",
+      "operationId": "api_b2b_scim_v1_b2b_scim_connection_Create",
+      "summary": "Create",
+      "tags": [
+        "B2B SCIM"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations",
+      "operationId": "api_organization_v1_Create",
+      "summary": "Create",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}",
+      "operationId": "api_organization_v1_Get",
+      "summary": "Get",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/organizations/{organization_id}",
+      "operationId": "api_organization_v1_Update",
+      "summary": "Update",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}",
+      "operationId": "api_organization_v1_Delete",
+      "summary": "Delete",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/search",
+      "operationId": "api_organization_v1_Search",
+      "summary": "Search",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/metrics",
+      "operationId": "api_organization_v1_Metrics",
+      "summary": "Metrics",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/connected_apps",
+      "operationId": "api_organization_v1_ConnectedApps",
+      "summary": "Connectedapps",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}",
+      "operationId": "api_organization_v1_GetConnectedApp",
+      "summary": "Getconnectedapp",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/external_id",
+      "operationId": "api_organization_v1_DeleteExternalId",
+      "summary": "Deleteexternalid",
+      "tags": [
+        "Organization"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}",
+      "operationId": "api_organization_v1_organizations_members_Update",
+      "summary": "Update",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}",
+      "operationId": "api_organization_v1_organizations_members_Delete",
+      "summary": "Delete",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/reactivate",
+      "operationId": "api_organization_v1_organizations_members_Reactivate",
+      "summary": "Reactivate",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/members/mfa_phone_numbers/{member_id}",
+      "operationId": "api_organization_v1_organizations_members_DeleteMFAPhoneNumber",
+      "summary": "Deletemfaphonenumber",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/totp",
+      "operationId": "api_organization_v1_organizations_members_DeleteTOTP",
+      "summary": "Deletetotp",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/members/search",
+      "operationId": "api_organization_v1_organizations_members_Search",
+      "summary": "Search",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/members/passwords/{member_password_id}",
+      "operationId": "api_organization_v1_organizations_members_DeletePassword",
+      "summary": "Deletepassword",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/members/dangerously_get/{member_id}",
+      "operationId": "api_organization_v1_organizations_members_DangerouslyGet",
+      "summary": "Dangerouslyget",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oidc_providers",
+      "operationId": "api_organization_v1_organizations_members_OIDCProviders",
+      "summary": "Oidcproviders",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/unlink_retired_email",
+      "operationId": "api_organization_v1_organizations_members_UnlinkRetiredEmail",
+      "summary": "Unlinkretiredemail",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/start_email_update",
+      "operationId": "api_organization_v1_organizations_members_StartEmailUpdate",
+      "summary": "Startemailupdate",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/connected_apps",
+      "operationId": "api_organization_v1_organizations_members_GetConnectedApps",
+      "summary": "Getconnectedapps",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/external_id",
+      "operationId": "api_organization_v1_organizations_members_DeleteExternalId",
+      "summary": "Deleteexternalid",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/{organization_id}/members",
+      "operationId": "api_organization_v1_organizations_members_Create",
+      "summary": "Create",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/member",
+      "operationId": "api_organization_v1_organizations_members_Get",
+      "summary": "Get",
+      "tags": [
+        "Organizations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/google",
+      "operationId": "api_organization_v1_organizations_members_oauth_providers_Google",
+      "summary": "Google",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/microsoft",
+      "operationId": "api_organization_v1_organizations_members_oauth_providers_Microsoft",
+      "summary": "Microsoft",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/slack",
+      "operationId": "api_organization_v1_organizations_members_oauth_providers_Slack",
+      "summary": "Slack",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/hubspot",
+      "operationId": "api_organization_v1_organizations_members_oauth_providers_Hubspot",
+      "summary": "Hubspot",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/github",
+      "operationId": "api_organization_v1_organizations_members_oauth_providers_Github",
+      "summary": "Github",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/organizations/{organization_id}/members/{member_id}/connected_apps/{connected_app_id}/revoke",
+      "operationId": "api_organization_v1_organizations_members_connected_apps_Revoke",
+      "summary": "Revoke",
+      "tags": [
+        "Members"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/idp/oauth/authorize/start",
+      "operationId": "api_b2b_idp_v1_b2b_idp_oauth_AuthorizeStart",
+      "summary": "Authorizestart",
+      "tags": [
+        "B2B IDP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/idp/oauth/authorize",
+      "operationId": "api_b2b_idp_v1_b2b_idp_oauth_Authorize",
+      "summary": "Authorize",
+      "tags": [
+        "B2B IDP"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/sessions",
+      "operationId": "api_b2b_session_v1_Get",
+      "summary": "Get",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/authenticate",
+      "operationId": "api_b2b_session_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/revoke",
+      "operationId": "api_b2b_session_v1_Revoke",
+      "summary": "Revoke",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/exchange",
+      "operationId": "api_b2b_session_v1_Exchange",
+      "summary": "Exchange",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/exchange_access_token",
+      "operationId": "api_b2b_session_v1_ExchangeAccessToken",
+      "summary": "Exchangeaccesstoken",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/attest",
+      "operationId": "api_b2b_session_v1_Attest",
+      "summary": "Attest",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sessions/migrate",
+      "operationId": "api_b2b_session_v1_Migrate",
+      "summary": "Migrate",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/sessions/jwks/{project_id}",
+      "operationId": "api_b2b_session_v1_GetJWKS",
+      "summary": "Getjwks",
+      "tags": [
+        "Session"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/impersonation/authenticate",
+      "operationId": "api_b2b_impersonation_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B Impersonation"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/rbac/policy",
+      "operationId": "api_b2b_rbac_v1_Policy",
+      "summary": "Policy",
+      "tags": [
+        "B2B RBAC"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/rbac/organizations/{organization_id}",
+      "operationId": "api_b2b_rbac_v1_b2b_rbac_organizations_GetOrgPolicy",
+      "summary": "Getorgpolicy",
+      "tags": [
+        "B2B RBAC"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/rbac/organizations/{organization_id}",
+      "operationId": "api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicy",
+      "summary": "Setorgpolicy",
+      "tags": [
+        "B2B RBAC"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/recovery_codes/recover",
+      "operationId": "api_b2b_recovery_codes_v1_Recover",
+      "summary": "Recover",
+      "tags": [
+        "B2B Recovery Codes"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/recovery_codes/{organization_id}/{member_id}",
+      "operationId": "api_b2b_recovery_codes_v1_Get",
+      "summary": "Get",
+      "tags": [
+        "B2B Recovery Codes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/recovery_codes/rotate",
+      "operationId": "api_b2b_recovery_codes_v1_Rotate",
+      "summary": "Rotate",
+      "tags": [
+        "B2B Recovery Codes"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/totp",
+      "operationId": "api_b2b_totp_v1_Create",
+      "summary": "Create",
+      "tags": [
+        "B2B TOTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/totp/authenticate",
+      "operationId": "api_b2b_totp_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B TOTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/totp/migrate",
+      "operationId": "api_b2b_totp_v1_Migrate",
+      "summary": "Migrate",
+      "tags": [
+        "B2B TOTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/discovery/intermediate_sessions/exchange",
+      "operationId": "api_discovery_v1_discovery_intermediate_sessions_Exchange",
+      "summary": "Exchange",
+      "tags": [
+        "Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/discovery/organizations/create",
+      "operationId": "api_discovery_v1_discovery_organizations_Create",
+      "summary": "Create",
+      "tags": [
+        "Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/discovery/organizations",
+      "operationId": "api_discovery_v1_discovery_organizations_List",
+      "summary": "List",
+      "tags": [
+        "Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/magic_links/authenticate",
+      "operationId": "api_b2b_magic_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B Magic Links"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/magic_links/email/login_or_signup",
+      "operationId": "api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignup",
+      "summary": "Loginorsignup",
+      "tags": [
+        "B2B Magic Links"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/magic_links/email/invite",
+      "operationId": "api_b2b_magic_v1_b2b_magic_links_email_Invite",
+      "summary": "Invite",
+      "tags": [
+        "B2B Magic Links"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/magic_links/email/discovery/send",
+      "operationId": "api_b2b_magic_v1_b2b_magic_links_email_discovery_Send",
+      "summary": "Send",
+      "tags": [
+        "Email"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/magic_links/discovery/authenticate",
+      "operationId": "api_b2b_magic_v1_b2b_magic_links_discovery_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B Magic Links"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/oauth/authenticate",
+      "operationId": "api_b2b_oauth_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B OAuth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/oauth/discovery/authenticate",
+      "operationId": "api_b2b_oauth_v1_b2b_oauth_discovery_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B OAuth"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/sms/send",
+      "operationId": "api_b2b_otp_v1_b2b_otp_sms_Send",
+      "summary": "Send",
+      "tags": [
+        "B2B OTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/sms/authenticate",
+      "operationId": "api_b2b_otp_v1_b2b_otp_sms_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B OTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/email/login_or_signup",
+      "operationId": "api_b2b_otp_v1_b2b_otp_email_LoginOrSignup",
+      "summary": "Loginorsignup",
+      "tags": [
+        "B2B OTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/email/authenticate",
+      "operationId": "api_b2b_otp_v1_b2b_otp_email_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B OTP"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/email/discovery/send",
+      "operationId": "api_b2b_otp_v1_b2b_otp_email_discovery_Send",
+      "summary": "Send",
+      "tags": [
+        "Email"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/otps/email/discovery/authenticate",
+      "operationId": "api_b2b_otp_v1_b2b_otp_email_discovery_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "Email"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/strength_check",
+      "operationId": "api_b2b_password_v1_StrengthCheck",
+      "summary": "Strengthcheck",
+      "tags": [
+        "Password"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/migrate",
+      "operationId": "api_b2b_password_v1_Migrate",
+      "summary": "Migrate",
+      "tags": [
+        "Password"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/authenticate",
+      "operationId": "api_b2b_password_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "Password"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/email/reset/start",
+      "operationId": "api_b2b_password_v1_b2b_passwords_email_ResetStart",
+      "summary": "Resetstart",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/email/reset",
+      "operationId": "api_b2b_password_v1_b2b_passwords_email_Reset",
+      "summary": "Reset",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/email/require_reset",
+      "operationId": "api_b2b_password_v1_b2b_passwords_email_RequireReset",
+      "summary": "Requirereset",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/session/reset",
+      "operationId": "api_b2b_password_v1_b2b_passwords_session_Reset",
+      "summary": "Reset",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/existing_password/reset",
+      "operationId": "api_b2b_password_v1_b2b_passwords_existing_password_Reset",
+      "summary": "Reset",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/discovery/authenticate",
+      "operationId": "api_b2b_password_v1_b2b_passwords_discovery_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "B2B Passwords"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/discovery/email/reset/start",
+      "operationId": "api_b2b_password_v1_b2b_passwords_discovery_email_ResetStart",
+      "summary": "Resetstart",
+      "tags": [
+        "Discovery"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/passwords/discovery/email/reset",
+      "operationId": "api_b2b_password_v1_b2b_passwords_discovery_email_Reset",
+      "summary": "Reset",
+      "tags": [
+        "Discovery"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v1/b2b/sso/{organization_id}",
+      "operationId": "api_sso_v1_GetConnections",
+      "summary": "Getconnections",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/sso/{organization_id}/connections/{connection_id}",
+      "operationId": "api_sso_v1_DeleteConnection",
+      "summary": "Deleteconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sso/authenticate",
+      "operationId": "api_sso_v1_Authenticate",
+      "summary": "Authenticate",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sso/oidc/{organization_id}",
+      "operationId": "api_sso_v1_sso_oidc_CreateConnection",
+      "summary": "Createconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/sso/oidc/{organization_id}/connections/{connection_id}",
+      "operationId": "api_sso_v1_sso_oidc_UpdateConnection",
+      "summary": "Updateconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sso/saml/{organization_id}",
+      "operationId": "api_sso_v1_sso_saml_CreateConnection",
+      "summary": "Createconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/sso/saml/{organization_id}/connections/{connection_id}",
+      "operationId": "api_sso_v1_sso_saml_UpdateConnection",
+      "summary": "Updateconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/sso/saml/{organization_id}/connections/{connection_id}/url",
+      "operationId": "api_sso_v1_sso_saml_UpdateByURL",
+      "summary": "Updatebyurl",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/sso/saml/{organization_id}/connections/{connection_id}/verification_certificates/{certificate_id}",
+      "operationId": "api_sso_v1_sso_saml_DeleteVerificationCertificate",
+      "summary": "Deleteverificationcertificate",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/b2b/sso/saml/{organization_id}/connections/{connection_id}/encryption_private_keys/{private_key_id}",
+      "operationId": "api_sso_v1_sso_saml_DeleteEncryptionPrivateKey",
+      "summary": "Deleteencryptionprivatekey",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v1/b2b/sso/external/{organization_id}",
+      "operationId": "api_sso_v1_sso_external_CreateConnection",
+      "summary": "Createconnection",
+      "tags": [
+        "SSO"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/v1/b2b/sso/external/{organization_id}/connections/{connection_id}",
+      "operationId": "api_sso_v1_sso_external_UpdateConnection",
+      "summary": "Updateconnection",
+      "tags": [
+        "SSO"
+      ]
+    }
+  ]
+}

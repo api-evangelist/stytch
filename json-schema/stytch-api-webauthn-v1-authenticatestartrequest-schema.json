@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_webauthn_v1_AuthenticateStartRequest",
+  "title": "api_webauthn_v1_AuthenticateStartRequest",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The `user_id` of an active user the Passkey or WebAuthn registration should be tied to. You may use an `external_id` here if one is set for the user."
+    },
+    "return_passkey_credential_options": {
+      "type": "boolean",
+      "description": "If true, the `public_key_credential_creation_options` returned will be optimized for Passkeys with `userVerification` set to `\"preferred\"`.\n      "
+    },
+    "use_base64_url_encoding": {
+      "type": "boolean",
+      "description": "If true, values in the `public_key_credential_creation_options` will be base64 URL encoded. Set this option to true when using built-in browser methods like `navigator.credentials.create` and `navigator.credentials.get`."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "domain"
+  ]
+}

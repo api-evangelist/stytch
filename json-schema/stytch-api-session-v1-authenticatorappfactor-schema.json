@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_AuthenticatorAppFactor",
+  "title": "api_session_v1_AuthenticatorAppFactor",
+  "type": "object",
+  "properties": {
+    "totp_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a TOTP instance."
+    }
+  },
+  "required": [
+    "totp_id"
+  ]
+}

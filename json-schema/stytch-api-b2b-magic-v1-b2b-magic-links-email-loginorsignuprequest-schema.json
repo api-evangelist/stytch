@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignupRequest",
+  "title": "api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignupRequest",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+    },
+    "email_address": {
+      "type": "string",
+      "description": "The email address of the Member."
+    },
+    "login_redirect_url": {
+      "type": "string",
+      "description": "The URL that the Member clicks from the login Email Magic Link. This URL should be an endpoint in the backend server that\n  verifies the request by querying Stytch's authenticate endpoint and finishes the login. If this value is not passed, the default login\n  redirect URL that you set in your Dashboard is used. If you have not set a default login redirect URL, an error is returned."
+    },
+    "signup_redirect_url": {
+      "type": "string",
+      "description": "The URL the Member clicks from the signup Email Magic Link. This URL should be an endpoint in the backend server that verifies\n  the request by querying Stytch's authenticate endpoint and finishes the login. If this value is not passed, the default sign-up redirect URL\n  that you set in your Dashboard is used. If you have not set a default sign-up redirect URL, an error is returned."
+    },
+    "pkce_code_challenge": {
+      "type": "string",
+      "description": "A base64url encoded SHA256 hash of a one time secret used to validate that the request starts and ends on the same device."
+    },
+    "login_template_id": {
+      "type": "string",
+      "description": "Use a custom template for login emails. By default, it will use your default email template. Templates can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in customization options or custom HTML templates with type \u201cMagic Links - Login\u201d."
+    },
+    "signup_template_id": {
+      "type": "string",
+      "description": "Use a custom template for signup emails. By default, it will use your default email template. The template must be from Stytch's\nbuilt-in customizations or a custom HTML email for \u201cMagic Links - Signup\u201d."
+    },
+    "locale": {
+      "$ref": "#/components/schemas/api_b2b_magic_v1_LoginOrSignupRequestLocale",
+      "description": "Used to determine which language to use when sending the user this delivery method. Parameter is an [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `\"en\"`.\n\nCurrently supported languages are English (`\"en\"`), Spanish (`\"es\"`), French (`\"fr\"`) and Brazilian Portuguese (`\"pt-br\"`); if no value is provided, the copy defaults to English.\n\nRequest support for additional languages [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link\")!\n"
+    },
+    "login_expiration_minutes": {
+      "type": "integer",
+      "format": "int32",
+      "minimum": 0,
+      "description": "The expiration time, in minutes, for a login Email Magic Link. If not authenticated within this time frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of 10080 (1 week)."
+    },
+    "signup_expiration_minutes": {
+      "type": "integer",
+      "format": "int32",
+      "minimum": 0,
+      "description": "The expiration time, in minutes, for a signup Email Magic Link. If not authenticated within this time frame, the email will need to be resent. Defaults to 60 (1 hour) with a minimum of 5 and a maximum of 10080 (1 week)."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "organization_id",
+    "email_address"
+  ]
+}

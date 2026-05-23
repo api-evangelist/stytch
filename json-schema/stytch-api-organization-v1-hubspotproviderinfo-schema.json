@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_HubspotProviderInfo",
+  "title": "api_organization_v1_HubspotProviderInfo",
+  "type": "object",
+  "properties": {
+    "provider_subject": {
+      "type": "string",
+      "description": "The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or \"Subject field\" in OAuth protocols."
+    },
+    "provider_tenant_id": {
+      "type": "string",
+      "description": "The tenant ID returned by the OAuth provider. This is typically used to identify an organization or group within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the Workspace ID, and in GitHub this is an organization ID. This field will only be populated if exactly one tenant ID is returned from a successful OAuth authentication and developers should prefer `provider_tenant_ids` over this since it accounts for the possibility of an OAuth provider yielding multiple tenant IDs."
+    },
+    "access_token": {
+      "type": "string",
+      "description": "The `access_token` that you may use to access the User's data in the provider's API."
+    },
+    "access_token_expires_in": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of seconds until the access token expires."
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes."
+    },
+    "refresh_token": {
+      "type": "string",
+      "description": "The `refresh_token` that you may use to obtain a new `access_token` for the User within the provider's API."
+    }
+  },
+  "required": [
+    "provider_subject",
+    "provider_tenant_id",
+    "access_token",
+    "access_token_expires_in",
+    "scopes"
+  ]
+}

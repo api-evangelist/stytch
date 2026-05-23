@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_consumer_rbac_v1_PolicyResource",
+  "title": "api_consumer_rbac_v1_PolicyResource",
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "type": "string",
+      "description": "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the RBAC Resource."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of all possible actions for a provided Resource."
+    }
+  },
+  "required": [
+    "resource_id",
+    "description",
+    "actions"
+  ]
+}

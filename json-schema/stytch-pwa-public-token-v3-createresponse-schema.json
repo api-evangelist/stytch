@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_public_token_v3_CreateResponse",
+  "title": "pwa_public_token_v3_CreateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "public_token": {
+      "$ref": "#/components/schemas/pwa_public_token_v3_PublicToken"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "public_token",
+    "status_code"
+  ]
+}

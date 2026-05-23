@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_OIDCConnection",
+  "title": "api_sso_v1_OIDCConnection",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+    },
+    "connection_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific OIDC Connection."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the connection. The possible values are pending or active. See the [Update OIDC Connection endpoint](https://stytch.com/docs/b2b/api/update-oidc-connection) for more details."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "redirect_url": {
+      "type": "string",
+      "description": "The callback URL for this OIDC connection. This value will be passed to the IdP to redirect the Member back to Stytch after a sign-in attempt."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "The OAuth2.0 client ID used to authenticate login attempts. This will be provided by the IdP."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "The secret belonging to the OAuth2.0 client used to authenticate login attempts. This will be provided by the IdP."
+    },
+    "issuer": {
+      "type": "string",
+      "description": "A case-sensitive `https://` URL that uniquely identifies the IdP. This will be provided by the IdP."
+    },
+    "authorization_url": {
+      "type": "string",
+      "description": "The location of the URL that starts an OAuth login at the IdP. This will be provided by the IdP."
+    },
+    "token_url": {
+      "type": "string",
+      "description": "The location of the URL that issues OAuth2.0 access tokens and OIDC ID tokens. This will be provided by the IdP."
+    },
+    "userinfo_url": {
+      "type": "string",
+      "description": "The location of the IDP's [UserInfo Endpoint](https://openid.net/specs/openid-connect-core-1_0.html#UserInfo). This will be provided by the IdP."
+    },
+    "jwks_url": {
+      "type": "string",
+      "description": "The location of the IdP's JSON Web Key Set, used to verify credentials issued by the IdP. This will be provided by the IdP."
+    },
+    "identity_provider": {
+      "type": "string",
+      "description": "Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`, `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`, `rippling`, `salesforce`, `shibboleth`, or `generic`.\n\nSpecifying a known provider allows Stytch to handle any provider-specific logic."
+    },
+    "custom_scopes": {
+      "type": "string",
+      "description": "A space-separated list of custom scopes that will be requested on every SSOStart call. If set, this value will replace the default set of OIDC scopes requested: `openid email profile`. Additional scopes can be requested using the `custom_scopes` query parameter on individual SSOStart calls."
+    },
+    "attribute_mapping": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An object that represents the attributes used to identify a Member. This object will map the IdP-defined User attributes to Stytch-specific values, which will appear on the member's Trusted Metadata."
+    }
+  },
+  "required": [
+    "organization_id",
+    "connection_id",
+    "status",
+    "display_name",
+    "redirect_url",
+    "client_id",
+    "client_secret",
+    "issuer",
+    "authorization_url",
+    "token_url",
+    "userinfo_url",
+    "jwks_url",
+    "identity_provider",
+    "custom_scopes"
+  ]
+}

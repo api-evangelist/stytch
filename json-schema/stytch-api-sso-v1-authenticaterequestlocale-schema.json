@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_AuthenticateRequestLocale",
+  "title": "api_sso_v1_AuthenticateRequestLocale",
+  "type": "string",
+  "enum": [
+    "en",
+    "es",
+    "pt-br",
+    "fr",
+    "it",
+    "de-DE",
+    "zh-Hans",
+    "ca-ES"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_DisableResponse",
+  "title": "pwa_event_log_streaming_v3_DisableResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "status_code"
+  ]
+}

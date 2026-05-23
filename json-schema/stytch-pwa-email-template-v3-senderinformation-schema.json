@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_SenderInformation",
+  "title": "pwa_email_template_v3_SenderInformation",
+  "type": "object",
+  "properties": {
+    "from_local_part": {
+      "type": "string"
+    },
+    "from_domain": {
+      "type": "string"
+    },
+    "from_name": {
+      "type": "string"
+    },
+    "reply_to_local_part": {
+      "type": "string"
+    },
+    "reply_to_name": {
+      "type": "string"
+    }
+  }
+}

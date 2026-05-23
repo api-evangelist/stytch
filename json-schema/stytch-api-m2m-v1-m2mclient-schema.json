@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_M2MClient",
+  "title": "api_m2m_v1_M2MClient",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "The ID of the client."
+    },
+    "client_name": {
+      "type": "string",
+      "description": "A human-readable name for the client."
+    },
+    "client_description": {
+      "type": "string",
+      "description": "A human-readable description for the client."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the client - either `active` or `inactive`."
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of scopes assigned to the client."
+    },
+    "client_secret_last_four": {
+      "type": "string",
+      "description": "The last four characters of the client secret."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An arbitrary JSON object for storing application-specific data."
+    },
+    "next_client_secret_last_four": {
+      "type": "string",
+      "description": "The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists."
+    }
+  },
+  "required": [
+    "client_id",
+    "client_name",
+    "client_description",
+    "status",
+    "scopes",
+    "client_secret_last_four"
+  ]
+}

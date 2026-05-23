@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerConfig",
+  "title": "pwa_sdk_v3_ConsumerConfig",
+  "type": "object",
+  "properties": {
+    "basic": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerBasicConfig"
+    },
+    "sessions": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerSessionsConfig"
+    },
+    "magic_links": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerMagicLinksConfig"
+    },
+    "otps": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerOTPsConfig"
+    },
+    "oauth": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerOAuthConfig"
+    },
+    "totps": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerTOTPsConfig"
+    },
+    "webauthn": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerWebAuthnConfig"
+    },
+    "crypto_wallets": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerCryptoWalletsConfig"
+    },
+    "dfppa": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerDFPPAConfig"
+    },
+    "biometrics": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerBiometricsConfig"
+    },
+    "passwords": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerPasswordsConfig"
+    },
+    "cookies": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerCookiesConfig"
+    }
+  }
+}

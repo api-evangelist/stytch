@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_email_RiskRequest",
+  "title": "api_fraud_v1_fraud_email_RiskRequest",
+  "type": "object",
+  "properties": {
+    "email_address": {
+      "type": "string",
+      "description": "The email address to check."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "email_address"
+  ]
+}

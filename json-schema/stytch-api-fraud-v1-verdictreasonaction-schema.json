@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_VerdictReasonAction",
+  "title": "api_fraud_v1_VerdictReasonAction",
+  "type": "object",
+  "properties": {
+    "verdict_reason": {
+      "type": "string",
+      "description": "The verdict reason."
+    },
+    "default_action": {
+      "$ref": "#/components/schemas/api_fraud_v1_VerdictReasonActionAction",
+      "description": "The default action returned for the specified verdict reason in a fingerprint lookup when no overrides are specified."
+    },
+    "override_action": {
+      "$ref": "#/components/schemas/api_fraud_v1_VerdictReasonActionAction",
+      "description": "If not null, this action will be returned for the specified verdict reason in a fingerprint lookup, in place of the default action."
+    },
+    "override_created_at": {
+      "type": "string",
+      "description": "The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "override_description": {
+      "type": "string",
+      "description": "A description of the override, if one exists."
+    }
+  },
+  "required": [
+    "verdict_reason",
+    "default_action"
+  ]
+}

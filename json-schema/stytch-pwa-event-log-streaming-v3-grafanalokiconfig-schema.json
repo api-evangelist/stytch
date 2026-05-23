@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_GrafanaLokiConfig",
+  "title": "pwa_event_log_streaming_v3_GrafanaLokiConfig",
+  "type": "object",
+  "properties": {
+    "hostname": {
+      "type": "string"
+    },
+    "username": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "hostname",
+    "username",
+    "password"
+  ]
+}

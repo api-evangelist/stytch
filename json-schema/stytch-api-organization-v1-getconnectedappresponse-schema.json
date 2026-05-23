@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_GetConnectedAppResponse",
+  "title": "api_organization_v1_GetConnectedAppResponse",
+  "type": "object",
+  "properties": {
+    "connected_app_id": {
+      "type": "string",
+      "description": "The ID of the Connected App."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the Connected App."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of the Connected App."
+    },
+    "client_type": {
+      "type": "string",
+      "description": "The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`."
+    },
+    "active_members": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_organization_v1_OrganizationConnectedAppActiveMember"
+      },
+      "description": "Details about Members who has installed a Connected App."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "logo_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connected_app_id",
+    "name",
+    "description",
+    "client_type",
+    "active_members",
+    "status_code"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_StartEmailUpdateRequestDeliveryMethod",
+  "title": "api_organization_v1_StartEmailUpdateRequestDeliveryMethod",
+  "type": "string",
+  "enum": [
+    "EMAIL_MAGIC_LINK",
+    "EMAIL_OTP"
+  ]
+}

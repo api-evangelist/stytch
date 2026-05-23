@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_discovery_v1_CreateRequestThirdPartyConnectedAppsAllowedType",
+  "title": "api_discovery_v1_CreateRequestThirdPartyConnectedAppsAllowedType",
+  "type": "string",
+  "enum": [
+    "ALL_ALLOWED",
+    "RESTRICTED",
+    "NOT_ALLOWED"
+  ]
+}

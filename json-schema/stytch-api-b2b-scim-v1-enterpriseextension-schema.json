@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_EnterpriseExtension",
+  "title": "api_b2b_scim_v1_EnterpriseExtension",
+  "type": "object",
+  "properties": {
+    "employee_number": {
+      "type": "string"
+    },
+    "cost_center": {
+      "type": "string"
+    },
+    "division": {
+      "type": "string"
+    },
+    "department": {
+      "type": "string"
+    },
+    "organization": {
+      "type": "string"
+    },
+    "manager": {
+      "$ref": "#/components/schemas/api_b2b_scim_v1_Manager"
+    }
+  },
+  "required": [
+    "employee_number",
+    "cost_center",
+    "division",
+    "department",
+    "organization"
+  ]
+}

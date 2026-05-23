@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse",
+  "title": "api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse",
+  "type": "object",
+  "properties": {
+    "scim_groups": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_SCIMGroup"
+      },
+      "description": "A list of SCIM Connection Groups belonging to the connection."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "next_cursor": {
+      "type": "string",
+      "description": "The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field."
+    }
+  },
+  "required": [
+    "scim_groups",
+    "status_code"
+  ]
+}

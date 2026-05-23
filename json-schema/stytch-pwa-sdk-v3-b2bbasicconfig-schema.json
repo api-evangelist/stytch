@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_B2BBasicConfig",
+  "title": "pwa_sdk_v3_B2BBasicConfig",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "allow_self_onboarding": {
+      "type": "boolean"
+    },
+    "enable_member_permissions": {
+      "type": "boolean"
+    },
+    "domains": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_sdk_v3_AuthorizedB2BDomain"
+      }
+    },
+    "bundle_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "enabled",
+    "allow_self_onboarding",
+    "enable_member_permissions",
+    "domains",
+    "bundle_ids"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_AddressInformation",
+  "title": "api_fraud_v1_AddressInformation",
+  "type": "object",
+  "properties": {
+    "has_known_bounces": {
+      "type": "boolean",
+      "description": "Whether email sent to this address is known to have bounced previously."
+    },
+    "has_valid_syntax": {
+      "type": "boolean",
+      "description": "Whether this email address is valid."
+    },
+    "is_suspected_role_address": {
+      "type": "boolean",
+      "description": "Whether the local part of the email appears to be a role or group, rather than an individual end user."
+    },
+    "normalized_email": {
+      "type": "string",
+      "description": "The normalized email address after removing '.' characters and any characters after a '+'."
+    },
+    "tumbling_character_count": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The number of '.' and '+' characters in the email address. A higher tumbling count indicates a higher potential for fraud."
+    }
+  },
+  "required": [
+    "has_known_bounces",
+    "has_valid_syntax",
+    "is_suspected_role_address",
+    "normalized_email",
+    "tumbling_character_count"
+  ]
+}

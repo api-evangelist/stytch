@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_trusted_token_profile_v3_PEMFile",
+  "title": "pwa_trusted_token_profile_v3_PEMFile",
+  "type": "object",
+  "properties": {
+    "pem_file_id": {
+      "type": "string"
+    },
+    "public_key": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "pem_file_id",
+    "public_key"
+  ]
+}

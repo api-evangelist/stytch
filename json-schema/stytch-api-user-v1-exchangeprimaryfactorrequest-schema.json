@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_ExchangePrimaryFactorRequest",
+  "title": "api_user_v1_ExchangePrimaryFactorRequest",
+  "type": "object",
+  "properties": {
+    "email_address": {
+      "type": "string",
+      "description": "The email address to exchange to."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX)."
+    }
+  },
+  "description": "Request type"
+}

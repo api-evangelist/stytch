@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_RecoveryCodeFactor",
+  "title": "api_session_v1_RecoveryCodeFactor",
+  "type": "object",
+  "properties": {
+    "totp_recovery_code_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "totp_recovery_code_id"
+  ]
+}

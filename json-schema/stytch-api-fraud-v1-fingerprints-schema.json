@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_Fingerprints",
+  "title": "api_fraud_v1_Fingerprints",
+  "type": "object",
+  "properties": {
+    "network_fingerprint": {
+      "type": "string",
+      "description": "Combination of signals associated with a specific network commonly known as TLS fingerprinting. "
+    },
+    "hardware_fingerprint": {
+      "type": "string",
+      "description": "Combinations of signals to identify an operating system and architecture."
+    },
+    "browser_fingerprint": {
+      "type": "string",
+      "description": "Combination of signals to identify a browser and its specific version."
+    },
+    "visitor_fingerprint": {
+      "type": "string",
+      "description": "Cookie-less way of identifying a unique user."
+    },
+    "visitor_id": {
+      "type": "string",
+      "description": "The cookie stored on the user's device that uniquely identifies them."
+    },
+    "browser_id": {
+      "type": "string",
+      "description": "Combination of VisitorID and NetworkFingerprint to create a clear identifier of a browser."
+    }
+  },
+  "required": [
+    "network_fingerprint",
+    "hardware_fingerprint",
+    "browser_fingerprint",
+    "visitor_fingerprint"
+  ]
+}

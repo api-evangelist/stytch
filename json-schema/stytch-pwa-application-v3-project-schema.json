@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_application_v3_Project",
+  "title": "pwa_application_v3_Project",
+  "type": "object",
+  "properties": {
+    "project_slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "vertical": {
+      "$ref": "#/components/schemas/api_attribute_v1_Vertical"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "project_slug",
+    "name"
+  ]
+}

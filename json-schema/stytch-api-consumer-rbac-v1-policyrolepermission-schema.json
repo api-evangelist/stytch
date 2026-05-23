@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_consumer_rbac_v1_PolicyRolePermission",
+  "title": "api_consumer_rbac_v1_PolicyRolePermission",
+  "type": "object",
+  "properties": {
+    "resource_id": {
+      "type": "string",
+      "description": "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*` as a wildcard to grant a Role permission to use all possible actions related to the Resource. "
+    }
+  },
+  "required": [
+    "resource_id",
+    "actions"
+  ]
+}

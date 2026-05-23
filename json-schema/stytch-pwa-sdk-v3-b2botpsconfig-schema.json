@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_B2BOTPsConfig",
+  "title": "pwa_sdk_v3_B2BOTPsConfig",
+  "type": "object",
+  "properties": {
+    "sms_enabled": {
+      "type": "boolean"
+    },
+    "sms_autofill_metadata": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_sdk_v3_SMSAutofillMetadata"
+      }
+    },
+    "email_enabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "sms_enabled",
+    "sms_autofill_metadata",
+    "email_enabled"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_redirect_url_v3_GetResponse",
+  "title": "pwa_redirect_url_v3_GetResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "redirect_url": {
+      "$ref": "#/components/schemas/pwa_redirect_url_v3_RedirectUrl"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "redirect_url",
+    "status_code"
+  ]
+}

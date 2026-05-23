@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_GetAllResponse",
+  "title": "pwa_environment_v3_GetAllResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "environments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_environment_v3_Environment"
+      }
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "environments",
+    "status_code"
+  ]
+}

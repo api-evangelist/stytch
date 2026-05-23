@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_AuthenticateRequest",
+  "title": "api_session_v1_AuthenticateRequest",
+  "type": "object",
+  "properties": {
+    "session_token": {
+      "type": "string",
+      "description": "The session token to authenticate."
+    },
+    "session_duration_minutes": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Set the session lifetime to be this many minutes from now; minimum of 5 and a maximum of 527040 minutes (366 days). Note that a successful authentication will continue to extend the session this many minutes."
+    },
+    "session_jwt": {
+      "type": "string",
+      "description": "The JWT to authenticate. You may provide a JWT that has expired according to its `exp` claim and needs to be refreshed. If the signature is valid and the underlying session is still active then Stytch will return a new JWT."
+    },
+    "session_custom_claims": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key, supply a null value.\n\n  Custom claims made with reserved claims (\"iss\", \"sub\", \"aud\", \"exp\", \"nbf\", \"iat\", \"jti\") will be ignored. Total custom claims size cannot exceed four kilobytes."
+    },
+    "authorization_check": {
+      "$ref": "#/components/schemas/api_session_v1_AuthorizationCheck",
+      "description": "If an `authorization_check` object is passed in, this endpoint will also check if the User is\n  authorized to perform the given action on the given Resource. A User is authorized if they are assigned a Role with adequate permissions.\n\n  If the User is not authorized to perform the specified action on the specified Resource, a 403 error will be thrown.\n  Otherwise, the response will contain a list of Roles that satisfied the authorization check."
+    }
+  },
+  "description": "Request type"
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_SetConsumerConfigResponse",
+  "title": "pwa_sdk_v3_SetConsumerConfigResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "config": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_ConsumerConfig"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "config",
+    "status_code"
+  ]
+}

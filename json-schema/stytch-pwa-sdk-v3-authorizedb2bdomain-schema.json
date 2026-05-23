@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_AuthorizedB2BDomain",
+  "title": "pwa_sdk_v3_AuthorizedB2BDomain",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string"
+    },
+    "slug_pattern": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "domain",
+    "slug_pattern"
+  ]
+}

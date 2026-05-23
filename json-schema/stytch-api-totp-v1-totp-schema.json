@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_totp_v1_TOTP",
+  "title": "api_totp_v1_TOTP",
+  "type": "object",
+  "properties": {
+    "totp_id": {
+      "type": "string",
+      "description": "The unique ID for a TOTP instance."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    },
+    "recovery_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The recovery codes used to authenticate the user without an authenticator app."
+    }
+  },
+  "required": [
+    "totp_id",
+    "verified",
+    "recovery_codes"
+  ]
+}

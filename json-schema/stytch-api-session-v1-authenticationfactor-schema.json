@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_AuthenticationFactor",
+  "title": "api_session_v1_AuthenticationFactor",
+  "type": "object",
+  "properties": {
+    "type": {
+      "$ref": "#/components/schemas/api_session_v1_AuthenticationFactorType",
+      "description": "The type of authentication factor. The possible values are: `email_otp`, `impersonated`, `imported`,\n       `magic_link`, `oauth`, `otp`, `password`, `recovery_codes`, `sso`, `trusted_auth_token`, or `totp`."
+    },
+    "delivery_method": {
+      "$ref": "#/components/schemas/api_session_v1_AuthenticationFactorDeliveryMethod",
+      "description": "The method that was used to deliver the authentication factor. The possible values depend on the `type`:\n     \n      `email_otp` \u2013 Only `email`.\n     \n      `impersonated` \u2013 Only `impersonation`.\n      \n      `imported` \u2013 Only `imported_auth0`.\n     \n      `magic_link` \u2013 Only `email`.\n     \n      `oauth` \u2013 The delivery method is determined by the specific OAuth provider used. The possible values are `oauth_google`, `oauth_microsoft`, `oauth_hubspot`, `oauth_slack`, or `oauth_github`.\n      \n        In addition, you may see an 'exchange' delivery method when a non-email-verifying OAuth factor originally authenticated in one organization is exchanged for a factor in another organization.\n        This can happen during authentication flows such as [session exchange](https://stytch.com/docs/b2b/api/exchange-session).\n        The non-email-verifying OAuth providers are Hubspot, Slack, and Github.\n        Google is also considered non-email-verifying when the HD claim is empty.\n        The possible exchange values are `oauth_exchange_google`, `oauth_exchange_hubspot`, `oauth_exchange_slack`, or `oauth_exchange_github`.\n       \n        The final possible value is `oauth_access_token_exchange`, if this factor came from an [access token exchange flow](https://stytch.com/docs/b2b/api/connected-app-access-token-exchange).\n     \n      `otp` \u2013  Only `sms`.\n     \n      `password` \u2013 Only `knowledge`.\n     \n      `recovery_codes` \u2013 Only `recovery_code`.\n     \n      `sso` \u2013 Either `sso_saml` or `sso_oidc`.\n     \n      `trusted_auth_token` \u2013 Only `trusted_token_exchange`.\n     \n      `totp` \u2013 Only `authenticator_app`.\n      "
+    },
+    "last_authenticated_at": {
+      "type": "string",
+      "description": "The timestamp when the factor was last authenticated."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "The timestamp when the factor was initially authenticated."
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "The timestamp when the factor was last updated."
+    },
+    "email_factor": {
+      "$ref": "#/components/schemas/api_session_v1_EmailFactor",
+      "description": "Information about the email factor, if one is present."
+    },
+    "phone_number_factor": {
+      "$ref": "#/components/schemas/api_session_v1_PhoneNumberFactor",
+      "description": "Information about the phone number factor, if one is present."
+    },
+    "google_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_GoogleOAuthFactor",
+      "description": "Information about the Google OAuth factor, if one is present."
+    },
+    "microsoft_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_MicrosoftOAuthFactor",
+      "description": "Information about the Microsoft OAuth factor, if one is present."
+    },
+    "apple_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_AppleOAuthFactor"
+    },
+    "webauthn_factor": {
+      "$ref": "#/components/schemas/api_session_v1_WebAuthnFactor"
+    },
+    "authenticator_app_factor": {
+      "$ref": "#/components/schemas/api_session_v1_AuthenticatorAppFactor",
+      "description": "Information about the TOTP-backed Authenticator App factor, if one is present."
+    },
+    "github_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_GithubOAuthFactor",
+      "description": "Information about the Github OAuth factor, if one is present."
+    },
+    "recovery_code_factor": {
+      "$ref": "#/components/schemas/api_session_v1_RecoveryCodeFactor"
+    },
+    "facebook_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_FacebookOAuthFactor"
+    },
+    "crypto_wallet_factor": {
+      "$ref": "#/components/schemas/api_session_v1_CryptoWalletFactor"
+    },
+    "amazon_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_AmazonOAuthFactor"
+    },
+    "bitbucket_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_BitbucketOAuthFactor"
+    },
+    "coinbase_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_CoinbaseOAuthFactor"
+    },
+    "discord_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_DiscordOAuthFactor"
+    },
+    "figma_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_FigmaOAuthFactor"
+    },
+    "git_lab_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_GitLabOAuthFactor"
+    },
+    "instagram_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_InstagramOAuthFactor"
+    },
+    "linked_in_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_LinkedInOAuthFactor"
+    },
+    "shopify_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_ShopifyOAuthFactor"
+    },
+    "slack_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SlackOAuthFactor",
+      "description": "Information about the Slack OAuth factor, if one is present."
+    },
+    "snapchat_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SnapchatOAuthFactor"
+    },
+    "spotify_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SpotifyOAuthFactor"
+    },
+    "steam_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SteamOAuthFactor"
+    },
+    "tik_tok_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_TikTokOAuthFactor"
+    },
+    "twitch_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_TwitchOAuthFactor"
+    },
+    "twitter_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_TwitterOAuthFactor"
+    },
+    "embeddable_magic_link_factor": {
+      "$ref": "#/components/schemas/api_session_v1_EmbeddableMagicLinkFactor"
+    },
+    "biometric_factor": {
+      "$ref": "#/components/schemas/api_session_v1_BiometricFactor"
+    },
+    "saml_sso_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SAMLSSOFactor",
+      "description": "Information about the SAML SSO factor, if one is present."
+    },
+    "oidc_sso_factor": {
+      "$ref": "#/components/schemas/api_session_v1_OIDCSSOFactor",
+      "description": "Information about the OIDC SSO factor, if one is present."
+    },
+    "salesforce_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SalesforceOAuthFactor"
+    },
+    "yahoo_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_YahooOAuthFactor"
+    },
+    "hubspot_oauth_factor": {
+      "$ref": "#/components/schemas/api_session_v1_HubspotOAuthFactor",
+      "description": "Information about the Hubspot OAuth factor, if one is present."
+    },
+    "slack_oauth_exchange_factor": {
+      "$ref": "#/components/schemas/api_session_v1_SlackOAuthExchangeFactor",
+      "description": "Information about the Slack OAuth Exchange factor, if one is present."
+    },
+    "hubspot_oauth_exchange_factor": {
+      "$ref": "#/components/schemas/api_session_v1_HubspotOAuthExchangeFactor",
+      "description": "Information about the Hubspot OAuth Exchange factor, if one is present."
+    },
+    "github_oauth_exchange_factor": {
+      "$ref": "#/components/schemas/api_session_v1_GithubOAuthExchangeFactor",
+      "description": "Information about the Github OAuth Exchange factor, if one is present."
+    },
+    "google_oauth_exchange_factor": {
+      "$ref": "#/components/schemas/api_session_v1_GoogleOAuthExchangeFactor",
+      "description": "Information about the Google OAuth Exchange factor, if one is present."
+    },
+    "impersonated_factor": {
+      "$ref": "#/components/schemas/api_session_v1_ImpersonatedFactor",
+      "description": "Information about the impersonated factor, if one is present."
+    },
+    "oauth_access_token_exchange_factor": {
+      "$ref": "#/components/schemas/api_session_v1_OAuthAccessTokenExchangeFactor",
+      "description": "Information about the access token exchange factor, if one is present."
+    },
+    "trusted_auth_token_factor": {
+      "$ref": "#/components/schemas/api_session_v1_TrustedAuthTokenFactor",
+      "description": "Information about the trusted auth token factor, if one is present."
+    }
+  },
+  "required": [
+    "type",
+    "delivery_method"
+  ]
+}

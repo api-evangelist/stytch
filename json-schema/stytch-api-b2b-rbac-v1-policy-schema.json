@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_rbac_v1_Policy",
+  "title": "api_b2b_rbac_v1_Policy",
+  "type": "object",
+  "properties": {
+    "roles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_rbac_v1_PolicyRole"
+      },
+      "description": "An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object)."
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_rbac_v1_PolicyResource"
+      },
+      "description": "An array of [Resource objects](https://stytch.com/docs/b2b/api/rbac-resource-object)."
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_rbac_v1_PolicyScope"
+      },
+      "description": "An array of [Scope objects](https://stytch.com/docs/b2b/api/rbac-scope-object)."
+    }
+  },
+  "required": [
+    "roles",
+    "resources",
+    "scopes"
+  ]
+}

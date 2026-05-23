@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_email_RiskResponse",
+  "title": "api_fraud_v1_fraud_email_RiskResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "address_information": {
+      "$ref": "#/components/schemas/api_fraud_v1_AddressInformation",
+      "description": "Information about the email address."
+    },
+    "domain_information": {
+      "$ref": "#/components/schemas/api_fraud_v1_DomainInformation",
+      "description": "Information about the email domain."
+    },
+    "action": {
+      "$ref": "#/components/schemas/api_fraud_v1_RiskResponseAction",
+      "description": "The suggested action based on the attributes of the email address. The available actions are:\n  * `ALLOW` - This email is most likely safe to send to and not fraudulent.\n  * `BLOCK` - This email is invalid or exhibits signs of fraud. We recommend blocking the end user.\n  * `CHALLENGE` - This email has some potentially fraudulent attributes. We recommend increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.\n  "
+    },
+    "risk_score": {
+      "type": "integer",
+      "format": "int32",
+      "description": "A score from 0 to 100 indicating how risky the email is. 100 is the most risky."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    }
+  },
+  "required": [
+    "request_id",
+    "address_information",
+    "domain_information",
+    "action",
+    "risk_score",
+    "status_code"
+  ]
+}

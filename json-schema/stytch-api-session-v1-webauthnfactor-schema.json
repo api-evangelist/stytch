@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_WebAuthnFactor",
+  "title": "api_session_v1_WebAuthnFactor",
+  "type": "object",
+  "properties": {
+    "webauthn_registration_id": {
+      "type": "string"
+    },
+    "domain": {
+      "type": "string"
+    },
+    "user_agent": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "webauthn_registration_id",
+    "domain"
+  ]
+}

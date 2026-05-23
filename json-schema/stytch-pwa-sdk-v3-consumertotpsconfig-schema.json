@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerTOTPsConfig",
+  "title": "pwa_sdk_v3_ConsumerTOTPsConfig",
+  "type": "object",
+  "properties": {
+    "create_totps": {
+      "type": "boolean"
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "create_totps",
+    "enabled"
+  ]
+}

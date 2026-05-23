@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_SMSAutofillMetadata",
+  "title": "pwa_sdk_v3_SMSAutofillMetadata",
+  "type": "object",
+  "properties": {
+    "metadata_type": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_SMSAutofillMetadataMetadataType"
+    },
+    "metadata_value": {
+      "type": "string"
+    },
+    "bundle_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "metadata_type",
+    "metadata_value",
+    "bundle_id"
+  ]
+}

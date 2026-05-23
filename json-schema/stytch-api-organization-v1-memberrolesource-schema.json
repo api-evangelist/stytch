@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_MemberRoleSource",
+  "title": "api_organization_v1_MemberRoleSource",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of role assignment. The possible values are:\n \n  `direct_assignment` \u2013 an explicitly assigned Role.\n\n  Directly assigned roles can be updated by passing in the `roles` argument to the\n  [Update Member](https://stytch.com/docs/b2b/api/update-member) endpoint.\n \n  `email_assignment` \u2013 an implicit Role granted by the Member's email domain, regardless of their login method.\n\n  Email implicit role assignments can be updated by passing in the `rbac_email_implicit_role_assignments` argument to\n  the [Update Organization](https://stytch.com/docs/b2b/api/update-organization) endpoint.\n \n  `sso_connection` \u2013 an implicit Role granted by the Member's SSO connection. This is currently only available\n  for SAML connections and not for OIDC. If the Member has a SAML Member registration with the given connection, this\n  role assignment will appear in the list. However, for authorization check purposes (in\n  [sessions authenticate](https://stytch.com/docs/b2b/api/authenticate-session) or in any endpoint that enforces RBAC with session\n  headers), the Member will only be granted the Role if their session contains an authentication factor with the\n  specified SAML connection.\n\n  SAML connection implicit role assignments can be updated by passing in the\n  `saml_connection_implicit_role_assignments` argument to the\n  [Update SAML connection](https://stytch.com/docs/b2b/api/update-saml-connection) endpoint.\n \n  `sso_connection_group` \u2013 an implicit Role granted by the Member's SSO connection and group. This is currently only\n  available for SAML connections and not for OIDC. If the Member has a SAML Member registration with the given\n  connection, and belongs to a specific group within the IdP, this role assignment will appear in the list. However,\n  for authorization check purposes (in [sessions authenticate](https://stytch.com/docs/b2b/api/authenticate-session) or in any endpoint\n  that enforces RBAC with session headers), the Member will only be granted the role if their session contains an\n  authentication factor with the specified SAML connection.\n\n  SAML group implicit role assignments can be updated by passing in the `saml_group_implicit_role_assignments`\n  argument to the [Update SAML connection](https://stytch.com/docs/b2b/api/update-saml-connection) endpoint.\n\n    `scim_connection_group` \u2013 an implicit Role granted by the Member's SCIM connection and group. If the Member has\n  a SCIM Member registration with the given connection, and belongs to a specific group within the IdP, this role assignment will appear in the list.\n\n  SCIM group implicit role assignments can be updated by passing in the `scim_group_implicit_role_assignments`\n  argument to the [Update SCIM connection](https://stytch.com/docs/b2b/api/update-scim-connection) endpoint.\n  "
+    },
+    "details": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An object containing additional metadata about the source assignment. The fields will vary depending\n  on the role assignment type as follows:\n \n  `direct_assignment` \u2013 no additional details.\n \n  `email_assignment` \u2013 will contain the email domain that granted the assignment.\n  \n  `sso_connection` \u2013 will contain the `connection_id` of the SAML connection that granted the assignment.\n \n  `sso_connection_group` \u2013 will contain the `connection_id` of the SAML connection and the name of the `group`\n  that granted the assignment.\n \n  `scim_connection_group` \u2013 will contain the `connection_id` of the SAML connection and the `group_id`\n  that granted the assignment.\n  "
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

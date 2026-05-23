@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_SearchResponse",
+  "title": "api_organization_v1_SearchResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "organizations": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_organization_v1_Organization"
+      },
+      "description": "An array of [Organization objects](https://stytch.com/docs/b2b/api/organization-object)."
+    },
+    "results_metadata": {
+      "$ref": "#/components/schemas/api_organization_v1_ResultsMetadata",
+      "description": "The search `results_metadata` object contains metadata relevant to your specific query like `total` and `next_cursor`."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    }
+  },
+  "required": [
+    "request_id",
+    "organizations",
+    "results_metadata",
+    "status_code"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType",
+  "title": "pwa_trusted_token_profile_v3_PublicKeyType",
+  "type": "string",
+  "enum": [
+    "JWK",
+    "PEM"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_PhoneNumber",
+  "title": "api_user_v1_PhoneNumber",
+  "type": "object",
+  "properties": {
+    "phone_id": {
+      "type": "string",
+      "description": "The unique ID for the phone number."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "The phone number."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    }
+  },
+  "required": [
+    "phone_id",
+    "phone_number",
+    "verified"
+  ]
+}

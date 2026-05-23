@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_rbac_v3_SetRequest",
+  "title": "pwa_rbac_v3_SetRequest",
+  "type": "object",
+  "properties": {
+    "stytch_member": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    },
+    "stytch_admin": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    },
+    "stytch_user": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    },
+    "custom_roles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Role"
+      }
+    },
+    "custom_resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Resource"
+      }
+    },
+    "custom_scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Scope"
+      }
+    }
+  },
+  "description": "Request type"
+}

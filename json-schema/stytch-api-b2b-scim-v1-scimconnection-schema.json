@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_SCIMConnection",
+  "title": "api_b2b_scim_v1_SCIMConnection",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+    },
+    "connection_id": {
+      "type": "string",
+      "description": "The ID of the SCIM connection."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the connection. The possible values are deleted or active."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "identity_provider": {
+      "type": "string",
+      "description": "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
+    },
+    "base_url": {
+      "type": "string",
+      "description": "The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints"
+    },
+    "bearer_token_last_four": {
+      "type": "string",
+      "description": "The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to generate a new one, use the [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start)."
+    },
+    "scim_group_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments"
+      },
+      "description": "An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`."
+    },
+    "next_bearer_token_last_four": {
+      "type": "string"
+    },
+    "bearer_token_expires_at": {
+      "type": "string",
+      "description": "The bearer token expiry time."
+    },
+    "next_bearer_token_expires_at": {
+      "type": "string",
+      "description": "This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry time."
+    }
+  },
+  "required": [
+    "organization_id",
+    "connection_id",
+    "status",
+    "display_name",
+    "identity_provider",
+    "base_url",
+    "bearer_token_last_four",
+    "scim_group_implicit_role_assignments",
+    "next_bearer_token_last_four"
+  ]
+}

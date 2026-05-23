@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_UpdateRequestStatus",
+  "title": "api_m2m_v1_UpdateRequestStatus",
+  "type": "string",
+  "enum": [
+    "active",
+    "inactive"
+  ]
+}

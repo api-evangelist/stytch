@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_SetB2BConfigRequest",
+  "title": "pwa_sdk_v3_SetB2BConfigRequest",
+  "type": "object",
+  "properties": {
+    "config": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BConfig"
+    }
+  },
+  "description": "Request type"
+}

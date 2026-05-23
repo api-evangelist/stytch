@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_IPGeoProperties",
+  "title": "api_fraud_v1_IPGeoProperties",
+  "type": "object",
+  "properties": {
+    "city": {
+      "type": "string",
+      "description": "The city where the IP is located."
+    },
+    "region": {
+      "type": "string",
+      "description": "The region where the IP is located."
+    },
+    "country": {
+      "type": "string",
+      "description": "The country where the IP is located."
+    }
+  },
+  "required": [
+    "city",
+    "region",
+    "country"
+  ]
+}

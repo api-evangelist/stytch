@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_rbac_v3_Policy",
+  "title": "pwa_rbac_v3_Policy",
+  "type": "object",
+  "properties": {
+    "stytch_resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Resource"
+      }
+    },
+    "custom_roles": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Role"
+      }
+    },
+    "custom_resources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Resource"
+      }
+    },
+    "custom_scopes": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Scope"
+      }
+    },
+    "stytch_member": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    },
+    "stytch_admin": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    },
+    "stytch_user": {
+      "$ref": "#/components/schemas/pwa_rbac_v3_DefaultRole"
+    }
+  },
+  "required": [
+    "stytch_resources",
+    "custom_roles",
+    "custom_resources",
+    "custom_scopes"
+  ]
+}

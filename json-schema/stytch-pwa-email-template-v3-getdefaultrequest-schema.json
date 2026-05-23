@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_GetDefaultRequest",
+  "title": "pwa_email_template_v3_GetDefaultRequest",
+  "type": "object",
+  "properties": {},
+  "description": "Request type"
+}

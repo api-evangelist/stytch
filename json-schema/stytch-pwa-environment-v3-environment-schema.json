@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_Environment",
+  "title": "pwa_environment_v3_Environment",
+  "type": "object",
+  "properties": {
+    "environment_slug": {
+      "type": "string"
+    },
+    "project_slug": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "oauth_callback_id": {
+      "type": "string"
+    },
+    "cross_org_passwords_enabled": {
+      "type": "boolean"
+    },
+    "user_impersonation_enabled": {
+      "type": "boolean"
+    },
+    "zero_downtime_session_migration_url": {
+      "type": "string"
+    },
+    "use_custom_domain_in_magic_link_emails": {
+      "type": "boolean"
+    },
+    "user_lock_self_serve_enabled": {
+      "type": "boolean"
+    },
+    "user_lock_threshold": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "user_lock_ttl": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "idp_authorization_url": {
+      "type": "string"
+    },
+    "idp_dynamic_client_registration_enabled": {
+      "type": "boolean"
+    },
+    "idp_dynamic_client_registration_access_token_template_content": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/components/schemas/pwa_environment_v3_EnvironmentType"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "environment_slug",
+    "project_slug",
+    "name",
+    "oauth_callback_id",
+    "cross_org_passwords_enabled",
+    "user_impersonation_enabled",
+    "zero_downtime_session_migration_url",
+    "use_custom_domain_in_magic_link_emails",
+    "user_lock_self_serve_enabled",
+    "user_lock_threshold",
+    "user_lock_ttl",
+    "idp_authorization_url",
+    "idp_dynamic_client_registration_enabled",
+    "idp_dynamic_client_registration_access_token_template_content",
+    "project_id"
+  ]
+}

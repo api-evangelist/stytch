@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_oauth_v1_AttachRequest",
+  "title": "api_oauth_v1_AttachRequest",
+  "type": "object",
+  "properties": {
+    "provider": {
+      "type": "string",
+      "description": "The OAuth provider's name."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+    },
+    "session_token": {
+      "type": "string",
+      "description": "The `session_token` associated with a User's existing Session."
+    },
+    "session_jwt": {
+      "type": "string",
+      "description": "The `session_jwt` associated with a User's existing Session."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "provider"
+  ]
+}

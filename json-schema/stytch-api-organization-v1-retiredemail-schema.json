@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_RetiredEmail",
+  "title": "api_organization_v1_RetiredEmail",
+  "type": "object",
+  "properties": {
+    "email_id": {
+      "type": "string",
+      "description": "The globally unique UUID of a Member's email."
+    },
+    "email_address": {
+      "type": "string",
+      "description": "The email address of the Member."
+    }
+  },
+  "required": [
+    "email_id",
+    "email_address"
+  ]
+}

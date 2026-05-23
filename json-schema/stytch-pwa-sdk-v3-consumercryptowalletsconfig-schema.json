@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerCryptoWalletsConfig",
+  "title": "pwa_sdk_v3_ConsumerCryptoWalletsConfig",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "siwe_required": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "enabled",
+    "siwe_required"
+  ]
+}

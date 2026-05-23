@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_sso_saml_UpdateConnectionRequest",
+  "title": "api_sso_v1_sso_saml_UpdateConnectionRequest",
+  "type": "object",
+  "properties": {
+    "idp_entity_id": {
+      "type": "string",
+      "description": "A globally unique name for the IdP. This will be provided by the IdP."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "attribute_mapping": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "An object that represents the attributes used to identify a Member. This object will map the IdP-defined User attributes to Stytch-specific values. Required attributes: `email` and one of `full_name` or `first_name` and `last_name`."
+    },
+    "x509_certificate": {
+      "type": "string",
+      "description": "A certificate that Stytch will use to verify the sign-in assertion sent by the IdP, in [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format. See our [X509 guide](https://stytch.com/docs/b2b/api/saml-certificates) for more info."
+    },
+    "idp_sso_url": {
+      "type": "string",
+      "description": "The URL for which assertions for login requests will be sent. This will be provided by the IdP."
+    },
+    "saml_connection_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_SAMLConnectionImplicitRoleAssignment"
+      },
+      "description": "All Members who log in with this SAML connection will implicitly receive the specified Roles. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role assignment."
+    },
+    "saml_group_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_SAMLGroupImplicitRoleAssignment"
+      },
+      "description": "Defines the names of the SAML groups\n that grant specific role assignments. For each group-Role pair, if a Member logs in with this SAML connection and\n belongs to the specified SAML group, they will be granted the associated Role. See the\n [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role assignment. Before adding any group implicit role assignments, you must add a \"groups\" key to your SAML connection's\n         `attribute_mapping`. Make sure that your IdP is configured to correctly send the group information."
+    },
+    "alternative_audience_uri": {
+      "type": "string",
+      "description": "An alternative URL to use for the Audience Restriction. This value can be used when you wish to migrate an existing SAML integration to Stytch with zero downtime. Read our [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations) for more info."
+    },
+    "identity_provider": {
+      "$ref": "#/components/schemas/api_sso_v1_UpdateConnectionRequestIdentityProvider",
+      "description": "Name of the IdP. Enum with possible values: `classlink`, `cyberark`, `duo`, `google-workspace`, `jumpcloud`, `keycloak`, `miniorange`, `microsoft-entra`, `okta`, `onelogin`, `pingfederate`, `rippling`, `salesforce`, `shibboleth`, or `generic`.\n\nSpecifying a known provider allows Stytch to handle any provider-specific logic."
+    },
+    "signing_private_key": {
+      "type": "string",
+      "description": "A PKCS1 format RSA private key used for signing SAML requests. Only PKCS1 format (starting with \"-----BEGIN RSA PRIVATE KEY-----\") is supported. When provided, Stytch will generate a new x509 certificate from this key and return it in the signing_certificates array."
+    },
+    "nameid_format": {
+      "type": "string",
+      "description": "The NameID format the SAML Connection expects to use. Defaults to `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress`."
+    },
+    "alternative_acs_url": {
+      "type": "string",
+      "description": "An alternative URL to use for the `AssertionConsumerServiceURL` in SP initiated SAML AuthNRequests. This value can be used when you wish to migrate an existing SAML integration to Stytch with zero downtime. Note that you will be responsible for proxying requests sent to the Alternative ACS URL to Stytch. Read our [SSO migration guide](https://stytch.com/docs/b2b/guides/migrations/additional-migration-considerations) for more info."
+    },
+    "idp_initiated_auth_disabled": {
+      "type": "boolean",
+      "description": "Determines whether IDP initiated auth is allowed for a given SAML connection. Defaults to false (IDP Initiated Auth is enabled)."
+    },
+    "saml_encryption_private_key": {
+      "type": "string",
+      "description": "A PKCS1 format RSA private key used to decrypt encrypted SAML assertions. Only PKCS1 format (starting with \"-----BEGIN RSA PRIVATE KEY-----\") is supported."
+    },
+    "allow_gateway_callback": {
+      "type": "boolean"
+    }
+  },
+  "description": "Request type"
+}

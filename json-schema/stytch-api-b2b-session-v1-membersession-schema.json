@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_session_v1_MemberSession",
+  "title": "api_b2b_session_v1_MemberSession",
+  "type": "object",
+  "properties": {
+    "member_session_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Session."
+    },
+    "member_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Member."
+    },
+    "started_at": {
+      "type": "string",
+      "description": "The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "last_accessed_at": {
+      "type": "string",
+      "description": "The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+    },
+    "authentication_factors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_session_v1_AuthenticationFactor"
+      },
+      "description": "An array of different authentication factors that comprise a Session."
+    },
+    "organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value."
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "organization_slug": {
+      "type": "string",
+      "description": "The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience."
+    },
+    "custom_claims": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate call."
+    }
+  },
+  "required": [
+    "member_session_id",
+    "member_id",
+    "started_at",
+    "last_accessed_at",
+    "expires_at",
+    "authentication_factors",
+    "organization_id",
+    "roles",
+    "organization_slug"
+  ]
+}

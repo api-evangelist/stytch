@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_TemplateType",
+  "title": "pwa_email_template_v3_TemplateType",
+  "type": "string",
+  "enum": [
+    "LOGIN",
+    "SIGNUP",
+    "INVITE",
+    "RESET_PASSWORD",
+    "ONE_TIME_PASSCODE",
+    "ONE_TIME_PASSCODE_SIGNUP",
+    "VERIFY_EMAIL_PASSWORD_RESET",
+    "UNLOCK",
+    "PREBUILT"
+  ]
+}

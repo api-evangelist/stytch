@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_verdict_reasons_OverrideRequest",
+  "title": "api_fraud_v1_fraud_verdict_reasons_OverrideRequest",
+  "type": "object",
+  "properties": {
+    "verdict_reason": {
+      "type": "string",
+      "description": "The verdict reason that you wish to override. For a list of possible reasons to override, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons). You may not override the `RULE_MATCH` reason."
+    },
+    "override_action": {
+      "$ref": "#/components/schemas/api_fraud_v1_OverrideRequestAction",
+      "description": "The action that you want to be returned for the specified verdict reason. The override action must be one of `ALLOW`, `BLOCK`, or `CHALLENGE`."
+    },
+    "override_description": {
+      "type": "string",
+      "description": "An optional description for the verdict reason override."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "verdict_reason",
+    "override_action"
+  ]
+}

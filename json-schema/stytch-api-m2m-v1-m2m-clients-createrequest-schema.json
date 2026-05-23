@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_m2m_v1_m2m_clients_CreateRequest",
+  "title": "api_m2m_v1_m2m_clients_CreateRequest",
+  "type": "object",
+  "properties": {
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of scopes assigned to the client."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "If provided, the ID of the client to create. If not provided, Stytch will generate this value for you. The `client_id` must be unique within your project."
+    },
+    "client_secret": {
+      "type": "string",
+      "description": "If provided, the stored secret of the client to create. If not provided, Stytch will generate this value for you. If provided, the `client_secret` must be at least 8 characters long and pass entropy requirements."
+    },
+    "client_name": {
+      "type": "string",
+      "description": "A human-readable name for the client."
+    },
+    "client_description": {
+      "type": "string",
+      "description": "A human-readable description for the client."
+    },
+    "trusted_metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "scopes"
+  ]
+}

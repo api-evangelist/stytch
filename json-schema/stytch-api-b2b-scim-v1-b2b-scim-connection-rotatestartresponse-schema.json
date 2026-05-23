@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse",
+  "title": "api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    },
+    "connection": {
+      "$ref": "#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithNextToken",
+      "description": "The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object)."
+    }
+  },
+  "required": [
+    "request_id",
+    "status_code"
+  ]
+}

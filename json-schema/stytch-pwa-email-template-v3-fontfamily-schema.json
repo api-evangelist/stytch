@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_FontFamily",
+  "title": "pwa_email_template_v3_FontFamily",
+  "type": "string",
+  "enum": [
+    "ARIAL",
+    "BRUSH_SCRIPT_MT",
+    "COURIER_NEW",
+    "GEORGIA",
+    "HELVETICA",
+    "TAHOMA",
+    "TIMES_NEW_ROMAN",
+    "TREBUCHET_MS",
+    "VERDANA"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_rbac_v3_Scope",
+  "title": "pwa_rbac_v3_Scope",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_rbac_v3_Permission"
+      }
+    }
+  },
+  "required": [
+    "scope",
+    "description",
+    "permissions"
+  ]
+}

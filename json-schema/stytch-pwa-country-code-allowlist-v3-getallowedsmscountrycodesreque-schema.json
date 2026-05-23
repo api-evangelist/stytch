@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesRequest",
+  "title": "pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesRequest",
+  "type": "object",
+  "properties": {},
+  "description": "Request type"
+}

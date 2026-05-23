@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_DeleteExternalIdResponse",
+  "title": "api_organization_v1_DeleteExternalIdResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "organization": {
+      "$ref": "#/components/schemas/api_organization_v1_Organization"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "organization",
+    "status_code"
+  ]
+}

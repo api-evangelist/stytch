@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_idp_v1_idp_oauth_AuthorizeRequest",
+  "title": "api_idp_v1_idp_oauth_AuthorizeRequest",
+  "type": "object",
+  "properties": {
+    "consent_granted": {
+      "type": "boolean",
+      "description": "Indicates whether the user granted the requested scopes."
+    },
+    "scopes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "An array of scopes requested by the client."
+    },
+    "client_id": {
+      "type": "string",
+      "description": "The ID of the Connected App client."
+    },
+    "redirect_uri": {
+      "type": "string",
+      "description": "The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant."
+    },
+    "response_type": {
+      "type": "string",
+      "description": "The OAuth 2.0 response type. For authorization code flows this value is `code`."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+    },
+    "session_token": {
+      "type": "string",
+      "description": "The `session_token` associated with a User's existing Session."
+    },
+    "session_jwt": {
+      "type": "string",
+      "description": "The `session_jwt` associated with a User's existing Session."
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today."
+    },
+    "state": {
+      "type": "string",
+      "description": "An opaque value used to maintain state between the request and callback."
+    },
+    "nonce": {
+      "type": "string",
+      "description": "A string used to associate a client session with an ID token to mitigate replay attacks."
+    },
+    "code_challenge": {
+      "type": "string",
+      "description": "A base64url encoded challenge derived from the code verifier for PKCE flows."
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "consent_granted",
+    "scopes",
+    "client_id",
+    "redirect_uri",
+    "response_type"
+  ]
+}

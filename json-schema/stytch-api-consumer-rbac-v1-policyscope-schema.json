@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_consumer_rbac_v1_PolicyScope",
+  "title": "api_consumer_rbac_v1_PolicyScope",
+  "type": "object",
+  "properties": {
+    "scope": {
+      "type": "string",
+      "description": "The unique identifier of the RBAC Scope, provided by the developer and intended to be human-readable."
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the RBAC Scope."
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_consumer_rbac_v1_PolicyScopePermission"
+      },
+      "description": "A list of permissions that link a [Resource](https://stytch.com/docs/api/rbac-resource-object) to a list of actions."
+    }
+  },
+  "required": [
+    "scope",
+    "description",
+    "permissions"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_X509Certificate",
+  "title": "api_sso_v1_X509Certificate",
+  "type": "object",
+  "properties": {
+    "certificate_id": {
+      "type": "string",
+      "description": "The ID of the certificate."
+    },
+    "certificate": {
+      "type": "string",
+      "description": "The certificate, in [PEM](https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail) format."
+    },
+    "issuer": {
+      "type": "string",
+      "description": "The issuer of the certificate. For signing certificates, this value will be \"Stytch\"."
+    },
+    "created_at": {
+      "type": "string",
+      "description": "A timestamp that indicates when the certificate was created."
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "A timestamp that indicates when the certificate will expire."
+    },
+    "updated_at": {
+      "type": "string",
+      "description": "A timestamp that indicates when the certificate was updated."
+    }
+  },
+  "required": [
+    "certificate_id",
+    "certificate",
+    "issuer"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_application_v3_CreateRequest",
+  "title": "pwa_application_v3_CreateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "vertical": {
+      "$ref": "#/components/schemas/api_attribute_v1_Vertical"
+    },
+    "project_slug": {
+      "type": "string"
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "name"
+  ]
+}

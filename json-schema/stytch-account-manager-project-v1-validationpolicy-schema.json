@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/account_manager_project_v1_ValidationPolicy",
+  "title": "account_manager_project_v1_ValidationPolicy",
+  "type": "string",
+  "enum": [
+    "ZXCVBN",
+    "LUDS"
+  ]
+}

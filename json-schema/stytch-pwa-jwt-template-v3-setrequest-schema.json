@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_jwt_template_v3_SetRequest",
+  "title": "pwa_jwt_template_v3_SetRequest",
+  "type": "object",
+  "properties": {
+    "template_content": {
+      "type": "string"
+    },
+    "custom_audience": {
+      "type": "string"
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "template_content",
+    "custom_audience"
+  ]
+}

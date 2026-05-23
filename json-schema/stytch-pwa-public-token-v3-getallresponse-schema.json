@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_public_token_v3_GetAllResponse",
+  "title": "pwa_public_token_v3_GetAllResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "public_tokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_public_token_v3_PublicToken"
+      }
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "public_tokens",
+    "status_code"
+  ]
+}

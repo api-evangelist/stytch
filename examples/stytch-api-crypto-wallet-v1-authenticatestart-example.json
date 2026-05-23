@@ -1,0 +1,42 @@
+{
+  "operationId": "api_crypto_wallet_v1_AuthenticateStart",
+  "method": "POST",
+  "path": "/v1/crypto_wallets/authenticate/start",
+  "summary": "Authenticatestart",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "401",
+      "contentType": "application/json",
+      "example": {
+        "status_code": 401,
+        "request_id": "request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141",
+        "error_type": "unauthorized_credentials",
+        "error_message": "Unauthorized credentials.",
+        "error_url": "https://stytch.com/docs/api/errors/401"
+      }
+    },
+    {
+      "status": "429",
+      "contentType": "application/json",
+      "example": {
+        "status_code": 429,
+        "request_id": "request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141",
+        "error_type": "too_many_requests",
+        "error_message": "Too many requests have been made.",
+        "error_url": "https://stytch.com/docs/api/errors/429"
+      }
+    },
+    {
+      "status": "500",
+      "contentType": "application/json",
+      "example": {
+        "status_code": 500,
+        "request_id": "request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141",
+        "error_type": "internal_server_error",
+        "error_message": "Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.",
+        "error_url": "https://stytch.com/docs/api/errors/500"
+      }
+    }
+  ]
+}

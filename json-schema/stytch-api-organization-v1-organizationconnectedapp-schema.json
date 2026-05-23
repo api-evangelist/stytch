@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_OrganizationConnectedApp",
+  "title": "api_organization_v1_OrganizationConnectedApp",
+  "type": "object",
+  "properties": {
+    "connected_app_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "client_type": {
+      "type": "string"
+    },
+    "logo_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connected_app_id",
+    "name",
+    "description",
+    "client_type"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_WebAuthnRegistration",
+  "title": "api_user_v1_WebAuthnRegistration",
+  "type": "object",
+  "properties": {
+    "webauthn_registration_id": {
+      "type": "string",
+      "description": "The unique ID for the Passkey or WebAuthn registration."
+    },
+    "domain": {
+      "type": "string",
+      "description": "The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app."
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "The user agent of the User."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    },
+    "authenticator_type": {
+      "type": "string",
+      "description": "The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are \"platform\" and \"cross-platform\". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference."
+    },
+    "name": {
+      "type": "string",
+      "description": "The `name` of the Passkey or WebAuthn registration."
+    }
+  },
+  "required": [
+    "webauthn_registration_id",
+    "domain",
+    "user_agent",
+    "verified",
+    "authenticator_type",
+    "name"
+  ]
+}

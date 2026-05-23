@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_RevokeRequest",
+  "title": "api_session_v1_RevokeRequest",
+  "type": "object",
+  "properties": {
+    "session_id": {
+      "type": "string",
+      "description": "The `session_id` to revoke."
+    },
+    "session_token": {
+      "type": "string",
+      "description": "The session token to revoke."
+    },
+    "session_jwt": {
+      "type": "string",
+      "description": "A JWT for the session to revoke."
+    }
+  },
+  "description": "Request type"
+}

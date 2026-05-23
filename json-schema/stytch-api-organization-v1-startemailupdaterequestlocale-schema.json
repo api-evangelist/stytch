@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_StartEmailUpdateRequestLocale",
+  "title": "api_organization_v1_StartEmailUpdateRequestLocale",
+  "type": "string",
+  "enum": [
+    "en",
+    "es",
+    "pt-br",
+    "fr"
+  ]
+}

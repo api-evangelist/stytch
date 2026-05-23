@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_totp_v1_RecoveryCodesRequest",
+  "title": "api_totp_v1_RecoveryCodesRequest",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "user_id"
+  ]
+}

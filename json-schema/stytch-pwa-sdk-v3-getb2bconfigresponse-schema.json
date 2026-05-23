@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_GetB2BConfigResponse",
+  "title": "pwa_sdk_v3_GetB2BConfigResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "config": {
+      "$ref": "#/components/schemas/pwa_sdk_v3_B2BConfig"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "config",
+    "status_code"
+  ]
+}

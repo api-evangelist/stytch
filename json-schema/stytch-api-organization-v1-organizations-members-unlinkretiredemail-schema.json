@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_organizations_members_UnlinkRetiredEmailRequest",
+  "title": "api_organization_v1_organizations_members_UnlinkRetiredEmailRequest",
+  "type": "object",
+  "properties": {
+    "email_id": {
+      "type": "string",
+      "description": "The globally unique UUID of a Member's email."
+    },
+    "email_address": {
+      "type": "string",
+      "description": "The email address of the Member."
+    }
+  },
+  "description": "Request type"
+}

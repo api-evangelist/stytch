@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_b2b_mfa_v1_MemberOptions",
+  "title": "api_b2b_mfa_v1_MemberOptions",
+  "type": "object",
+  "properties": {
+    "mfa_phone_number": {
+      "type": "string",
+      "description": "The Member's MFA phone number."
+    },
+    "totp_registration_id": {
+      "type": "string",
+      "description": "The Member's MFA TOTP registration ID."
+    }
+  },
+  "required": [
+    "mfa_phone_number",
+    "totp_registration_id"
+  ]
+}

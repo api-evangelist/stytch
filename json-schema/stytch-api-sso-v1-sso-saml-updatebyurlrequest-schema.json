@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_sso_saml_UpdateByURLRequest",
+  "title": "api_sso_v1_sso_saml_UpdateByURLRequest",
+  "type": "object",
+  "properties": {
+    "metadata_url": {
+      "type": "string",
+      "description": "A URL that points to the IdP metadata. This will be provided by the IdP."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "metadata_url"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_project_v1_ProjectMetric",
+  "title": "api_project_v1_ProjectMetric",
+  "type": "object",
+  "properties": {
+    "metric_type": {
+      "$ref": "#/components/schemas/api_project_v1_ProjectMetricMetricType"
+    },
+    "count": {
+      "type": "integer",
+      "format": "int32",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "metric_type",
+    "count"
+  ]
+}

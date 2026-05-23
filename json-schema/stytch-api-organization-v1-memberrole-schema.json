@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_MemberRole",
+  "title": "api_organization_v1_MemberRole",
+  "type": "object",
+  "properties": {
+    "role_id": {
+      "type": "string",
+      "description": "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_organization_v1_MemberRoleSource"
+      },
+      "description": "A list of sources for this role assignment. A role assignment can come from multiple sources - for example, the Role could be both explicitly assigned and implicitly granted from the Member's email domain."
+    }
+  },
+  "required": [
+    "role_id",
+    "sources"
+  ]
+}

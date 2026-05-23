@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_OAuthProvider",
+  "title": "api_user_v1_OAuthProvider",
+  "type": "object",
+  "properties": {
+    "provider_type": {
+      "type": "string",
+      "description": "Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc."
+    },
+    "provider_subject": {
+      "type": "string",
+      "description": "The unique identifier for the User within a given OAuth provider. Also commonly called the \"sub\" or \"Subject field\" in OAuth protocols."
+    },
+    "profile_picture_url": {
+      "type": "string",
+      "description": "If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture."
+    },
+    "locale": {
+      "type": "string",
+      "description": "If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with."
+    },
+    "oauth_user_registration_id": {
+      "type": "string",
+      "description": "The unique ID for an OAuth registration."
+    }
+  },
+  "required": [
+    "provider_type",
+    "provider_subject",
+    "profile_picture_url",
+    "locale",
+    "oauth_user_registration_id"
+  ]
+}

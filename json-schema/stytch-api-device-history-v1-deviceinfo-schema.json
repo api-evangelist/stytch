@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_device_history_v1_DeviceInfo",
+  "title": "api_device_history_v1_DeviceInfo",
+  "type": "object",
+  "properties": {
+    "visitor_id": {
+      "type": "string",
+      "description": "The `visitor_id` (a unique identifier) of the user's device. See the [Device Fingerprinting documentation](https://stytch.com/docs/fraud/guides/device-fingerprinting/fingerprints) for more details on the `visitor_id`."
+    },
+    "visitor_id_details": {
+      "$ref": "#/components/schemas/api_device_history_v1_DeviceAttributeDetails",
+      "description": "Information about the `visitor_id`."
+    },
+    "ip_address": {
+      "type": "string",
+      "description": "The IP address of the user's device."
+    },
+    "ip_address_details": {
+      "$ref": "#/components/schemas/api_device_history_v1_DeviceAttributeDetails",
+      "description": "Information about the `ip_address`."
+    },
+    "ip_geo_city": {
+      "type": "string",
+      "description": "The city where the IP address is located."
+    },
+    "ip_geo_region": {
+      "type": "string",
+      "description": "The region where the IP address is located."
+    },
+    "ip_geo_country": {
+      "type": "string",
+      "description": "The country code where the IP address is located."
+    },
+    "ip_geo_country_details": {
+      "$ref": "#/components/schemas/api_device_history_v1_DeviceAttributeDetails",
+      "description": "Information about the `ip_geo_country`."
+    }
+  },
+  "required": [
+    "visitor_id"
+  ]
+}

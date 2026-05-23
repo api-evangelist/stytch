@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_GetMetricsResponse",
+  "title": "pwa_environment_v3_GetMetricsResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "metrics": {
+      "$ref": "#/components/schemas/pwa_environment_v3_Metrics"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "metrics",
+    "status_code"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_GetMetricsRequest",
+  "title": "pwa_environment_v3_GetMetricsRequest",
+  "type": "object",
+  "properties": {},
+  "description": "Request type"
+}

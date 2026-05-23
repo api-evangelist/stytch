@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_EnvironmentType",
+  "title": "pwa_environment_v3_EnvironmentType",
+  "type": "string",
+  "enum": [
+    "LIVE",
+    "TEST"
+  ]
+}

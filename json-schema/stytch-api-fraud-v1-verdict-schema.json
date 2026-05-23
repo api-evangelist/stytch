@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_Verdict",
+  "title": "api_fraud_v1_Verdict",
+  "type": "object",
+  "properties": {
+    "action": {
+      "$ref": "#/components/schemas/api_fraud_v1_VerdictAction",
+      "description": "The suggested action based on the fingerprint review. The available actions are:\n  * `ALLOW` - This is a known valid device grouping or device profile that is part of the default ALLOW listed set of known devices by Stytch. This grouping is made up of verified device profiles that match the characteristics of known/authentic traffic origins\n  * `BLOCK` - This is a known bad or malicious device profile that is undesirable and should be blocked from completing the privileged action in question\n  * `CHALLENGE` - This is an unknown or potentially malicious device that should be put through increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed\n  "
+    },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A set of contextual clues to inform why a `CHALLENGE` or `BLOCK` action was suggested. For a list of possible Reasons, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons)."
+    },
+    "detected_device_type": {
+      "type": "string",
+      "description": "The operating system and architecture that took the fingerprint."
+    },
+    "is_authentic_device": {
+      "type": "boolean",
+      "description": "The assessment of whether this is an authentic device. It will be false if hardware or browser deception is detected."
+    },
+    "verdict_reason_overrides": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_fraud_v1_VerdictReasonOverride"
+      },
+      "description": "A list of verdict reason overrides that were applied, if any."
+    },
+    "rule_match_type": {
+      "$ref": "#/components/schemas/api_fraud_v1_RuleType",
+      "description": "The type of rule match that was applied (e.g. `VISITOR_ID`), if any. This field will only be present if there is a `RULE_MATCH` reason in the list of verdict reasons."
+    },
+    "rule_match_identifier": {
+      "type": "string",
+      "description": "The rule that was applied (e.g. a specific visitor ID value), if any. This field will only be present if there is a `RULE_MATCH` reason in the list of verdict reasons."
+    }
+  },
+  "required": [
+    "action",
+    "reasons",
+    "detected_device_type",
+    "is_authentic_device",
+    "verdict_reason_overrides"
+  ]
+}

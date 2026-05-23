@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_redirect_url_v3_UrlType",
+  "title": "pwa_redirect_url_v3_UrlType",
+  "type": "object",
+  "properties": {
+    "is_default": {
+      "type": "boolean"
+    },
+    "type": {
+      "$ref": "#/components/schemas/pwa_redirect_url_v3_RedirectUrlType"
+    }
+  },
+  "required": [
+    "is_default"
+  ]
+}

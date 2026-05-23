@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_webauthn_v1_UpdateRequest",
+  "title": "api_webauthn_v1_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The `name` of the WebAuthn registration or Passkey."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "name"
+  ]
+}

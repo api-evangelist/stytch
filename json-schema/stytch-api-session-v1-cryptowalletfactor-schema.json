@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_CryptoWalletFactor",
+  "title": "api_session_v1_CryptoWalletFactor",
+  "type": "object",
+  "properties": {
+    "crypto_wallet_id": {
+      "type": "string"
+    },
+    "crypto_wallet_address": {
+      "type": "string"
+    },
+    "crypto_wallet_type": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "crypto_wallet_id",
+    "crypto_wallet_address",
+    "crypto_wallet_type"
+  ]
+}

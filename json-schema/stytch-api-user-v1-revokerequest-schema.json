@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_RevokeRequest",
+  "title": "api_user_v1_RevokeRequest",
+  "type": "object",
+  "properties": {},
+  "description": "Request type"
+}

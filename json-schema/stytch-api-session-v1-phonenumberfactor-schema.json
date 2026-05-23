@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_PhoneNumberFactor",
+  "title": "api_session_v1_PhoneNumberFactor",
+  "type": "object",
+  "properties": {
+    "phone_id": {
+      "type": "string",
+      "description": "The globally unique UUID of the Member's phone number."
+    },
+    "phone_number": {
+      "type": "string",
+      "description": "The phone number of the Member."
+    }
+  },
+  "required": [
+    "phone_id",
+    "phone_number"
+  ]
+}

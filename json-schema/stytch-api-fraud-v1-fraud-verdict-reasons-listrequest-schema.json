@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_fraud_verdict_reasons_ListRequest",
+  "title": "api_fraud_v1_fraud_verdict_reasons_ListRequest",
+  "type": "object",
+  "properties": {
+    "overrides_only": {
+      "type": "boolean",
+      "description": "Whether to return only verdict reasons that have overrides set. Defaults to false."
+    }
+  },
+  "description": "Request type"
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_BiometricRegistration",
+  "title": "api_user_v1_BiometricRegistration",
+  "type": "object",
+  "properties": {
+    "biometric_registration_id": {
+      "type": "string",
+      "description": "The unique ID for a biometric registration."
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User."
+    }
+  },
+  "required": [
+    "biometric_registration_id",
+    "verified"
+  ]
+}

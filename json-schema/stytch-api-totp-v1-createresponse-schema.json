@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_totp_v1_CreateResponse",
+  "title": "api_totp_v1_CreateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "totp_id": {
+      "type": "string",
+      "description": "The unique ID for a TOTP instance."
+    },
+    "secret": {
+      "type": "string",
+      "description": "The TOTP secret key shared between the authenticator app and the server used to generate TOTP codes."
+    },
+    "qr_code": {
+      "type": "string",
+      "description": "The QR code image encoded in base64."
+    },
+    "recovery_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "The recovery codes used to authenticate the user without an authenticator app."
+    },
+    "user": {
+      "$ref": "#/components/schemas/api_user_v1_User",
+      "description": "The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of the affected User."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    }
+  },
+  "required": [
+    "request_id",
+    "totp_id",
+    "secret",
+    "qr_code",
+    "recovery_codes",
+    "user",
+    "user_id",
+    "status_code"
+  ]
+}

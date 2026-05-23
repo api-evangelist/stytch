@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_connectedapps_v1_connected_apps_clients_DeleteResponse",
+  "title": "api_connectedapps_v1_connected_apps_clients_DeleteResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string",
+      "description": "The ID of the client."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "client_id",
+    "status_code"
+  ]
+}

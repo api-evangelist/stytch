@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_EncryptionPrivateKey",
+  "title": "api_sso_v1_EncryptionPrivateKey",
+  "type": "object",
+  "properties": {
+    "private_key_id": {
+      "type": "string"
+    },
+    "private_key": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "private_key_id",
+    "private_key"
+  ]
+}

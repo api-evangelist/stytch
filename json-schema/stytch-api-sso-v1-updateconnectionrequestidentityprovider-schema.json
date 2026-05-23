@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_UpdateConnectionRequestIdentityProvider",
+  "title": "api_sso_v1_UpdateConnectionRequestIdentityProvider",
+  "type": "string",
+  "enum": [
+    "classlink",
+    "cyberark",
+    "duo",
+    "generic",
+    "google-workspace",
+    "jumpcloud",
+    "keycloak",
+    "miniorange",
+    "microsoft-entra",
+    "okta",
+    "onelogin",
+    "pingfederate",
+    "rippling",
+    "salesforce",
+    "shibboleth"
+  ]
+}

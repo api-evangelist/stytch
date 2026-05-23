@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_user_v1_UpdateResponse",
+  "title": "api_user_v1_UpdateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string",
+      "description": "Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue."
+    },
+    "user_id": {
+      "type": "string",
+      "description": "The unique ID of the updated User."
+    },
+    "emails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_Email"
+      },
+      "description": "An array of email objects for the User."
+    },
+    "phone_numbers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_PhoneNumber"
+      },
+      "description": "An array of phone number objects linked to the User."
+    },
+    "crypto_wallets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_user_v1_CryptoWallet"
+      },
+      "description": "An array contains a list of all crypto wallets for a given User in the Stytch API."
+    },
+    "user": {
+      "$ref": "#/components/schemas/api_user_v1_User",
+      "description": "The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details."
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors."
+    }
+  },
+  "required": [
+    "request_id",
+    "user_id",
+    "emails",
+    "phone_numbers",
+    "crypto_wallets",
+    "user",
+    "status_code"
+  ]
+}

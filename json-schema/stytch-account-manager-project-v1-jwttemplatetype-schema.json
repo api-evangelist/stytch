@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/account_manager_project_v1_JWTTemplateType",
+  "title": "account_manager_project_v1_JWTTemplateType",
+  "type": "string",
+  "enum": [
+    "SESSION",
+    "M2M"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_project_v1_ProjectMetricMetricType",
+  "title": "api_project_v1_ProjectMetricMetricType",
+  "type": "string",
+  "enum": [
+    "UNKNOWN",
+    "USER_COUNT",
+    "ORGANIZATION_COUNT",
+    "MEMBER_COUNT",
+    "M2M_CLIENT_COUNT"
+  ]
+}

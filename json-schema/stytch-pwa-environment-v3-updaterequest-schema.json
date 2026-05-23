@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_environment_v3_UpdateRequest",
+  "title": "pwa_environment_v3_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "cross_org_passwords_enabled": {
+      "type": "boolean"
+    },
+    "user_impersonation_enabled": {
+      "type": "boolean"
+    },
+    "zero_downtime_session_migration_url": {
+      "type": "string"
+    },
+    "use_custom_domain_in_magic_link_emails": {
+      "type": "boolean"
+    },
+    "user_lock_self_serve_enabled": {
+      "type": "boolean"
+    },
+    "user_lock_threshold": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "user_lock_ttl": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "idp_authorization_url": {
+      "type": "string"
+    },
+    "idp_dynamic_client_registration_enabled": {
+      "type": "boolean"
+    },
+    "idp_dynamic_client_registration_access_token_template_content": {
+      "type": "string"
+    }
+  },
+  "description": "Request type"
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_sso_external_CreateConnectionRequest",
+  "title": "api_sso_v1_sso_external_CreateConnectionRequest",
+  "type": "object",
+  "properties": {
+    "external_organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a different Organization within your Project."
+    },
+    "external_connection_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific SSO connection configured for a different Organization in your Project."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "connection_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_SAMLConnectionImplicitRoleAssignment"
+      }
+    },
+    "group_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_SAMLGroupImplicitRoleAssignment"
+      }
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "external_organization_id",
+    "external_connection_id"
+  ]
+}

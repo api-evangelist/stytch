@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_SCIMRegistration",
+  "title": "api_organization_v1_SCIMRegistration",
+  "type": "object",
+  "properties": {
+    "connection_id": {
+      "type": "string",
+      "description": "The ID of the SCIM connection."
+    },
+    "registration_id": {
+      "type": "string",
+      "description": "The unique ID of a SCIM Registration."
+    },
+    "external_id": {
+      "type": "string",
+      "description": "The ID of the member given by the identity provider."
+    },
+    "scim_attributes": {
+      "$ref": "#/components/schemas/api_b2b_scim_v1_SCIMAttributes",
+      "description": "An object for storing SCIM attributes brought over from the identity provider."
+    }
+  },
+  "required": [
+    "connection_id",
+    "registration_id"
+  ]
+}

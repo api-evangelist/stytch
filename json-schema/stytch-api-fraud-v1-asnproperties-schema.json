@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_fraud_v1_ASNProperties",
+  "title": "api_fraud_v1_ASNProperties",
+  "type": "object",
+  "properties": {
+    "asn": {
+      "type": "string",
+      "description": "The Autonomous System Number of the user's network."
+    },
+    "name": {
+      "type": "string",
+      "description": "Public name associated with the ASN."
+    },
+    "network": {
+      "type": "string",
+      "description": "The CIDR block associated with the ASN."
+    }
+  },
+  "required": [
+    "asn",
+    "name",
+    "network"
+  ]
+}

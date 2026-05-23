@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_CreateResponse",
+  "title": "pwa_event_log_streaming_v3_CreateResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "event_log_streaming_config": {
+      "$ref": "#/components/schemas/pwa_event_log_streaming_v3_EventLogStreaming"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "description": "Response type",
+  "required": [
+    "request_id",
+    "event_log_streaming_config",
+    "status_code"
+  ]
+}

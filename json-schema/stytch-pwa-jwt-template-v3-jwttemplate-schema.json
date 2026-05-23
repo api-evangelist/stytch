@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_jwt_template_v3_JWTTemplate",
+  "title": "pwa_jwt_template_v3_JWTTemplate",
+  "type": "object",
+  "properties": {
+    "template_content": {
+      "type": "string"
+    },
+    "custom_audience": {
+      "type": "string"
+    },
+    "jwt_template_type": {
+      "$ref": "#/components/schemas/account_manager_project_v1_JWTTemplateType"
+    }
+  },
+  "required": [
+    "template_content",
+    "custom_audience"
+  ]
+}

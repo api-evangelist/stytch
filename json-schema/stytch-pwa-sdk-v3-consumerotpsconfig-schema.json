@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_ConsumerOTPsConfig",
+  "title": "pwa_sdk_v3_ConsumerOTPsConfig",
+  "type": "object",
+  "properties": {
+    "sms_login_or_create_enabled": {
+      "type": "boolean"
+    },
+    "whatsapp_login_or_create_enabled": {
+      "type": "boolean"
+    },
+    "email_login_or_create_enabled": {
+      "type": "boolean"
+    },
+    "sms_send_enabled": {
+      "type": "boolean"
+    },
+    "whatsapp_send_enabled": {
+      "type": "boolean"
+    },
+    "email_send_enabled": {
+      "type": "boolean"
+    },
+    "sms_autofill_metadata": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/pwa_sdk_v3_SMSAutofillMetadata"
+      }
+    }
+  },
+  "required": [
+    "sms_login_or_create_enabled",
+    "whatsapp_login_or_create_enabled",
+    "email_login_or_create_enabled",
+    "sms_send_enabled",
+    "whatsapp_send_enabled",
+    "email_send_enabled",
+    "sms_autofill_metadata"
+  ]
+}

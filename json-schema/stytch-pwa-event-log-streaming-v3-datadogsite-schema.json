@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_event_log_streaming_v3_DatadogSite",
+  "title": "pwa_event_log_streaming_v3_DatadogSite",
+  "type": "string",
+  "enum": [
+    "US",
+    "US3",
+    "US5",
+    "EU",
+    "AP1"
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_organizations_members_DeleteExternalIdResponse",
+  "title": "api_organization_v1_organizations_members_DeleteExternalIdResponse",
+  "type": "object",
+  "properties": {
+    "request_id": {
+      "type": "string"
+    },
+    "member_id": {
+      "type": "string"
+    },
+    "member": {
+      "$ref": "#/components/schemas/api_organization_v1_Member"
+    },
+    "organization": {
+      "$ref": "#/components/schemas/api_organization_v1_Organization"
+    },
+    "status_code": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "required": [
+    "request_id",
+    "member_id",
+    "member",
+    "organization",
+    "status_code"
+  ]
+}

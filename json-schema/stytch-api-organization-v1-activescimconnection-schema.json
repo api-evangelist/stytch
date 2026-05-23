@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_organization_v1_ActiveSCIMConnection",
+  "title": "api_organization_v1_ActiveSCIMConnection",
+  "type": "object",
+  "properties": {
+    "connection_id": {
+      "type": "string",
+      "description": "The ID of the SCIM connection."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "bearer_token_last_four": {
+      "type": "string"
+    },
+    "bearer_token_expires_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "connection_id",
+    "display_name",
+    "bearer_token_last_four"
+  ]
+}

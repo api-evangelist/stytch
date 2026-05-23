@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_trusted_token_profile_v3_UpdateRequest",
+  "title": "pwa_trusted_token_profile_v3_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "jwks_url": {
+      "type": "string"
+    },
+    "attribute_mapping": {
+      "type": "string"
+    },
+    "can_jit_provision": {
+      "type": "boolean"
+    }
+  },
+  "description": "Request type"
+}

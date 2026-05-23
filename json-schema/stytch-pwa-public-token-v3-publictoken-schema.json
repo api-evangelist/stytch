@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_public_token_v3_PublicToken",
+  "title": "pwa_public_token_v3_PublicToken",
+  "type": "object",
+  "properties": {
+    "public_token": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "public_token"
+  ]
+}

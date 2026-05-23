@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_JWK",
+  "title": "api_session_v1_JWK",
+  "type": "object",
+  "properties": {
+    "kty": {
+      "type": "string"
+    },
+    "use": {
+      "type": "string"
+    },
+    "key_ops": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "alg": {
+      "type": "string"
+    },
+    "kid": {
+      "type": "string"
+    },
+    "x5c": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "x5tS256": {
+      "type": "string"
+    },
+    "n": {
+      "type": "string"
+    },
+    "e": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "kty",
+    "use",
+    "key_ops",
+    "alg",
+    "kid",
+    "x5c",
+    "x5tS256",
+    "n",
+    "e"
+  ]
+}

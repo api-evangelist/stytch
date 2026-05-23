@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_sdk_v3_DFPPASetting",
+  "title": "pwa_sdk_v3_DFPPASetting",
+  "type": "string",
+  "enum": [
+    "ENABLED",
+    "PASSIVE",
+    "DISABLED"
+  ]
+}

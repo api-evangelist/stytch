@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_sso_v1_Connection",
+  "title": "api_sso_v1_Connection",
+  "type": "object",
+  "properties": {
+    "organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+    },
+    "connection_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific External SSO Connection."
+    },
+    "external_organization_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a different Organization within your Project."
+    },
+    "external_connection_id": {
+      "type": "string",
+      "description": "Globally unique UUID that identifies a specific SSO connection configured for a different Organization in your Project."
+    },
+    "display_name": {
+      "type": "string",
+      "description": "A human-readable display name for the connection."
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the connection. External connections are always active."
+    },
+    "external_connection_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_ConnectionImplicitRoleAssignment"
+      },
+      "description": "All Members who log in with this External connection will implicitly receive the specified Roles. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role assignment. Implicit role assignments are not supported for External connections if the underlying SSO connection is an OIDC connection. "
+    },
+    "external_group_implicit_role_assignments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/api_sso_v1_GroupImplicitRoleAssignment"
+      },
+      "description": "Defines the names of the groups\n that grant specific role assignments. For each group-Role pair, if a Member logs in with this external connection and\n belongs to the specified group, they will be granted the associated Role. See the\n [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role assignment."
+    }
+  },
+  "required": [
+    "organization_id",
+    "connection_id",
+    "external_organization_id",
+    "external_connection_id",
+    "display_name",
+    "status",
+    "external_connection_implicit_role_assignments",
+    "external_group_implicit_role_assignments"
+  ]
+}

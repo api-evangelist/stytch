@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_session_v1_GithubOAuthFactor",
+  "title": "api_session_v1_GithubOAuthFactor",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The unique ID of an OAuth registration."
+    },
+    "provider_subject": {
+      "type": "string",
+      "description": "The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or \"Subject field\" in OAuth protocols."
+    },
+    "email_id": {
+      "type": "string",
+      "description": "The globally unique UUID of the Member's email."
+    }
+  },
+  "required": [
+    "id",
+    "provider_subject"
+  ]
+}

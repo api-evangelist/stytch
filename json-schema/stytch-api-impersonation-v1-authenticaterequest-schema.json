@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/api_impersonation_v1_AuthenticateRequest",
+  "title": "api_impersonation_v1_AuthenticateRequest",
+  "type": "object",
+  "properties": {
+    "impersonation_token": {
+      "type": "string",
+      "description": "The User Impersonation token to authenticate. Expires in 5 minutes by default."
+    }
+  },
+  "description": "Request type",
+  "required": [
+    "impersonation_token"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/pwa_email_template_v3_UpdateRequest",
+  "title": "pwa_email_template_v3_UpdateRequest",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "sender_information": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_SenderInformation"
+    },
+    "prebuilt_customization": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_PrebuiltCustomization"
+    },
+    "custom_html_customization": {
+      "$ref": "#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization"
+    }
+  },
+  "description": "Request type"
+}
