@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Stytch B2B Organization Magic Link Login
+  summary: Send an organization-scoped email magic link and authenticate the clicked token.
+  description: >-
+    A direct organization login flow for B2B apps where the member already knows
+    which tenant they belong to. The workflow sends a login-or-signup email magic
+    link scoped to a specific organization, then authenticates the token from the
+    clicked link to mint a member session and validate it. Every step spells out
+    its request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description. All calls authenticate with HTTP Basic auth
+    using your Stytch project_id as the username and secret as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchB2bApi
+  url: ../openapi/stytch-b2b-openapi.yml
+  type: openapi
+workflows:
+- workflowId: magic-link-org-login
+  summary: Email an org-scoped magic link, authenticate the token, and validate the session.
+  description: >-
+    Sends a login-or-signup email magic link scoped to an organization,
+    exchanges the clicked token for a member session, then validates that
+    session token.
+  inputs:
+    type: object
+    required:
+    - organization_id
+    - email_address
+    - login_redirect_url
+    - magic_links_token
+    properties:
+      organization_id:
+        type: string
+        description: The id of the organization the member is logging into.
+      email_address:
+        type: string
+        description: The member's email address to send the magic link to.
+      login_redirect_url:
+        type: string
+        description: The URL the member is redirected to after clicking the login link.
+      signup_redirect_url:
+        type: string
+        description: Optional URL the member is redirected to after clicking a signup link.
+      magic_links_token:
+        type: string
+        description: The magic link token captured from the clicked link.
+      session_duration_minutes:
+        type: integer
+        description: Optional session lifetime in minutes for the member session.
+  steps:
+  - stepId: sendMagicLink
+    description: >-
+      Send a login-or-signup email magic link scoped to the organization so the
+      member can authenticate by clicking through.
+    operationId: api_b2b_magic_v1_b2b_magic_links_email_LoginOrSignup
+    requestBody:
+      contentType: application/json
+      payload:
+        organization_id: $inputs.organization_id
+        email_address: $inputs.email_address
+        login_redirect_url: $inputs.login_redirect_url
+        signup_redirect_url: $inputs.signup_redirect_url
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberId: $response.body#/member_id
+      memberCreated: $response.body#/member_created
+  - stepId: authenticateMagicLink
+    description: >-
+      Authenticate the magic link token captured from the clicked link to mint a
+      member session.
+    operationId: api_b2b_magic_v1_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        magic_links_token: $inputs.magic_links_token
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberId: $response.body#/member_id
+      organizationId: $response.body#/organization_id
+      sessionToken: $response.body#/session_token
+  - stepId: authenticateSession
+    description: >-
+      Validate the member session token to confirm the session is active and
+      resolve the member and organization.
+    operationId: api_b2b_session_v1_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        session_token: $steps.authenticateMagicLink.outputs.sessionToken
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberId: $response.body#/member/member_id
+      organizationId: $response.body#/organization/organization_id
+  outputs:
+    memberId: $steps.authenticateMagicLink.outputs.memberId
+    organizationId: $steps.authenticateMagicLink.outputs.organizationId
+    sessionToken: $steps.authenticateMagicLink.outputs.sessionToken

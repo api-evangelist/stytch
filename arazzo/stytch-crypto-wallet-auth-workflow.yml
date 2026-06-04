@@ -1,0 +1,82 @@
+arazzo: 1.0.1
+info:
+  title: Stytch Crypto Wallet Authentication
+  summary: Start a crypto wallet challenge and authenticate the signed message.
+  description: >-
+    A Web3 wallet sign-in flow for consumer apps. The workflow starts crypto
+    wallet authentication by issuing a challenge for a given wallet address
+    (creating the user if needed), then authenticates the signature the user
+    produced by signing that challenge in their wallet, minting a session. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description. All calls authenticate
+    with HTTP Basic auth using your Stytch project_id as the username and secret
+    as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchConsumerApi
+  url: ../openapi/stytch-consumer-openapi.yml
+  type: openapi
+workflows:
+- workflowId: crypto-wallet-auth
+  summary: Issue a wallet challenge and authenticate the signed response.
+  description: >-
+    Starts crypto wallet authentication to obtain a challenge for the wallet
+    address, then exchanges the user-produced signature for an authenticated
+    session.
+  inputs:
+    type: object
+    required:
+    - crypto_wallet_type
+    - crypto_wallet_address
+    - signature
+    properties:
+      crypto_wallet_type:
+        type: string
+        description: The wallet type, e.g. "ethereum" or "solana".
+      crypto_wallet_address:
+        type: string
+        description: The public wallet address being authenticated.
+      signature:
+        type: string
+        description: The signature produced by signing the issued challenge.
+      session_duration_minutes:
+        type: integer
+        description: Optional session lifetime in minutes for the authenticated session.
+  steps:
+  - stepId: startChallenge
+    description: >-
+      Start crypto wallet authentication to issue a challenge for the wallet
+      address, creating the user if no account exists, and return the challenge.
+    operationId: api_crypto_wallet_v1_AuthenticateStart
+    requestBody:
+      contentType: application/json
+      payload:
+        crypto_wallet_type: $inputs.crypto_wallet_type
+        crypto_wallet_address: $inputs.crypto_wallet_address
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user_id
+      challenge: $response.body#/challenge
+  - stepId: authenticateSignature
+    description: >-
+      Authenticate the signature the user produced by signing the challenge to
+      mint a session.
+    operationId: api_crypto_wallet_v1_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        crypto_wallet_type: $inputs.crypto_wallet_type
+        crypto_wallet_address: $inputs.crypto_wallet_address
+        signature: $inputs.signature
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user_id
+      sessionToken: $response.body#/session_token
+      sessionJwt: $response.body#/session_jwt
+  outputs:
+    userId: $steps.authenticateSignature.outputs.userId
+    challenge: $steps.startChallenge.outputs.challenge
+    sessionToken: $steps.authenticateSignature.outputs.sessionToken

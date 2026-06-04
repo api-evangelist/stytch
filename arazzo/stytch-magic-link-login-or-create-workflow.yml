@@ -1,0 +1,97 @@
+arazzo: 1.0.1
+info:
+  title: Stytch Magic Link Login or Create
+  summary: Send a login-or-create email magic link and authenticate the clicked token.
+  description: >-
+    A single-step onboarding-and-login flow for consumer apps. The workflow
+    sends an email magic link that logs in an existing user or creates a new one
+    on the fly, then authenticates the token from the clicked link to mint a
+    session and read the user's active sessions. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description. All calls authenticate with HTTP Basic auth
+    using your Stytch project_id as the username and secret as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchConsumerApi
+  url: ../openapi/stytch-consumer-openapi.yml
+  type: openapi
+workflows:
+- workflowId: magic-link-login-or-create
+  summary: Email a login-or-create magic link, authenticate the token, and verify the session.
+  description: >-
+    Dispatches an email magic link that logs in or creates the user, exchanges
+    the clicked token for a session, then reads the active sessions for the
+    user.
+  inputs:
+    type: object
+    required:
+    - email
+    - login_magic_link_url
+    - signup_magic_link_url
+    - token
+    properties:
+      email:
+        type: string
+        description: The email address to send the login-or-create magic link to.
+      login_magic_link_url:
+        type: string
+        description: The URL the user is redirected to after clicking a login magic link.
+      signup_magic_link_url:
+        type: string
+        description: The URL the user is redirected to after clicking a signup magic link.
+      token:
+        type: string
+        description: The magic link token extracted from the URL the user clicked.
+      session_duration_minutes:
+        type: integer
+        description: Optional session lifetime in minutes for the authenticated session.
+  steps:
+  - stepId: sendLoginOrCreate
+    description: >-
+      Send an email magic link that logs in an existing user or creates a new
+      one, returning whether the user was newly created.
+    operationId: api_magic_v1_magic_links_email_LoginOrCreate
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+        login_magic_link_url: $inputs.login_magic_link_url
+        signup_magic_link_url: $inputs.signup_magic_link_url
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user_id
+      userCreated: $response.body#/user_created
+  - stepId: authenticateMagicLink
+    description: >-
+      Authenticate the magic link token captured from the clicked link to mint a
+      session for the user.
+    operationId: api_magic_v1_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        token: $inputs.token
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user_id
+      sessionToken: $response.body#/session_token
+      sessionJwt: $response.body#/session_jwt
+  - stepId: getSession
+    description: >-
+      Read the active sessions for the authenticated user to confirm the session
+      is live.
+    operationId: api_session_v1_Get
+    parameters:
+    - name: user_id
+      in: query
+      value: $steps.authenticateMagicLink.outputs.userId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sessions: $response.body#/sessions
+  outputs:
+    userId: $steps.authenticateMagicLink.outputs.userId
+    userCreated: $steps.sendLoginOrCreate.outputs.userCreated
+    sessionToken: $steps.authenticateMagicLink.outputs.sessionToken

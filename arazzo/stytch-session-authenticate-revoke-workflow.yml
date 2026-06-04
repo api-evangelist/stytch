@@ -1,0 +1,77 @@
+arazzo: 1.0.1
+info:
+  title: Stytch Session Authenticate and Revoke
+  summary: Validate a session token, read the user's active sessions, then revoke the session.
+  description: >-
+    A session lifecycle management flow for consumer apps. The workflow
+    authenticates an existing session token to confirm it is valid and resolve
+    the owning user, lists that user's active sessions, and then revokes the
+    session to log the user out. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description. All calls authenticate with HTTP Basic auth using your Stytch
+    project_id as the username and secret as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchConsumerApi
+  url: ../openapi/stytch-consumer-openapi.yml
+  type: openapi
+workflows:
+- workflowId: session-authenticate-revoke
+  summary: Authenticate a session token, list active sessions, then revoke it.
+  description: >-
+    Validates a session token to resolve the user, reads the user's active
+    sessions, and finally revokes the session token to end the session.
+  inputs:
+    type: object
+    required:
+    - session_token
+    properties:
+      session_token:
+        type: string
+        description: The session token to validate and ultimately revoke.
+      session_duration_minutes:
+        type: integer
+        description: Optional value to extend the session lifetime on authentication.
+  steps:
+  - stepId: authenticateSession
+    description: >-
+      Authenticate the session token to confirm it is valid and resolve the
+      owning user_id for the subsequent session lookup.
+    operationId: api_session_v1_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        session_token: $inputs.session_token
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user/user_id
+      sessionToken: $response.body#/session_token
+  - stepId: listSessions
+    description: >-
+      Read the active sessions for the authenticated user before revoking.
+    operationId: api_session_v1_Get
+    parameters:
+    - name: user_id
+      in: query
+      value: $steps.authenticateSession.outputs.userId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sessions: $response.body#/sessions
+  - stepId: revokeSession
+    description: >-
+      Revoke the session token to invalidate the session and log the user out.
+    operationId: api_session_v1_Revoke
+    requestBody:
+      contentType: application/json
+      payload:
+        session_token: $steps.authenticateSession.outputs.sessionToken
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requestId: $response.body#/request_id
+  outputs:
+    userId: $steps.authenticateSession.outputs.userId
+    revokeRequestId: $steps.revokeSession.outputs.requestId

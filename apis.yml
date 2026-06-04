@@ -121,6 +121,81 @@ maintainers:
     email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+  - type: ArazzoWorkflows
+    url: arazzo/
+    workflows:
+    - url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
+      name: Stytch B2B Create Organization and Invite Member
+      summary: Create a B2B organization and email a magic link invite to a new member.
+    - url: arazzo/stytch-b2b-discovery-intermediate-exchange-workflow.yml
+      name: Stytch B2B Discovery Intermediate Session Exchange
+      summary: Authenticate a discovery magic link, list discovered organizations, then exchange into one.
+    - url: arazzo/stytch-b2b-email-magic-link-discovery-workflow.yml
+      name: Stytch B2B Email Magic Link Discovery and Organization Create
+      summary: Send a discovery magic link, authenticate it, and create an organization from the intermediate session.
+    - url: arazzo/stytch-b2b-email-otp-discovery-workflow.yml
+      name: Stytch B2B Email OTP Discovery and Exchange
+      summary: Send a discovery email OTP, authenticate the code, then exchange into an organization.
+    - url: arazzo/stytch-b2b-email-otp-login-workflow.yml
+      name: Stytch B2B Email OTP Login
+      summary: Send an email OTP to an organization member and authenticate the code.
+    - url: arazzo/stytch-b2b-magic-link-org-login-workflow.yml
+      name: Stytch B2B Organization Magic Link Login
+      summary: Send an organization-scoped email magic link and authenticate the clicked token.
+    - url: arazzo/stytch-b2b-org-create-member-workflow.yml
+      name: Stytch B2B Create Organization and Member
+      summary: Create a B2B organization, add a member to it, and read the member back.
+    - url: arazzo/stytch-b2b-password-auth-session-workflow.yml
+      name: Stytch B2B Password Authenticate and Session
+      summary: Authenticate a member's organization password, then validate the resulting session.
+    - url: arazzo/stytch-b2b-recovery-codes-rotate-workflow.yml
+      name: Stytch B2B Recovery Codes Get and Rotate
+      summary: Read a member's MFA recovery codes, then rotate them to a fresh set.
+    - url: arazzo/stytch-b2b-sms-otp-mfa-workflow.yml
+      name: Stytch B2B SMS OTP Multi-Factor Authentication
+      summary: Send an SMS OTP to a member and authenticate the code to complete MFA.
+    - url: arazzo/stytch-b2b-totp-enrollment-workflow.yml
+      name: Stytch B2B TOTP Authenticator Enrollment
+      summary: Register a TOTP authenticator for a member and authenticate the first code.
+    - url: arazzo/stytch-create-user-magic-link-workflow.yml
+      name: Stytch Create User and Send Email Magic Link
+      summary: Create a Stytch user, send them an email magic link, and authenticate the resulting token.
+    - url: arazzo/stytch-crypto-wallet-auth-workflow.yml
+      name: Stytch Crypto Wallet Authentication
+      summary: Start a crypto wallet challenge and authenticate the signed message.
+    - url: arazzo/stytch-email-otp-login-workflow.yml
+      name: Stytch Email One-Time Passcode Login
+      summary: Send an email one-time passcode, authenticate the code, and read the session.
+    - url: arazzo/stytch-magic-link-login-or-create-workflow.yml
+      name: Stytch Magic Link Login or Create
+      summary: Send a login-or-create email magic link and authenticate the clicked token.
+    - url: arazzo/stytch-oauth-authenticate-session-workflow.yml
+      name: Stytch OAuth Authenticate and Session
+      summary: Authenticate an OAuth token returned from a provider redirect and read the session.
+    - url: arazzo/stytch-password-reset-email-workflow.yml
+      name: Stytch Password Reset by Email
+      summary: Start an email password reset, complete it with the token, and read the new session.
+    - url: arazzo/stytch-password-signup-session-workflow.yml
+      name: Stytch Password Signup to Session
+      summary: Create a password-based user, authenticate the credentials, and read the resulting session.
+    - url: arazzo/stytch-revoke-connected-app-workflow.yml
+      name: Stytch Revoke a User's Connected App
+      summary: List a user's connected apps and revoke the first authorized app's access.
+    - url: arazzo/stytch-session-authenticate-revoke-workflow.yml
+      name: Stytch Session Authenticate and Revoke
+      summary: Validate a session token, read the user's active sessions, then revoke the session.
+    - url: arazzo/stytch-sms-otp-login-workflow.yml
+      name: Stytch SMS One-Time Passcode Login
+      summary: Send an SMS one-time passcode and authenticate the code the user enters.
+    - url: arazzo/stytch-totp-enrollment-workflow.yml
+      name: Stytch TOTP Authenticator Enrollment
+      summary: Create a user, register a TOTP authenticator, and authenticate the first code.
+    - url: arazzo/stytch-user-create-search-delete-workflow.yml
+      name: Stytch User Create, Search, and Delete
+      summary: Create a user, find them again by email search, then delete the matched user.
+    - url: arazzo/stytch-whatsapp-otp-login-workflow.yml
+      name: Stytch WhatsApp One-Time Passcode Login
+      summary: Send a WhatsApp one-time passcode and authenticate the code the user enters.
   - type: Website
     url: https://stytch.com
   - type: Documentation

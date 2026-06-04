@@ -1,0 +1,94 @@
+arazzo: 1.0.1
+info:
+  title: Stytch User Create, Search, and Delete
+  summary: Create a user, find them again by email search, then delete the matched user.
+  description: >-
+    A user lifecycle management flow for consumer apps. The workflow creates a
+    user, searches the user store by email to confirm the record exists, and
+    then branches: when the search returns a match it deletes the matched user,
+    and when no match is found it ends without deleting anything. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description. All calls authenticate with HTTP
+    Basic auth using your Stytch project_id as the username and secret as the
+    password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchConsumerApi
+  url: ../openapi/stytch-consumer-openapi.yml
+  type: openapi
+workflows:
+- workflowId: user-create-search-delete
+  summary: Provision a user, locate them by email search, and delete the match.
+  description: >-
+    Creates a user, runs a user search filtered by email address, and deletes
+    the user only when the search confirms a matching record.
+  inputs:
+    type: object
+    required:
+    - email
+    properties:
+      email:
+        type: string
+        description: The email address to create and then search/delete the user by.
+  steps:
+  - stepId: createUser
+    description: >-
+      Add a new user to Stytch under the supplied email, returning the user_id.
+    operationId: api_user_v1_Create
+    requestBody:
+      contentType: application/json
+      payload:
+        email: $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/user_id
+  - stepId: searchUser
+    description: >-
+      Search the user store for an account whose email matches the supplied
+      address, confirming the record was created.
+    operationId: api_user_v1_Search
+    requestBody:
+      contentType: application/json
+      payload:
+        limit: 1
+        query:
+          operator: AND
+          operands:
+          - filter_name: email_address
+            filter_value:
+            - $inputs.email
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedUserId: $response.body#/results/0/user_id
+    onSuccess:
+    - name: userFound
+      type: goto
+      stepId: deleteUser
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: userMissing
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: deleteUser
+    description: >-
+      Delete the matched user by user_id to clean up the account.
+    operationId: api_user_v1_Delete
+    parameters:
+    - name: user_id
+      in: path
+      value: $steps.searchUser.outputs.matchedUserId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requestId: $response.body#/request_id
+  outputs:
+    createdUserId: $steps.createUser.outputs.userId
+    matchedUserId: $steps.searchUser.outputs.matchedUserId
+    deleteRequestId: $steps.deleteUser.outputs.requestId

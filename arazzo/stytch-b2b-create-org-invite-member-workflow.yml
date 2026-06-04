@@ -1,0 +1,75 @@
+arazzo: 1.0.1
+info:
+  title: Stytch B2B Create Organization and Invite Member
+  summary: Create a B2B organization and email a magic link invite to a new member.
+  description: >-
+    A tenant bootstrap flow for B2B apps. The workflow creates a new
+    organization and then sends an email magic link invite to a prospective
+    member, attaching them to the freshly created organization so they can join
+    by clicking through. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description. All
+    calls authenticate with HTTP Basic auth using your Stytch project_id as the
+    username and secret as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchB2bApi
+  url: ../openapi/stytch-b2b-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-org-invite-member
+  summary: Create an organization, then email a magic link invite to a member.
+  description: >-
+    Provisions a B2B organization and dispatches an email magic link invite that
+    attaches the invited member to that organization.
+  inputs:
+    type: object
+    required:
+    - organization_name
+    - email_address
+    - invite_redirect_url
+    properties:
+      organization_name:
+        type: string
+        description: The human-readable name of the organization to create.
+      organization_slug:
+        type: string
+        description: Optional unique slug for the organization.
+      email_address:
+        type: string
+        description: The email address of the member to invite.
+      invite_redirect_url:
+        type: string
+        description: The URL the invited member is redirected to after clicking the invite.
+  steps:
+  - stepId: createOrganization
+    description: >-
+      Create a new B2B organization, returning the organization object whose id
+      is used to scope the invite.
+    operationId: api_organization_v1_Create
+    requestBody:
+      contentType: application/json
+      payload:
+        organization_name: $inputs.organization_name
+        organization_slug: $inputs.organization_slug
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      organizationId: $response.body#/organization/organization_id
+  - stepId: inviteMember
+    description: >-
+      Send an email magic link invite to the prospective member, attaching them
+      to the newly created organization.
+    operationId: api_b2b_magic_v1_b2b_magic_links_email_Invite
+    requestBody:
+      contentType: application/json
+      payload:
+        organization_id: $steps.createOrganization.outputs.organizationId
+        email_address: $inputs.email_address
+        invite_redirect_url: $inputs.invite_redirect_url
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberId: $response.body#/member_id
+  outputs:
+    organizationId: $steps.createOrganization.outputs.organizationId
+    memberId: $steps.inviteMember.outputs.memberId

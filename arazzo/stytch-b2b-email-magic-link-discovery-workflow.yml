@@ -1,0 +1,100 @@
+arazzo: 1.0.1
+info:
+  title: Stytch B2B Email Magic Link Discovery and Organization Create
+  summary: Send a discovery magic link, authenticate it, and create an organization from the intermediate session.
+  description: >-
+    An organization-discovery onboarding flow for B2B apps. The workflow sends a
+    discovery email magic link to an address that may not yet belong to any
+    organization, authenticates the clicked token to obtain an intermediate
+    session and the list of discovered organizations, and then creates a brand
+    new organization from that intermediate session to log the member in. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description. All calls authenticate
+    with HTTP Basic auth using your Stytch project_id as the username and secret
+    as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchB2bApi
+  url: ../openapi/stytch-b2b-openapi.yml
+  type: openapi
+workflows:
+- workflowId: email-magic-link-discovery
+  summary: Discovery magic link send, authenticate, then create an organization.
+  description: >-
+    Sends a discovery email magic link, exchanges the clicked token for an
+    intermediate session token, and creates a new organization from that
+    intermediate session.
+  inputs:
+    type: object
+    required:
+    - email_address
+    - discovery_redirect_url
+    - discovery_magic_links_token
+    - organization_name
+    properties:
+      email_address:
+        type: string
+        description: The email address to send the discovery magic link to.
+      discovery_redirect_url:
+        type: string
+        description: The URL the user is redirected to after clicking the discovery link.
+      discovery_magic_links_token:
+        type: string
+        description: The discovery magic link token captured from the clicked link.
+      organization_name:
+        type: string
+        description: The name of the organization to create from the intermediate session.
+      session_duration_minutes:
+        type: integer
+        description: Optional session lifetime in minutes for the resulting member session.
+  steps:
+  - stepId: sendDiscovery
+    description: >-
+      Send a discovery email magic link to the address so the user can begin the
+      organization discovery flow.
+    operationId: api_b2b_magic_v1_b2b_magic_links_email_discovery_Send
+    requestBody:
+      contentType: application/json
+      payload:
+        email_address: $inputs.email_address
+        discovery_redirect_url: $inputs.discovery_redirect_url
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requestId: $response.body#/request_id
+  - stepId: authenticateDiscovery
+    description: >-
+      Authenticate the discovery magic link token to obtain an intermediate
+      session token and the list of organizations the email already belongs to.
+    operationId: api_b2b_magic_v1_b2b_magic_links_discovery_Authenticate
+    requestBody:
+      contentType: application/json
+      payload:
+        discovery_magic_links_token: $inputs.discovery_magic_links_token
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      intermediateSessionToken: $response.body#/intermediate_session_token
+      discoveredOrganizations: $response.body#/discovered_organizations
+  - stepId: createOrganization
+    description: >-
+      Create a new organization from the intermediate session token, logging the
+      member into the freshly created tenant.
+    operationId: api_discovery_v1_discovery_organizations_Create
+    requestBody:
+      contentType: application/json
+      payload:
+        intermediate_session_token: $steps.authenticateDiscovery.outputs.intermediateSessionToken
+        organization_name: $inputs.organization_name
+        session_duration_minutes: $inputs.session_duration_minutes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      organizationId: $response.body#/organization/organization_id
+      memberId: $response.body#/member_id
+      sessionToken: $response.body#/session_token
+  outputs:
+    intermediateSessionToken: $steps.authenticateDiscovery.outputs.intermediateSessionToken
+    organizationId: $steps.createOrganization.outputs.organizationId
+    memberId: $steps.createOrganization.outputs.memberId
+    sessionToken: $steps.createOrganization.outputs.sessionToken

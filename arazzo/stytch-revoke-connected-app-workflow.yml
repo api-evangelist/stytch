@@ -1,0 +1,81 @@
+arazzo: 1.0.1
+info:
+  title: Stytch Revoke a User's Connected App
+  summary: List a user's connected apps and revoke the first authorized app's access.
+  description: >-
+    A consent-management flow for consumer apps that act as an OAuth identity
+    provider. The workflow lists the Connected Apps a user has authorized and
+    then branches: when at least one app is present it revokes the first app's
+    access, and when the user has authorized no apps it ends without revoking
+    anything. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description. All calls
+    authenticate with HTTP Basic auth using your Stytch project_id as the
+    username and secret as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchConsumerApi
+  url: ../openapi/stytch-consumer-openapi.yml
+  type: openapi
+workflows:
+- workflowId: revoke-connected-app
+  summary: List a user's connected apps and revoke the first one when present.
+  description: >-
+    Reads the Connected Apps a user has authorized and revokes the first app's
+    access only when the list contains at least one entry.
+  inputs:
+    type: object
+    required:
+    - user_id
+    properties:
+      user_id:
+        type: string
+        description: The id of the user whose connected app access is being managed.
+  steps:
+  - stepId: listConnectedApps
+    description: >-
+      List the Connected Apps the user has successfully authorized so the first
+      one can be selected for revocation.
+    operationId: api_user_v1_ConnectedApps
+    parameters:
+    - name: user_id
+      in: path
+      value: $inputs.user_id
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstConnectedAppId: $response.body#/connected_apps/0/connected_app_id
+    onSuccess:
+    - name: hasConnectedApp
+      type: goto
+      stepId: revokeApp
+      criteria:
+      - context: $response.body
+        condition: $.connected_apps.length > 0
+        type: jsonpath
+    - name: noConnectedApps
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.connected_apps.length == 0
+        type: jsonpath
+  - stepId: revokeApp
+    description: >-
+      Revoke the first authorized Connected App's access for the user.
+    operationId: api_user_v1_Revoke
+    parameters:
+    - name: user_id
+      in: path
+      value: $inputs.user_id
+    - name: connected_app_id
+      in: path
+      value: $steps.listConnectedApps.outputs.firstConnectedAppId
+    requestBody:
+      contentType: application/json
+      payload: {}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      requestId: $response.body#/request_id
+  outputs:
+    revokedConnectedAppId: $steps.listConnectedApps.outputs.firstConnectedAppId
+    revokeRequestId: $steps.revokeApp.outputs.requestId

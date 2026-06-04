@@ -1,0 +1,91 @@
+arazzo: 1.0.1
+info:
+  title: Stytch B2B Create Organization and Member
+  summary: Create a B2B organization, add a member to it, and read the member back.
+  description: >-
+    A tenant-and-member provisioning flow for B2B apps. The workflow creates a
+    new organization, directly creates a member within that organization, and
+    then reads the member back by id to confirm the record was persisted. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description. All calls authenticate
+    with HTTP Basic auth using your Stytch project_id as the username and secret
+    as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchB2bApi
+  url: ../openapi/stytch-b2b-openapi.yml
+  type: openapi
+workflows:
+- workflowId: org-create-member
+  summary: Create an organization, add a member, and fetch the member by id.
+  description: >-
+    Provisions a B2B organization, creates a member inside it, then retrieves
+    that member by member_id to verify creation.
+  inputs:
+    type: object
+    required:
+    - organization_name
+    - email_address
+    properties:
+      organization_name:
+        type: string
+        description: The human-readable name of the organization to create.
+      email_address:
+        type: string
+        description: The email address of the member to create in the organization.
+      name:
+        type: string
+        description: Optional display name for the new member.
+  steps:
+  - stepId: createOrganization
+    description: >-
+      Create a new B2B organization, returning the organization id used to scope
+      member creation.
+    operationId: api_organization_v1_Create
+    requestBody:
+      contentType: application/json
+      payload:
+        organization_name: $inputs.organization_name
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      organizationId: $response.body#/organization/organization_id
+  - stepId: createMember
+    description: >-
+      Create a member inside the organization using the supplied email address,
+      returning the member_id.
+    operationId: api_organization_v1_organizations_members_Create
+    parameters:
+    - name: organization_id
+      in: path
+      value: $steps.createOrganization.outputs.organizationId
+    requestBody:
+      contentType: application/json
+      payload:
+        email_address: $inputs.email_address
+        name: $inputs.name
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberId: $response.body#/member_id
+  - stepId: getMember
+    description: >-
+      Read the member back by member_id to confirm the record was persisted in
+      the organization.
+    operationId: api_organization_v1_organizations_members_Get
+    parameters:
+    - name: organization_id
+      in: path
+      value: $steps.createOrganization.outputs.organizationId
+    - name: member_id
+      in: query
+      value: $steps.createMember.outputs.memberId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      memberEmail: $response.body#/member/email_address
+      memberStatus: $response.body#/member/status
+  outputs:
+    organizationId: $steps.createOrganization.outputs.organizationId
+    memberId: $steps.createMember.outputs.memberId
+    memberStatus: $steps.getMember.outputs.memberStatus

@@ -1,0 +1,69 @@
+arazzo: 1.0.1
+info:
+  title: Stytch B2B Recovery Codes Get and Rotate
+  summary: Read a member's MFA recovery codes, then rotate them to a fresh set.
+  description: >-
+    A recovery-code management flow for B2B members. The workflow reads a
+    member's current set of MFA recovery codes and then rotates them, retiring
+    the existing codes and issuing a brand new set the member can store. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description. All calls authenticate
+    with HTTP Basic auth using your Stytch project_id as the username and secret
+    as the password.
+  version: 1.0.0
+sourceDescriptions:
+- name: stytchB2bApi
+  url: ../openapi/stytch-b2b-openapi.yml
+  type: openapi
+workflows:
+- workflowId: recovery-codes-rotate
+  summary: Fetch a member's recovery codes, then rotate to a new set.
+  description: >-
+    Reads the member's current MFA recovery codes and rotates them, returning a
+    freshly generated set.
+  inputs:
+    type: object
+    required:
+    - organization_id
+    - member_id
+    properties:
+      organization_id:
+        type: string
+        description: The id of the organization the member belongs to.
+      member_id:
+        type: string
+        description: The id of the member whose recovery codes are managed.
+  steps:
+  - stepId: getRecoveryCodes
+    description: >-
+      Read the member's current set of MFA recovery codes by organization and
+      member id.
+    operationId: api_b2b_recovery_codes_v1_Get
+    parameters:
+    - name: organization_id
+      in: path
+      value: $inputs.organization_id
+    - name: member_id
+      in: path
+      value: $inputs.member_id
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      currentRecoveryCodes: $response.body#/recovery_codes
+  - stepId: rotateRecoveryCodes
+    description: >-
+      Rotate the member's recovery codes, retiring the current set and returning
+      a freshly generated set.
+    operationId: api_b2b_recovery_codes_v1_Rotate
+    requestBody:
+      contentType: application/json
+      payload:
+        organization_id: $inputs.organization_id
+        member_id: $inputs.member_id
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      newRecoveryCodes: $response.body#/recovery_codes
+  outputs:
+    currentRecoveryCodes: $steps.getRecoveryCodes.outputs.currentRecoveryCodes
+    newRecoveryCodes: $steps.rotateRecoveryCodes.outputs.newRecoveryCodes
