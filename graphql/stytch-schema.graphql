@@ -1,0 +1,848 @@
+"""
+Stytch Authentication Platform — Conceptual GraphQL Schema
+Source: https://stytch.com/docs/api (REST-only; this is a derived data-model representation)
+Covers: Consumer API, B2B API, and Management API surface types.
+"""
+
+scalar DateTime
+scalar JSON
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum AuthenticationFactorType {
+  MAGIC_LINK
+  OTP_EMAIL
+  OTP_SMS
+  OTP_WHATSAPP
+  OAUTH
+  TOTP
+  WEBAUTHN
+  CRYPTO_WALLET
+  PASSWORD
+  SSO_SAML
+  SSO_OIDC
+  RECOVERY_CODE
+}
+
+enum OTPChannel {
+  EMAIL
+  SMS
+  WHATSAPP
+}
+
+enum OAuthProvider {
+  GOOGLE
+  APPLE
+  FACEBOOK
+  GITHUB
+  GITLAB
+  MICROSOFT
+  SLACK
+  DISCORD
+  SALESFORCE
+  HUBSPOT
+  LINKEDIN
+  TWITCH
+  COINBASE
+  FIGMA
+  SNAPCHAT
+}
+
+enum CryptoWalletType {
+  ETHEREUM
+  SOLANA
+}
+
+enum SessionTokenType {
+  OPAQUE
+  JWT
+}
+
+enum MemberStatus {
+  ACTIVE
+  INVITED
+  PENDING_SELECTION
+  WITHDRAWN
+}
+
+enum SSOConnectionType {
+  SAML
+  OIDC
+}
+
+enum SCIMProvisioningStatus {
+  ACTIVE
+  NOT_STARTED
+  STALE
+}
+
+enum RBACScope {
+  CONSUMER
+  B2B
+}
+
+enum PolicyResourceAccess {
+  ALLOW
+  DENY
+}
+
+enum ProjectEnvironment {
+  LIVE
+  TEST
+}
+
+enum SecretStatus {
+  ACTIVE
+  INACTIVE
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — Core Identity Types
+# ─────────────────────────────────────────────
+
+"""A Stytch Consumer end-user."""
+type User {
+  userId: ID!
+  name: UserName
+  emails: [Email!]!
+  phoneNumbers: [PhoneNumber!]!
+  providers: [OAuthProviderRecord!]!
+  webauthnRegistrations: [WebAuthnRegistration!]!
+  totps: [TOTPRecord!]!
+  cryptoWallets: [CryptoWalletRecord!]!
+  biometricRegistrations: [BiometricRegistration!]!
+  password: PasswordRecord
+  trustedMetadata: TrustedMetadata
+  untrustedMetadata: JSON
+  status: String!
+  createdAt: DateTime!
+  requestedAt: DateTime
+}
+
+type UserName {
+  firstName: String
+  middleName: String
+  lastName: String
+}
+
+"""Verified email address belonging to a User."""
+type Email {
+  emailId: ID!
+  email: String!
+  verified: Boolean!
+}
+
+"""Verified phone number belonging to a User."""
+type PhoneNumber {
+  phoneId: ID!
+  phoneNumber: String!
+  verified: Boolean!
+}
+
+"""OAuth provider link associated with a User."""
+type OAuthProviderRecord {
+  oauthUserRegistrationId: ID!
+  provider: OAuthProvider!
+  providerUserId: String!
+  oauthUserEmails: [OAuthEmail!]!
+  profilePictureUrl: String
+  locale: String
+  accessToken: String
+  accessTokenExpiresIn: Int
+  refreshToken: String
+  idToken: String
+  scopes: [String!]!
+}
+
+type OAuthEmail {
+  email: String!
+  verified: Boolean!
+}
+
+"""WebAuthn / Passkey credential registration."""
+type WebAuthnRegistration {
+  webauthnRegistrationId: ID!
+  domain: String!
+  userAgent: String
+  authenticatorType: String
+  aaGuid: String
+  credentialId: String!
+  verified: Boolean!
+  createdAt: DateTime!
+}
+
+"""TOTP (authenticator app) registration."""
+type TOTPRecord {
+  totpId: ID!
+  verified: Boolean!
+  createdAt: DateTime!
+}
+
+"""Crypto wallet linked to a User."""
+type CryptoWalletRecord {
+  cryptoWalletId: ID!
+  cryptoWalletAddress: String!
+  cryptoWalletType: CryptoWalletType!
+  verified: Boolean!
+}
+
+"""Biometric (device-native) registration."""
+type BiometricRegistration {
+  biometricRegistrationId: ID!
+  verified: Boolean!
+  createdAt: DateTime!
+}
+
+"""Bcrypt/argon2 password credential."""
+type PasswordRecord {
+  requiresReset: Boolean!
+}
+
+"""Operator-controlled metadata attached to a User."""
+type TrustedMetadata {
+  data: JSON
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — Sessions
+# ─────────────────────────────────────────────
+
+"""Active Consumer session."""
+type Session {
+  sessionId: ID!
+  userId: ID!
+  authenticationFactors: [AuthenticationFactor!]!
+  startedAt: DateTime!
+  lastAccessedAt: DateTime!
+  expiresAt: DateTime!
+  attributes: SessionAttributes
+  customClaims: JSON
+}
+
+type SessionAttributes {
+  ipAddress: String
+  userAgent: String
+}
+
+"""A single authentication factor recorded in a session."""
+type AuthenticationFactor {
+  type: AuthenticationFactorType!
+  deliveryMethod: String
+  lastAuthenticatedAt: DateTime!
+  emailFactor: EmailFactor
+  phoneFactor: PhoneFactor
+  googleOauthFactor: GoogleOAuthFactor
+  webauthnFactor: WebAuthnFactor
+  totpFactor: TOTPFactor
+  cryptoWalletFactor: CryptoWalletFactor
+  passwordFactor: PasswordFactor
+  samlSsoFactor: SAMLSSOFactor
+  oidcSsoFactor: OIDCSSOFactor
+}
+
+type EmailFactor {
+  emailId: ID!
+  emailAddress: String!
+}
+
+type PhoneFactor {
+  phoneId: ID!
+  phoneNumber: String!
+}
+
+type GoogleOAuthFactor {
+  id: ID!
+  emailAddress: String!
+}
+
+type WebAuthnFactor {
+  webauthnRegistrationId: ID!
+  domain: String!
+  userAgent: String
+}
+
+type TOTPFactor {
+  totpId: ID!
+}
+
+type CryptoWalletFactor {
+  cryptoWalletId: ID!
+  cryptoWalletAddress: String!
+  cryptoWalletType: CryptoWalletType!
+}
+
+type PasswordFactor {
+  emailId: ID!
+  emailAddress: String!
+}
+
+type SAMLSSOFactor {
+  id: ID!
+  providerSubject: String!
+}
+
+type OIDCSSOFactor {
+  id: ID!
+  providerSubject: String!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — Magic Links
+# ─────────────────────────────────────────────
+
+"""Magic link token send/authenticate result."""
+type MagicLink {
+  userId: ID!
+  emailId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+}
+
+"""Embedded magic link token (pre-built UI embed)."""
+type EmbeddedMagicLink {
+  token: String!
+  expiresAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — OTP
+# ─────────────────────────────────────────────
+
+"""One-time passcode send result."""
+type OTP {
+  userId: ID!
+  emailId: ID
+  phoneId: ID
+  methodId: ID!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — TOTP
+# ─────────────────────────────────────────────
+
+"""TOTP creation response (before verification)."""
+type TOTPCreate {
+  totpId: ID!
+  secret: String!
+  qrCode: String!
+  recoveryCodes: [String!]!
+  user: User!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — OAuth
+# ─────────────────────────────────────────────
+
+"""OAuth token authenticate result."""
+type OAuthAuthenticate {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  providerValues: OAuthProviderValues
+  userCreated: Boolean!
+}
+
+type OAuthProviderValues {
+  accessToken: String!
+  idToken: String
+  refreshToken: String
+  expiresAt: DateTime
+  scopes: [String!]!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — Passwords
+# ─────────────────────────────────────────────
+
+type Password {
+  userId: ID!
+  emailId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — Connected Apps & M2M
+# ─────────────────────────────────────────────
+
+"""OAuth 2.0 Connected App registered in the Stytch project."""
+type ConnectedApp {
+  clientId: ID!
+  clientName: String!
+  clientDescription: String
+  redirectUris: [String!]!
+  scopes: [String!]!
+  tokenEndpointAuthMethod: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""M2M (machine-to-machine) client credential client."""
+type M2MClient {
+  clientId: ID!
+  clientName: String!
+  clientDescription: String
+  status: SecretStatus!
+  scopes: [String!]!
+  clientSecretLastFour: String!
+  nextClientSecretLastFour: String
+  trustedMetadata: JSON
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Consumer API — RBAC
+# ─────────────────────────────────────────────
+
+"""A named permission within a resource."""
+type Permission {
+  permissionId: ID!
+  description: String
+}
+
+"""A resource type that permissions are scoped to."""
+type RBACResource {
+  resourceId: ID!
+  description: String
+  permissions: [Permission!]!
+}
+
+"""A role that groups permissions."""
+type Role {
+  roleId: ID!
+  description: String
+  permissions: [RolePermission!]!
+}
+
+type RolePermission {
+  resourceId: ID!
+  permissionId: ID!
+}
+
+"""Top-level RBAC policy for a Stytch project."""
+type Policy {
+  roles: [Role!]!
+  resources: [RBACResource!]!
+}
+
+# ─────────────────────────────────────────────
+# B2B API — Organizations & Members
+# ─────────────────────────────────────────────
+
+"""A B2B tenant organization."""
+type Organization {
+  organizationId: ID!
+  organizationName: String!
+  organizationSlug: String
+  logoUrl: String
+  trustedMetadata: JSON
+  ssoJitProvisioning: String
+  ssoJitProvisioningAllowedConnections: [String!]!
+  ssoActiveConnections: [SSOConnection!]!
+  emailAllowedDomains: [String!]!
+  emailJitProvisioning: String
+  emailInvites: String
+  authMethods: String
+  allowedAuthMethods: [String!]!
+  mfaPolicy: String
+  rbacEmailImplicitRoleAssignments: [ImplicitRoleAssignment!]!
+  scimActiveConnection: SCIMConnection
+  createdAt: DateTime!
+}
+
+"""A member of a B2B organization."""
+type Member {
+  organizationId: ID!
+  memberId: ID!
+  emailAddress: String!
+  status: MemberStatus!
+  name: String
+  avatarUrl: String
+  trustedMetadata: JSON
+  untrustedMetadata: JSON
+  roles: [AssignedRole!]!
+  totpRegistrationId: String
+  phoneNumber: String
+  phoneNumberVerified: Boolean!
+  mfaPhoneNumberVerified: Boolean!
+  mfaEnrolled: Boolean!
+  defaultMfaMethod: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AssignedRole {
+  roleId: ID!
+  sources: [RoleSource!]!
+}
+
+type RoleSource {
+  type: String!
+  details: JSON
+}
+
+type ImplicitRoleAssignment {
+  roleId: ID!
+  emailDomain: String!
+}
+
+# ─────────────────────────────────────────────
+# B2B API — SSO
+# ─────────────────────────────────────────────
+
+"""An SSO connection (SAML or OIDC) for an organization."""
+type SSOConnection {
+  connectionId: ID!
+  organizationId: ID!
+  type: SSOConnectionType!
+  displayName: String
+  status: String!
+  samlConnection: SAMLConnection
+  oidcConnection: OIDCConnection
+}
+
+type SAMLConnection {
+  idpEntityId: String!
+  idpSsoUrl: String!
+  issuer: String
+  acsUrl: String!
+  audienceUri: String!
+  signingCertificates: [SAMLCertificate!]!
+  attributeMapping: JSON
+}
+
+type SAMLCertificate {
+  certificateId: ID!
+  certificate: String!
+  issuedAt: DateTime
+  expiresAt: DateTime
+}
+
+type OIDCConnection {
+  displayName: String
+  clientId: String!
+  issuer: String!
+  authorizationUrl: String!
+  tokenUrl: String!
+  userinfoUrl: String!
+  jwksUrl: String!
+  identifierField: String
+}
+
+# ─────────────────────────────────────────────
+# B2B API — SCIM
+# ─────────────────────────────────────────────
+
+"""SCIM directory-sync connection for an organization."""
+type SCIMConnection {
+  connectionId: ID!
+  organizationId: ID!
+  displayName: String
+  provisioningStatus: SCIMProvisioningStatus!
+  scimGroupImplicitRoleAssignments: [SCIMGroupRoleAssignment!]!
+  nextBearerTokenLastFour: String
+  bearerTokenLastFour: String!
+  bearerTokenExpiresAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type SCIMGroupRoleAssignment {
+  groupId: String!
+  roleId: String!
+}
+
+# ─────────────────────────────────────────────
+# B2B API — B2B Sessions
+# ─────────────────────────────────────────────
+
+"""Active B2B session for an organization member."""
+type B2BSession {
+  memberSessionId: ID!
+  memberId: ID!
+  organizationId: ID!
+  authenticationFactors: [AuthenticationFactor!]!
+  startedAt: DateTime!
+  lastAccessedAt: DateTime!
+  expiresAt: DateTime!
+  customClaims: JSON
+}
+
+# ─────────────────────────────────────────────
+# Management API
+# ─────────────────────────────────────────────
+
+"""A Stytch project (workspace unit)."""
+type Project {
+  projectId: ID!
+  projectName: String!
+  projectType: String!
+  environments: [ProjectEnvironmentConfig!]!
+  createdAt: DateTime!
+}
+
+type ProjectEnvironmentConfig {
+  environment: ProjectEnvironment!
+  publicToken: String!
+  projectId: ID!
+}
+
+"""A Stytch project API secret."""
+type Secret {
+  secretId: ID!
+  lastFour: String!
+  status: SecretStatus!
+  createdAt: DateTime!
+}
+
+# ─────────────────────────────────────────────
+# Query & Mutation roots (representative surface)
+# ─────────────────────────────────────────────
+
+type Query {
+  # Consumer — Users
+  getUser(userId: ID!): User
+  searchUsers(query: JSON, limit: Int, cursor: String): UserSearchResult!
+
+  # Consumer — Sessions
+  getSession(sessionToken: String, sessionJwt: String): Session
+  getUserSessions(userId: ID!): [Session!]!
+
+  # Consumer — RBAC
+  getPolicy: Policy!
+
+  # Consumer — Connected Apps
+  getConnectedApp(clientId: ID!): ConnectedApp
+  listConnectedApps: [ConnectedApp!]!
+
+  # Consumer — M2M
+  getM2MClient(clientId: ID!): M2MClient
+  listM2MClients: [M2MClient!]!
+
+  # B2B — Organizations
+  getOrganization(organizationId: ID!): Organization
+  searchOrganizations(query: JSON, limit: Int, cursor: String): OrgSearchResult!
+
+  # B2B — Members
+  getMember(organizationId: ID!, memberId: ID!): Member
+  searchMembers(organizationId: ID!, query: JSON, limit: Int, cursor: String): MemberSearchResult!
+
+  # B2B — SSO
+  getSSOConnections(organizationId: ID!): [SSOConnection!]!
+
+  # B2B — B2B Sessions
+  getB2BSession(sessionToken: String, sessionJwt: String): B2BSession
+
+  # B2B — RBAC
+  getB2BPolicy: Policy!
+
+  # Management — Projects
+  getProject(projectId: ID!): Project
+  listProjects: [Project!]!
+}
+
+type Mutation {
+  # Consumer — Users
+  createUser(email: String, phoneNumber: String, name: UserNameInput, trustedMetadata: JSON): User!
+  updateUser(userId: ID!, name: UserNameInput, trustedMetadata: JSON, untrustedMetadata: JSON): User!
+  deleteUser(userId: ID!): DeleteResult!
+
+  # Consumer — Magic Links
+  sendEmailMagicLink(email: String!, loginMagicLinkUrl: String!, signupMagicLinkUrl: String): MagicLink!
+  authenticateMagicLink(token: String!, sessionDurationMinutes: Int): MagicLinkAuthResult!
+
+  # Consumer — OTP
+  sendOTP(channel: OTPChannel!, recipient: String!): OTP!
+  authenticateOTP(methodId: ID!, code: String!, sessionDurationMinutes: Int): OTPAuthResult!
+
+  # Consumer — OAuth
+  authenticateOAuth(token: String!, sessionDurationMinutes: Int): OAuthAuthenticate!
+
+  # Consumer — TOTP
+  createTOTP(userId: ID!): TOTPCreate!
+  authenticateTOTP(userId: ID!, totpCode: String!, sessionDurationMinutes: Int): TOTPAuthResult!
+
+  # Consumer — WebAuthn
+  registerWebAuthnStart(userId: ID!, domain: String!, userAgent: String): JSON!
+  registerWebAuthnFinish(userId: ID!, publicKeyCredential: JSON!): WebAuthnRegistration!
+  authenticateWebAuthnStart(domain: String!, userAgent: String): JSON!
+  authenticateWebAuthnFinish(publicKeyCredential: JSON!, sessionDurationMinutes: Int): WebAuthnAuthResult!
+
+  # Consumer — Crypto Wallets
+  authenticateCryptoWalletStart(cryptoWalletType: CryptoWalletType!, cryptoWalletAddress: String!): CryptoWalletChallenge!
+  authenticateCryptoWalletFinish(cryptoWalletType: CryptoWalletType!, cryptoWalletAddress: String!, signature: String!, sessionDurationMinutes: Int): CryptoWalletAuthResult!
+
+  # Consumer — Passwords
+  createPassword(email: String!, password: String!): Password!
+  authenticatePassword(email: String!, password: String!, sessionDurationMinutes: Int): Password!
+  resetPasswordByEmail(email: String!, loginRedirectUrl: String, resetPasswordRedirectUrl: String): Boolean!
+  resetPasswordByEmailFinish(token: String!, password: String!, sessionDurationMinutes: Int): Password!
+  resetPasswordByExistingPassword(email: String!, existingPassword: String!, newPassword: String!): Password!
+
+  # Consumer — Sessions
+  authenticateSession(sessionToken: String, sessionJwt: String, sessionDurationMinutes: Int): SessionAuthResult!
+  revokeSession(sessionId: ID!): Boolean!
+
+  # Consumer — Connected Apps
+  createConnectedApp(clientName: String!, redirectUris: [String!]!, scopes: [String!]!): ConnectedAppCreateResult!
+  updateConnectedApp(clientId: ID!, clientName: String, redirectUris: [String!], scopes: [String!]): ConnectedApp!
+  deleteConnectedApp(clientId: ID!): DeleteResult!
+
+  # Consumer — M2M
+  createM2MClient(clientName: String!, scopes: [String!]!, trustedMetadata: JSON): M2MClientCreateResult!
+  rotateM2MClientSecret(clientId: ID!): M2MClientRotateResult!
+  deleteM2MClient(clientId: ID!): DeleteResult!
+
+  # B2B — Organizations
+  createOrganization(organizationName: String!, organizationSlug: String, trustedMetadata: JSON): Organization!
+  updateOrganization(organizationId: ID!, organizationName: String, trustedMetadata: JSON): Organization!
+  deleteOrganization(organizationId: ID!): DeleteResult!
+
+  # B2B — Members
+  createMember(organizationId: ID!, emailAddress: String!, name: String, roles: [String!]): Member!
+  updateMember(organizationId: ID!, memberId: ID!, name: String, trustedMetadata: JSON, roles: [String!]): Member!
+  deleteMember(organizationId: ID!, memberId: ID!): DeleteResult!
+
+  # B2B — SSO SAML
+  createSAMLConnection(organizationId: ID!, displayName: String): SSOConnection!
+  updateSAMLConnection(organizationId: ID!, connectionId: ID!, idpEntityId: String, idpSsoUrl: String, attributeMapping: JSON): SSOConnection!
+  deleteSSOConnection(organizationId: ID!, connectionId: ID!): DeleteResult!
+
+  # B2B — SCIM
+  createSCIMConnection(organizationId: ID!, displayName: String): SCIMConnection!
+  rotateSCIMToken(organizationId: ID!, connectionId: ID!): SCIMConnection!
+  deleteSCIMConnection(organizationId: ID!, connectionId: ID!): DeleteResult!
+
+  # B2B — B2B Sessions
+  authenticateB2BSession(sessionToken: String, sessionJwt: String, sessionDurationMinutes: Int): B2BSessionAuthResult!
+  revokeB2BSession(memberSessionId: ID!): Boolean!
+
+  # Management — Projects
+  createProject(projectName: String!, projectType: String!): Project!
+  deleteProject(projectId: ID!): DeleteResult!
+  createSecret(projectId: ID!): SecretCreateResult!
+  deleteSecret(projectId: ID!, secretId: ID!): DeleteResult!
+}
+
+# ─────────────────────────────────────────────
+# Input & Auxiliary types
+# ─────────────────────────────────────────────
+
+input UserNameInput {
+  firstName: String
+  middleName: String
+  lastName: String
+}
+
+type UserSearchResult {
+  results: [User!]!
+  resultsMetadata: SearchMetadata!
+}
+
+type OrgSearchResult {
+  organizations: [Organization!]!
+  resultsMetadata: SearchMetadata!
+}
+
+type MemberSearchResult {
+  members: [Member!]!
+  resultsMetadata: SearchMetadata!
+}
+
+type SearchMetadata {
+  total: Int!
+  nextCursor: String
+}
+
+type DeleteResult {
+  requestId: String!
+  statusCode: Int!
+}
+
+type MagicLinkAuthResult {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+}
+
+type OTPAuthResult {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+}
+
+type TOTPAuthResult {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+}
+
+type WebAuthnAuthResult {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+}
+
+type CryptoWalletChallenge {
+  challenge: String!
+}
+
+type CryptoWalletAuthResult {
+  userId: ID!
+  session: Session
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+  userCreated: Boolean!
+}
+
+type SessionAuthResult {
+  session: Session!
+  sessionToken: String
+  sessionJwt: String
+  user: User!
+}
+
+type ConnectedAppCreateResult {
+  clientId: ID!
+  clientSecret: String!
+  connectedApp: ConnectedApp!
+}
+
+type M2MClientCreateResult {
+  clientId: ID!
+  clientSecret: String!
+  m2mClient: M2MClient!
+}
+
+type M2MClientRotateResult {
+  nextClientSecret: String!
+  m2mClient: M2MClient!
+}
+
+type SecretCreateResult {
+  secret: String!
+  secretRecord: Secret!
+}
+
+type B2BSessionAuthResult {
+  memberSession: B2BSession!
+  sessionToken: String
+  sessionJwt: String
+  member: Member!
+  organization: Organization!
+}

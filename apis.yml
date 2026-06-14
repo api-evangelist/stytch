@@ -1,368 +1,381 @@
 aid: stytch
 url: https://raw.githubusercontent.com/api-evangelist/stytch/refs/heads/main/apis.yml
 apis:
-  - aid: stytch:stytch-consumer-api
-    name: Stytch Consumer Authentication API
-    tags:
-      - Authentication
-      - Passwordless
-      - Magic Links
-      - OTP
-      - OAuth
-      - WebAuthn
-      - Passkeys
-      - Consumer
-      - M2M
-      - Connected Apps
-      - Fraud
-    humanURL: https://stytch.com/docs/api
-    baseURL: https://api.stytch.com
-    properties:
-      - url: https://stytch.com/docs/api
-        type: Documentation
-      - url: https://stytch.com/docs/api/reference/library/overview
-        type: APIReference
-      - url: openapi/stytch-consumer-openapi.yml
-        type: OpenAPI
-      - url: https://github.com/stytchauth/stytch-openapi
-        type: OpenAPISource
-    description: >-
-      Stytch's Consumer API for end-user authentication. Covers Magic Links, SMS / email / WhatsApp OTP,
-      OAuth social login, Passwords, TOTP, WebAuthn / Passkeys, Crypto Wallets, Sessions, Users, plus the
-      M2M (client credentials) surface, Connected Apps (OAuth provider for third-party tools, AI agents,
-      and MCP servers), Fraud / Device Fingerprinting, Impersonation, IDP introspection, and Consumer RBAC.
-  - aid: stytch:stytch-b2b-api
-    name: Stytch B2B Authentication API
-    tags:
-      - Authentication
-      - B2B
-      - SSO
-      - SAML
-      - OIDC
-      - SCIM
-      - Multi-Tenant
-      - Organizations
-      - RBAC
-      - Connected Apps
-    humanURL: https://stytch.com/docs/b2b
-    baseURL: https://api.stytch.com/v1/b2b
-    properties:
-      - url: https://stytch.com/docs/b2b
-        type: Documentation
-      - url: https://stytch.com/docs/b2b/api/overview
-        type: APIReference
-      - url: openapi/stytch-b2b-openapi.yml
-        type: OpenAPI
-      - url: https://github.com/stytchauth/stytch-openapi
-        type: OpenAPISource
-    description: >-
-      Stytch's B2B API for multi-tenant SaaS authentication. Covers Organizations, Members, SSO (SAML and
-      OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM directory sync, TOTP, Recovery
-      Codes, Passwords, Impersonation, and the B2B IDP surface used by Connected Apps.
-  - aid: stytch:stytch-management-api
-    name: Stytch Management API
-    tags:
-      - Management
-      - Configuration
-      - Projects
-      - Secrets
-      - RBAC
-      - SDKConfig
-    humanURL: https://stytch.com/docs/workspace-management-api
-    baseURL: https://management.stytch.com
-    properties:
-      - url: https://stytch.com/docs/workspace-management-api
-        type: Documentation
-      - url: openapi/stytch-management-openapi.yml
-        type: OpenAPI
-      - url: https://github.com/stytchauth/stytch-management-openapi
-        type: OpenAPISource
-      - url: https://github.com/stytchauth/terraform-provider-stytch
-        type: TerraformProvider
-      - url: https://github.com/stytchauth/stytch-management-node
-        type: SDK
-      - url: https://github.com/stytchauth/stytch-management-go
-        type: SDK
-      - url: https://github.com/stytchauth/stytch-management-python
-        type: SDK
-    description: >-
-      Stytch's Workspace Management API (management.stytch.com) for programmatic configuration —
-      projects, environments, secrets, redirect URLs, allowed country codes, RBAC policies, email
-      templates, JWT templates, event log streaming, public tokens, trusted token profiles, and
-      Consumer / B2B SDK configuration. Backs the Terraform provider and the language-specific
-      management SDKs.
+- aid: stytch:stytch-consumer-api
+  name: Stytch Consumer Authentication API
+  tags:
+  - Authentication
+  - Passwordless
+  - Magic Links
+  - OTP
+  - OAuth
+  - WebAuthn
+  - Passkeys
+  - Consumer
+  - M2M
+  - Connected Apps
+  - Fraud
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  properties:
+  - url: https://stytch.com/docs/api
+    type: Documentation
+  - url: https://stytch.com/docs/api/reference/library/overview
+    type: APIReference
+  - url: openapi/stytch-consumer-openapi.yml
+    type: OpenAPI
+  - url: https://github.com/stytchauth/stytch-openapi
+    type: OpenAPISource
+  - url: graphql/stytch-graphql.md
+    type: GraphQL
+  description: Stytch's Consumer API for end-user authentication. Covers Magic Links,
+    SMS / email / WhatsApp OTP, OAuth social login, Passwords, TOTP, WebAuthn / Passkeys,
+    Crypto Wallets, Sessions, Users, plus the M2M (client credentials) surface, Connected
+    Apps (OAuth provider for third-party tools, AI agents, and MCP servers), Fraud
+    / Device Fingerprinting, Impersonation, IDP introspection, and Consumer RBAC.
+- aid: stytch:stytch-b2b-api
+  name: Stytch B2B Authentication API
+  tags:
+  - Authentication
+  - B2B
+  - SSO
+  - SAML
+  - OIDC
+  - SCIM
+  - Multi-Tenant
+  - Organizations
+  - RBAC
+  - Connected Apps
+  humanURL: https://stytch.com/docs/b2b
+  baseURL: https://api.stytch.com/v1/b2b
+  properties:
+  - url: https://stytch.com/docs/b2b
+    type: Documentation
+  - url: https://stytch.com/docs/b2b/api/overview
+    type: APIReference
+  - url: openapi/stytch-b2b-openapi.yml
+    type: OpenAPI
+  - url: https://github.com/stytchauth/stytch-openapi
+    type: OpenAPISource
+  description: Stytch's B2B API for multi-tenant SaaS authentication. Covers Organizations,
+    Members, SSO (SAML and OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B
+    RBAC, SCIM directory sync, TOTP, Recovery Codes, Passwords, Impersonation, and
+    the B2B IDP surface used by Connected Apps.
+- aid: stytch:stytch-management-api
+  name: Stytch Management API
+  tags:
+  - Management
+  - Configuration
+  - Projects
+  - Secrets
+  - RBAC
+  - SDKConfig
+  humanURL: https://stytch.com/docs/workspace-management-api
+  baseURL: https://management.stytch.com
+  properties:
+  - url: https://stytch.com/docs/workspace-management-api
+    type: Documentation
+  - url: openapi/stytch-management-openapi.yml
+    type: OpenAPI
+  - url: https://github.com/stytchauth/stytch-management-openapi
+    type: OpenAPISource
+  - url: https://github.com/stytchauth/terraform-provider-stytch
+    type: TerraformProvider
+  - url: https://github.com/stytchauth/stytch-management-node
+    type: SDK
+  - url: https://github.com/stytchauth/stytch-management-go
+    type: SDK
+  - url: https://github.com/stytchauth/stytch-management-python
+    type: SDK
+  description: Stytch's Workspace Management API (management.stytch.com) for programmatic
+    configuration — projects, environments, secrets, redirect URLs, allowed country
+    codes, RBAC policies, email templates, JWT templates, event log streaming, public
+    tokens, trusted token profiles, and Consumer / B2B SDK configuration. Backs the
+    Terraform provider and the language-specific management SDKs.
 name: Stytch
 tags:
-  - Authentication
-  - Identity
-  - Passwordless
-  - Security
-  - B2B
-  - Connected Apps
-  - MCP
-  - AI Agents
-  - Developer Tools
+- Authentication
+- Identity
+- Passwordless
+- Security
+- B2B
+- Connected Apps
+- MCP
+- AI Agents
+- Developer Tools
 kind: contract
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
 created: '2024-11-15'
 modified: '2026-05-22'
 position: Consuming
-description: >-
-  Stytch is an authentication and identity infrastructure provider. Its Consumer and B2B APIs cover
-  passwordless authentication (Magic Links, OTP, OAuth, WebAuthn / Passkeys, TOTP), enterprise SSO
-  (SAML / OIDC) and SCIM, sessions, M2M client-credentials tokens, and Device Fingerprinting / fraud
-  defense. Connected Apps lets a Stytch-secured product act as an OAuth 2.0 / OIDC Authorization
-  Server for third-party integrations, desktop apps, AI agents, and MCP servers — a posture Stytch
-  describes as "agent-ready". A separate Management API plus a Terraform provider handle workspace
-  configuration as code.
+description: Stytch is an authentication and identity infrastructure provider. Its
+  Consumer and B2B APIs cover passwordless authentication (Magic Links, OTP, OAuth,
+  WebAuthn / Passkeys, TOTP), enterprise SSO (SAML / OIDC) and SCIM, sessions, M2M
+  client-credentials tokens, and Device Fingerprinting / fraud defense. Connected
+  Apps lets a Stytch-secured product act as an OAuth 2.0 / OIDC Authorization Server
+  for third-party integrations, desktop apps, AI agents, and MCP servers — a posture
+  Stytch describes as "agent-ready". A separate Management API plus a Terraform provider
+  handle workspace configuration as code.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-    - url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
-      name: Stytch B2B Create Organization and Invite Member
-      summary: Create a B2B organization and email a magic link invite to a new member.
-    - url: arazzo/stytch-b2b-discovery-intermediate-exchange-workflow.yml
-      name: Stytch B2B Discovery Intermediate Session Exchange
-      summary: Authenticate a discovery magic link, list discovered organizations, then exchange into one.
-    - url: arazzo/stytch-b2b-email-magic-link-discovery-workflow.yml
-      name: Stytch B2B Email Magic Link Discovery and Organization Create
-      summary: Send a discovery magic link, authenticate it, and create an organization from the intermediate session.
-    - url: arazzo/stytch-b2b-email-otp-discovery-workflow.yml
-      name: Stytch B2B Email OTP Discovery and Exchange
-      summary: Send a discovery email OTP, authenticate the code, then exchange into an organization.
-    - url: arazzo/stytch-b2b-email-otp-login-workflow.yml
-      name: Stytch B2B Email OTP Login
-      summary: Send an email OTP to an organization member and authenticate the code.
-    - url: arazzo/stytch-b2b-magic-link-org-login-workflow.yml
-      name: Stytch B2B Organization Magic Link Login
-      summary: Send an organization-scoped email magic link and authenticate the clicked token.
-    - url: arazzo/stytch-b2b-org-create-member-workflow.yml
-      name: Stytch B2B Create Organization and Member
-      summary: Create a B2B organization, add a member to it, and read the member back.
-    - url: arazzo/stytch-b2b-password-auth-session-workflow.yml
-      name: Stytch B2B Password Authenticate and Session
-      summary: Authenticate a member's organization password, then validate the resulting session.
-    - url: arazzo/stytch-b2b-recovery-codes-rotate-workflow.yml
-      name: Stytch B2B Recovery Codes Get and Rotate
-      summary: Read a member's MFA recovery codes, then rotate them to a fresh set.
-    - url: arazzo/stytch-b2b-sms-otp-mfa-workflow.yml
-      name: Stytch B2B SMS OTP Multi-Factor Authentication
-      summary: Send an SMS OTP to a member and authenticate the code to complete MFA.
-    - url: arazzo/stytch-b2b-totp-enrollment-workflow.yml
-      name: Stytch B2B TOTP Authenticator Enrollment
-      summary: Register a TOTP authenticator for a member and authenticate the first code.
-    - url: arazzo/stytch-create-user-magic-link-workflow.yml
-      name: Stytch Create User and Send Email Magic Link
-      summary: Create a Stytch user, send them an email magic link, and authenticate the resulting token.
-    - url: arazzo/stytch-crypto-wallet-auth-workflow.yml
-      name: Stytch Crypto Wallet Authentication
-      summary: Start a crypto wallet challenge and authenticate the signed message.
-    - url: arazzo/stytch-email-otp-login-workflow.yml
-      name: Stytch Email One-Time Passcode Login
-      summary: Send an email one-time passcode, authenticate the code, and read the session.
-    - url: arazzo/stytch-magic-link-login-or-create-workflow.yml
-      name: Stytch Magic Link Login or Create
-      summary: Send a login-or-create email magic link and authenticate the clicked token.
-    - url: arazzo/stytch-oauth-authenticate-session-workflow.yml
-      name: Stytch OAuth Authenticate and Session
-      summary: Authenticate an OAuth token returned from a provider redirect and read the session.
-    - url: arazzo/stytch-password-reset-email-workflow.yml
-      name: Stytch Password Reset by Email
-      summary: Start an email password reset, complete it with the token, and read the new session.
-    - url: arazzo/stytch-password-signup-session-workflow.yml
-      name: Stytch Password Signup to Session
-      summary: Create a password-based user, authenticate the credentials, and read the resulting session.
-    - url: arazzo/stytch-revoke-connected-app-workflow.yml
-      name: Stytch Revoke a User's Connected App
-      summary: List a user's connected apps and revoke the first authorized app's access.
-    - url: arazzo/stytch-session-authenticate-revoke-workflow.yml
-      name: Stytch Session Authenticate and Revoke
-      summary: Validate a session token, read the user's active sessions, then revoke the session.
-    - url: arazzo/stytch-sms-otp-login-workflow.yml
-      name: Stytch SMS One-Time Passcode Login
-      summary: Send an SMS one-time passcode and authenticate the code the user enters.
-    - url: arazzo/stytch-totp-enrollment-workflow.yml
-      name: Stytch TOTP Authenticator Enrollment
-      summary: Create a user, register a TOTP authenticator, and authenticate the first code.
-    - url: arazzo/stytch-user-create-search-delete-workflow.yml
-      name: Stytch User Create, Search, and Delete
-      summary: Create a user, find them again by email search, then delete the matched user.
-    - url: arazzo/stytch-whatsapp-otp-login-workflow.yml
-      name: Stytch WhatsApp One-Time Passcode Login
-      summary: Send a WhatsApp one-time passcode and authenticate the code the user enters.
-  - type: Website
-    url: https://stytch.com
-  - type: Documentation
-    url: https://stytch.com/docs
-  - type: APIReference
-    url: https://stytch.com/docs/api
-  - type: SignUp
-    url: https://app.stytch.com/register
-  - type: Portal
-    url: https://app.stytch.com
-  - type: Authentication
-    url: https://stytch.com/docs/guides/authentication
-  - type: Sessions
-    url: https://stytch.com/docs/guides/sessions
-  - type: ConnectedApps
-    url: https://stytch.com/docs/guides/connected-apps/overview
-  - type: MCPServer
-    url: https://github.com/stytchauth/mcp-stytch-consumer-todo-list
-  - type: AIAgentDetection
-    url: https://github.com/stytchauth/is-agent
-  - type: SDKs
-    url: https://stytch.com/docs/sdks
-  - type: Pricing
-    url: https://stytch.com/pricing
-  - type: PrivacyPolicy
-    url: https://stytch.com/privacy
-  - type: TermsOfService
-    url: https://stytch.com/terms
-  - type: Webhooks
-    url: https://stytch.com/docs/guides/webhooks
-  - type: GitHubOrganization
-    url: https://github.com/stytchauth
-  - type: PostmanWorkspace
-    url: https://www.postman.com/stytch/stytch-public-workspace/overview
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/stytch
-  - type: Node.js SDK
-    url: https://github.com/stytchauth/stytch-node
-  - type: Python SDK
-    url: https://github.com/stytchauth/stytch-python
-  - type: Java SDK
-    url: https://github.com/stytchauth/stytch-java
-  - type: Go SDK
-    url: https://github.com/stytchauth/stytch-go
-  - type: Ruby SDK
-    url: https://github.com/stytchauth/stytch-ruby
-  - type: PHP SDK
-    url: https://github.com/stytchauth/stytch-php
-  - type: .NET SDK
-    url: https://github.com/stytchauth/stytch-dotnet
-  - type: Rust SDK
-    url: https://github.com/stytchauth/stytch-rust
-  - type: iOS SDK
-    url: https://github.com/stytchauth/stytch-ios
-  - type: Android SDK
-    url: https://github.com/stytchauth/stytch-android
-  - type: Browser SDK
-    url: https://github.com/stytchauth/stytch-browser
-  - type: Mobile SDK
-    url: https://github.com/stytchauth/stytch-mobile
-  - type: CLI
-    url: https://github.com/stytchauth/stytch-cli
-  - type: TerraformProvider
-    url: https://github.com/stytchauth/terraform-provider-stytch
-  - type: ManagementSDK
-    url: https://github.com/stytchauth/stytch-management-node
-  - type: OSS Library
-    url: https://github.com/stytchauth/samlshield
-  - type: StatusPage
-    url: https://status.stytch.com
-  - type: Blog
-    url: https://stytch.com/blog
-  - type: Spectral Rules
-    url: rules/stytch-rules.yml
-  - type: Naftiko Capability
-    url: capabilities/passwordless-authentication.yaml
-  - type: Naftiko Capability
-    url: capabilities/b2b-identity-management.yaml
-  - type: Naftiko Capability
-    url: capabilities/b2b-sso-scim-provisioning.yaml
-  - type: Naftiko Capability
-    url: capabilities/connected-apps-mcp-authorization.yaml
-  - type: Naftiko Capability
-    url: capabilities/m2m-service-authentication.yaml
-  - type: Naftiko Capability
-    url: capabilities/fraud-device-intelligence.yaml
-  - type: Vocabulary
-    url: vocabulary/stytch-vocabulary.yml
-  - type: JSON Schema
-    url: json-schema/stytch-user-schema.json
-  - type: JSON Schema
-    url: json-schema/stytch-organization-schema.json
-  - type: JSON Schema
-    url: json-schema/stytch-member-schema.json
-  - type: JSON Schema
-    url: json-schema/stytch-connected-app-schema.json
-  - type: JSON Schema
-    url: json-schema/stytch-m2m-client-schema.json
-  - type: JSON Structure
-    url: json-structure/stytch-session-structure.json
-  - type: JSON Structure
-    url: json-structure/stytch-connected-app-structure.json
-  - type: JSON-LD Context
-    url: json-ld/stytch-context.jsonld
-  - type: Example
-    url: examples/stytch-send-magic-link-example.json
-  - type: Example
-    url: examples/stytch-create-organization-example.json
-  - type: Example
-    url: examples/stytch-consumer-magic-links-login-or-create-example.json
-  - type: Example
-    url: examples/stytch-consumer-otps-sms-send-example.json
-  - type: Example
-    url: examples/stytch-consumer-oauth-authenticate-example.json
-  - type: Example
-    url: examples/stytch-consumer-sessions-authenticate-example.json
-  - type: Example
-    url: examples/stytch-consumer-webauthn-register-start-example.json
-  - type: Example
-    url: examples/stytch-consumer-connected-apps-create-example.json
-  - type: Example
-    url: examples/stytch-consumer-fingerprint-lookup-example.json
-  - type: Example
-    url: examples/stytch-consumer-users-create-example.json
-  - type: Example
-    url: examples/stytch-b2b-organizations-create-example.json
-  - type: Example
-    url: examples/stytch-b2b-members-create-example.json
-  - type: Example
-    url: examples/stytch-b2b-sso-saml-create-connection-example.json
-  - type: Example
-    url: examples/stytch-b2b-discovery-organizations-example.json
-  - type: Example
-    url: examples/stytch-b2b-magic-links-email-login-or-signup-example.json
-  - type: Example
-    url: examples/stytch-b2b-sessions-authenticate-example.json
-  - type: Example
-    url: examples/stytch-b2b-rbac-policy-get-example.json
-  - type: Example
-    url: examples/stytch-management-create-project-example.json
-  - type: Example
-    url: examples/stytch-management-create-redirect-url-example.json
-  - type: Plans
-    url: plans/stytch-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/stytch-rate-limits.yml
-  - type: FinOps
-    url: finops/stytch-finops.yml
-  - type: Features
-    data:
-      - One integration for authentication, authorization, and security, making your app "enterprise-ready and agent-ready" (stytch.com)
-      - Consumer Authentication API (Magic Links, OTP, OAuth, Passwords, TOTP, WebAuthn / Passkeys, Crypto Wallets, Sessions, Users)
-      - B2B Authentication API (Organizations, Members, SSO SAML/OIDC, SCIM, Discovery, RBAC, Magic Links, OTP, OAuth, Sessions)
-      - Connected Apps — turn your product into an OAuth 2.0 / OIDC Authorization Server for third-party integrations, AI agents, and MCP servers
-      - MCP server demos (mcp-stytch-consumer-todo-list, stytch-connected-apps-b2b-demo, mcp-stytch-b2b-okr-manager) on the GitHub org
-      - is-agent SDK for detecting AI agents / bots client-side
-      - M2M client credentials with short-lived JWTs and secret rotation
-      - Device Fingerprinting (DFP), verdict reasons, adaptive MFA, fraud rules
-      - Workspace Management API (management.stytch.com) and Terraform provider for config-as-code
-      - SDKs for Node, Python, Go, Ruby, Java/Kotlin, PHP, .NET, Rust, iOS, Android, Browser, Mobile
-      - SAML Shield open-source library to harden SAML assertion validation
-      - Pay-as-you-go pricing — $0 base, 10K MAUs + AI agents included, 5 SSO/SCIM included ($125/mo additional), 1K M2M tokens, 10K fingerprints free ($0.005 thereafter)
-      - Enterprise tier — 99.99% SLA, HIPAA/BAA, dedicated Slack support, custom volume pricing
-      - Webhooks for auth events
-      - Default API rate limit ~100 req/sec/project
-    sources:
-      - https://stytch.com
-      - https://stytch.com/pricing
-      - https://github.com/stytchauth
-    updated: '2026-05-22'
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
+    name: Stytch B2B Create Organization and Invite Member
+    summary: Create a B2B organization and email a magic link invite to a new member.
+  - url: arazzo/stytch-b2b-discovery-intermediate-exchange-workflow.yml
+    name: Stytch B2B Discovery Intermediate Session Exchange
+    summary: Authenticate a discovery magic link, list discovered organizations, then
+      exchange into one.
+  - url: arazzo/stytch-b2b-email-magic-link-discovery-workflow.yml
+    name: Stytch B2B Email Magic Link Discovery and Organization Create
+    summary: Send a discovery magic link, authenticate it, and create an organization
+      from the intermediate session.
+  - url: arazzo/stytch-b2b-email-otp-discovery-workflow.yml
+    name: Stytch B2B Email OTP Discovery and Exchange
+    summary: Send a discovery email OTP, authenticate the code, then exchange into
+      an organization.
+  - url: arazzo/stytch-b2b-email-otp-login-workflow.yml
+    name: Stytch B2B Email OTP Login
+    summary: Send an email OTP to an organization member and authenticate the code.
+  - url: arazzo/stytch-b2b-magic-link-org-login-workflow.yml
+    name: Stytch B2B Organization Magic Link Login
+    summary: Send an organization-scoped email magic link and authenticate the clicked
+      token.
+  - url: arazzo/stytch-b2b-org-create-member-workflow.yml
+    name: Stytch B2B Create Organization and Member
+    summary: Create a B2B organization, add a member to it, and read the member back.
+  - url: arazzo/stytch-b2b-password-auth-session-workflow.yml
+    name: Stytch B2B Password Authenticate and Session
+    summary: Authenticate a member's organization password, then validate the resulting
+      session.
+  - url: arazzo/stytch-b2b-recovery-codes-rotate-workflow.yml
+    name: Stytch B2B Recovery Codes Get and Rotate
+    summary: Read a member's MFA recovery codes, then rotate them to a fresh set.
+  - url: arazzo/stytch-b2b-sms-otp-mfa-workflow.yml
+    name: Stytch B2B SMS OTP Multi-Factor Authentication
+    summary: Send an SMS OTP to a member and authenticate the code to complete MFA.
+  - url: arazzo/stytch-b2b-totp-enrollment-workflow.yml
+    name: Stytch B2B TOTP Authenticator Enrollment
+    summary: Register a TOTP authenticator for a member and authenticate the first
+      code.
+  - url: arazzo/stytch-create-user-magic-link-workflow.yml
+    name: Stytch Create User and Send Email Magic Link
+    summary: Create a Stytch user, send them an email magic link, and authenticate
+      the resulting token.
+  - url: arazzo/stytch-crypto-wallet-auth-workflow.yml
+    name: Stytch Crypto Wallet Authentication
+    summary: Start a crypto wallet challenge and authenticate the signed message.
+  - url: arazzo/stytch-email-otp-login-workflow.yml
+    name: Stytch Email One-Time Passcode Login
+    summary: Send an email one-time passcode, authenticate the code, and read the
+      session.
+  - url: arazzo/stytch-magic-link-login-or-create-workflow.yml
+    name: Stytch Magic Link Login or Create
+    summary: Send a login-or-create email magic link and authenticate the clicked
+      token.
+  - url: arazzo/stytch-oauth-authenticate-session-workflow.yml
+    name: Stytch OAuth Authenticate and Session
+    summary: Authenticate an OAuth token returned from a provider redirect and read
+      the session.
+  - url: arazzo/stytch-password-reset-email-workflow.yml
+    name: Stytch Password Reset by Email
+    summary: Start an email password reset, complete it with the token, and read the
+      new session.
+  - url: arazzo/stytch-password-signup-session-workflow.yml
+    name: Stytch Password Signup to Session
+    summary: Create a password-based user, authenticate the credentials, and read
+      the resulting session.
+  - url: arazzo/stytch-revoke-connected-app-workflow.yml
+    name: Stytch Revoke a User's Connected App
+    summary: List a user's connected apps and revoke the first authorized app's access.
+  - url: arazzo/stytch-session-authenticate-revoke-workflow.yml
+    name: Stytch Session Authenticate and Revoke
+    summary: Validate a session token, read the user's active sessions, then revoke
+      the session.
+  - url: arazzo/stytch-sms-otp-login-workflow.yml
+    name: Stytch SMS One-Time Passcode Login
+    summary: Send an SMS one-time passcode and authenticate the code the user enters.
+  - url: arazzo/stytch-totp-enrollment-workflow.yml
+    name: Stytch TOTP Authenticator Enrollment
+    summary: Create a user, register a TOTP authenticator, and authenticate the first
+      code.
+  - url: arazzo/stytch-user-create-search-delete-workflow.yml
+    name: Stytch User Create, Search, and Delete
+    summary: Create a user, find them again by email search, then delete the matched
+      user.
+  - url: arazzo/stytch-whatsapp-otp-login-workflow.yml
+    name: Stytch WhatsApp One-Time Passcode Login
+    summary: Send a WhatsApp one-time passcode and authenticate the code the user
+      enters.
+- type: Website
+  url: https://stytch.com
+- type: Documentation
+  url: https://stytch.com/docs
+- type: APIReference
+  url: https://stytch.com/docs/api
+- type: SignUp
+  url: https://app.stytch.com/register
+- type: Portal
+  url: https://app.stytch.com
+- type: Authentication
+  url: https://stytch.com/docs/guides/authentication
+- type: Sessions
+  url: https://stytch.com/docs/guides/sessions
+- type: ConnectedApps
+  url: https://stytch.com/docs/guides/connected-apps/overview
+- type: MCPServer
+  url: https://github.com/stytchauth/mcp-stytch-consumer-todo-list
+- type: AIAgentDetection
+  url: https://github.com/stytchauth/is-agent
+- type: SDKs
+  url: https://stytch.com/docs/sdks
+- type: Pricing
+  url: https://stytch.com/pricing
+- type: PrivacyPolicy
+  url: https://stytch.com/privacy
+- type: TermsOfService
+  url: https://stytch.com/terms
+- type: Webhooks
+  url: https://stytch.com/docs/guides/webhooks
+- type: GitHubOrganization
+  url: https://github.com/stytchauth
+- type: PostmanWorkspace
+  url: https://www.postman.com/stytch/stytch-public-workspace/overview
+- type: LinkedIn
+  url: https://www.linkedin.com/company/stytch
+- type: Node.js SDK
+  url: https://github.com/stytchauth/stytch-node
+- type: Python SDK
+  url: https://github.com/stytchauth/stytch-python
+- type: Java SDK
+  url: https://github.com/stytchauth/stytch-java
+- type: Go SDK
+  url: https://github.com/stytchauth/stytch-go
+- type: Ruby SDK
+  url: https://github.com/stytchauth/stytch-ruby
+- type: PHP SDK
+  url: https://github.com/stytchauth/stytch-php
+- type: .NET SDK
+  url: https://github.com/stytchauth/stytch-dotnet
+- type: Rust SDK
+  url: https://github.com/stytchauth/stytch-rust
+- type: iOS SDK
+  url: https://github.com/stytchauth/stytch-ios
+- type: Android SDK
+  url: https://github.com/stytchauth/stytch-android
+- type: Browser SDK
+  url: https://github.com/stytchauth/stytch-browser
+- type: Mobile SDK
+  url: https://github.com/stytchauth/stytch-mobile
+- type: CLI
+  url: https://github.com/stytchauth/stytch-cli
+- type: TerraformProvider
+  url: https://github.com/stytchauth/terraform-provider-stytch
+- type: ManagementSDK
+  url: https://github.com/stytchauth/stytch-management-node
+- type: OSS Library
+  url: https://github.com/stytchauth/samlshield
+- type: StatusPage
+  url: https://status.stytch.com
+- type: Blog
+  url: https://stytch.com/blog
+- type: Spectral Rules
+  url: rules/stytch-rules.yml
+- type: Vocabulary
+  url: vocabulary/stytch-vocabulary.yml
+- type: JSON Schema
+  url: json-schema/stytch-user-schema.json
+- type: JSON Schema
+  url: json-schema/stytch-organization-schema.json
+- type: JSON Schema
+  url: json-schema/stytch-member-schema.json
+- type: JSON Schema
+  url: json-schema/stytch-connected-app-schema.json
+- type: JSON Schema
+  url: json-schema/stytch-m2m-client-schema.json
+- type: JSON Structure
+  url: json-structure/stytch-session-structure.json
+- type: JSON Structure
+  url: json-structure/stytch-connected-app-structure.json
+- type: JSON-LD Context
+  url: json-ld/stytch-context.jsonld
+- type: Example
+  url: examples/stytch-send-magic-link-example.json
+- type: Example
+  url: examples/stytch-create-organization-example.json
+- type: Example
+  url: examples/stytch-consumer-magic-links-login-or-create-example.json
+- type: Example
+  url: examples/stytch-consumer-otps-sms-send-example.json
+- type: Example
+  url: examples/stytch-consumer-oauth-authenticate-example.json
+- type: Example
+  url: examples/stytch-consumer-sessions-authenticate-example.json
+- type: Example
+  url: examples/stytch-consumer-webauthn-register-start-example.json
+- type: Example
+  url: examples/stytch-consumer-connected-apps-create-example.json
+- type: Example
+  url: examples/stytch-consumer-fingerprint-lookup-example.json
+- type: Example
+  url: examples/stytch-consumer-users-create-example.json
+- type: Example
+  url: examples/stytch-b2b-organizations-create-example.json
+- type: Example
+  url: examples/stytch-b2b-members-create-example.json
+- type: Example
+  url: examples/stytch-b2b-sso-saml-create-connection-example.json
+- type: Example
+  url: examples/stytch-b2b-discovery-organizations-example.json
+- type: Example
+  url: examples/stytch-b2b-magic-links-email-login-or-signup-example.json
+- type: Example
+  url: examples/stytch-b2b-sessions-authenticate-example.json
+- type: Example
+  url: examples/stytch-b2b-rbac-policy-get-example.json
+- type: Example
+  url: examples/stytch-management-create-project-example.json
+- type: Example
+  url: examples/stytch-management-create-redirect-url-example.json
+- type: Plans
+  url: plans/stytch-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/stytch-rate-limits.yml
+- type: FinOps
+  url: finops/stytch-finops.yml
+- type: Features
+  data:
+  - One integration for authentication, authorization, and security, making your app
+    "enterprise-ready and agent-ready" (stytch.com)
+  - Consumer Authentication API (Magic Links, OTP, OAuth, Passwords, TOTP, WebAuthn
+    / Passkeys, Crypto Wallets, Sessions, Users)
+  - B2B Authentication API (Organizations, Members, SSO SAML/OIDC, SCIM, Discovery,
+    RBAC, Magic Links, OTP, OAuth, Sessions)
+  - Connected Apps — turn your product into an OAuth 2.0 / OIDC Authorization Server
+    for third-party integrations, AI agents, and MCP servers
+  - MCP server demos (mcp-stytch-consumer-todo-list, stytch-connected-apps-b2b-demo,
+    mcp-stytch-b2b-okr-manager) on the GitHub org
+  - is-agent SDK for detecting AI agents / bots client-side
+  - M2M client credentials with short-lived JWTs and secret rotation
+  - Device Fingerprinting (DFP), verdict reasons, adaptive MFA, fraud rules
+  - Workspace Management API (management.stytch.com) and Terraform provider for config-as-code
+  - SDKs for Node, Python, Go, Ruby, Java/Kotlin, PHP, .NET, Rust, iOS, Android, Browser,
+    Mobile
+  - SAML Shield open-source library to harden SAML assertion validation
+  - Pay-as-you-go pricing — $0 base, 10K MAUs + AI agents included, 5 SSO/SCIM included
+    ($125/mo additional), 1K M2M tokens, 10K fingerprints free ($0.005 thereafter)
+  - Enterprise tier — 99.99% SLA, HIPAA/BAA, dedicated Slack support, custom volume
+    pricing
+  - Webhooks for auth events
+  - Default API rate limit ~100 req/sec/project
+  sources:
+  - https://stytch.com
+  - https://stytch.com/pricing
+  - https://github.com/stytchauth
+  updated: '2026-05-22'
