@@ -1,0 +1,1657 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch Management API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Application",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects"
+          },
+          "docs": "GetAll retrieves all projects in a workspace."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a project, including both a live and test environment."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves a project."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates the project."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes a project and all of its environments."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Country Code Allowlist",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getallowedsmscountrycodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/sms",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAllowedSMSCountryCodes retrieves the allowed SMS country codes for an environment."
+        },
+        {
+          "info": {
+            "name": "Setallowedsmscountrycodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/sms",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetAllowedSMSCountryCodes sets the allowed SMS country codes for an environment."
+        },
+        {
+          "info": {
+            "name": "Getallowedwhatsappcountrycodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/whatsapp",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAllowedWhatsAppCountryCodes retrieves the allowed WhatsApp country codes for an environment."
+        },
+        {
+          "info": {
+            "name": "Setallowedwhatsappcountrycodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/whatsapp",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetAllowedWhatsAppCountryCodes sets the allowed WhatsApp country codes for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email Template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/email_templates",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all email templates for a project."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/email_templates",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates an email template for a project."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/email_templates/:template_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves an email template for a project."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/email_templates/:template_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates an email template for a project."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/email_templates/:template_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes an email template for a project."
+        },
+        {
+          "info": {
+            "name": "Getdefault",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/default_email_templates/:email_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetDefault retrieves the default email template for a specific template type in a project."
+        },
+        {
+          "info": {
+            "name": "Setdefault",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/default_email_templates/:email_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetDefault sets the default email template for a specific template type in a project."
+        },
+        {
+          "info": {
+            "name": "Unsetdefault",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/default_email_templates/:email_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "email_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "UnsetDefault removes the default email template for a specific template type in a project."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Environment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves all environments in a project."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new environment in a project."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deletes an environment."
+        },
+        {
+          "info": {
+            "name": "Getmetrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/metrics",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves metrics for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Event Log Streaming",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Enable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type/enable",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable starts streaming event logs for an environment to a destination."
+        },
+        {
+          "info": {
+            "name": "Disable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type/disable",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disable stops streaming event logs for an environment to a destination."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Jwt Template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/jwt_templates/:jwt_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "jwt_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves a JWT template for a project"
+        },
+        {
+          "info": {
+            "name": "Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/jwt_templates/:jwt_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "jwt_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set updates a specific JWT template for a project"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Password",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/password_strength_config",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves the password strength configuration for an environment."
+        },
+        {
+          "info": {
+            "name": "Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/password_strength_config",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set updates the password strength configuration for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Public Token",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/public_tokens",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all the active public tokens defined for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/public_tokens",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a new public token for an environment."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/public_tokens/:public_token",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "public_token",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves a public token for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/public_tokens/:public_token",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "public_token",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes a public token for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rbac",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/rbac_policy",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves the RBAC policy for an environment."
+        },
+        {
+          "info": {
+            "name": "Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/rbac_policy",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set updates the RBAC policy for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Redirect Url",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get retrieves a redirect URL for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a redirect URL for an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates the valid types for a redirect URL for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "url",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "do_not_promote_defaults",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Delete deletes a redirect URL for an environment."
+        },
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/redirect_urls/all",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all redirect URLs for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Sdk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getconsumerconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/consumer",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetConsumerConfig retrieves the SDK configuration for a B2C project environment"
+        },
+        {
+          "info": {
+            "name": "Setconsumerconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/consumer",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetConsumerConfig updates the SDK configuration for a B2C project environment"
+        },
+        {
+          "info": {
+            "name": "Getb2bconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/b2b",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetB2BConfig retrieves the SDK configuration for a B2B project environment"
+        },
+        {
+          "info": {
+            "name": "Setb2bconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/b2b",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetB2BConfig updates the SDK configuration for a B2B project environment"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Secret",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/secrets",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all secrets for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/secrets",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a secret for an environment. The response contains the full secret value, which will not be exposed in future Get requests."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/secrets/:secret_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "secret_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves a secret for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/secrets/:secret_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "secret_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes a secret for an environment."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trusted Token Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all the trusted token profiles for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves the trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Createpemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "CreatePEM creates a PEM file for a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Getpemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys/:pem_file_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pem_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetPEM retrieves a PEM file for a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Deletepemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://management.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys/:pem_file_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pem_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "DeletePEM deletes a PEM file for a trusted token profile for an environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

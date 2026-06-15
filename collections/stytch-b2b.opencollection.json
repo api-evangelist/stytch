@@ -1,0 +1,2549 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "B2B SCIM",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getgroups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Gets a paginated list of all SCIM Groups associated with a given Connection."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a SCIM Connection."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              }
+            ]
+          },
+          "docs": "Deletes a SCIM Connection."
+        },
+        {
+          "info": {
+            "name": "Rotatestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id/rotate/start",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a SCIM token rotation."
+        },
+        {
+          "info": {
+            "name": "Rotatecomplete",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id/rotate/complete",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a SCIM token rotation. This will complete the current token rotation process and update the active token to be the new token supplied in the [start SCIM token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start) response."
+        },
+        {
+          "info": {
+            "name": "Rotatecancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection/:connection_id/rotate/cancel",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SCIM connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel a SCIM token rotation. This will cancel the current token rotation process, keeping the original token active."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Get SCIM Connection."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/scim/:organization_id/connection",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new SCIM Connection."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Organization. An `organization_name` and a unique `organization_slug` are required.\n\nIf no Organization authentication setting parameters are passed in, `email_invites` will default to `ALL_ALLOWED` so that the Organization has a way to add Members. Otherwise, `email_invites` will default to `NOT_ALLOWED`.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites"
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Returns an Organization specified by `organization_id`."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an Organization specified by `organization_id`. An Organization must always have at least one auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Deletes an Organization specified by `organization_id`. All Members of the Organization will also be deleted."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 100 requests/minute.\n\nSearch across your Organizations. Returns an array of Organization objects."
+        },
+        {
+          "info": {
+            "name": "Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/metrics",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Metrics"
+        },
+        {
+          "info": {
+            "name": "Connectedapps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/connected_apps",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of Connected Apps for the Organization that have been installed by Members. Installation comprises\nsuccessful completion of an authorization flow with a Connected App that has not been revoked.\n\nConnected Apps may be uninstalled if an Organization changes its `first_party_connected_apps_allowed_type`\nor `third_party_connected_apps_allowed_type` policies."
+        },
+        {
+          "info": {
+            "name": "Getconnectedapp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/connected_apps/:connected_app_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ]
+          },
+          "docs": "Get Connected App for Organization retrieves information about the specified Connected App as well as a list of the\nOrganization's Members who have the App installed along with the scopes they requested at completion of their last\nauthorization with the App."
+        },
+        {
+          "info": {
+            "name": "Deleteexternalid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/external_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deleteexternalid"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Member specified by `organization_id` and `member_id`."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Deletes a Member specified by `organization_id` and `member_id`."
+        },
+        {
+          "info": {
+            "name": "Reactivate",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/reactivate",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reactivates a deleted Member's status and its associated email status (if applicable) to active, specified by `organization_id` and `member_id`. This endpoint will only work for Members with at least one verified email where their `email_address_verified` is `true`.\n\nNote that this endpoint does not accept an `external_id`. The Stytch `member_id` must be provided."
+        },
+        {
+          "info": {
+            "name": "Deletemfaphonenumber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/mfa_phone_numbers/:member_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Delete a Member's MFA phone number. \n\nTo change a Member's phone number, you must first call this endpoint to delete the existing phone number.\n\nExisting Member Sessions that include a phone number authentication factor will not be revoked if the phone number is deleted, and MFA will not be enforced until the Member logs in again.\nIf you wish to enforce MFA immediately after a phone number is deleted, you can do so by prompting the Member to enter a new phone number\nand calling the [OTP SMS send"
+        },
+        {
+          "info": {
+            "name": "Deletetotp",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/totp",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Delete a Member's MFA TOTP registration.\n\nTo mint a new registration for a Member, you must first call this endpoint to delete the existing registration.\n\nExisting Member Sessions that include the TOTP authentication factor will not be revoked if the registration is deleted, and MFA will not be enforced until the Member logs in again."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/members/search",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 100 requests/minute.\n\nSearch for Members within specified Organizations. An array with at least one `organization_id` is required. Submitting an empty `query` returns all non-deleted Members within the specified Organizations.\n\nAll fuzzy search filters require a minimum of three"
+        },
+        {
+          "info": {
+            "name": "Deletepassword",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/passwords/:member_password_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_password_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a Member's password."
+              }
+            ]
+          },
+          "docs": "Delete a Member's password. \n\nThis endpoint only works for Organization-scoped passwords. For cross-org password Projects, use [Require Password Reset By Email](https://stytch.com/docs/b2b/api/passwords-require-reset-by-email) instead."
+        },
+        {
+          "info": {
+            "name": "Dangerouslyget",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/members/dangerously_get/:member_id",
+            "params": [
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value."
+              },
+              {
+                "name": "include_deleted",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a Member by `member_id`. This endpoint does not require an `organization_id`, enabling you to get members across organizations. This is a dangerous operation. Incorrect use may open you up to indirect object reference (IDOR) attacks. We recommend using the [Get Member](https://stytch.com/docs/b2b/api/get-member) API instead."
+        },
+        {
+          "info": {
+            "name": "Oidcproviders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oidc_providers",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved OIDC access tokens and ID tokens for a member. After a successful OIDC login, Stytch will save the \nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the \naccess token automatically."
+        },
+        {
+          "info": {
+            "name": "Unlinkretiredemail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/unlink_retired_email",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Unlinks a retired email address from a Member specified by their `organization_id` and `member_id`. The email address\nto be retired can be identified in the request body by either its `email_id`, its `email_address`, or both. If using\nboth identifiers they must refer to the same email.\n\nA previously active email address can be marked as retired in one of two ways:\n\n- It's replaced with a new primary email address during an explicit Member update.\n- A new email address is surfaced by an OAuth, SA"
+        },
+        {
+          "info": {
+            "name": "Startemailupdate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/start_email_update",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts a self-serve email update for a Member specified by their `organization_id` and `member_id`.\nTo perform a self-serve update, members must be active and have an active, verified email address.\n\nThe new email address must meet the following requirements:\n\n- Must not be in use by another member (retired emails count as used until they are [unlinked](https://stytch.com/docs/b2b/api/unlink-retired-member-email))\n- Must not be updating for another member (i.e. two members cannot attempt to upda"
+        },
+        {
+          "info": {
+            "name": "Getconnectedapps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/connected_apps",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Member Get Connected Apps retrieves a list of Connected Apps with which the Member has successfully completed an\nauthorization flow.\nIf the Member revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the Connected App will\nno longer be returned in the response. A Connected App's access may also be revoked if the Organization's allowed Connected\nApp policy changes."
+        },
+        {
+          "info": {
+            "name": "Deleteexternalid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/external_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deleteexternalid"
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a Member. An `organization_id` and `email_address` are required."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/member",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "email_address",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get a Member by `member_id` or `email_address`."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/google",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the \naccess token automatically.\n\nGoogle One Tap does not return access tokens. If the member has only authenticated through Google One Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.\n\n__Note:__ Google does not issue a r"
+        },
+        {
+          "info": {
+            "name": "Microsoft",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/microsoft",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login, Stytch will save the\nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the\naccess token automatically."
+        },
+        {
+          "info": {
+            "name": "Slack",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/slack",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Slack access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider."
+        },
+        {
+          "info": {
+            "name": "Hubspot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/hubspot",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Hubspot access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the \naccess token automatically."
+        },
+        {
+          "info": {
+            "name": "Github",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/github",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved GitHub access token for a Member. After a successful OAuth login, Stytch will save the \nissued access token from the identity provider. GitHub does not issue refresh tokens, but will invalidate access\ntokens after very long periods of inactivity."
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/connected_apps/:connected_app_id/revoke",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke Connected App revokes a Connected App's access to a Member and revokes all active tokens that have been created\non the Member's behalf. New tokens cannot be created until the Member completes a new authorization flow with the\nConnected App."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B IDP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorizestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/idp/oauth/authorize/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a request for authorization of a Connected App to access a Member's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request.\nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ consent must be granted before p"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/idp/oauth/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a request for authorization of a Connected App to access a Member's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/b2b/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirec"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/sessions",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieves all active Sessions for a Member."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates a Session and updates its lifetime by the specified `session_duration_minutes`. If the `session_duration_minutes` is not specified, a Session will not be extended. This endpoint requires either a `session_jwt` or `session_token` be included in the request. It will return an error if both are present.\n\nYou may provide a JWT that needs to be refreshed and is expired according to its `exp` claim. A new JWT will be returned if both the signature and the underlying Session are still val"
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/revoke",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke a Session and immediately invalidate all its tokens. To revoke a specific Session, pass either the `member_session_id`, `session_token`, or `session_jwt`. To revoke all Sessions for a Member, pass the `member_id`."
+        },
+        {
+          "info": {
+            "name": "Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to exchange a Member's existing session for another session in a different Organization. This can be used to accept an invite, but not to create a new member via domain matching.\n\nTo create a new member via email domain JIT Provisioning, use the [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) flow instead.\n\nIf the user **has** already satisfied the authentication requirements of the Organization they are trying to switch into, this"
+        },
+        {
+          "info": {
+            "name": "Exchangeaccesstoken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/exchange_access_token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to exchange a Connected Apps Access Token back into a Member Session for the underlying Member. \nThis session can be used with the Stytch SDKs and APIs.\n\nThe Access Token must contain the `full_access` scope (only available to First Party clients) and must not be more than 5 minutes old. Access Tokens may only be exchanged a single time.\n\nBecause the Member previously completed MFA and satisfied all Organization authentication requirements at the time of the original Access Tok"
+        },
+        {
+          "info": {
+            "name": "Attest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/attest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange an auth token issued by a trusted identity provider for a Stytch session. You must first register a Trusted Auth Token profile in the Stytch dashboard [here](https://stytch.com/dashboard/trusted-auth-tokens).  If a session token or session JWT is provided, it will add the trusted auth token as an authentication factor to the existing session."
+        },
+        {
+          "info": {
+            "name": "Migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sessions/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrate a session from an external OIDC compliant endpoint.\nStytch will call the external UserInfo endpoint defined in your Stytch Project settings in the [Dashboard](https://stytch.com/dashboard/migrations), and then perform a lookup using the `session_token`.\nIf the response contains a valid email address, Stytch will attempt to match that email address with an existing Member in your Organization and create a Stytch Session.\nYou will need to create the member before using this endpoint."
+        },
+        {
+          "info": {
+            "name": "Getjwks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/sessions/jwks/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The `project_id` to get the JWKS for."
+              }
+            ]
+          },
+          "docs": "Get the JSON Web Key Set (JWKS) for a project.\n\nWithin the JWKS, the JSON Web Keys are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key, and both keys will be returned by this endpoint for a period of 1 month.\n\nJWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed by the old keys, and some JWTs will be signed by the new keys. The correct key to use for validation is determined by matching the `kid` value of the J"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B Impersonation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/impersonation/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate an impersonation token to impersonate a Member. This endpoint requires an impersonation token that is not expired or previously used. \nA Stytch session will be created for the impersonated member with a 60 minute duration. Impersonated sessions cannot be extended.\n\nPrior to this step, you can generate an impersonation token by visiting the Stytch Dashboard, viewing a member, and clicking the `Impersonate Member` button."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B RBAC",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/rbac/policy"
+          },
+          "docs": "Get the active RBAC Policy for your current Stytch Project. An RBAC Policy is the canonical document that stores all defined Resources and Roles within your RBAC permissioning model.\n\nWhen using the backend SDKs, the RBAC Policy will be cached to allow for local evaluations, eliminating the need for an extra request to Stytch. The policy will be refreshed if an authorization check is requested and the RBAC policy was last updated more than 5 minutes ago.\n\nResources and Roles can be created and m"
+        },
+        {
+          "info": {
+            "name": "Getorgpolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/rbac/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "\nThe organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.\n\nGet the active RBAC Policy for a specific Organization within your Stytch Project. An Organization RBAC Policy contains the roles that have been defined specifically for that organization, allowing for organization-specific permissioning models.\n\nThis endpoint returns the organization-scoped roles that supplement the pr"
+        },
+        {
+          "info": {
+            "name": "Setorgpolicy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/rbac/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\nThe organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.\n\nSet the RBAC Policy for a specific Organization within your Stytch Project. An Organization RBAC Policy allows you to define roles that are specific to that organization, providing fine-grained control over permissions at the organization level.\n\nThis endpoint allows you to create, update, or replace the organization-sc"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B Recovery Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Recover",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/recovery_codes/recover",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Allows a Member to complete an MFA flow by consuming a recovery code. This consumes the recovery code and returns a session token that can be used to authenticate the Member."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/recovery_codes/:organization_id/:member_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Returns a Member's full set of active recovery codes."
+        },
+        {
+          "info": {
+            "name": "Rotate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/recovery_codes/rotate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rotate a Member's recovery codes. This invalidates all existing recovery codes and generates a new set of recovery codes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B TOTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/totp",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new TOTP instance for a Member. The Member can use the authenticator application of their choice to scan the QR code or enter the secret. \n\nIf the Member already has an active MFA factor, then passing an intermediate session token, session token, or session JWT with the existing MFA factor on it is required to prevent bypassing MFA.  \n\nOtherwise, passing an intermediate session token, session token, or session JWT is not required, but if passed must match the `member_id` passed."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/totp/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a Member provided TOTP."
+        },
+        {
+          "info": {
+            "name": "Migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/totp/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrate an existing TOTP instance for a Member. Recovery codes are not required and will be minted for the Member if not provided."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/intermediate_sessions/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange an Intermediate Session for a fully realized [Member Session](https://stytch.com/docs/b2b/api/session-object) for the [Organization](https://stytch.com/docs/b2b/api/organization-object) that the user wishes to log into.\n\nThis endpoint can be used to accept invites and JIT Provision into a new Organization on the basis of the user's email domain or OAuth tenant.\n\nIf the user **has** already satisfied the authentication requirements of the Organization they are trying to exchange into and"
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/organizations/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint allows you to exchange the `intermediate_session_token` returned when the user successfully completes a Discovery authentication flow to create a new\n[Organization](https://stytch.com/docs/b2b/api/organization-object) and [Member](https://stytch.com/docs/b2b/api/member-object) and log the user in. If the user wants to log into an existing Organization, use the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) instead.\n\nStytch **"
+        },
+        {
+          "info": {
+            "name": "List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all possible organization relationships connected to a [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.\n\nWhen a Member Session is passed in, relationships with a type of `active_member`, `pending_member`, or `invited_member`\nwill be returned, and any membership can be assumed by calling the [Exchange Session](https://stytch.com/docs/b2b/api/exchange-session) endpoint.\n\nWhen an Intermediate Session is passed in, all relationship types - `active_member"
+        },
+        {
+          "info": {
+            "name": "Resetstart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/discovery/email/reset/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a password reset for the email address provided, when cross-org passwords are enabled. This will trigger an email to be sent to the address, containing a magic link that will allow them to set a new password and authenticate.\n\nThis endpoint adapts to your Project's password strength configuration.\nIf you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid\nif the strength score is >= 3. If you're using [LUDS](http"
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/discovery/email/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the password associated with an email and start an intermediate session. This endpoint checks that the password reset token is valid, hasn’t expired, or already been used.\n\nThe provided password needs to meet the project's password strength requirements, which can be checked in advance with the password strength endpoint. If the token and password are accepted, the password is securely stored for future authentication and the user is authenticated.\n\nResetting a password will start an inter"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B Magic Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a Member with a Magic Link. This endpoint requires a Magic Link token that is not expired or previously used. If the Member's status is `pending` or `invited`, they will be updated to `active`.\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\n\nIf the Member is required to complete MFA to log in to the Organization, the returned"
+        },
+        {
+          "info": {
+            "name": "Loginorsignup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/email/login_or_signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send either a login or signup magic link to a Member. A new, pending, or invited Member will receive a signup Email Magic Link. Members will have a `pending` status until they successfully authenticate. An active Member will receive a login Email Magic Link.\n\nThe magic link is valid for 60 minutes."
+        },
+        {
+          "info": {
+            "name": "Invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/email/invite",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an invite email to a new Member to join an Organization. The Member will be created with an `invited` status until they successfully authenticate. Sending invites to `pending` Members will update their status to `invited`. Sending invites to already `active` Members will return an error.\n\nThe magic link invite will be valid for 1 week.\n\n## Revoke an invite\n\nTo revoke an existing invite, use the [Delete Member](https://stytch.com/docs/b2b/api/delete-member) endpoint. This will both delete th"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/discovery/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the Discovery Magic Link token and exchanges it for an Intermediate Session Token. Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Email",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/email/discovery/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a discovery magic link to an email address. The magic link is valid for 60 minutes."
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/discovery/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a discovery OTP to an email address. The OTP is valid for 10 minutes. Only the most recently sent OTP is valid: when an OTP is sent, all OTPs previously sent to the same email address are invalidated, even if unused or unexpired."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/discovery/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the OTP and returns an intermediate session token. Intermediate session tokens can be used for various Discovery login flows and are valid for 10 minutes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/oauth/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a Member given a `token`. This endpoint verifies that the member completed the OAuth flow by verifying that the token is valid and hasn't expired.  Provide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\n\nIf the Member is required to complete MFA to log in to the Organization, the returned value of `member_authenticated` will be `fals"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/oauth/discovery/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the Discovery OAuth token and exchanges it for an Intermediate\nSession Token. Intermediate Session Tokens can be used for various Discovery login flows and are valid for 10 minutes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B OTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/sms/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a One-Time Passcode (OTP) to a Member's phone number.\n\nIf the Member already has a phone number, the `mfa_phone_number` field is not needed; the endpoint will send an OTP to the number associated with the Member.\nIf the Member does not have a phone number, the endpoint will send an OTP to the `mfa_phone_number` provided and link the `mfa_phone_number` with the Member.\n\nAn error will be thrown if the Member already has a phone number and the provided `mfa_phone_number` does not match the exi"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/sms/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SMS OTPs may not be used as a primary authentication mechanism. They can be used to complete an MFA requirement, or they can be used as a step-up factor to be added to an existing session.\n\nThis endpoint verifies that the one-time passcode (OTP) is valid and hasn't expired or been previously used. OTP codes expire after two minutes.\n\nA given Member may only have a single active OTP code at any given time. If a Member requests another OTP code before the first one has expired, the first one will "
+        },
+        {
+          "info": {
+            "name": "Loginorsignup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/login_or_signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send either a login or signup email OTP to a Member. A new, pending, or invited Member will receive a signup email OTP. Non-active members will have a pending status until they successfully authenticate. An active Member will receive a login email OTP.\n\nThe OTP is valid for 10 minutes. Only the most recently sent OTP is valid: when an OTP is sent, all OTPs previously sent to the same email address are invalidated, even if unused or unexpired."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a Member with a one-time passcode (OTP). This endpoint requires an OTP that is not expired or previously used. \nOTPs have a default expiry of 10 minutes. If the Member's status is `pending` or `invited`, they will be updated to `active`.\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\n\nIf the Member is required to complete MFA"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Password",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Strengthcheck",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/strength_check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API allows you to check whether the user’s provided password is valid, and to provide feedback to the user on how to increase the strength of their password.\n\nThis endpoint adapts to your Project's password strength configuration.\nIf you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid if the strength score is >= 3.\nIf you're using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are"
+        },
+        {
+          "info": {
+            "name": "Migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning:** This endpoint marks the Member's email address as verified. Do **not** use this endpoint unless the user has already verified their email address in your application. \n\nAdds an existing password to a Member's email that doesn't have a password yet.\n\nWe support migrating members from passwords stored with bcrypt, scrypt, argon2, MD-5, SHA-1, SHA-512, and PBKDF2. This endpoint has a rate limit of 100 requests per second.\n\nThe Member's email will be marked as verified when you use thi"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a member with their email address and password. This endpoint verifies that the member has a password currently set, and that the entered password is correct.\n\nIf you have breach detection during authentication enabled in your [password strength policy](https://stytch.com/docs/b2b/guides/passwords/strength-policy) and the member's credentials have appeared in the HaveIBeenPwned dataset, this endpoint will return a `member_reset_password` error even if the member enters a correct pas"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "B2B Passwords",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resetstart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/email/reset/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a password reset for the email address provided. This will trigger an email to be sent to the address, containing a magic link that will allow them to set a new password and authenticate.\n\nThis endpoint adapts to your Project's password strength configuration.\nIf you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid\nif the strength score is >= 3. If you're using [LUDS](https://stytch.com/docs/guides/passwords/s"
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/email/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the Member's password and authenticate them. This endpoint checks that the password reset token is valid, hasn’t expired, or already been used.\n\nThe provided password needs to meet our password strength requirements, which can be checked in advance with the password strength endpoint. If the token and password are accepted, the password is securely stored for future authentication and the user is authenticated.\n\nIf the Member is required to complete MFA to log in to the Organization, the r"
+        },
+        {
+          "info": {
+            "name": "Requirereset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/email/require_reset",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Require a password be reset by the associated email address. This endpoint is only functional for cross-org password use cases.\n\nIf there are is only one active Member using the associated email address in the Project, the password will be deleted."
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/session/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the Member's password using their existing session. The endpoint will error if the session does not contain an authentication factor that has been issued within the last 5 minutes. Either `session_token` or `session_jwt` should be provided.\n\nNote that a successful password reset via an existing session will revoke all active sessions for the `member_id`, except for the one used during the reset flow."
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/existing_password/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the member's password using their existing password.\n\nThis endpoint adapts to your Project's password strength configuration.\nIf you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid\nif the strength score is >= 3. If you're using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are\nconsidered valid if they meet the requirements that you've set with Stytch.\nYou may update your passwor"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/discovery/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate an email/password combination in the discovery flow. This authenticate flow is only valid for cross-org passwords use cases, and is not tied to a specific organization.\n\nIf you have breach detection during authentication enabled in your [password strength policy](https://stytch.com/docs/b2b/guides/passwords/strength-policy) and the member's credentials have appeared in the HaveIBeenPwned dataset, this endpoint will return a `member_reset_password` error even if the member enters a c"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "SSO",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getconnections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/sso/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Get all SSO Connections owned by the organization."
+        },
+        {
+          "info": {
+            "name": "Deleteconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/sso/:organization_id/connections/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID that the SSO connection belongs to. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SSO connection. SAML, OIDC, and External connection IDs can be provided."
+              }
+            ]
+          },
+          "docs": "Delete an existing SSO connection."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sso/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user given a token. \nThis endpoint verifies that the user completed the SSO Authentication flow by verifying that the token is valid and hasn't expired.\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. \nIf the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\nTo link this authentication event to an existing Stytch session, include either the `session_token` or `session_jwt` param.\n"
+        },
+        {
+          "info": {
+            "name": "Createconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sso/oidc/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new OIDC Connection."
+        },
+        {
+          "info": {
+            "name": "Updateconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/sso/oidc/:organization_id/connections/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific SSO `connection_id` for a Member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing OIDC connection.\n\nWhen the value of `issuer` changes, Stytch will attempt to retrieve the [OpenID Provider Metadata](https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata) document found at `$/.well-known/openid-configuration`.\nIf the metadata document can be retrieved successfully, Stytch will use it to infer the values of `authorization_url`, `token_url`, `jwks_url`, and `userinfo_url`.\nThe `client_id` and `client_secret` values cannot be inferred from"
+        },
+        {
+          "info": {
+            "name": "Createconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sso/saml/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new SAML Connection."
+        },
+        {
+          "info": {
+            "name": "Updateconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/sso/saml/:organization_id/connections/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific SSO `connection_id` for a Member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing SAML connection.\n\nNote that a newly created connection will not become active until all of the following are provided:\n* `idp_sso_url`\n* `attribute_mapping`\n* `idp_entity_id`\n* `x509_certificate`"
+        },
+        {
+          "info": {
+            "name": "Updatebyurl",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/sso/saml/:organization_id/connections/:connection_id/url",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific SSO `connection_id` for a Member."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Used to update an existing SAML connection using an IDP metadata URL.\n\nA newly created connection will not become active until all the following are provided:\n* `idp_sso_url`\n* `idp_entity_id`\n* `x509_certificate`\n* `attribute_mapping` (must be supplied using [Update SAML Connection](update-saml-connection))"
+        },
+        {
+          "info": {
+            "name": "Deleteverificationcertificate",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/sso/saml/:organization_id/connections/:connection_id/verification_certificates/:certificate_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "The organization ID that the SAML connection belongs to. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the SAML connection."
+              },
+              {
+                "name": "certificate_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the certificate to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a SAML verification certificate.\n\nYou may need to do this when rotating certificates from your IdP, since Stytch allows a maximum of 5 certificates per connection. There must always be at least one certificate per active connection."
+        },
+        {
+          "info": {
+            "name": "Deleteencryptionprivatekey",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/sso/saml/:organization_id/connections/:connection_id/encryption_private_keys/:private_key_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific SSO `connection_id` for a Member."
+              },
+              {
+                "name": "private_key_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the encryption private key to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a SAML encryption private key."
+        },
+        {
+          "info": {
+            "name": "Createconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/sso/external/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new External SSO Connection."
+        },
+        {
+          "info": {
+            "name": "Updateconnection",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/sso/external/:organization_id/connections/:connection_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connection_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific External SSO Connection."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing External SSO connection."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

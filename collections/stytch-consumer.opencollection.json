@@ -1,0 +1,1637 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch Consumer Authentication API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Connected Apps",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App client."
+              }
+            ]
+          },
+          "docs": "Retrieve details of a specific Connected App by `client_id`."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates mutable fields of a Connected App. Cannot update Client Type, Client ID, or Secrets."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ]
+          },
+          "docs": "Deletes a Connected App."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for Connected Apps. Supports cursor-based pagination. Specific filters coming soon."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/connected_apps/clients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Connected App. If the Connected App `client_type` is `first_party` or `third_party` a `client_secret` is returned.\n\n**Important:** This is the only time you will be able to view the generated `client_secret` in the API response. Stytch stores a hash of the `client_secret` and cannot recover the value if lost. Be sure to persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to trigger a secret rotation flow to receive another one."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Rotatestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id/secrets/rotate/start",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the rotation of a Connected App client secret. After this endpoint is called, both the client's `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the Rotate Secret Endpoint to complete the flow.\nSecret rotation can be cancelled using the Cancel Secret Rotation endpoint.\n\n**Important:** This is the only time you will be able to view the generated `next_client_secret` in the A"
+        },
+        {
+          "info": {
+            "name": "Rotatecancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id/secrets/rotate/cancel",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the rotation of a Connected App client secret started with the Start Secret Rotation Endpoint. After this endpoint is called, the client's `next_client_secret` is discarded and only the original `client_secret` will be valid."
+        },
+        {
+          "info": {
+            "name": "Rotate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/connected_apps/clients/:client_id/secrets/rotate",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete the rotation of a Connected App client secret started with the Rotate Secret Start Endpoint.\nAfter this endpoint is called, the client's `next_client_secret` becomes its `client_secret` and the previous `client_secret` will no longer be valid."
+        },
+        {
+          "info": {
+            "name": "Rotatestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id/secrets/rotate/start",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the rotation of an M2M client secret. After this endpoint is called, both the client's `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the [Rotate Secret Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret)[Rotate Secret Endpoint](https://stytch.com/docs/api/m2m-rotate-secret) to complete the flow.Secret rotation can be cancelled using the [Rotate Cancel Endpoint]("
+        },
+        {
+          "info": {
+            "name": "Rotatecancel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id/secrets/rotate/cancel",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).\nAfter this endpoint is called, the client's `next_client_secret` is discarded and only the original `client_secret` will be valid."
+        },
+        {
+          "info": {
+            "name": "Rotate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id/secrets/rotate",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).\nAfter this endpoint is called, the client's `next_client_secret` becomes its `client_secret` and the previous `client_secret` will no longer be valid."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other operations within Stytch. An `email` or a `phone_number` is required."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "Get information about a specific User."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a User's attributes.\n\n**Note:** In order to add a new email address or phone number to an existing User object, pass the new email address or phone number into the respective `/send` endpoint for the authentication method of your choice. If you specify the existing User's `user_id` while calling the `/send` endpoint, the new, unverified email address or phone number will be added to the existing User object. If the user successfully authenticates within 5 minutes of the `/send` request, t"
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "Delete a User from Stytch."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 150 requests/minute.\n\nSearch for Users within your Stytch Project.\n\nUse the `query` object to filter by different fields. See the `query.operands.filter_value` documentation below for a list of available filters.\n\n### Export all User data\n\nSubmit an empty `query` in your Search "
+        },
+        {
+          "info": {
+            "name": "Exchangeprimaryfactor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/users/:user_id/exchange_primary_factor",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange a user's email address or phone number for another.\n\nMust pass either an `email_address` or a `phone_number`.\n\nThis endpoint only works if the user has exactly one factor. You are able to exchange the type of factor for another as well, i.e. exchange an `email_address` for a `phone_number`.\n\nUse this endpoint with caution as it performs an admin level action."
+        },
+        {
+          "info": {
+            "name": "Deleteemail",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/emails/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The `email_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete an email from a User."
+        },
+        {
+          "info": {
+            "name": "Deletephonenumber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/phone_numbers/:phone_id",
+            "params": [
+              {
+                "name": "phone_id",
+                "value": "",
+                "type": "path",
+                "description": "The `phone_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a phone number from a User."
+        },
+        {
+          "info": {
+            "name": "Deletewebauthnregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/webauthn_registrations/:webauthn_registration_id",
+            "params": [
+              {
+                "name": "webauthn_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `webauthn_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a WebAuthn registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deletebiometricregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/biometric_registrations/:biometric_registration_id",
+            "params": [
+              {
+                "name": "biometric_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `biometric_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a biometric registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deletetotp",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/totps/:totp_id",
+            "params": [
+              {
+                "name": "totp_id",
+                "value": "",
+                "type": "path",
+                "description": "The `totp_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a TOTP from a User."
+        },
+        {
+          "info": {
+            "name": "Deletecryptowallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/crypto_wallets/:crypto_wallet_id",
+            "params": [
+              {
+                "name": "crypto_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The `crypto_wallet_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a crypto wallet from a User."
+        },
+        {
+          "info": {
+            "name": "Deletepassword",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/passwords/:password_id",
+            "params": [
+              {
+                "name": "password_id",
+                "value": "",
+                "type": "path",
+                "description": "The `password_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a password from a User."
+        },
+        {
+          "info": {
+            "name": "Deleteoauthregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/oauth/:oauth_user_registration_id",
+            "params": [
+              {
+                "name": "oauth_user_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `oauth_user_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete an OAuth registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deleteexternalid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/:user_id/external_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deleteexternalid"
+        },
+        {
+          "info": {
+            "name": "Connectedapps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/users/:user_id/connected_apps",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully completed an\nauthorization flow.\nIf the User revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the Connected App will\nno longer be returned in the response."
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users/:user_id/connected_apps/:connected_app_id/revoke",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke Connected App revokes a Connected App's access to a User and revokes all active tokens that have been created\non the User's behalf. New tokens cannot be created until the User completes a new authorization flow with the\nConnected App."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Session",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/sessions",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all active Sessions for a given `user_id`. All timestamps are formatted according to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/sessions/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a session token or session JWT and retrieve associated session data. If `session_duration_minutes` is included, update the lifetime of the session to be that many minutes from now. All timestamps are formatted according to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`. This endpoint requires exactly one `session_jwt` or `session_token` as part of the request. If both are included, you will receive a `too_many_session_arguments` error.\n\nYou may provide a"
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/sessions/revoke",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke a Session, immediately invalidating all of its session tokens. You can revoke a session in three ways: using its ID, or using one of its session tokens, or one of its JWTs. This endpoint requires exactly one of those to be included in the request. It will return an error if multiple are present."
+        },
+        {
+          "info": {
+            "name": "Migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/sessions/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Migrate a session from an external OIDC compliant endpoint. Stytch will call the external UserInfo endpoint defined in your Stytch Project settings in the [Dashboard](https://stytch.com/dashboard), and then perform a lookup using the `session_token`. If the response contains a valid email address, Stytch will attempt to match that email address with an existing User and create a Stytch Session. You will need to create the user before using this endpoint."
+        },
+        {
+          "info": {
+            "name": "Exchangeaccesstoken",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/sessions/exchange_access_token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to exchange a Connected Apps Access Token back into a Stytch Session for the underlying User. \nThis session can be used with the Stytch SDKs and APIs.\n\nThe Access Token must contain the `full_access` scope (only available to First Party clients) and must not be more than 5 minutes old. Access Tokens may only be exchanged a single time."
+        },
+        {
+          "info": {
+            "name": "Getjwks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/sessions/jwks/:project_id",
+            "params": [
+              {
+                "name": "project_id",
+                "value": "",
+                "type": "path",
+                "description": "The `project_id` to get the JWKS for."
+              }
+            ]
+          },
+          "docs": "Get the JSON Web Key Set (JWKS) for a project.\n\nWithin the JWKS, the JSON Web Keys are rotated every ~6 months. Upon rotation, new JWTs will be signed using the new key, and both keys will be returned by this endpoint for a period of 1 month.\n\nJWTs have a set lifetime of 5 minutes, so there will be a 5 minute period where some JWTs will be signed by the old keys, and some JWTs will be signed by the new keys. The correct key to use for validation is determined by matching the `kid` value of the J"
+        },
+        {
+          "info": {
+            "name": "Attest",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/sessions/attest",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange an auth token issued by a trusted identity provider for a Stytch session. You must first register a Trusted Auth Token profile in the Stytch dashboard [here](https://stytch.com/dashboard/trusted-auth-tokens). If a session token or session JWT is provided, it will add the trusted auth token as an authentication factor to the existing session."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Consumer RBAC",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/rbac/policy"
+          },
+          "docs": "Get the active RBAC Policy for your current Stytch Project. An RBAC Policy is the canonical document that stores all defined Resources and Roles within your RBAC permissioning model.\n\nWhen using the backend SDKs, the RBAC Policy will be cached to allow for local evaluations, eliminating the need for an extra request to Stytch.\nThe policy will be refreshed if an authorization check is requested and the RBAC policy was last updated more than 5 minutes ago.\n\nResources and Roles can be created and m"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Crypto Wallet",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticatestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/crypto_wallets/authenticate/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the authentication of a crypto wallet. After calling this endpoint, the user will need to sign a message containing the returned `challenge` field.\n\nFor Ethereum crypto wallets, you can optionally use the Sign In With Ethereum (SIWE) protocol for the message by passing in the `siwe_params`. The only required fields are `domain` and `uri`.\nIf the crypto wallet detects that the domain in the message does not match the website's domain, it will display a warning to the user.\n\nIf not using "
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/crypto_wallets/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete the authentication of a crypto wallet by passing the signature."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Debug",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Whoami",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/debug/whoami"
+          },
+          "docs": "Whoami"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Fraud",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Lookup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/fingerprint/lookup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID()` function.\nLearn more about the different fingerprint types and verdicts in our [DFP guide](https://stytch.com/docs/fraud/guides/device-fingerprinting/overview).\n\nYou can make a decision based on the recommended `verdict` in the response:\n* `ALLOW` - This is a known valid device grouping or device profile that is part of the default `ALLOW` listed set of known devices by Stytch. This grouping is made up "
+        },
+        {
+          "info": {
+            "name": "Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/rules/set",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set a rule for a particular `visitor_id`, `browser_id`, `visitor_fingerprint`, `browser_fingerprint`, `hardware_fingerprint`, `network_fingerprint`, `cidr_block`, `asn`, or `country_code`. This is helpful in cases where you want to allow or block a specific user or fingerprint. You should be careful when setting rules for `browser_fingerprint`, `hardware_fingerprint`, or `network_fingerprint` as they can be shared across multiple users, and you could affect more users than intended.\n\nYou may not"
+        },
+        {
+          "info": {
+            "name": "List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/rules/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get all rules that have been set for your project."
+        },
+        {
+          "info": {
+            "name": "Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/verdict_reasons/override",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Use this endpoint to override the action returned for a specific verdict reason during a fingerprint lookup. For example, Stytch Device Fingerprinting returns a `CHALLENGE` verdict action by default for the verdict reason `VIRTUAL_MACHINE`. You can use this endpoint to override that reason to return an `ALLOW` verdict instead if you expect many legitimate users to be using a browser that runs in a virtual machine."
+        },
+        {
+          "info": {
+            "name": "List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/verdict_reasons/list",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get the list of verdict reasons returned by the Stytch Device Fingerprinting product along with their default actions and any overrides you may have defined. This is not an exhaustive list of verdict reasons, but it contains all verdict reasons that you may set an override on.\n\nFor a full list of possible verdict reasons, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons)."
+        },
+        {
+          "info": {
+            "name": "Risk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/email/risk",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get risk information for a specific email address.\nThe response will contain a recommended action (`ALLOW`, `BLOCK`, or `CHALLENGE`) and a more granular `risk_score`.\nYou can also check the `address_information` and `domain_information` fields for more information about the email address and email domain.\n\nThis feature is in beta. Reach out to us [here](mailto:fraud-team@stytch.com?subject=Email_Intelligence_Early_Access) if you'd like to request early access."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "IDP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorizestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/idp/oauth/authorize/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request. \nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ user consent must be granted befo"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/idp/oauth/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirect_uri`"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Impersonation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/impersonation/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate an impersonation token to impersonate a User. This endpoint requires an impersonation token that is not expired or previously used.\nA Stytch session will be created for the impersonated user with a 60 minute duration. Impersonated sessions cannot be extended.\n\nPrior to this step, you can generate an impersonation token by visiting the Stytch Dashboard, viewing a user, and clicking the `Impersonate User` button."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "M2M",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ]
+          },
+          "docs": "Gets information about an existing M2M Client."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing M2M Client. You can use this endpoint to activate or deactivate an M2M Client by changing its `status`. A deactivated M2M Client will not be allowed to perform future token exchange flows until it is reactivated.\n\n**Important:** Deactivating an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.\nTo protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs"
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/m2m/clients/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client."
+              }
+            ]
+          },
+          "docs": "Deletes the M2M Client.\n\n**Important:** Deleting an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.\nTo protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token)."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/m2m/clients/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Search for M2M Clients within your Stytch Project. Submit an empty `query` in the request to return all M2M Clients.\n\nThe following search filters are supported today:\n- `client_id`: Pass in a list of client IDs to get many clients in a single request\n- `client_name`: Search for clients by exact match on client name\n- `scopes`: Search for clients assigned a specific scope"
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/m2m/clients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new M2M Client. On initial client creation, you may pass in a custom `client_id` or `client_secret` to import an existing M2M client. If you do not pass in a custom `client_id` or `client_secret`, one will be generated automatically. The `client_id` must be unique among all clients in your project.\n\n**Important:** This is the only time you will be able to view the generated `client_secret` in the API response. Stytch stores a hash of the `client_secret` and cannot recover the value if "
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Magic Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a User given a Magic Link. This endpoint verifies that the Magic Link token is valid, hasn't expired or been previously used, and any optional security settings such as IP match or user agent match are satisfied."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an Embeddable Magic Link token for a User.\n\n### Important usage notes\n\nCarefully review the following notes before using Embeddable Magic Links:\n\n* Embeddable Magic Link tokens are **sensitive values**. You should handle and store them securely.\n* Authenticating an Embeddable Magic Link token will not mark any of a user's delivery factors (email address or phone number) as verified, since we cannot confirm how the token was sent to the user.\n* Embeddable Magic Links are only available in "
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links/email/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a magic link to an existing Stytch user using their email address. If you'd like to create a user and send them a magic link by email with one request, use our [log in or create endpoint](https://stytch.com/docs/api/log-in-or-create-user-by-email).\n\n### Add an email to an existing user\nThis endpoint also allows you to add a new email address to an existing Stytch User. Including a `user_id`, `session_token`, or `session_jwt` in your Send Magic Link by email request will add the new, unverif"
+        },
+        {
+          "info": {
+            "name": "Loginorcreate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links/email/login_or_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send either a login or signup Magic Link to the User based on if the email is associated with a User already. A new or pending User will receive a signup Magic Link. An active User will receive a login Magic Link. For more information on how to control the status your Users are created in see the `create_user_as_pending` flag.\n\n### Next steps\nThe User is emailed a Magic Link which redirects them to the provided [redirect URL](https://stytch.com/docs/guides/magic-links/email-magic-links/redirect-"
+        },
+        {
+          "info": {
+            "name": "Invite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links/email/invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a User and send an invite Magic Link to the provided `email`. The User will be created with a `pending` status until they click the Magic Link in the invite email.\n\n### Next steps\nThe User is emailed a Magic Link which redirects them to the provided [redirect URL](https://stytch.com/docs/guides/magic-links/email-magic-links/redirect-routing). Collect the `token` from the URL query parameters and call [Authenticate Magic Link](https://stytch.com/docs/api/authenticate-magic-link) to complet"
+        },
+        {
+          "info": {
+            "name": "Revokeinvite",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/magic_links/email/revoke_invite",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke a pending invite based on the `email` provided."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Password",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user with a password. If `session_duration_minutes` is specified, a new session will be started as well.\n\nIf a user with this email already exists in your Stytch project, this endpoint will return a `duplicate_email` error. To add a password to an existing passwordless user, you'll need to either call the [Migrate password endpoint](https://stytch.com/docs/api/password-migrate) or prompt the user to complete one of our password reset flows.\n\nThis endpoint will return an error if the"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a user with their email address and password. This endpoint verifies that the user has a password currently set, and that the entered password is correct. There are two instances where the endpoint will return a `reset_password` error even if they enter their previous password:\n\n**One:** The user's credentials appeared in the HaveIBeenPwned dataset. We force a password reset to ensure that the user is the legitimate owner of the email address, and not a malicious actor abusing the c"
+        },
+        {
+          "info": {
+            "name": "Strengthcheck",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/strength_check",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This API allows you to check whether or not the user’s provided password is valid, and to provide feedback to the user on how to increase the strength of their password.\n\nThis endpoint adapts to your Project's password strength configuration. If you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid if the strength score is >= 3. If you're using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwo"
+        },
+        {
+          "info": {
+            "name": "Migrate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/migrate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an existing password to a User's email that doesn't have a password yet. We support migrating users from passwords stored with `bcrypt`, `scrypt`, `argon2`, `MD-5`, `SHA-1`, `SHA-512`, or `PBKDF2`. This endpoint has a rate limit of 100 requests per second."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Passwords",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resetstart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/email/reset/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a password reset for the email address provided. This will trigger an email to be sent to the address, containing a magic link that will allow them to set a new password and authenticate."
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/email/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the user's password and authenticate them. This endpoint checks that the magic link `token` is valid, hasn't expired, or already been used – and can optionally require additional security settings, such as the IP address and user agent matching the initial reset request.\n\nThe provided password needs to meet our password strength requirements, which can be checked in advance with the password strength endpoint. If the token and password are accepted, the password is securely stored for futu"
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/existing_password/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the User's password using their existing password.\n\nNote that a successful password reset via an existing password will revoke all active sessions for the `user_id`."
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/passwords/session/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the user’s password using their existing session. The endpoint will error if the session does not have a password, email magic link, or email OTP authentication factor that has been issued within the last 5 minutes. This endpoint requires either a `session_jwt` or `session_token` be included in the request.\n\nNote that a successful password reset via an existing session will revoke all active sessions for the `user_id`, except for the one used during the reset flow."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Attach",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/oauth/attach",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generate an OAuth Attach Token to pre-associate an OAuth flow with an existing Stytch User. Pass the returned `oauth_attach_token` to the same provider's OAuth Start endpoint to treat this OAuth flow as a login for that user instead of a signup for a new user.\n\nExactly one of `user_id`, `session_token`, or `session_jwt` must be provided to identify the target Stytch User.\n\n**Note**: This is an optional step in the OAuth flow. Stytch can often determine whether to associate a new OAuth login with"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/oauth/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a User given a `token`. This endpoint verifies that the user completed the OAuth flow by verifying that the token is valid and hasn't expired. To initiate a Stytch session for the user while authenticating their OAuth token, include `session_duration_minutes`; a session with the identity provider, e.g. Google or Facebook, will always be initiated upon successful authentication."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a User given a `method_id` (the associated `email_id` or `phone_id`) and a `code`. This endpoint verifies that the code is valid, hasn't expired or been previously used, and any optional security settings such as IP match or user agent match are satisfied. A given `method_id` may only have a single active OTP code at any given time, if a User requests another OTP code before the first one has expired, the first one will be invalidated."
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/sms/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a one-time passcode (OTP) to a user's phone number. If you'd like to create a user and send them a passcode with one request, use our [log in or create](https://stytch.com/docs/api/log-in-or-create-user-by-sms) endpoint.\n\nNote that sending another OTP code before the first has expired will invalidate the first code.\n\n### Cost to send SMS OTP\nBefore configuring SMS or WhatsApp OTPs, please review how Stytch [bills the costs of international OTPs](https://stytch.com/pricing) and understand ho"
+        },
+        {
+          "info": {
+            "name": "Loginorcreate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/sms/login_or_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a One-Time Passcode (OTP) to a User using their phone number. If the phone number is not associated with a user already, a user will be created.\n\n### Cost to send SMS OTP\nBefore configuring SMS or WhatsApp OTPs, please review how Stytch [bills the costs of international OTPs](https://stytch.com/pricing) and understand how to protect your app against [toll fraud](https://stytch.com/docs/guides/passcodes/toll-fraud/overview).\n\n__Note:__ SMS to phone numbers outside of the US and Canada is dis"
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/whatsapp/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a One-Time Passcode (OTP) to a User's WhatsApp. If you'd like to create a user and send them a passcode with one request, use our [log in or create](https://stytch.com/docs/api/whatsapp-login-or-create) endpoint.\n\nNote that sending another OTP code before the first has expired will invalidate the first code.\n\n### Cost to send SMS OTP\nBefore configuring SMS or WhatsApp OTPs, please review how Stytch [bills the costs of international OTPs](https://stytch.com/pricing) and understand how to pro"
+        },
+        {
+          "info": {
+            "name": "Loginorcreate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/whatsapp/login_or_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a one-time passcode (OTP) to a User's WhatsApp using their phone number. If the phone number is not associated with a User already, a User will be created.\n\n### Cost to send SMS OTP\nBefore configuring SMS or WhatsApp OTPs, please review how Stytch [bills the costs of international OTPs](https://stytch.com/pricing) and understand how to protect your app against [toll fraud](https://stytch.com/docs/guides/passcodes/toll-fraud/overview).\n\n### Next steps\n\nCollect the OTP which was delivered to "
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/email/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a One-Time Passcode (OTP) to a User using their email. If you'd like to create a user and send them a passcode with one request, use our [log in or create endpoint](https://stytch.com/docs/api/log-in-or-create-user-by-email-otp).\n\n### Add an email to an existing user\nThis endpoint also allows you to add a new email address to an existing Stytch User. Including a `user_id`, `session_token`, or `session_jwt` in your Send one-time passcode by email request will add the new, unverified email ad"
+        },
+        {
+          "info": {
+            "name": "Loginorcreate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/otps/email/login_or_create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a one-time passcode (OTP) to a User using their email. If the email is not associated with a User already, a User will be created.\n\n### Next steps\n\nCollect the OTP which was delivered to the User. Call [Authenticate OTP](https://stytch.com/docs/api/authenticate-otp) using the OTP `code` along with the `phone_id` found in the response as the `method_id`."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Project",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/projects/metrics"
+          },
+          "docs": "Metrics"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "TOTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/totps",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new TOTP instance for a user. The user can use the authenticator application of their choice to scan the QR code or enter the secret."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/totps/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a TOTP code entered by a user."
+        },
+        {
+          "info": {
+            "name": "Recoverycodes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/totps/recovery_codes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve the recovery codes for a TOTP instance tied to a User."
+        },
+        {
+          "info": {
+            "name": "Recover",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/totps/recover",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a recovery code for a TOTP instance."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "WebAuthn",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Registerstart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/webauthn/register/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the process of creating a new Passkey or WebAuthn registration. \n\nTo optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.\n\nAfter calling this endpoint, the browser will need to call [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) with the data from [public_key_credential_creation_options](https://w3c.github.io/webauthn/#dictionary-makecredentialoptions) passed to the [navigator.credentials.create()](https://www.w3."
+        },
+        {
+          "info": {
+            "name": "Register",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/webauthn/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete the creation of a WebAuthn registration by passing the response from the [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) request to this endpoint as the `public_key_credential` parameter. \n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code."
+        },
+        {
+          "info": {
+            "name": "Authenticatestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/webauthn/authenticate/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiate the authentication of a Passkey or WebAuthn registration. \n\nTo optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.\n\nAfter calling this endpoint, the browser will need to call [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) with the data from `public_key_credential_request_options` passed to the [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request via the public key argument.\n\nWhen us"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/webauthn/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete the authentication of a Passkey or WebAuthn registration by passing the response from the [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request to the authenticate endpoint. \n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/webauthn/:webauthn_registration_id",
+            "params": [
+              {
+                "name": "webauthn_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Passkey or WebAuthn registration."
+        },
+        {
+          "info": {
+            "name": "Listcredentials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/webauthn/credentials/:user_id/:domain",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "path",
+                "description": "The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+              }
+            ]
+          },
+          "docs": "List the public key credentials of the WebAuthn Registrations or Passkeys registered to a specific User."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
