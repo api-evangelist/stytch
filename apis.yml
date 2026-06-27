@@ -82,11 +82,11 @@ apis:
   - url: https://github.com/stytchauth/terraform-provider-stytch
     type: TerraformProvider
   - url: https://github.com/stytchauth/stytch-management-node
-    type: SDK
+    type: SDKs
   - url: https://github.com/stytchauth/stytch-management-go
-    type: SDK
+    type: SDKs
   - url: https://github.com/stytchauth/stytch-management-python
-    type: SDK
+    type: SDKs
   description: Stytch's Workspace Management API (management.stytch.com) for programmatic
     configuration — projects, environments, secrets, redirect URLs, allowed country
     codes, RBAC policies, email templates, JWT templates, event log streaming, public
@@ -122,104 +122,85 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
-    name: Stytch B2B Create Organization and Invite Member
-    summary: Create a B2B organization and email a magic link invite to a new member.
-  - url: arazzo/stytch-b2b-discovery-intermediate-exchange-workflow.yml
-    name: Stytch B2B Discovery Intermediate Session Exchange
-    summary: Authenticate a discovery magic link, list discovered organizations, then
-      exchange into one.
-  - url: arazzo/stytch-b2b-email-magic-link-discovery-workflow.yml
-    name: Stytch B2B Email Magic Link Discovery and Organization Create
-    summary: Send a discovery magic link, authenticate it, and create an organization
-      from the intermediate session.
-  - url: arazzo/stytch-b2b-email-otp-discovery-workflow.yml
-    name: Stytch B2B Email OTP Discovery and Exchange
-    summary: Send a discovery email OTP, authenticate the code, then exchange into
-      an organization.
-  - url: arazzo/stytch-b2b-email-otp-login-workflow.yml
-    name: Stytch B2B Email OTP Login
-    summary: Send an email OTP to an organization member and authenticate the code.
-  - url: arazzo/stytch-b2b-magic-link-org-login-workflow.yml
-    name: Stytch B2B Organization Magic Link Login
-    summary: Send an organization-scoped email magic link and authenticate the clicked
-      token.
-  - url: arazzo/stytch-b2b-org-create-member-workflow.yml
-    name: Stytch B2B Create Organization and Member
-    summary: Create a B2B organization, add a member to it, and read the member back.
-  - url: arazzo/stytch-b2b-password-auth-session-workflow.yml
-    name: Stytch B2B Password Authenticate and Session
-    summary: Authenticate a member's organization password, then validate the resulting
-      session.
-  - url: arazzo/stytch-b2b-recovery-codes-rotate-workflow.yml
-    name: Stytch B2B Recovery Codes Get and Rotate
-    summary: Read a member's MFA recovery codes, then rotate them to a fresh set.
-  - url: arazzo/stytch-b2b-sms-otp-mfa-workflow.yml
-    name: Stytch B2B SMS OTP Multi-Factor Authentication
-    summary: Send an SMS OTP to a member and authenticate the code to complete MFA.
-  - url: arazzo/stytch-b2b-totp-enrollment-workflow.yml
-    name: Stytch B2B TOTP Authenticator Enrollment
-    summary: Register a TOTP authenticator for a member and authenticate the first
-      code.
-  - url: arazzo/stytch-create-user-magic-link-workflow.yml
-    name: Stytch Create User and Send Email Magic Link
-    summary: Create a Stytch user, send them an email magic link, and authenticate
-      the resulting token.
-  - url: arazzo/stytch-crypto-wallet-auth-workflow.yml
-    name: Stytch Crypto Wallet Authentication
-    summary: Start a crypto wallet challenge and authenticate the signed message.
-  - url: arazzo/stytch-email-otp-login-workflow.yml
-    name: Stytch Email One-Time Passcode Login
-    summary: Send an email one-time passcode, authenticate the code, and read the
-      session.
-  - url: arazzo/stytch-magic-link-login-or-create-workflow.yml
-    name: Stytch Magic Link Login or Create
-    summary: Send a login-or-create email magic link and authenticate the clicked
-      token.
-  - url: arazzo/stytch-oauth-authenticate-session-workflow.yml
-    name: Stytch OAuth Authenticate and Session
-    summary: Authenticate an OAuth token returned from a provider redirect and read
-      the session.
-  - url: arazzo/stytch-password-reset-email-workflow.yml
-    name: Stytch Password Reset by Email
-    summary: Start an email password reset, complete it with the token, and read the
-      new session.
-  - url: arazzo/stytch-password-signup-session-workflow.yml
-    name: Stytch Password Signup to Session
-    summary: Create a password-based user, authenticate the credentials, and read
-      the resulting session.
-  - url: arazzo/stytch-revoke-connected-app-workflow.yml
-    name: Stytch Revoke a User's Connected App
-    summary: List a user's connected apps and revoke the first authorized app's access.
-  - url: arazzo/stytch-session-authenticate-revoke-workflow.yml
-    name: Stytch Session Authenticate and Revoke
-    summary: Validate a session token, read the user's active sessions, then revoke
-      the session.
-  - url: arazzo/stytch-sms-otp-login-workflow.yml
-    name: Stytch SMS One-Time Passcode Login
-    summary: Send an SMS one-time passcode and authenticate the code the user enters.
-  - url: arazzo/stytch-totp-enrollment-workflow.yml
-    name: Stytch TOTP Authenticator Enrollment
-    summary: Create a user, register a TOTP authenticator, and authenticate the first
-      code.
-  - url: arazzo/stytch-user-create-search-delete-workflow.yml
-    name: Stytch User Create, Search, and Delete
-    summary: Create a user, find them again by email search, then delete the matched
-      user.
-  - url: arazzo/stytch-whatsapp-otp-login-workflow.yml
-    name: Stytch WhatsApp One-Time Passcode Login
-    summary: Send a WhatsApp one-time passcode and authenticate the code the user
-      enters.
+- type: Arazzo
+  url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
+  name: Stytch B2B Create Organization and Invite Member
+- type: Arazzo
+  url: arazzo/stytch-b2b-discovery-intermediate-exchange-workflow.yml
+  name: Stytch B2B Discovery Intermediate Session Exchange
+- type: Arazzo
+  url: arazzo/stytch-b2b-email-magic-link-discovery-workflow.yml
+  name: Stytch B2B Email Magic Link Discovery and Organization Create
+- type: Arazzo
+  url: arazzo/stytch-b2b-email-otp-discovery-workflow.yml
+  name: Stytch B2B Email OTP Discovery and Exchange
+- type: Arazzo
+  url: arazzo/stytch-b2b-email-otp-login-workflow.yml
+  name: Stytch B2B Email OTP Login
+- type: Arazzo
+  url: arazzo/stytch-b2b-magic-link-org-login-workflow.yml
+  name: Stytch B2B Organization Magic Link Login
+- type: Arazzo
+  url: arazzo/stytch-b2b-org-create-member-workflow.yml
+  name: Stytch B2B Create Organization and Member
+- type: Arazzo
+  url: arazzo/stytch-b2b-password-auth-session-workflow.yml
+  name: Stytch B2B Password Authenticate and Session
+- type: Arazzo
+  url: arazzo/stytch-b2b-recovery-codes-rotate-workflow.yml
+  name: Stytch B2B Recovery Codes Get and Rotate
+- type: Arazzo
+  url: arazzo/stytch-b2b-sms-otp-mfa-workflow.yml
+  name: Stytch B2B SMS OTP Multi-Factor Authentication
+- type: Arazzo
+  url: arazzo/stytch-b2b-totp-enrollment-workflow.yml
+  name: Stytch B2B TOTP Authenticator Enrollment
+- type: Arazzo
+  url: arazzo/stytch-create-user-magic-link-workflow.yml
+  name: Stytch Create User and Send Email Magic Link
+- type: Arazzo
+  url: arazzo/stytch-crypto-wallet-auth-workflow.yml
+  name: Stytch Crypto Wallet Authentication
+- type: Arazzo
+  url: arazzo/stytch-email-otp-login-workflow.yml
+  name: Stytch Email One-Time Passcode Login
+- type: Arazzo
+  url: arazzo/stytch-magic-link-login-or-create-workflow.yml
+  name: Stytch Magic Link Login or Create
+- type: Arazzo
+  url: arazzo/stytch-oauth-authenticate-session-workflow.yml
+  name: Stytch OAuth Authenticate and Session
+- type: Arazzo
+  url: arazzo/stytch-password-reset-email-workflow.yml
+  name: Stytch Password Reset by Email
+- type: Arazzo
+  url: arazzo/stytch-password-signup-session-workflow.yml
+  name: Stytch Password Signup to Session
+- type: Arazzo
+  url: arazzo/stytch-revoke-connected-app-workflow.yml
+  name: Stytch Revoke a User's Connected App
+- type: Arazzo
+  url: arazzo/stytch-session-authenticate-revoke-workflow.yml
+  name: Stytch Session Authenticate and Revoke
+- type: Arazzo
+  url: arazzo/stytch-sms-otp-login-workflow.yml
+  name: Stytch SMS One-Time Passcode Login
+- type: Arazzo
+  url: arazzo/stytch-totp-enrollment-workflow.yml
+  name: Stytch TOTP Authenticator Enrollment
+- type: Arazzo
+  url: arazzo/stytch-user-create-search-delete-workflow.yml
+  name: Stytch User Create, Search, and Delete
+- type: Arazzo
+  url: arazzo/stytch-whatsapp-otp-login-workflow.yml
+  name: Stytch WhatsApp One-Time Passcode Login
 - type: Website
   url: https://stytch.com
 - type: Documentation
   url: https://stytch.com/docs
 - type: APIReference
   url: https://stytch.com/docs/api
-- type: SignUp
+- type: Signup
   url: https://app.stytch.com/register
 - type: Portal
   url: https://app.stytch.com
@@ -285,63 +266,63 @@ common:
   url: https://status.stytch.com
 - type: Blog
   url: https://stytch.com/blog
-- type: Spectral Rules
+- type: SpectralRules
   url: rules/stytch-rules.yml
 - type: Vocabulary
   url: vocabulary/stytch-vocabulary.yml
-- type: JSON Schema
+- type: JSONSchema
   url: json-schema/stytch-user-schema.json
-- type: JSON Schema
+- type: JSONSchema
   url: json-schema/stytch-organization-schema.json
-- type: JSON Schema
+- type: JSONSchema
   url: json-schema/stytch-member-schema.json
-- type: JSON Schema
+- type: JSONSchema
   url: json-schema/stytch-connected-app-schema.json
-- type: JSON Schema
+- type: JSONSchema
   url: json-schema/stytch-m2m-client-schema.json
-- type: JSON Structure
+- type: JSONStructure
   url: json-structure/stytch-session-structure.json
-- type: JSON Structure
+- type: JSONStructure
   url: json-structure/stytch-connected-app-structure.json
-- type: JSON-LD Context
+- type: JSONLDContext
   url: json-ld/stytch-context.jsonld
-- type: Example
+- type: Examples
   url: examples/stytch-send-magic-link-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-create-organization-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-magic-links-login-or-create-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-otps-sms-send-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-oauth-authenticate-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-sessions-authenticate-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-webauthn-register-start-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-connected-apps-create-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-fingerprint-lookup-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-consumer-users-create-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-organizations-create-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-members-create-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-sso-saml-create-connection-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-discovery-organizations-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-magic-links-email-login-or-signup-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-sessions-authenticate-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-b2b-rbac-policy-get-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-management-create-project-example.json
-- type: Example
+- type: Examples
   url: examples/stytch-management-create-redirect-url-example.json
 - type: Plans
   url: plans/stytch-plans-pricing.yml

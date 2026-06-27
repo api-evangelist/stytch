@@ -10,12 +10,12 @@
     },
     {
       "source": "https://status.stytch.com",
-      "feed_url": "https://status.stytch.com",
+      "feed_url": "https://status.stytch.com/feed/",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "discovered"
     }
   ],
   "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }
