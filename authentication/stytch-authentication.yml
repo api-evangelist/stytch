@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/stytch-b2b-openapi.yml, openapi/stytch-consumer-openapi.yml, openapi/stytch-management-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/stytch-b2b-openapi.yml
+  - openapi/stytch-consumer-openapi.yml
+  - openapi/stytch-management-openapi.yml

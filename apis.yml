@@ -122,6 +122,10 @@ maintainers:
   email: kin@apievangelist.com
 specificationVersion: '0.19'
 common:
+- type: DomainSecurity
+  url: security/stytch-domain-security.yml
+- type: Authentication
+  url: authentication/stytch-authentication.yml
 - type: Arazzo
   url: arazzo/stytch-b2b-create-org-invite-member-workflow.yml
   name: Stytch B2B Create Organization and Invite Member
