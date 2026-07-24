@@ -1,0 +1,211 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Jwt Template API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Jwt Template
+paths:
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/jwt_templates/:jwt_template_type:
+    get:
+      summary: Get
+      operationId: pwa_jwt_template_v3_Get
+      tags:
+      - Jwt Template
+      description: Get retrieves a JWT template for a project
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: jwt_template_type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/account_manager_project_v1_JWTTemplateType'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_jwt_template_v3_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    put:
+      summary: Set
+      operationId: pwa_jwt_template_v3_Set
+      tags:
+      - Jwt Template
+      description: Set updates a specific JWT template for a project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_jwt_template_v3_SetRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: jwt_template_type
+        in: path
+        required: true
+        schema:
+          $ref: '#/components/schemas/account_manager_project_v1_JWTTemplateType'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_jwt_template_v3_SetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+components:
+  schemas:
+    account_manager_project_v1_JWTTemplateType:
+      type: string
+      enum:
+      - SESSION
+      - M2M
+    pwa_jwt_template_v3_SetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        jwt_template:
+          $ref: '#/components/schemas/pwa_jwt_template_v3_JWTTemplate'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - jwt_template
+      - status_code
+    pwa_jwt_template_v3_JWTTemplate:
+      type: object
+      properties:
+        template_content:
+          type: string
+        custom_audience:
+          type: string
+        jwt_template_type:
+          $ref: '#/components/schemas/account_manager_project_v1_JWTTemplateType'
+      required:
+      - template_content
+      - custom_audience
+    pwa_jwt_template_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        jwt_template:
+          $ref: '#/components/schemas/pwa_jwt_template_v3_JWTTemplate'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - jwt_template
+      - status_code
+    pwa_jwt_template_v3_SetRequest:
+      type: object
+      properties:
+        template_content:
+          type: string
+        custom_audience:
+          type: string
+      description: Request type
+      required:
+      - template_content
+      - custom_audience
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

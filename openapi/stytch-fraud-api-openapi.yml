@@ -1,0 +1,1173 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Fraud API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Fraud
+paths:
+  /v1/fingerprint/lookup:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: Lookup
+      operationId: api_fraud_v1_fraud_fingerprint_Lookup
+      tags:
+      - Fraud
+      description: 'Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID()` function.
+
+        Learn more about the different fingerprint types and verdicts in our [DFP guide](https://stytch.com/docs/fraud/guides/device-fingerprinting/overview).
+
+
+        You can make a decision based on the recommended `verdict` in the response:
+
+        * `ALLOW` - This is a known valid device grouping or device profile that is part of the default `ALLOW` listed set of known devices by Stytch. This grouping is made up of  verified device profiles that match the characteristics of known/authentic traffic origins.
+
+        * `BLOCK` - This is a known bad or malicious device profile that is undesirable and should be blocked from completing the privileged action in question.
+
+        * `CHALLENGE` - This is an unknown or potentially malicious device that should be put through increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.
+
+
+        If the `telemetry_id` is expired or not found, this endpoint returns a 404 `telemetry_id_not_found` [error](https://stytch.com/docs/fraud/api/errors/404#telemetry_id_not_found).
+
+        We recommend treating 404 errors as a `BLOCK`, since it could be a sign of an attacker trying to bypass DFP protections.
+
+        See [Attacker-controlled telemetry IDs](https://stytch.com/docs/fraud/guides/device-fingerprinting/integration-steps/test-your-integration#attacker-controlled-telemetry-ids) for more information.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_fingerprint_LookupRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_fingerprint_LookupResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/fingerprint/lookup\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  telemetry_id: \"${exampleTelemetryId}\",\n};\n\nclient.Fraud.Fingerprint.Lookup(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/fingerprint/lookup\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/fingerprint\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &fingerprint.LookupParams{\n\t\tTelemetryID: \"${exampleTelemetryId}\",\n\t}\n\n\tresp, err := client.Fraud.Fingerprint.Lookup(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/fingerprint/lookup\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraudfingerprint.LookupRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        LookupRequest params = new LookupRequest();\n        params.setTelemetryId(\"${exampleTelemetryId}\");\n\n        Object result = StytchClient.getFraud().getFingerprint().lookup(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/fingerprint/lookup\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraudfingerprint.LookupRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.fingerprint.lookup(\n                LookupRequest(\n                    telemetryId = \"${exampleTelemetryId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/fingerprint/lookup\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  telemetry_id: \"${exampleTelemetryId}\",\n};\n\nclient.fraud.fingerprint.lookup(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->fraud->fingerprint->lookup([\n    'telemetry_id' => '${exampleTelemetryId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/fingerprint/lookup\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.fingerprint.lookup(\n    telemetry_id=\"${exampleTelemetryId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/fingerprint/lookup\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.fingerprint.lookup(\n  telemetry_id: \"${exampleTelemetryId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/fingerprint/lookup\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_fingerprint::LookupRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.fingerprint.lookup(\n        LookupRequest{\n            telemetry_id: \"${exampleTelemetryId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/fingerprint/lookup\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/fingerprint/lookup \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"telemetry_id\": \"${exampleTelemetryId}\"\n  }'"
+  /v1/rules/set:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: Set
+      operationId: api_fraud_v1_fraud_rules_Set
+      tags:
+      - Fraud
+      description: 'Set a rule for a particular `visitor_id`, `browser_id`, `visitor_fingerprint`, `browser_fingerprint`, `hardware_fingerprint`, `network_fingerprint`, `cidr_block`, `asn`, or `country_code`. This is helpful in cases where you want to allow or block a specific user or fingerprint. You should be careful when setting rules for `browser_fingerprint`, `hardware_fingerprint`, or `network_fingerprint` as they can be shared across multiple users, and you could affect more users than intended.
+
+
+        You may not set an `ALLOW` rule for a `country_code`.
+
+
+        Rules are applied in the order specified above. For example, if an end user has an `ALLOW` rule set for their `visitor_id` but a `BLOCK` rule set for their `hardware_fingerprint`, they will receive an `ALLOW` verdict because the `visitor_id` rule takes precedence.
+
+
+        If there are conflicts between multiple `cidr_block` rules (for example, if the `ip_address` of the end user overlaps with multiple CIDR blocks that have rules set), the conflicts are resolved as follows:
+
+        - The smallest block size takes precedence. For example, if an `ip_address` overlaps with a `cidr_block` rule of `ALLOW` for a block with a prefix of `/32` and a `cidr_block` rule of `BLOCK` with a prefix of `/24`, the rule match verdict will be `ALLOW`.
+
+        - Among equivalent size blocks, `BLOCK` takes precedence over `CHALLENGE`, which takes precedence over `ALLOW`. For example, if an `ip_address` overlaps with two `cidr_block` rules with blocks of the same size that return `CHALLENGE` and `ALLOW`, the rule match verdict will be `CHALLENGE`.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_rules_SetRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_rules_SetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/rules/set\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  action: CHALLENGE,\n  visitor_id: \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n  expires_in_minutes: 120,\n};\n\nclient.Fraud.Rules.Set(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/rules/set\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/rules\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &rules.SetParams{\n\t\tAction:           fraud.RuleActionCHALLENGE,\n\t\tVisitorID:        \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n\t\tExpiresInMinutes: 120,\n\t}\n\n\tresp, err := client.Fraud.Rules.Set(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/rules/set\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraud.RuleAction;\nimport com.stytch.java.consumer.models.fraudrules.SetRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        SetRequest params = new SetRequest();\n        params.setAction(RuleAction.CHALLENGE);\n        params.setVisitorId(\"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\");\n        params.setExpiresInMinutes(120);\n\n        Object result = StytchClient.getFraud().getRules().set(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/rules/set\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraud.RuleAction\nimport com.stytch.java.consumer.models.fraudrules.SetRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.rules.set(\n                SetRequest(\n                    action = RuleAction.CHALLENGE,\n                    visitorId = \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n                    expiresInMinutes = 120,\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/rules/set\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  action: \"CHALLENGE\",\n  visitor_id: \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n  expires_in_minutes: 120,\n};\n\nclient.fraud.rules.set(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->fraud->rules->set([\n    'action' => 'CHALLENGE',\n    'visitor_id' => 'visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72',\n    'expires_in_minutes' => 120,\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/rules/set\nfrom stytch import Client\nfrom stytch.consumer.models.fraud import RuleAction\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.rules.set(\n    action=RuleAction.CHALLENGE,\n    visitor_id=\"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n    expires_in_minutes=120,\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/rules/set\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.rules.set(\n  action: \"CHALLENGE\",\n  visitor_id: \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n  expires_in_minutes: 120\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/rules/set\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_rules::SetRequest;\nuse stytch::consumer::fraud::RuleAction;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.rules.set(\n        SetRequest{\n            action: RuleAction::CHALLENGE,\n            visitor_id: Some(String::from(\"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\")),\n            expires_in_minutes: 120,\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/rules/set\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/rules/set \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"action\": \"CHALLENGE\",\n    \"visitor_id\": \"visitor-6139cbcc-4dda-4b1f-b1c0-13c08ec64d72\",\n    \"expires_in_minutes\": 120\n  }'"
+  /v1/rules/list:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: List
+      operationId: api_fraud_v1_fraud_rules_List
+      tags:
+      - Fraud
+      description: Get all rules that have been set for your project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_rules_ListRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_rules_ListResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/rules/list\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  limit: 10,\n};\n\nclient.Fraud.Rules.List(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/rules/list\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/rules\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &rules.ListParams{\n\t\tLimit: 10,\n\t}\n\n\tresp, err := client.Fraud.Rules.List(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/rules/list\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraudrules.ListRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        ListRequest params = new ListRequest();\n        params.setLimit(10);\n\n        Object result = StytchClient.getFraud().getRules().list(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/rules/list\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraudrules.ListRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.rules.list(\n                ListRequest(\n                    limit = 10,\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/rules/list\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  limit: 10,\n};\n\nclient.fraud.rules.list(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->fraud->rules->list([\n    'limit' => 10,\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/rules/list\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.rules.list(\n    limit=10,\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/rules/list\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.rules.list(\n  limit: 10\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/rules/list\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_rules::ListRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.rules.list(\n        ListRequest{\n            limit: 10,\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/rules/list\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/rules/list \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"limit\": 10\n  }'"
+  /v1/verdict_reasons/override:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: Override
+      operationId: api_fraud_v1_fraud_verdict_reasons_Override
+      tags:
+      - Fraud
+      description: Use this endpoint to override the action returned for a specific verdict reason during a fingerprint lookup. For example, Stytch Device Fingerprinting returns a `CHALLENGE` verdict action by default for the verdict reason `VIRTUAL_MACHINE`. You can use this endpoint to override that reason to return an `ALLOW` verdict instead if you expect many legitimate users to be using a browser that runs in a virtual machine.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_verdict_reasons_OverrideRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_verdict_reasons_OverrideResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/verdict_reasons/override\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  verdict_reason: \"VIRTUAL_MACHINE\",\n  override_action: ALLOW,\n};\n\nclient.Fraud.VerdictReasons.Override(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/verdict_reasons/override\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/verdictreasons\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &verdictreasons.OverrideParams{\n\t\tVerdictReason:  \"VIRTUAL_MACHINE\",\n\t\tOverrideAction: verdictreasons.OverrideRequestActionALLOW,\n\t}\n\n\tresp, err := client.Fraud.VerdictReasons.Override(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/verdict_reasons/override\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraudverdictreasons.OverrideRequest;\nimport com.stytch.java.consumer.models.fraudverdictreasons.OverrideRequestAction;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        OverrideRequest params = new OverrideRequest();\n        params.setVerdictReason(\"VIRTUAL_MACHINE\");\n        params.setOverrideAction(OverrideRequestAction.ALLOW);\n\n        Object result = StytchClient.getFraud().getVerdictReasons().override(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/verdict_reasons/override\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraudverdictreasons.OverrideRequest\nimport com.stytch.java.consumer.models.fraudverdictreasons.OverrideRequestAction\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.verdictReasons.override(\n                OverrideRequest(\n                    verdictReason = \"VIRTUAL_MACHINE\",\n                    overrideAction = OverrideRequestAction.ALLOW,\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/verdict_reasons/override\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  verdict_reason: \"VIRTUAL_MACHINE\",\n  override_action: \"ALLOW\",\n};\n\nclient.fraud.verdictReasons.override(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->fraud->verdict_reasons->override([\n    'verdict_reason' => 'VIRTUAL_MACHINE',\n    'override_action' => 'ALLOW',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/verdict_reasons/override\nfrom stytch import Client\nfrom stytch.consumer.models.fraud_verdict_reasons import OverrideRequestAction\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.verdict_reasons.override(\n    verdict_reason=\"VIRTUAL_MACHINE\",\n    override_action=OverrideRequestAction.ALLOW,\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/verdict_reasons/override\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.verdict_reasons.override(\n  verdict_reason: \"VIRTUAL_MACHINE\",\n  override_action: \"ALLOW\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/verdict_reasons/override\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_verdict_reasons::OverrideRequestAction;\nuse stytch::consumer::fraud_verdict_reasons::OverrideRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.verdict_reasons.r#override(\n        OverrideRequest{\n            verdict_reason: \"VIRTUAL_MACHINE\",\n            override_action: OverrideRequestAction::ALLOW,\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/verdict_reasons/override\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/verdict_reasons/override \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"verdict_reason\": \"VIRTUAL_MACHINE\",\n    \"override_action\": \"ALLOW\"\n  }'"
+  /v1/verdict_reasons/list:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: List
+      operationId: api_fraud_v1_fraud_verdict_reasons_List
+      tags:
+      - Fraud
+      description: 'Get the list of verdict reasons returned by the Stytch Device Fingerprinting product along with their default actions and any overrides you may have defined. This is not an exhaustive list of verdict reasons, but it contains all verdict reasons that you may set an override on.
+
+
+        For a full list of possible verdict reasons, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons).'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_verdict_reasons_ListRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_verdict_reasons_ListResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/verdict_reasons/list\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.Fraud.VerdictReasons.List(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/verdict_reasons/list\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/verdictreasons\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &verdictreasons.ListParams{}\n\n\tresp, err := client.Fraud.VerdictReasons.List(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/verdict_reasons/list\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraudverdictreasons.ListRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        ListRequest params = new ListRequest();\n\n        Object result = StytchClient.getFraud().getVerdictReasons().list(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/verdict_reasons/list\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraudverdictreasons.ListRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.verdictReasons.list(\n                ListRequest(),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/verdict_reasons/list\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.fraud.verdictReasons.list(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: '$response = $client->fraud->verdict_reasons->list([
+
+          ]);'
+      - lang: python
+        label: Python
+        source: "# POST /v1/verdict_reasons/list\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.verdict_reasons.list()\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/verdict_reasons/list\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.verdict_reasons.list(\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/verdict_reasons/list\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_verdict_reasons::ListRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.verdict_reasons.list(\n        ListRequest{\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/verdict_reasons/list\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/verdict_reasons/list \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n  }'"
+  /v1/email/risk:
+    servers:
+    - url: https://telemetry.stytch.com
+    post:
+      summary: Risk
+      operationId: api_fraud_v1_fraud_email_Risk
+      tags:
+      - Fraud
+      description: 'Get risk information for a specific email address.
+
+        The response will contain a recommended action (`ALLOW`, `BLOCK`, or `CHALLENGE`) and a more granular `risk_score`.
+
+        You can also check the `address_information` and `domain_information` fields for more information about the email address and email domain.
+
+
+        This feature is in beta. Reach out to us [here](mailto:fraud-team@stytch.com?subject=Email_Intelligence_Early_Access) if you''d like to request early access.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_fraud_v1_fraud_email_RiskRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_fraud_v1_fraud_email_RiskResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/email/risk\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_address: \"${email}\",\n};\n\nclient.Fraud.Email.Risk(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/email/risk\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/fraud/email\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &email.RiskParams{\n\t\tEmailAddress: \"${email}\",\n\t}\n\n\tresp, err := client.Fraud.Email.Risk(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/email/risk\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.fraudemail.RiskRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        RiskRequest params = new RiskRequest();\n        params.setEmailAddress(\"${email}\");\n\n        Object result = StytchClient.getFraud().getEmail().risk(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/email/risk\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.fraudemail.RiskRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.fraud.email.risk(\n                RiskRequest(\n                    emailAddress = \"${email}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/email/risk\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_address: \"${email}\",\n};\n\nclient.fraud.email.risk(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->fraud->email->risk([\n    'email_address' => '${email}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/email/risk\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.fraud.email.risk(\n    email_address=\"${email}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/email/risk\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.fraud.email.risk(\n  email_address: \"${email}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/email/risk\nuse stytch::consumer::client::Client;\nuse stytch::consumer::fraud_email::RiskRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.fraud.email.risk(\n        RiskRequest{\n            email_address: \"${email}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/email/risk\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/email/risk \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"email_address\": \"${email}\"\n  }'"
+components:
+  schemas:
+    api_fraud_v1_fraud_verdict_reasons_ListResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        verdict_reason_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_fraud_v1_VerdictReasonAction'
+          description: Information about verdict reasons and any overrides that were set on them.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - verdict_reason_actions
+      - status_code
+    api_fraud_v1_fraud_rules_ListRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 100 results. If your query returns more than 100 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor`, repeat the request with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make requests until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          description: The number of results to return per page. The default limit is 10. A maximum of 100 results can be returned by a single get request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+      description: Request type
+    api_fraud_v1_Verdict:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictAction'
+          description: "The suggested action based on the fingerprint review. The available actions are:\n  * `ALLOW` - This is a known valid device grouping or device profile that is part of the default ALLOW listed set of known devices by Stytch. This grouping is made up of verified device profiles that match the characteristics of known/authentic traffic origins\n  * `BLOCK` - This is a known bad or malicious device profile that is undesirable and should be blocked from completing the privileged action in question\n  * `CHALLENGE` - This is an unknown or potentially malicious device that should be put through increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed\n  "
+        reasons:
+          type: array
+          items:
+            type: string
+          description: A set of contextual clues to inform why a `CHALLENGE` or `BLOCK` action was suggested. For a list of possible Reasons, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons).
+        detected_device_type:
+          type: string
+          description: The operating system and architecture that took the fingerprint.
+        is_authentic_device:
+          type: boolean
+          description: The assessment of whether this is an authentic device. It will be false if hardware or browser deception is detected.
+        verdict_reason_overrides:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_fraud_v1_VerdictReasonOverride'
+          description: A list of verdict reason overrides that were applied, if any.
+        rule_match_type:
+          $ref: '#/components/schemas/api_fraud_v1_RuleType'
+          description: The type of rule match that was applied (e.g. `VISITOR_ID`), if any. This field will only be present if there is a `RULE_MATCH` reason in the list of verdict reasons.
+        rule_match_identifier:
+          type: string
+          description: The rule that was applied (e.g. a specific visitor ID value), if any. This field will only be present if there is a `RULE_MATCH` reason in the list of verdict reasons.
+      required:
+      - action
+      - reasons
+      - detected_device_type
+      - is_authentic_device
+      - verdict_reason_overrides
+    api_fraud_v1_RiskResponseAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_fraud_rules_SetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
+          description: The action that will be returned for the specified identifier.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        visitor_id:
+          type: string
+          description: The visitor ID that a rule was set for.
+        browser_id:
+          type: string
+          description: The browser ID that a rule was set for.
+        visitor_fingerprint:
+          type: string
+          description: The visitor fingerprint that a rule was set for.
+        browser_fingerprint:
+          type: string
+          description: The browser fingerprint that a rule was set for.
+        hardware_fingerprint:
+          type: string
+          description: The hardware fingerprint that a rule was set for.
+        network_fingerprint:
+          type: string
+          description: The network fingerprint that a rule was set for.
+        expires_at:
+          type: string
+          description: The timestamp when the rule expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        cidr_block:
+          type: string
+          description: The CIDR block that a rule was set for. If an end user's IP address is within this CIDR block, this rule will be applied.
+        country_code:
+          type: string
+          description: The country code that a rule was set for.
+        asn:
+          type: string
+          description: The ASN that a rule was set for.
+      required:
+      - request_id
+      - action
+      - status_code
+    api_fraud_v1_AddressInformation:
+      type: object
+      properties:
+        has_known_bounces:
+          type: boolean
+          description: Whether email sent to this address is known to have bounced previously.
+        has_valid_syntax:
+          type: boolean
+          description: Whether this email address is valid.
+        is_suspected_role_address:
+          type: boolean
+          description: Whether the local part of the email appears to be a role or group, rather than an individual end user.
+        normalized_email:
+          type: string
+          description: The normalized email address after removing '.' characters and any characters after a '+'.
+        tumbling_character_count:
+          type: integer
+          format: int32
+          description: The number of '.' and '+' characters in the email address. A higher tumbling count indicates a higher potential for fraud.
+      required:
+      - has_known_bounces
+      - has_valid_syntax
+      - is_suspected_role_address
+      - normalized_email
+      - tumbling_character_count
+    api_fraud_v1_VerdictReasonAction:
+      type: object
+      properties:
+        verdict_reason:
+          type: string
+          description: The verdict reason.
+        default_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
+          description: The default action returned for the specified verdict reason in a fingerprint lookup when no overrides are specified.
+        override_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
+          description: If not null, this action will be returned for the specified verdict reason in a fingerprint lookup, in place of the default action.
+        override_created_at:
+          type: string
+          description: The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        override_description:
+          type: string
+          description: A description of the override, if one exists.
+      required:
+      - verdict_reason
+      - default_action
+    api_fraud_v1_Metadata:
+      type: object
+      properties:
+        external_id:
+          type: string
+          description: An external ID, such as a user ID, that you wish to associate with the telemetry ID.
+        organization_id:
+          type: string
+          description: The organization ID you wish to associate with the telemetry ID.
+        user_action:
+          type: string
+          description: The user action, such as 'login', that you wish to associate with the telemetry ID.
+    api_fraud_v1_VerdictAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_NetworkProperties:
+      type: object
+      properties:
+        ip_address:
+          type: string
+          description: The IP address of the client.
+        asn:
+          $ref: '#/components/schemas/api_fraud_v1_ASNProperties'
+          description: Information about the network's ASN (Autonomous System Number).
+        ip_geolocation:
+          $ref: '#/components/schemas/api_fraud_v1_IPGeoProperties'
+          description: Information about the geolocation of the user's IP address.
+        is_proxy:
+          type: boolean
+          description: Whether the user is using a proxy.
+        is_vpn:
+          type: boolean
+          description: Whether the user is using a VPN.
+      required:
+      - ip_address
+      - asn
+      - ip_geolocation
+      - is_proxy
+      - is_vpn
+    api_fraud_v1_BrowserProperties:
+      type: object
+      properties:
+        user_agent:
+          type: string
+          description: The user agent of the user's browser.
+      required:
+      - user_agent
+    api_fraud_v1_VerdictReasonActionAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_fraud_verdict_reasons_ListRequest:
+      type: object
+      properties:
+        overrides_only:
+          type: boolean
+          description: Whether to return only verdict reasons that have overrides set. Defaults to false.
+      description: Request type
+    api_fraud_v1_VerdictReasonOverride:
+      type: object
+      properties:
+        verdict_reason:
+          type: string
+          description: The verdict reason that was overridden.
+        override_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonOverrideAction'
+          description: The action that was applied for the given verdict reason.
+      required:
+      - verdict_reason
+      - override_action
+    api_fraud_v1_RuleType:
+      type: string
+      enum:
+      - VISITOR_ID
+      - BROWSER_ID
+      - VISITOR_FINGERPRINT
+      - BROWSER_FINGERPRINT
+      - HARDWARE_FINGERPRINT
+      - NETWORK_FINGERPRINT
+      - CIDR_BLOCK
+      - ASN
+      - COUNTRY_CODE
+    api_fraud_v1_RuleAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+      - NONE
+    api_fraud_v1_OverrideRequestAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+      - NONE
+    api_fraud_v1_fraud_email_RiskResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        address_information:
+          $ref: '#/components/schemas/api_fraud_v1_AddressInformation'
+          description: Information about the email address.
+        domain_information:
+          $ref: '#/components/schemas/api_fraud_v1_DomainInformation'
+          description: Information about the email domain.
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RiskResponseAction'
+          description: "The suggested action based on the attributes of the email address. The available actions are:\n  * `ALLOW` - This email is most likely safe to send to and not fraudulent.\n  * `BLOCK` - This email is invalid or exhibits signs of fraud. We recommend blocking the end user.\n  * `CHALLENGE` - This email has some potentially fraudulent attributes. We recommend increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.\n  "
+        risk_score:
+          type: integer
+          format: int32
+          description: A score from 0 to 100 indicating how risky the email is. 100 is the most risky.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - address_information
+      - domain_information
+      - action
+      - risk_score
+      - status_code
+    api_fraud_v1_fraud_fingerprint_LookupRequest:
+      type: object
+      properties:
+        telemetry_id:
+          type: string
+          description: The telemetry ID associated with the fingerprint getting looked up.
+        external_metadata:
+          $ref: '#/components/schemas/api_fraud_v1_Metadata'
+          description: External identifiers that you wish to associate with the given telemetry ID. You will be able to search for fingerprint results by these identifiers in the DFP analytics dashboard. External metadata fields may not exceed 65 characters. They may only contain alphanumerics and the characters `_` `-` `+` `.` or `@`.
+      description: Request type
+      required:
+      - telemetry_id
+    api_fraud_v1_fraud_rules_ListResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your result contains more than one page of results. This value is passed into your next request in the `cursor` field.
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_fraud_v1_Rule'
+          description: A list of rules for the project
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - next_cursor
+      - rules
+      - status_code
+    api_fraud_v1_VerdictReasonOverrideAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_Rule:
+      type: object
+      properties:
+        rule_type:
+          $ref: '#/components/schemas/api_fraud_v1_RuleType'
+          description: The rule type. The possible values are `VISITOR_ID`, `BROWSER_ID`, `VISITOR_FINGERPRINT`, `BROWSER_FINGERPRINT`, `HARDWARE_FINGERPRINT`, `NETWORK_FINGERPRINT`, `CIDR_BLOCK`, `ASN`, or `COUNTRY_CODE`.
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
+          description: The action (`ALLOW`, `BLOCK`, or `CHALLENGE`) that will be returned for this rule.
+        created_at:
+          type: string
+          description: The time when the rule was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        visitor_id:
+          type: string
+          description: The visitor ID that a rule was set for.
+        browser_id:
+          type: string
+          description: The browser ID that a rule was set for.
+        visitor_fingerprint:
+          type: string
+          description: The visitor fingerprint that a rule was set for.
+        browser_fingerprint:
+          type: string
+          description: The browser fingerprint that a rule was set for.
+        hardware_fingerprint:
+          type: string
+          description: The hardware fingerprint that a rule was set for.
+        network_fingerprint:
+          type: string
+          description: The network fingerprint that a rule was set for.
+        cidr_block:
+          type: string
+          description: The CIDR block that a rule was set for. If an end user's IP address is within this CIDR block, this rule will be applied.
+        country_code:
+          type: string
+          description: The country code that a rule was set for.
+        asn:
+          type: string
+          description: The ASN that a rule was set for.
+        description:
+          type: string
+          description: A description for the rule.
+        expires_at:
+          type: string
+          description: The timestamp when the rule expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        last_updated_at:
+          type: string
+          description: The time when the rule was last updated. Will be null if the rule has never been updated. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+      required:
+      - rule_type
+      - action
+      - created_at
+    api_fraud_v1_fraud_email_RiskRequest:
+      type: object
+      properties:
+        email_address:
+          type: string
+          description: The email address to check.
+      description: Request type
+      required:
+      - email_address
+    api_fraud_v1_ASNProperties:
+      type: object
+      properties:
+        asn:
+          type: string
+          description: The Autonomous System Number of the user's network.
+        name:
+          type: string
+          description: Public name associated with the ASN.
+        network:
+          type: string
+          description: The CIDR block associated with the ASN.
+      required:
+      - asn
+      - name
+      - network
+    api_fraud_v1_Fingerprints:
+      type: object
+      properties:
+        network_fingerprint:
+          type: string
+          description: 'Combination of signals associated with a specific network commonly known as TLS fingerprinting. '
+        hardware_fingerprint:
+          type: string
+          description: Combinations of signals to identify an operating system and architecture.
+        browser_fingerprint:
+          type: string
+          description: Combination of signals to identify a browser and its specific version.
+        visitor_fingerprint:
+          type: string
+          description: Cookie-less way of identifying a unique user.
+        visitor_id:
+          type: string
+          description: The cookie stored on the user's device that uniquely identifies them.
+        browser_id:
+          type: string
+          description: Combination of VisitorID and NetworkFingerprint to create a clear identifier of a browser.
+      required:
+      - network_fingerprint
+      - hardware_fingerprint
+      - browser_fingerprint
+      - visitor_fingerprint
+    api_fraud_v1_fraud_verdict_reasons_OverrideRequest:
+      type: object
+      properties:
+        verdict_reason:
+          type: string
+          description: The verdict reason that you wish to override. For a list of possible reasons to override, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons). You may not override the `RULE_MATCH` reason.
+        override_action:
+          $ref: '#/components/schemas/api_fraud_v1_OverrideRequestAction'
+          description: The action that you want to be returned for the specified verdict reason. The override action must be one of `ALLOW`, `BLOCK`, or `CHALLENGE`.
+        override_description:
+          type: string
+          description: An optional description for the verdict reason override.
+      description: Request type
+      required:
+      - verdict_reason
+      - override_action
+    api_fraud_v1_fraud_fingerprint_LookupResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        telemetry_id:
+          type: string
+          description: The telemetry ID associated with the fingerprint getting looked up.
+        fingerprints:
+          $ref: '#/components/schemas/api_fraud_v1_Fingerprints'
+          description: 'A Stytch fingerprint consists of the following identifiers:'
+        verdict:
+          $ref: '#/components/schemas/api_fraud_v1_Verdict'
+          description: The metadata associated with each fingerprint
+        external_metadata:
+          $ref: '#/components/schemas/api_fraud_v1_Metadata'
+          description: External identifiers that you wish to associate with the given telemetry ID. You will be able to search for fingerprint results by these identifiers in the DFP analytics dashboard. External metadata fields may not exceed 65 characters. They may only contain alphanumerics and the characters `_` `-` `+` `.` or `@`.
+        created_at:
+          type: string
+          description: The time when the fingerprint was taken. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        expires_at:
+          type: string
+          description: The timestamp when the fingerprint expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        properties:
+          $ref: '#/components/schemas/api_fraud_v1_Properties'
+          description: Additional information about the user's browser and network.
+        raw_signals:
+          type: object
+          additionalProperties: true
+          description: The raw device attributes, such as screen size, that were collected by the Device Fingerprinting product to generate the fingerprints and verdict. You must be specifically enabled for the raw signals feature to see this field. You can find documentation for the specific fields in the [guides](https://stytch.com/docs/fraud/guides/device-fingerprinting/reference/raw-signals).
+      required:
+      - request_id
+      - telemetry_id
+      - fingerprints
+      - verdict
+      - external_metadata
+      - created_at
+      - expires_at
+      - status_code
+    api_fraud_v1_DomainInformation:
+      type: object
+      properties:
+        has_mx_or_a_record:
+          type: boolean
+          description: Whether the email has appropriate DNS records to deliver a message.
+        is_disposable_domain:
+          type: boolean
+          description: Whether the email domain is known to be disposable.
+      required:
+      - has_mx_or_a_record
+      - is_disposable_domain
+    api_fraud_v1_fraud_rules_SetRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
+          description: 'The action that should be returned by a fingerprint lookup for that identifier with a `RULE_MATCH` reason. The following values are valid: `ALLOW`, `BLOCK`, `CHALLENGE`, or `NONE`. For country codes, `ALLOW` actions are not allowed. If a `NONE` action is specified, it will clear the stored rule.'
+        visitor_id:
+          type: string
+          description: The visitor ID we want to set a rule for. Only one identifier can be specified in the request.
+        browser_id:
+          type: string
+          description: The browser ID we want to set a rule for. Only one identifier can be specified in the request.
+        visitor_fingerprint:
+          type: string
+          description: The visitor fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        browser_fingerprint:
+          type: string
+          description: The browser fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        hardware_fingerprint:
+          type: string
+          description: The hardware fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        network_fingerprint:
+          type: string
+          description: The network fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        expires_in_minutes:
+          type: integer
+          format: int32
+          description: The number of minutes until this rule expires. If no `expires_in_minutes` is specified, then the rule is kept permanently.
+        description:
+          type: string
+          description: An optional description for the rule.
+        cidr_block:
+          type: string
+          description: The CIDR block we want to set a rule for. You may pass either an IP address or a CIDR block. The CIDR block prefix must be between 16 and 32, inclusive. If an end user's IP address is within this CIDR block, this rule will be applied. Only one identifier can be specified in the request.
+        country_code:
+          type: string
+          description: The country code we want to set a rule for. The country code must be a valid ISO 3166-1 alpha-2 code. You may not set `ALLOW` rules for country codes. Only one identifier can be specified in the request.
+        asn:
+          type: string
+          description: The ASN we want to set a rule for. The ASN must be the string representation of an integer between 0 and 4294967295, inclusive. Only one identifier can be specified in the request.
+      description: Request type
+      required:
+      - action
+    api_fraud_v1_fraud_verdict_reasons_OverrideResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        verdict_reason_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonAction'
+          description: Information about the verdict reason override that was just set.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - verdict_reason_action
+      - status_code
+    api_fraud_v1_IPGeoProperties:
+      type: object
+      properties:
+        city:
+          type: string
+          description: The city where the IP is located.
+        region:
+          type: string
+          description: The region where the IP is located.
+        country:
+          type: string
+          description: The country where the IP is located.
+      required:
+      - city
+      - region
+      - country
+    api_fraud_v1_Properties:
+      type: object
+      properties:
+        network_properties:
+          $ref: '#/components/schemas/api_fraud_v1_NetworkProperties'
+        browser_properties:
+          $ref: '#/components/schemas/api_fraud_v1_BrowserProperties'
+      required:
+      - network_properties
+      - browser_properties
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

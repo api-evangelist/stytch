@@ -1,0 +1,1523 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Organization API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Organization
+paths:
+  /v1/b2b/organizations:
+    post:
+      summary: Create
+      operationId: api_organization_v1_Create
+      tags:
+      - Organization
+      description: 'Creates an Organization. An `organization_name` and a unique `organization_slug` are required.
+
+
+        If no Organization authentication setting parameters are passed in, `email_invites` will default to `ALL_ALLOWED` so that the Organization has a way to add Members. Otherwise, `email_invites` will default to `NOT_ALLOWED`.
+
+
+        *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_organization_v1_CreateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/organizations\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\",\n};\n\nclient.Organizations.Create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/organizations\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.CreateParams{\n\t\tOrganizationName:       \"${organizationName}\",\n\t\tOrganizationSlug:       \"${organizationSlug}\",\n\t\tOrganizationExternalID: \"my-external-id\",\n\t}\n\n\tresp, err := client.Organizations.Create(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/organizations\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.CreateRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        CreateRequest params = new CreateRequest();\n        params.setOrganizationName(\"${organizationName}\");\n        params.setOrganizationSlug(\"${organizationSlug}\");\n        params.setOrganizationExternalId(\"my-external-id\");\n\n        Object result = StytchB2BClient.getOrganizations().create(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/organizations\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.CreateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.create(\n                CreateRequest(\n                    organizationName = \"${organizationName}\",\n                    organizationSlug = \"${organizationSlug}\",\n                    organizationExternalId = \"my-external-id\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/organizations\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\",\n};\n\nclient.organizations.create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->create([\n    'organization_name' => '${organizationName}',\n    'organization_slug' => '${organizationSlug}',\n    'organization_external_id' => 'my-external-id',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/organizations\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.create(\n    organization_name=\"${organizationName}\",\n    organization_slug=\"${organizationSlug}\",\n    organization_external_id=\"my-external-id\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/organizations\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.create(\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/organizations\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::CreateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.create(\n        CreateRequest{\n            organization_name: \"${organizationName}\",\n            organization_slug: Some(String::from(\"${organizationSlug}\")),\n            organization_external_id: Some(String::from(\"my-external-id\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/organizations\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/organizations \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"organization_name\": \"${organizationName}\",\n    \"organization_slug\": \"${organizationSlug}\",\n    \"organization_external_id\": \"my-external-id\"\n  }'"
+  /v1/b2b/organizations/{organization_id}:
+    get:
+      summary: Get
+      operationId: api_organization_v1_Get
+      tags:
+      - Organization
+      description: Returns an Organization specified by `organization_id`.
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nclient.Organizations.Get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/organizations/{organization_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.GetParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t}\n\n\tresp, err := client.Organizations.Get(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/organizations/{organization_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.GetRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetRequest params = new GetRequest();\n        params.setOrganizationId(\"${organizationId}\");\n\n        Object result = StytchB2BClient.getOrganizations().get(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/organizations/{organization_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.GetRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.get(\n                GetRequest(\n                    organizationId = \"${organizationId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nclient.organizations.get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->get([\n    'organization_id' => '${organizationId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/organizations/{organization_id}\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.get(\n    organization_id=\"${organizationId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/organizations/{organization_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.get(\n  organization_id: \"${organizationId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/organizations/{organization_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::GetRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.get(\n        GetRequest{\n            organization_id: \"${organizationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/organizations/{organization_id}\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+    put:
+      summary: Update
+      operationId: api_organization_v1_Update
+      tags:
+      - Organization
+      description: 'Updates an Organization specified by `organization_id`. An Organization must always have at least one auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.
+
+
+        *See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_organization_v1_UpdateRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// PUT /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  organization_name: \"${organizationName}\",\n  organization_external_id: \"my-new-external-id\",\n  email_jit_provisioning: \"ALL_ALLOWED\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.Organizations.Update(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// PUT /v1/b2b/organizations/{organization_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.UpdateParams{\n\t\tOrganizationID:         \"${organizationId}\",\n\t\tOrganizationName:       \"${organizationName}\",\n\t\tOrganizationExternalID: \"my-new-external-id\",\n\t\tEmailJITProvisioning:   \"ALL_ALLOWED\",\n\t}\n\n\toptions := &organizations.UpdateParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.Organizations.Update(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// PUT /v1/b2b/organizations/{organization_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.UpdateRequest;\nimport com.stytch.java.b2b.models.organizations.UpdateRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        UpdateRequest params = new UpdateRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setOrganizationName(\"${organizationName}\");\n        params.setOrganizationExternalId(\"my-new-external-id\");\n        params.setEmailJITProvisioning(\"ALL_ALLOWED\");\n\n        UpdateRequestOptions options = new UpdateRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getOrganizations().update(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// PUT /v1/b2b/organizations/{organization_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.UpdateRequest\nimport com.stytch.java.b2b.models.organizations.UpdateRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.update(\n                UpdateRequest(\n                    organizationId = \"${organizationId}\",\n                    organizationName = \"${organizationName}\",\n                    organizationExternalId = \"my-new-external-id\",\n                    emailJITProvisioning = \"ALL_ALLOWED\",\n                ),\n                UpdateRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// PUT /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  organization_name: \"${organizationName}\",\n  organization_external_id: \"my-new-external-id\",\n  email_jit_provisioning: \"ALL_ALLOWED\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.organizations.update(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->update([\n    'organization_id' => '${organizationId}',\n    'organization_name' => '${organizationName}',\n    'organization_external_id' => 'my-new-external-id',\n    'email_jit_provisioning' => 'ALL_ALLOWED',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# PUT /v1/b2b/organizations/{organization_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.organizations import UpdateRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.update(\n    organization_id=\"${organizationId}\",\n    organization_name=\"${organizationName}\",\n    organization_external_id=\"my-new-external-id\",\n    email_jit_provisioning=\"ALL_ALLOWED\",\n    method_options=UpdateRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# PUT /v1/b2b/organizations/{organization_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.update(\n  organization_id: \"${organizationId}\",\n  organization_name: \"${organizationName}\",\n  organization_external_id: \"my-new-external-id\",\n  email_jit_provisioning: \"ALL_ALLOWED\",\n  method_options: StytchB2B::Organizations::UpdateRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// PUT /v1/b2b/organizations/{organization_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::UpdateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.update(\n        UpdateRequest{\n            organization_id: \"${organizationId}\",\n            organization_name: Some(String::from(\"${organizationName}\")),\n            organization_external_id: Some(String::from(\"my-new-external-id\")),\n            email_jit_provisioning: Some(String::from(\"ALL_ALLOWED\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# PUT /v1/b2b/organizations/{organization_id}\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\" \\\n  -d '{\n    \"organization_name\": \"${organizationName}\",\n    \"organization_external_id\": \"my-new-external-id\",\n    \"email_jit_provisioning\": \"ALL_ALLOWED\"\n  }'"
+    delete:
+      summary: Delete
+      operationId: api_organization_v1_Delete
+      tags:
+      - Organization
+      description: Deletes an Organization specified by `organization_id`. All Members of the Organization will also be deleted.
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.Organizations.Delete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.DeleteParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t}\n\n\toptions := &organizations.DeleteParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.Organizations.Delete(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.DeleteRequest;\nimport com.stytch.java.b2b.models.organizations.DeleteRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteRequest params = new DeleteRequest();\n        params.setOrganizationId(\"${organizationId}\");\n\n        DeleteRequestOptions options = new DeleteRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getOrganizations().delete(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.DeleteRequest\nimport com.stytch.java.b2b.models.organizations.DeleteRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.delete(\n                DeleteRequest(\n                    organizationId = \"${organizationId}\",\n                ),\n                DeleteRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.organizations.delete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->delete([\n    'organization_id' => '${organizationId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/b2b/organizations/{organization_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.organizations import DeleteRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.delete(\n    organization_id=\"${organizationId}\",\n    method_options=DeleteRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/b2b/organizations/{organization_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.delete(\n  organization_id: \"${organizationId}\",\n  method_options: StytchB2B::Organizations::DeleteRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/b2b/organizations/{organization_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::DeleteRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.delete(\n        DeleteRequest{\n            organization_id: \"${organizationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/b2b/organizations/{organization_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/organizations/search:
+    post:
+      summary: Search
+      operationId: api_organization_v1_Search
+      tags:
+      - Organization
+      description: '
+
+        **Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 100 requests/minute.
+
+
+        Search across your Organizations. Returns an array of Organization objects.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_organization_v1_SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_SearchResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /v1/b2b/organizations/{organization_id}/metrics:
+    get:
+      summary: Metrics
+      operationId: api_organization_v1_Metrics
+      tags:
+      - Organization
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_MetricsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nclient.Organizations.Metrics(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.MetricsParams{\n\t\tOrganizationID: \"TODO_MISSING_EXAMPLE_VALUE\",\n\t}\n\n\tresp, err := client.Organizations.Metrics(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.MetricsRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        MetricsRequest params = new MetricsRequest();\n        params.setOrganizationId(\"TODO_MISSING_EXAMPLE_VALUE\");\n\n        Object result = StytchB2BClient.getOrganizations().metrics(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.MetricsRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.metrics(\n                MetricsRequest(\n                    organizationId = \"TODO_MISSING_EXAMPLE_VALUE\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nclient.organizations.metrics(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->metrics([\n    'organization_id' => 'TODO_MISSING_EXAMPLE_VALUE',\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/organizations/{organization_id}/metrics\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.metrics(\n    organization_id=\"TODO_MISSING_EXAMPLE_VALUE\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/organizations/{organization_id}/metrics\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.metrics(\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/organizations/{organization_id}/metrics\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::MetricsRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.metrics(\n        MetricsRequest{\n            organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/organizations/{organization_id}/metrics\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/organizations/TODO_MISSING_EXAMPLE_VALUE/metrics \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/b2b/organizations/{organization_id}/connected_apps:
+    get:
+      summary: Connectedapps
+      operationId: api_organization_v1_ConnectedApps
+      tags:
+      - Organization
+      description: 'Retrieves a list of Connected Apps for the Organization that have been installed by Members. Installation comprises
+
+        successful completion of an authorization flow with a Connected App that has not been revoked.
+
+
+        Connected Apps may be uninstalled if an Organization changes its `first_party_connected_apps_allowed_type`
+
+        or `third_party_connected_apps_allowed_type` policies.'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_ConnectedAppsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.Organizations.ConnectedApps(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.ConnectedAppsParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t}\n\n\toptions := &organizations.ConnectedAppsParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.Organizations.ConnectedApps(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.ConnectedAppsRequest;\nimport com.stytch.java.b2b.models.organizations.ConnectedAppsRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        ConnectedAppsRequest params = new ConnectedAppsRequest();\n        params.setOrganizationId(\"${organizationId}\");\n\n        ConnectedAppsRequestOptions options = new ConnectedAppsRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getOrganizations().connectedApps(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.ConnectedAppsRequest\nimport com.stytch.java.b2b.models.organizations.ConnectedAppsRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.connectedApps(\n                ConnectedAppsRequest(\n                    organizationId = \"${organizationId}\",\n                ),\n                ConnectedAppsRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.organizations.connectedApps(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->connected_apps([\n    'organization_id' => '${organizationId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps\nfrom stytch import B2BClient\nfrom stytch.b2b.models.organizations import ConnectedAppsRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.connected_apps(\n    organization_id=\"${organizationId}\",\n    method_options=ConnectedAppsRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.connected_apps(\n  organization_id: \"${organizationId}\",\n  method_options: StytchB2B::Organizations::ConnectedAppsRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::ConnectedAppsRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.connected_apps(\n        ConnectedAppsRequest{\n            organization_id: \"${organizationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId}/connected_apps \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}:
+    get:
+      summary: Getconnectedapp
+      operationId: api_organization_v1_GetConnectedApp
+      tags:
+      - Organization
+      description: 'Get Connected App for Organization retrieves information about the specified Connected App as well as a list of the
+
+        Organization''s Members who have the App installed along with the scopes they requested at completion of their last
+
+        authorization with the App.'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connected_app_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the Connected App.
+        description: The ID of the Connected App.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_GetConnectedAppResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.Organizations.GetConnectedApp(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.GetConnectedAppParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectedAppID: \"${exampleConnectedAppClientID}\",\n\t}\n\n\toptions := &organizations.GetConnectedAppParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.Organizations.GetConnectedApp(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.GetConnectedAppRequest;\nimport com.stytch.java.b2b.models.organizations.GetConnectedAppRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetConnectedAppRequest params = new GetConnectedAppRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectedAppId(\"${exampleConnectedAppClientID}\");\n\n        GetConnectedAppRequestOptions options = new GetConnectedAppRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getOrganizations().getConnectedApp(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.GetConnectedAppRequest\nimport com.stytch.java.b2b.models.organizations.GetConnectedAppRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.getConnectedApp(\n                GetConnectedAppRequest(\n                    organizationId = \"${organizationId}\",\n                    connectedAppId = \"${exampleConnectedAppClientID}\",\n                ),\n                GetConnectedAppRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.organizations.getConnectedApp(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->get_connected_app([\n    'organization_id' => '${organizationId}',\n    'connected_app_id' => '${exampleConnectedAppClientID}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.organizations import GetConnectedAppRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.get_connected_app(\n    organization_id=\"${organizationId}\",\n    connected_app_id=\"${exampleConnectedAppClientID}\",\n    method_options=GetConnectedAppRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.get_connected_app(\n  organization_id: \"${organizationId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\",\n  method_options: StytchB2B::Organizations::GetConnectedAppRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::GetConnectedAppRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.get_connected_app(\n        GetConnectedAppRequest{\n            organization_id: \"${organizationId}\",\n            connected_app_id: \"${exampleConnectedAppClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/organizations/{organization_id}/connected_apps/{connected_app_id}\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId}/connected_apps/${exampleConnectedAppClientID} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/organizations/{organization_id}/external_id:
+    delete:
+      summary: Deleteexternalid
+      operationId: api_organization_v1_DeleteExternalId
+      tags:
+      - Organization
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_organization_v1_DeleteExternalIdResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.Organizations.DeleteExternalId(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/organizations\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.DeleteExternalIDParams{\n\t\tOrganizationID: \"TODO_MISSING_EXAMPLE_VALUE\",\n\t}\n\n\toptions := &organizations.DeleteExternalIDParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.Organizations.DeleteExternalID(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\npackage com.example;\n\nimport com.stytch.java.b2b.models.organizations.DeleteExternalIdRequest;\nimport com.stytch.java.b2b.models.organizations.DeleteExternalIdRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteExternalIdRequest params = new DeleteExternalIdRequest();\n        params.setOrganizationId(\"TODO_MISSING_EXAMPLE_VALUE\");\n\n        DeleteExternalIdRequestOptions options = new DeleteExternalIdRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getOrganizations().deleteExternalId(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.organizations.DeleteExternalIdRequest\nimport com.stytch.java.b2b.models.organizations.DeleteExternalIdRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.organizations.deleteExternalId(\n                DeleteExternalIdRequest(\n                    organizationId = \"TODO_MISSING_EXAMPLE_VALUE\",\n                ),\n                DeleteExternalIdRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.organizations.deleteExternalId(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->organizations->delete_external_id([\n    'organization_id' => 'TODO_MISSING_EXAMPLE_VALUE',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/b2b/organizations/{organization_id}/external_id\nfrom stytch import B2BClient\nfrom stytch.b2b.models.organizations import DeleteExternalIdRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.organizations.delete_external_id(\n    organization_id=\"TODO_MISSING_EXAMPLE_VALUE\",\n    method_options=DeleteExternalIdRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/b2b/organizations/{organization_id}/external_id\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.organizations.delete_external_id(\n  organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n  method_options: StytchB2B::Organizations::DeleteExternalIdRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/b2b/organizations/{organization_id}/external_id\nuse stytch::b2b::client::Client;\nuse stytch::b2b::organizations::DeleteExternalIdRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.organizations.delete_external_id(\n        DeleteExternalIdRequest{\n            organization_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/b2b/organizations/{organization_id}/external_id\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/b2b/organizations/TODO_MISSING_EXAMPLE_VALUE/external_id \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+components:
+  schemas:
+    api_organization_v1_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_GetConnectedAppResponse:
+      type: object
+      properties:
+        connected_app_id:
+          type: string
+          description: The ID of the Connected App.
+        name:
+          type: string
+          description: The name of the Connected App.
+        description:
+          type: string
+          description: A description of the Connected App.
+        client_type:
+          type: string
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        active_members:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_OrganizationConnectedAppActiveMember'
+          description: Details about Members who has installed a Connected App.
+        status_code:
+          type: integer
+          format: int32
+        logo_url:
+          type: string
+      required:
+      - connected_app_id
+      - name
+      - description
+      - client_type
+      - active_members
+      - status_code
+    api_organization_v1_SearchResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: An array of [Organization objects](https://stytch.com/docs/b2b/api/organization-object).
+        results_metadata:
+          $ref: '#/components/schemas/api_organization_v1_ResultsMetadata'
+          description: The search `results_metadata` object contains metadata relevant to your specific query like `total` and `next_cursor`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organizations
+      - results_metadata
+      - status_code
+    api_organization_v1_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization_id
+      - status_code
+    api_organization_v1_ConnectedAppsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_OrganizationConnectedApp'
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - connected_apps
+      - status_code
+    api_organization_v1_MetricsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        member_count:
+          type: integer
+          format: int32
+          minimum: 0
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - member_count
+      - status_code
+    api_organization_v1_UpdateRequestFirstPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_UpdateRequest:
+      type: object
+      properties:
+        organization_name:
+          type: string
+          description: 'The name of the Organization. Must be between 1 and 128 characters in length.
+
+
+            If this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.info.name` action on the `stytch.organization` Resource.'
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience.
+
+
+            If this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.info.slug` action on the `stytch.organization` Resource.'
+        organization_logo_url:
+          type: string
+          description: 'The image URL of the Organization logo.
+
+
+            If this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.info.logo-url` action on the `stytch.organization` Resource.'
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: "An arbitrary JSON object for storing application-specific data or identity-provider-specific data.\n          If a session header is passed into the request, this field may **not** be passed into the request. You cannot\n          update trusted metadata when acting as a Member."
+        organization_external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a organization_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within a project, but may be reused across different projects in the same workspace.
+        sso_default_connection_id:
+          type: string
+          description: 'The default connection used for SSO when there are multiple active connections.
+
+
+            If this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.default-sso-connection` action on the `stytch.organization` Resource.'
+        sso_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` – only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` – disable JIT provisioning via SSO.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.sso-jit-provisioning` action on the `stytch.organization` Resource."
+        sso_jit_provisioning_allowed_connections:
+          type: array
+          items:
+            type: string
+          description: "An array of `connection_id`s that reference [SAML Connection objects](https://stytch.com/docs/b2b/api/saml-connection-object).\n  Only these connections will be allowed to JIT provision Members via SSO when `sso_jit_provisioning` is set to `RESTRICTED`.\n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.sso-jit-provisioning` action on the `stytch.organization` Resource."
+        email_allowed_domains:
+          type: array
+          items:
+            type: string
+          description: "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list.\n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-domains` action on the `stytch.organization` Resource."
+        email_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.email-jit-provisioning` action on the `stytch.organization` Resource."
+        email_invites:
+          type: string
+          description: "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` – any new Member can be invited to join via email.\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` – disable email invites.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.email-invites` action on the `stytch.organization` Resource."
+        auth_methods:
+          type: string
+          description: "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-auth-methods` action on the `stytch.organization` Resource."
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-auth-methods` action on the `stytch.organization` Resource."
+        mfa_policy:
+          type: string
+          description: "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.mfa-policy` action on the `stytch.organization` Resource."
+        rbac_email_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment'
+          description: "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment.\n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.implicit-roles` action on the `stytch.organization` Resource."
+        mfa_methods:
+          type: string
+          description: "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-mfa-methods` action on the `stytch.organization` Resource."
+        allowed_mfa_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-mfa-methods` action on the `stytch.organization` Resource."
+        oauth_tenant_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning by OAuth Tenant.\n  \n\nIf this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.oauth-tenant-jit-provisioning` action on the `stytch.organization` Resource."
+        allowed_oauth_tenants:
+          type: object
+          additionalProperties: true
+          description: 'A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
+
+
+            If this field is provided and a session header is passed into the request, the Member Session must have permission to perform the `update.settings.allowed-oauth-tenants` action on the `stytch.organization` Resource.'
+        claimed_email_domains:
+          type: array
+          items:
+            type: string
+          description: A list of email domains that are claimed by the Organization.
+        first_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_organization_v1_UpdateRequestFirstPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no first party Connected Apps are permitted.\n  "
+        allowed_first_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        third_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_organization_v1_UpdateRequestThirdPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no third party Connected Apps are permitted.\n  "
+        allowed_third_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+      description: Request type
+    api_organization_v1_Organization:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        organization_name:
+          type: string
+          description: The name of the Organization. Must be between 1 and 128 characters in length.
+        organization_logo_url:
+          type: string
+          description: The image URL of the Organization logo.
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience.'
+        sso_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` – only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` – disable JIT provisioning via SSO.\n  "
+        sso_jit_provisioning_allowed_connections:
+          type: array
+          items:
+            type: string
+          description: "An array of `connection_id`s that reference [SAML Connection objects](https://stytch.com/docs/b2b/api/saml-connection-object).\n  Only these connections will be allowed to JIT provision Members via SSO when `sso_jit_provisioning` is set to `RESTRICTED`."
+        sso_active_connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_ActiveSSOConnection'
+          description: An array of active [SAML Connection references](https://stytch.com/docs/b2b/api/saml-connection-object) or [OIDC Connection references](https://stytch.com/docs/b2b/api/oidc-connection-object).
+        email_allowed_domains:
+          type: array
+          items:
+            type: string
+          description: "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list."
+        email_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  "
+        email_invites:
+          type: string
+          description: "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` – any new Member can be invited to join via email.\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` – disable email invites.\n  "
+        auth_methods:
+          type: string
+          description: "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  "
+        mfa_policy:
+          type: string
+          description: "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  "
+        rbac_email_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment'
+          description: "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment."
+        mfa_methods:
+          type: string
+          description: "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_mfa_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  "
+        oauth_tenant_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning by OAuth Tenant.\n  "
+        claimed_email_domains:
+          type: array
+          items:
+            type: string
+          description: A list of email domains that are claimed by the Organization.
+        first_party_connected_apps_allowed_type:
+          type: string
+          description: "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no first party Connected Apps are permitted.\n  "
+        allowed_first_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        third_party_connected_apps_allowed_type:
+          type: string
+          description: "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no third party Connected Apps are permitted.\n  "
+        allowed_third_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        custom_roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_CustomRole'
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
+        created_at:
+          type: string
+          description: The timestamp of the Organization's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        updated_at:
+          type: string
+          description: The timestamp of when the Organization was last updated. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        organization_external_id:
+          type: string
+          description: A unique identifier for the organization.
+        sso_default_connection_id:
+          type: string
+          description: The default connection used for SSO when there are multiple active connections.
+        scim_active_connection:
+          $ref: '#/components/schemas/api_organization_v1_ActiveSCIMConnection'
+          description: An active [SCIM Connection references](https://stytch.com/docs/b2b/api/scim-connection-object).
+        allowed_oauth_tenants:
+          type: object
+          additionalProperties: true
+          description: A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
+      required:
+      - organization_id
+      - organization_name
+      - organization_logo_url
+      - organization_slug
+      - sso_jit_provisioning
+      - sso_jit_provisioning_allowed_connections
+      - sso_active_connections
+      - email_allowed_domains
+      - email_jit_provisioning
+      - email_invites
+      - auth_methods
+      - allowed_auth_methods
+      - mfa_policy
+      - rbac_email_implicit_role_assignments
+      - mfa_methods
+      - allowed_mfa_methods
+      - oauth_tenant_jit_provisioning
+      - claimed_email_domains
+      - first_party_connected_apps_allowed_type
+      - allowed_first_party_connected_apps
+      - third_party_connected_apps_allowed_type
+      - allowed_third_party_connected_apps
+      - custom_roles
+    api_organization_v1_EmailImplicitRoleAssignment:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Email domain that grants the specified Role.
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+      required:
+      - domain
+      - role_id
+    api_organization_v1_ResultsMetadata:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - total
+    api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_UpdateRequestThirdPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_CustomRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_CustomRolePermission'
+      required:
+      - role_id
+      - description
+      - permissions
+    api_organization_v1_ActiveSSOConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - identity_provider
+    api_organization_v1_SearchQuery:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/api_organization_v1_SearchQueryOperator'
+          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
+        operands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: An array of operand objects that contains all of the filters and values to apply to your search query.
+      required:
+      - operator
+      - operands
+    api_organization_v1_SearchQueryOperator:
+      type: string
+      enum:
+      - OR
+      - AND
+    api_organization_v1_DeleteExternalIdResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_CustomRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - resource_id
+      - actions
+    api_organization_v1_ActiveSCIMConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        bearer_token_last_four:
+          type: string
+        bearer_token_expires_at:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - bearer_token_last_four
+    api_organization_v1_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_organization_v1_SearchQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all Organizations with no filtering applied.
+      description: Request type
+    api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_OrganizationConnectedApp:
+      type: object
+      properties:
+        connected_app_id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        client_type:
+          type: string
+        logo_url:
+          type: string
+      required:
+      - connected_app_id
+      - name
+      - description
+      - client_type
+    api_organization_v1_OrganizationConnectedAppActiveMember:
+      type: object
+      properties:
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member.
+        granted_scopes:
+          type: array
+          items:
+            type: string
+          description: Scopes that were granted at the completion of the last authorization flow.
+      required:
+      - member_id
+      - granted_scopes
+    api_organization_v1_CreateRequest:
+      type: object
+      properties:
+        organization_name:
+          type: string
+          description: The name of the Organization. Must be between 1 and 128 characters in length.
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience.'
+        organization_logo_url:
+          type: string
+          description: The image URL of the Organization logo.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
+        organization_external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a organization_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within a project, but may be reused across different projects in the same workspace.
+        sso_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` – only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` – disable JIT provisioning via SSO.\n  "
+        email_allowed_domains:
+          type: array
+          items:
+            type: string
+          description: "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list."
+        email_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  "
+        email_invites:
+          type: string
+          description: "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` – any new Member can be invited to join via email.\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` – disable email invites.\n  "
+        auth_methods:
+          type: string
+          description: "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  "
+        mfa_policy:
+          type: string
+          description: "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  "
+        rbac_email_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment'
+          description: "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment."
+        mfa_methods:
+          type: string
+          description: "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_mfa_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  "
+        oauth_tenant_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning by OAuth Tenant.\n  "
+        allowed_oauth_tenants:
+          type: object
+          additionalProperties: true
+          description: A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
+        claimed_email_domains:
+          type: array
+          items:
+            type: string
+          description: A list of email domains that are claimed by the Organization.
+        first_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no first party Connected Apps are permitted.\n  "
+        allowed_first_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        third_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no third party Connected Apps are permitted.\n  "
+        allowed_third_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+      description: Request type
+      required:
+      - organization_name
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

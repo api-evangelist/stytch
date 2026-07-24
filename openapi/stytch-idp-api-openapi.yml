@@ -1,0 +1,605 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application IDP API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: IDP
+paths:
+  /v1/idp/oauth/authorize/start:
+    post:
+      summary: Authorizestart
+      operationId: api_idp_v1_idp_oauth_AuthorizeStart
+      tags:
+      - IDP
+      description: "Initiates a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request. \nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ user consent must be granted before proceeding with the authorization\n- A list of scopes the user has the ability to grant the Connected App\n\nUse this response to prompt the user for consent (if necessary) before calling the [Submit OAuth Authorization](https://stytch.com/docs/api/connected-apps-oauth-authorize) endpoint.\n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_idp_v1_idp_oauth_AuthorizeStartRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_idp_v1_idp_oauth_AuthorizeStartResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/idp/oauth/authorize/start\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\",\n  scopes: [\"openid\"],\n};\n\nclient.IDP.OAuth.AuthorizeStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/idp/oauth/authorize/start\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/idp/oauth\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &oauth.AuthorizeStartParams{\n\t\tClientID:     \"${exampleConnectedAppClientID}\",\n\t\tRedirectURI:  \"https://app.example/oauth/callback\",\n\t\tResponseType: \"code\",\n\t\tScopes:       []string{\"openid\"},\n\t}\n\n\tresp, err := client.IDP.OAuth.AuthorizeStart(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/idp/oauth/authorize/start\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.idpoauth.AuthorizeStartRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        AuthorizeStartRequest params = new AuthorizeStartRequest();\n        params.setClientId(\"${exampleConnectedAppClientID}\");\n        params.setRedirectUri(\"https://app.example/oauth/callback\");\n        params.setResponseType(\"code\");\n        params.setScopes(new String(\"openid\"));\n\n        Object result = StytchClient.getIDP().getOAuth().authorizeStart(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/idp/oauth/authorize/start\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.idpoauth.AuthorizeStartRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.idp.oauth.authorizeStart(\n                AuthorizeStartRequest(\n                    clientId = \"${exampleConnectedAppClientID}\",\n                    redirectUri = \"https://app.example/oauth/callback\",\n                    responseType = \"code\",\n                    scopes = arrayOf(\"openid\"),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/idp/oauth/authorize/start\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\",\n  scopes: [\"openid\"],\n};\n\nclient.idp.oauth.authorizeStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->idp->oauth->authorize_start([\n    'client_id' => '${exampleConnectedAppClientID}',\n    'redirect_uri' => 'https://app.example/oauth/callback',\n    'response_type' => 'code',\n    'scopes' => ['openid'],\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/idp/oauth/authorize/start\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.idp.oauth.authorize_start(\n    client_id=\"${exampleConnectedAppClientID}\",\n    redirect_uri=\"https://app.example/oauth/callback\",\n    response_type=\"code\",\n    scopes=[\"openid\"],\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/idp/oauth/authorize/start\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.idp.oauth.authorize_start(\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\",\n  scopes: ['openid']\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/idp/oauth/authorize/start\nuse stytch::consumer::client::Client;\nuse stytch::consumer::idp_oauth::AuthorizeStartRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.idp.oauth.authorize_start(\n        AuthorizeStartRequest{\n            client_id: \"${exampleConnectedAppClientID}\",\n            redirect_uri: \"https://app.example/oauth/callback\",\n            response_type: \"code\",\n            scopes: vec![\"openid\"],\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/idp/oauth/authorize/start\ncurl --request POST \\\n  --url https://test.stytch.com/v1/idp/oauth/authorize/start \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"client_id\": \"${exampleConnectedAppClientID}\",\n    \"redirect_uri\": \"https://app.example/oauth/callback\",\n    \"response_type\": \"code\",\n    \"scopes\": [\"openid\"]\n  }'"
+  /v1/idp/oauth/authorize:
+    post:
+      summary: Authorize
+      operationId: api_idp_v1_idp_oauth_Authorize
+      tags:
+      - IDP
+      description: "Completes a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirect_uri` will contain a valid `authorization_code` embedded as a query parameter.\nIf the authorization was unsuccessful, the `redirect_uri` will contain an OAuth2.1 `error_code`.\nIn both cases, redirect the user to the location for the response to be consumed by the Connected App. \n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_idp_v1_idp_oauth_AuthorizeRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_idp_v1_idp_oauth_AuthorizeResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/idp/oauth/authorize\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  consent_granted: true,\n  scopes: [\"openid\"],\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\",\n};\n\nclient.IDP.OAuth.Authorize(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/idp/oauth/authorize\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/idp/oauth\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &oauth.AuthorizeParams{\n\t\tConsentGranted: true,\n\t\tScopes:         []string{\"openid\"},\n\t\tClientID:       \"${exampleConnectedAppClientID}\",\n\t\tRedirectURI:    \"https://app.example/oauth/callback\",\n\t\tResponseType:   \"code\",\n\t}\n\n\tresp, err := client.IDP.OAuth.Authorize(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/idp/oauth/authorize\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.idpoauth.AuthorizeRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        AuthorizeRequest params = new AuthorizeRequest();\n        params.setConsentGranted(true);\n        params.setScopes(new String(\"openid\"));\n        params.setClientId(\"${exampleConnectedAppClientID}\");\n        params.setRedirectUri(\"https://app.example/oauth/callback\");\n        params.setResponseType(\"code\");\n\n        Object result = StytchClient.getIDP().getOAuth().authorize(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/idp/oauth/authorize\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.idpoauth.AuthorizeRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.idp.oauth.authorize(\n                AuthorizeRequest(\n                    consentGranted = true,\n                    scopes = arrayOf(\"openid\"),\n                    clientId = \"${exampleConnectedAppClientID}\",\n                    redirectUri = \"https://app.example/oauth/callback\",\n                    responseType = \"code\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/idp/oauth/authorize\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  consent_granted: true,\n  scopes: [\"openid\"],\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\",\n};\n\nclient.idp.oauth.authorize(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->idp->oauth->authorize([\n    'consent_granted' => true,\n    'scopes' => ['openid'],\n    'client_id' => '${exampleConnectedAppClientID}',\n    'redirect_uri' => 'https://app.example/oauth/callback',\n    'response_type' => 'code',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/idp/oauth/authorize\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.idp.oauth.authorize(\n    consent_granted=True,\n    scopes=[\"openid\"],\n    client_id=\"${exampleConnectedAppClientID}\",\n    redirect_uri=\"https://app.example/oauth/callback\",\n    response_type=\"code\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/idp/oauth/authorize\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.idp.oauth.authorize(\n  consent_granted: true,\n  scopes: ['openid'],\n  client_id: \"${exampleConnectedAppClientID}\",\n  redirect_uri: \"https://app.example/oauth/callback\",\n  response_type: \"code\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/idp/oauth/authorize\nuse stytch::consumer::client::Client;\nuse stytch::consumer::idp_oauth::AuthorizeRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.idp.oauth.authorize(\n        AuthorizeRequest{\n            consent_granted: true,\n            scopes: vec![\"openid\"],\n            client_id: \"${exampleConnectedAppClientID}\",\n            redirect_uri: \"https://app.example/oauth/callback\",\n            response_type: \"code\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/idp/oauth/authorize\ncurl --request POST \\\n  --url https://test.stytch.com/v1/idp/oauth/authorize \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"consent_granted\": true,\n    \"scopes\": [\"openid\"],\n    \"client_id\": \"${exampleConnectedAppClientID}\",\n    \"redirect_uri\": \"https://app.example/oauth/callback\",\n    \"response_type\": \"code\"\n  }'"
+components:
+  schemas:
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_idp_v1_ScopeResult:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: The name of the scope.
+        description:
+          type: string
+          description: A human-readable description of the scope, taken from the RBAC Policy.
+        is_grantable:
+          type: boolean
+          description: Indicates whether the scope can be granted. Users can only grant scopes if they have the required permissions.
+      required:
+      - scope
+      - description
+      - is_grantable
+    api_idp_v1_idp_oauth_AuthorizeStartRequest:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+        redirect_uri:
+          type: string
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        response_type:
+          type: string
+          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes requested by the client.
+        user_id:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        prompt:
+          type: string
+          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
+      description: Request type
+      required:
+      - client_id
+      - redirect_uri
+      - response_type
+      - scopes
+    api_idp_v1_idp_oauth_AuthorizeStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        client:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppPublic'
+        consent_required:
+          type: boolean
+          description: Whether the user must provide explicit consent for the authorization request.
+        scope_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_idp_v1_ScopeResult'
+          description: Details about each requested scope.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - user_id
+      - user
+      - client
+      - consent_required
+      - scope_results
+      - status_code
+    api_idp_v1_idp_oauth_AuthorizeRequest:
+      type: object
+      properties:
+        consent_granted:
+          type: boolean
+          description: Indicates whether the user granted the requested scopes.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes requested by the client.
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+        redirect_uri:
+          type: string
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        response_type:
+          type: string
+          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
+        user_id:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        prompt:
+          type: string
+          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
+        state:
+          type: string
+          description: An opaque value used to maintain state between the request and callback.
+        nonce:
+          type: string
+          description: A string used to associate a client session with an ID token to mitigate replay attacks.
+        code_challenge:
+          type: string
+          description: A base64url encoded challenge derived from the code verifier for PKCE flows.
+        resources:
+          type: array
+          items:
+            type: string
+      description: Request type
+      required:
+      - consent_granted
+      - scopes
+      - client_id
+      - redirect_uri
+      - response_type
+    api_user_v1_WebAuthnRegistration:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+          description: The unique ID for the Passkey or WebAuthn registration.
+        domain:
+          type: string
+          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+        authenticator_type:
+          type: string
+          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+        name:
+          type: string
+          description: The `name` of the Passkey or WebAuthn registration.
+      required:
+      - webauthn_registration_id
+      - domain
+      - user_agent
+      - verified
+      - authenticator_type
+      - name
+    api_user_v1_Email:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        email:
+          type: string
+          description: The email address.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - email_id
+      - email
+      - verified
+    api_idp_v1_idp_oauth_AuthorizeResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        redirect_uri:
+          type: string
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        status_code:
+          type: integer
+          format: int32
+        authorization_code:
+          type: string
+          description: A one-time use code that can be exchanged for tokens.
+      required:
+      - request_id
+      - redirect_uri
+      - status_code
+    api_user_v1_TOTP:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - totp_id
+      - verified
+    api_user_v1_Name:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the user.
+        middle_name:
+          type: string
+          description: The middle name(s) of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - phone_id
+      - phone_number
+      - verified
+    api_user_v1_BiometricRegistration:
+      type: object
+      properties:
+        biometric_registration_id:
+          type: string
+          description: The unique ID for a biometric registration.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - biometric_registration_id
+      - verified
+    api_connectedapps_v1_ConnectedAppPublic:
+      type: object
+      properties:
+        client_id:
+          type: string
+        client_name:
+          type: string
+        client_description:
+          type: string
+        client_type:
+          type: string
+        logo_url:
+          type: string
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - client_type
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_user_v1_User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_Email'
+          description: An array of email objects for the User.
+        status:
+          type: string
+          description: The status of the User. The possible values are `pending` and `active`.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
+          description: An array of phone number objects linked to the User.
+        webauthn_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_WebAuthnRegistration'
+          description: An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API.
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_OAuthProvider'
+          description: An array of OAuth `provider` objects linked to the User.
+        totps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_TOTP'
+          description: An array containing a list of all TOTP instances for a given User in the Stytch API.
+        crypto_wallets:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
+          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
+        biometric_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_BiometricRegistration'
+          description: An array that contains a list of all biometric registrations for a given User in the Stytch API.
+        is_locked:
+          type: boolean
+          description: Whether the User is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the User. Each field in the `name` object is optional.
+        created_at:
+          type: string
+          description: The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        password:
+          $ref: '#/components/schemas/api_user_v1_Password'
+          description: The password object is returned for users with a password.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in most API calls where a `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within the project.
+        lock_created_at:
+          type: string
+          description: When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        lock_expires_at:
+          type: string
+          description: When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+      required:
+      - user_id
+      - emails
+      - status
+      - phone_numbers
+      - webauthn_registrations
+      - providers
+      - totps
+      - crypto_wallets
+      - biometric_registrations
+      - is_locked
+      - roles
+    api_user_v1_OAuthProvider:
+      type: object
+      properties:
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
+        profile_picture_url:
+          type: string
+          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
+        oauth_user_registration_id:
+          type: string
+          description: The unique ID for an OAuth registration.
+      required:
+      - provider_type
+      - provider_subject
+      - profile_picture_url
+      - locale
+      - oauth_user_registration_id
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

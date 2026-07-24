@@ -1,0 +1,2381 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Discovery API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Discovery
+paths:
+  /v1/b2b/discovery/intermediate_sessions/exchange:
+    post:
+      summary: Exchange
+      operationId: api_discovery_v1_discovery_intermediate_sessions_Exchange
+      tags:
+      - Discovery
+      description: 'Exchange an Intermediate Session for a fully realized [Member Session](https://stytch.com/docs/b2b/api/session-object) for the [Organization](https://stytch.com/docs/b2b/api/organization-object) that the user wishes to log into.
+
+
+        This endpoint can be used to accept invites and JIT Provision into a new Organization on the basis of the user''s email domain or OAuth tenant.
+
+
+        If the user **has** already satisfied the authentication requirements of the Organization they are trying to exchange into and logged in with a method that verifies their email address, this API will return `member_authenticated: true` and a `session_token` and `session_jwt`.
+
+
+        If the user **has not** satisfied the primary or secondary authentication requirements of the Organization they are attempting to exchange into or is JIT Provisioning but did not log in via a method that provides email verification, this API will return `member_authenticated: false` and an `intermediate_session_token`.
+
+
+        If `primary_required` is returned, prompt the user to fulfill the Organization''s auth requirements using the options returned in `primary_required.allowed_auth_methods`.
+
+
+        If `primary_required` is null and `mfa_required` is set, check `mfa_required.member_options` to determine if the Member has SMS OTP or TOTP set up for MFA and prompt accordingly. If the Member has SMS OTP, check `mfa_required.secondary_auth_initiated` to see if the OTP has already been sent.
+
+
+        Include the `intermediate_session_token` returned above when calling the `authenticate()` method that the user needed to perform. Once the user has completed the authentication requirements they were missing, they will be granted a full `session_token` and `session_jwt` to indicate they have successfully logged into the Organization.
+
+
+        The `intermediate_session_token` can also be used with the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization instead of joining an existing one.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_discovery_v1_discovery_intermediate_sessions_ExchangeRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_discovery_v1_discovery_intermediate_sessions_ExchangeResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n  organization_id: \"${organizationId}\",\n};\n\nclient.Discovery.IntermediateSessions.Exchange(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/discovery/intermediatesessions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &intermediatesessions.ExchangeParams{\n\t\tIntermediateSessionToken: \"${token}\",\n\t\tOrganizationID:           \"${organizationId}\",\n\t}\n\n\tresp, err := client.Discovery.IntermediateSessions.Exchange(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\npackage com.example;\n\nimport com.stytch.java.b2b.models.discoveryintermediatesessions.ExchangeRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        ExchangeRequest params = new ExchangeRequest();\n        params.setIntermediateSessionToken(\"${token}\");\n        params.setOrganizationId(\"${organizationId}\");\n\n        Object result = StytchB2BClient.getDiscovery().getIntermediateSessions().exchange(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.discoveryintermediatesessions.ExchangeRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.discovery.intermediateSessions.exchange(\n                ExchangeRequest(\n                    intermediateSessionToken = \"${token}\",\n                    organizationId = \"${organizationId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n  organization_id: \"${organizationId}\",\n};\n\nclient.discovery.intermediateSessions.exchange(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->discovery->intermediate_sessions->exchange([\n    'intermediate_session_token' => '${token}',\n    'organization_id' => '${organizationId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/discovery/intermediate_sessions/exchange\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.discovery.intermediate_sessions.exchange(\n    intermediate_session_token=\"${token}\",\n    organization_id=\"${organizationId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/discovery/intermediate_sessions/exchange\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.discovery.intermediate_sessions.exchange(\n  intermediate_session_token: \"${token}\",\n  organization_id: \"${organizationId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/discovery/intermediate_sessions/exchange\nuse stytch::b2b::client::Client;\nuse stytch::b2b::discovery_intermediate_sessions::ExchangeRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.discovery.intermediate_sessions.exchange(\n        ExchangeRequest{\n            intermediate_session_token: \"${token}\",\n            organization_id: \"${organizationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/discovery/intermediate_sessions/exchange\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/discovery/intermediate_sessions/exchange \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"intermediate_session_token\": \"${token}\",\n    \"organization_id\": \"${organizationId}\"\n  }'"
+  /v1/b2b/discovery/organizations/create:
+    post:
+      summary: Create
+      operationId: api_discovery_v1_discovery_organizations_Create
+      tags:
+      - Discovery
+      description: "This endpoint allows you to exchange the `intermediate_session_token` returned when the user successfully completes a Discovery authentication flow to create a new\n[Organization](https://stytch.com/docs/b2b/api/organization-object) and [Member](https://stytch.com/docs/b2b/api/member-object) and log the user in. If the user wants to log into an existing Organization, use the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) instead.\n\nStytch **requires that users verify their email address** prior to creating a new Organization in order to prevent Account Takeover (ATO) attacks and phishing.\n\nIf the user authenticated using a method that **does not** provide real-time email verification (returning password auth, Github/Slack/Hubspot OAuth) this API will return `member_authenticated: false` and an `intermediate_session_token` to indicate that the user must perform additional authentication via one of the options listed in `primary_required.allowed_auth_methods` to finish logging in.\n\nIf you specified an `mfa_policy: REQUIRED_FOR_ALL` in the request, this API will return `member_authenticated: false`, an `intermediate_session_token`, and `mfa_required` in order to indicate that you must prompt the user to enroll in MFA.\n\nInclude the `intermediate_session_token` when calling the `authenticate()` method that the user needed to perform to verify their email or enroll in MFA. Once the user has completed the authentication requirements they were missing, they will be granted a full `session_token` and `session_jwt` and be successfully logged in.\n\nIf the user logged in with a method that **does** provide real-time email verification (Email Magic Links, Email OTP, Google/Microsoft OAuth, initial email verification when creating a new password) this API will return `member_authenticated: true` and a `session_jwt` and `session_token` to indicate that the user has successfully logged in.\n\nThe Member created by this endpoint will automatically be granted the `stytch_admin` Role. See the \n[RBAC guide](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for more details on this Role."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_discovery_v1_discovery_organizations_CreateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_discovery_v1_discovery_organizations_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/discovery/organizations/create\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\",\n};\n\nclient.Discovery.Organizations.Create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/discovery/organizations/create\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/discovery/organizations\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.CreateParams{\n\t\tIntermediateSessionToken: \"${token}\",\n\t\tOrganizationName:         \"${organizationName}\",\n\t\tOrganizationSlug:         \"${organizationSlug}\",\n\t\tOrganizationExternalID:   \"my-external-id\",\n\t}\n\n\tresp, err := client.Discovery.Organizations.Create(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/discovery/organizations/create\npackage com.example;\n\nimport com.stytch.java.b2b.models.discoveryorganizations.CreateRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        CreateRequest params = new CreateRequest();\n        params.setIntermediateSessionToken(\"${token}\");\n        params.setOrganizationName(\"${organizationName}\");\n        params.setOrganizationSlug(\"${organizationSlug}\");\n        params.setOrganizationExternalId(\"my-external-id\");\n\n        Object result = StytchB2BClient.getDiscovery().getOrganizations().create(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/discovery/organizations/create\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.discoveryorganizations.CreateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.discovery.organizations.create(\n                CreateRequest(\n                    intermediateSessionToken = \"${token}\",\n                    organizationName = \"${organizationName}\",\n                    organizationSlug = \"${organizationSlug}\",\n                    organizationExternalId = \"my-external-id\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/discovery/organizations/create\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\",\n};\n\nclient.discovery.organizations.create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->discovery->organizations->create([\n    'intermediate_session_token' => '${token}',\n    'organization_name' => '${organizationName}',\n    'organization_slug' => '${organizationSlug}',\n    'organization_external_id' => 'my-external-id',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/discovery/organizations/create\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.discovery.organizations.create(\n    intermediate_session_token=\"${token}\",\n    organization_name=\"${organizationName}\",\n    organization_slug=\"${organizationSlug}\",\n    organization_external_id=\"my-external-id\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/discovery/organizations/create\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.discovery.organizations.create(\n  intermediate_session_token: \"${token}\",\n  organization_name: \"${organizationName}\",\n  organization_slug: \"${organizationSlug}\",\n  organization_external_id: \"my-external-id\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/discovery/organizations/create\nuse stytch::b2b::client::Client;\nuse stytch::b2b::discovery_organizations::CreateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.discovery.organizations.create(\n        CreateRequest{\n            intermediate_session_token: \"${token}\",\n            organization_name: Some(String::from(\"${organizationName}\")),\n            organization_slug: Some(String::from(\"${organizationSlug}\")),\n            organization_external_id: Some(String::from(\"my-external-id\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/discovery/organizations/create\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/discovery/organizations/create \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"intermediate_session_token\": \"${token}\",\n    \"organization_name\": \"${organizationName}\",\n    \"organization_slug\": \"${organizationSlug}\",\n    \"organization_external_id\": \"my-external-id\"\n  }'"
+  /v1/b2b/discovery/organizations:
+    post:
+      summary: List
+      operationId: api_discovery_v1_discovery_organizations_List
+      tags:
+      - Discovery
+      description: "List all possible organization relationships connected to a [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.\n\nWhen a Member Session is passed in, relationships with a type of `active_member`, `pending_member`, or `invited_member`\nwill be returned, and any membership can be assumed by calling the [Exchange Session](https://stytch.com/docs/b2b/api/exchange-session) endpoint.\n\nWhen an Intermediate Session is passed in, all relationship types - `active_member`, `pending_member`, `invited_member`, \n`eligible_to_join_by_email_domain`, and `eligible_to_join_by_oauth_tenant` - will be returned, \nand any membership can be assumed by calling the [Exchange Intermediate Session](https://stytch.com/docs/b2b/api/exchange-intermediate-session) endpoint. \n\nThis endpoint requires either an `intermediate_session_token`, `session_jwt` or `session_token` be included in the request.\nIt will return an error if multiple are present.\n\nThis operation does not consume the Intermediate Session or Session Token passed in."
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_discovery_v1_discovery_ListRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_discovery_v1_discovery_ListResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/discovery/organizations\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n};\n\nclient.Discovery.Organizations.List(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/discovery/organizations\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/discovery/organizations\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &organizations.ListParams{\n\t\tIntermediateSessionToken: \"${token}\",\n\t}\n\n\tresp, err := client.Discovery.Organizations.List(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/discovery/organizations\npackage com.example;\n\nimport com.stytch.java.b2b.models.discoveryorganizations.ListRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        ListRequest params = new ListRequest();\n        params.setIntermediateSessionToken(\"${token}\");\n\n        Object result = StytchB2BClient.getDiscovery().getOrganizations().list(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/discovery/organizations\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.discoveryorganizations.ListRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.discovery.organizations.list(\n                ListRequest(\n                    intermediateSessionToken = \"${token}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/discovery/organizations\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  intermediate_session_token: \"${token}\",\n};\n\nclient.discovery.organizations.list(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->discovery->organizations->list([\n    'intermediate_session_token' => '${token}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/discovery/organizations\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.discovery.organizations.list(\n    intermediate_session_token=\"${token}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/discovery/organizations\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.discovery.organizations.list(\n  intermediate_session_token: \"${token}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/discovery/organizations\nuse stytch::b2b::client::Client;\nuse stytch::b2b::discovery_organizations::ListRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.discovery.organizations.list(\n        ListRequest{\n            intermediate_session_token: Some(String::from(\"${token}\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/discovery/organizations\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/discovery/organizations \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"intermediate_session_token\": \"${token}\"\n  }'"
+  /v1/b2b/passwords/discovery/email/reset/start:
+    post:
+      summary: Resetstart
+      operationId: api_b2b_password_v1_b2b_passwords_discovery_email_ResetStart
+      tags:
+      - Discovery
+      description: 'Initiates a password reset for the email address provided, when cross-org passwords are enabled. This will trigger an email to be sent to the address, containing a magic link that will allow them to set a new password and authenticate.
+
+
+        This endpoint adapts to your Project''s password strength configuration.
+
+        If you''re using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid
+
+        if the strength score is >= 3. If you''re using [LUDS](https://stytch.com/docs/guides/passwords/strength-policy), your passwords are
+
+        considered valid if they meet the requirements that you''ve set with Stytch.
+
+        You may update your password strength configuration on the [Passwords Policy page](https://stytch.com/dashboard/password-strength-config) in the Stytch Dashboard.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_address: \"${email}\",\n};\n\nclient.Passwords.Discovery.Email.ResetStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/passwords/discovery/email\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &email.ResetStartParams{\n\t\tEmailAddress: \"${email}\",\n\t}\n\n\tresp, err := client.Passwords.Discovery.Email.ResetStart(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\npackage com.example;\n\nimport com.stytch.java.b2b.models.passwordsdiscoveryemail.ResetStartRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        ResetStartRequest params = new ResetStartRequest();\n        params.setEmailAddress(\"${email}\");\n\n        Object result = StytchB2BClient.getPasswords().getDiscovery().getEmail().resetStart(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.passwordsdiscoveryemail.ResetStartRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.passwords.discovery.email.resetStart(\n                ResetStartRequest(\n                    emailAddress = \"${email}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_address: \"${email}\",\n};\n\nclient.passwords.discovery.email.resetStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->passwords->discovery->email->reset_start([\n    'email_address' => '${email}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/passwords/discovery/email/reset/start\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.passwords.discovery.email.reset_start(\n    email_address=\"${email}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/passwords/discovery/email/reset/start\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.passwords.discovery.email.reset_start(\n  email_address: \"${email}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/passwords/discovery/email/reset/start\nuse stytch::b2b::client::Client;\nuse stytch::b2b::passwords_discovery_email::ResetStartRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.passwords.discovery.email.reset_start(\n        ResetStartRequest{\n            email_address: \"${email}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/passwords/discovery/email/reset/start\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/passwords/discovery/email/reset/start \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"email_address\": \"${email}\"\n  }'"
+  /v1/b2b/passwords/discovery/email/reset:
+    post:
+      summary: Reset
+      operationId: api_b2b_password_v1_b2b_passwords_discovery_email_Reset
+      tags:
+      - Discovery
+      description: 'Reset the password associated with an email and start an intermediate session. This endpoint checks that the password reset token is valid, hasn’t expired, or already been used.
+
+
+        The provided password needs to meet the project''s password strength requirements, which can be checked in advance with the password strength endpoint. If the token and password are accepted, the password is securely stored for future authentication and the user is authenticated.
+
+
+        Resetting a password will start an intermediate session and return a list of discovered organizations the session can be exchanged into.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_password_v1_b2b_passwords_discovery_email_ResetRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_password_v1_b2b_passwords_discovery_email_ResetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  password_reset_token: \"${token}\",\n  password: \"${examplePassword}\",\n};\n\nclient.Passwords.Discovery.Email.Reset(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/passwords/discovery/email\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &email.ResetParams{\n\t\tPasswordResetToken: \"${token}\",\n\t\tPassword:           \"${examplePassword}\",\n\t}\n\n\tresp, err := client.Passwords.Discovery.Email.Reset(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\npackage com.example;\n\nimport com.stytch.java.b2b.models.passwordsdiscoveryemail.ResetRequest;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        ResetRequest params = new ResetRequest();\n        params.setPasswordResetToken(\"${token}\");\n        params.setPassword(\"${examplePassword}\");\n\n        Object result = StytchB2BClient.getPasswords().getDiscovery().getEmail().reset(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.passwordsdiscoveryemail.ResetRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.passwords.discovery.email.reset(\n                ResetRequest(\n                    passwordResetToken = \"${token}\",\n                    password = \"${examplePassword}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  password_reset_token: \"${token}\",\n  password: \"${examplePassword}\",\n};\n\nclient.passwords.discovery.email.reset(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->passwords->discovery->email->reset([\n    'password_reset_token' => '${token}',\n    'password' => '${examplePassword}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/passwords/discovery/email/reset\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.passwords.discovery.email.reset(\n    password_reset_token=\"${token}\",\n    password=\"${examplePassword}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/passwords/discovery/email/reset\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.passwords.discovery.email.reset(\n  password_reset_token: \"${token}\",\n  password: \"${examplePassword}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/passwords/discovery/email/reset\nuse stytch::b2b::client::Client;\nuse stytch::b2b::passwords_discovery_email::ResetRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.passwords.discovery.email.reset(\n        ResetRequest{\n            password_reset_token: \"${token}\",\n            password: \"${examplePassword}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/passwords/discovery/email/reset\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/passwords/discovery/email/reset \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"password_reset_token\": \"${token}\",\n    \"password\": \"${examplePassword}\"\n  }'"
+components:
+  schemas:
+    api_session_v1_SlackOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_session_v1_HubspotOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_session_v1_DiscordOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_SalesforceOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_session_v1_PrimaryRequired:
+      type: object
+      properties:
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: Details the auth method that the member must also complete to fulfill the primary authentication requirements of the Organization. For example, a value of `[magic_link]` indicates that the Member must also complete a magic link authentication step. If you have an intermediate session token, you must pass it into that primary authentication step.
+      required:
+      - allowed_auth_methods
+    api_b2b_mfa_v1_MemberOptions:
+      type: object
+      properties:
+        mfa_phone_number:
+          type: string
+          description: The Member's MFA phone number.
+        totp_registration_id:
+          type: string
+          description: The Member's MFA TOTP registration ID.
+      required:
+      - mfa_phone_number
+      - totp_registration_id
+    api_session_v1_SAMLSSOFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an SSO Registration.
+        provider_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SAML Connection.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+      required:
+      - id
+      - provider_id
+      - external_id
+    api_organization_v1_CustomRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_CustomRolePermission'
+      required:
+      - role_id
+      - description
+      - permissions
+    api_b2b_password_v1_b2b_passwords_discovery_email_ResetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        intermediate_session_token:
+          type: string
+          description: The returned Intermediate Session Token contains a password factor associated with the Member. If this value is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. Password factors are not transferable between Organizations, so the intermediate session token is not valid for use with discovery endpoints.
+        email_address:
+          type: string
+          description: The email address.
+        discovered_organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_discovery_v1_DiscoveredOrganization'
+          description: "An array of `discovered_organization` objects tied to the `intermediate_session_token`, `session_token`, or `session_jwt`. See the [Discovered Organization Object](https://stytch.com/docs/b2b/api/discovered-organization-object) for complete details.\n\n  Note that Organizations will only appear here under any of the following conditions:\n  1. The end user is already a Member of the Organization.\n  2. The end user is invited to the Organization.\n  3. The end user can join the Organization because:\n\n      a) The Organization allows JIT provisioning.\n\n      b) The Organizations' allowed domains list contains the Member's email domain.\n\n      c) The Organization has at least one other Member with a verified email address with the same domain as the end user (to prevent phishing attacks)."
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - intermediate_session_token
+      - email_address
+      - discovered_organizations
+      - status_code
+    api_session_v1_ImpersonatedFactor:
+      type: object
+      properties:
+        impersonator_id:
+          type: string
+          description: For impersonated sessions initiated via the Stytch Dashboard, the `impersonator_id` will be the impersonator's Stytch Dashboard `member_id`.
+        impersonator_email_address:
+          type: string
+          description: The email address of the impersonator.
+      required:
+      - impersonator_id
+      - impersonator_email_address
+    api_session_v1_TikTokOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_CoinbaseOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_mfa_v1_MfaRequired:
+      type: object
+      properties:
+        member_options:
+          $ref: '#/components/schemas/api_b2b_mfa_v1_MemberOptions'
+          description: Information about the Member's options for completing MFA.
+        secondary_auth_initiated:
+          type: string
+          description: If null, indicates that no secondary authentication has been initiated. If equal to "sms_otp", indicates that the Member has a phone number, and a one time passcode has been sent to the Member's phone number. No secondary authentication will be initiated during calls to the discovery authenticate or list organizations endpoints, even if the Member has a phone number.
+    api_organization_v1_SSORegistration:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+        registration_id:
+          type: string
+          description: The unique ID of an SSO Registration.
+        sso_attributes:
+          type: object
+          additionalProperties: true
+          description: An object for storing SSO attributes brought over from the identity provider.
+      required:
+      - connection_id
+      - external_id
+      - registration_id
+    api_organization_v1_RetiredEmail:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of a Member's email.
+        email_address:
+          type: string
+          description: The email address of the Member.
+      required:
+      - email_id
+      - email_address
+    api_organization_v1_MemberRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_MemberRoleSource'
+          description: A list of sources for this role assignment. A role assignment can come from multiple sources - for example, the Role could be both explicitly assigned and implicitly granted from the Member's email domain.
+      required:
+      - role_id
+      - sources
+    api_discovery_v1_ExchangeRequestLocale:
+      type: string
+      enum:
+      - en
+      - es
+      - pt-br
+      - fr
+      - it
+      - de-DE
+      - zh-Hans
+      - ca-ES
+    api_discovery_v1_CreateRequestThirdPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_session_v1_EmbeddableMagicLinkFactor:
+      type: object
+      properties:
+        embedded_id:
+          type: string
+      required:
+      - embedded_id
+    api_b2b_scim_v1_SCIMAttributes:
+      type: object
+      properties:
+        user_name:
+          type: string
+        id:
+          type: string
+        external_id:
+          type: string
+        active:
+          type: boolean
+        groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Group'
+        display_name:
+          type: string
+        nick_name:
+          type: string
+        profile_url:
+          type: string
+        user_type:
+          type: string
+        title:
+          type: string
+        preferred_language:
+          type: string
+        locale:
+          type: string
+        timezone:
+          type: string
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Email'
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_PhoneNumber'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Address'
+        ims:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_IMs'
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Photo'
+        entitlements:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Entitlement'
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_Role'
+        x509certificates:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_X509Certificate'
+        name:
+          $ref: '#/components/schemas/api_b2b_scim_v1_Name'
+        enterprise_extension:
+          $ref: '#/components/schemas/api_b2b_scim_v1_EnterpriseExtension'
+      required:
+      - user_name
+      - id
+      - external_id
+      - active
+      - groups
+      - display_name
+      - nick_name
+      - profile_url
+      - user_type
+      - title
+      - preferred_language
+      - locale
+      - timezone
+      - emails
+      - phone_numbers
+      - addresses
+      - ims
+      - photos
+      - entitlements
+      - roles
+      - x509certificates
+    api_b2b_session_v1_MemberSession:
+      type: object
+      properties:
+        member_session_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Session.
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member.
+        started_at:
+          type: string
+          description: The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        last_accessed_at:
+          type: string
+          description: The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        expires_at:
+          type: string
+          description: The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        authentication_factors:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_session_v1_AuthenticationFactor'
+          description: An array of different authentication factors that comprise a Session.
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value.
+        roles:
+          type: array
+          items:
+            type: string
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience.'
+        custom_claims:
+          type: object
+          additionalProperties: true
+          description: The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate call.
+      required:
+      - member_session_id
+      - member_id
+      - started_at
+      - last_accessed_at
+      - expires_at
+      - authentication_factors
+      - organization_id
+      - roles
+      - organization_slug
+    api_device_history_v1_DeviceInfo:
+      type: object
+      properties:
+        visitor_id:
+          type: string
+          description: The `visitor_id` (a unique identifier) of the user's device. See the [Device Fingerprinting documentation](https://stytch.com/docs/fraud/guides/device-fingerprinting/fingerprints) for more details on the `visitor_id`.
+        visitor_id_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `visitor_id`.
+        ip_address:
+          type: string
+          description: The IP address of the user's device.
+        ip_address_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `ip_address`.
+        ip_geo_city:
+          type: string
+          description: The city where the IP address is located.
+        ip_geo_region:
+          type: string
+          description: The region where the IP address is located.
+        ip_geo_country:
+          type: string
+          description: The country code where the IP address is located.
+        ip_geo_country_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `ip_geo_country`.
+      required:
+      - visitor_id
+    api_b2b_scim_v1_Entitlement:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_session_v1_BitbucketOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_organization_v1_SCIMRegistration:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        registration_id:
+          type: string
+          description: The unique ID of a SCIM Registration.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+        scim_attributes:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMAttributes'
+          description: An object for storing SCIM attributes brought over from the identity provider.
+      required:
+      - connection_id
+      - registration_id
+    api_session_v1_YahooOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_TwitterOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_scim_v1_Email:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_discovery_v1_Membership:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Either `active_member`, `pending_member`, `invited_member`, `eligible_to_join_by_email_domain`, or `eligible_to_join_by_oauth_tenant`
+        details:
+          type: object
+          additionalProperties: true
+          description: An object containing additional metadata about the membership, if available.
+        member:
+          $ref: '#/components/schemas/api_organization_v1_Member'
+          description: The [Member object](https://stytch.com/docs/b2b/api/member-object) if one already exists, or null if one does not.
+      required:
+      - type
+    api_organization_v1_Organization:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        organization_name:
+          type: string
+          description: The name of the Organization. Must be between 1 and 128 characters in length.
+        organization_logo_url:
+          type: string
+          description: The image URL of the Organization logo.
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. Must be between 2 and 128 characters in length. Wherever an organization_id is expected in a path or request parameter, you may also use the organization_slug as a convenience.'
+        sso_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` – only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` – disable JIT provisioning via SSO.\n  "
+        sso_jit_provisioning_allowed_connections:
+          type: array
+          items:
+            type: string
+          description: "An array of `connection_id`s that reference [SAML Connection objects](https://stytch.com/docs/b2b/api/saml-connection-object).\n  Only these connections will be allowed to JIT provision Members via SSO when `sso_jit_provisioning` is set to `RESTRICTED`."
+        sso_active_connections:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_ActiveSSOConnection'
+          description: An array of active [SAML Connection references](https://stytch.com/docs/b2b/api/saml-connection-object) or [OIDC Connection references](https://stytch.com/docs/b2b/api/oidc-connection-object).
+        email_allowed_domains:
+          type: array
+          items:
+            type: string
+          description: "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list."
+        email_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  "
+        email_invites:
+          type: string
+          description: "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` – any new Member can be invited to join via email.\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` – disable email invites.\n  "
+        auth_methods:
+          type: string
+          description: "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  "
+        mfa_policy:
+          type: string
+          description: "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  "
+        rbac_email_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment'
+          description: "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment."
+        mfa_methods:
+          type: string
+          description: "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_mfa_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  "
+        oauth_tenant_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning by OAuth Tenant.\n  "
+        claimed_email_domains:
+          type: array
+          items:
+            type: string
+          description: A list of email domains that are claimed by the Organization.
+        first_party_connected_apps_allowed_type:
+          type: string
+          description: "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no first party Connected Apps are permitted.\n  "
+        allowed_first_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        third_party_connected_apps_allowed_type:
+          type: string
+          description: "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no third party Connected Apps are permitted.\n  "
+        allowed_third_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        custom_roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_CustomRole'
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
+        created_at:
+          type: string
+          description: The timestamp of the Organization's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        updated_at:
+          type: string
+          description: The timestamp of when the Organization was last updated. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        organization_external_id:
+          type: string
+          description: A unique identifier for the organization.
+        sso_default_connection_id:
+          type: string
+          description: The default connection used for SSO when there are multiple active connections.
+        scim_active_connection:
+          $ref: '#/components/schemas/api_organization_v1_ActiveSCIMConnection'
+          description: An active [SCIM Connection references](https://stytch.com/docs/b2b/api/scim-connection-object).
+        allowed_oauth_tenants:
+          type: object
+          additionalProperties: true
+          description: A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
+      required:
+      - organization_id
+      - organization_name
+      - organization_logo_url
+      - organization_slug
+      - sso_jit_provisioning
+      - sso_jit_provisioning_allowed_connections
+      - sso_active_connections
+      - email_allowed_domains
+      - email_jit_provisioning
+      - email_invites
+      - auth_methods
+      - allowed_auth_methods
+      - mfa_policy
+      - rbac_email_implicit_role_assignments
+      - mfa_methods
+      - allowed_mfa_methods
+      - oauth_tenant_jit_provisioning
+      - claimed_email_domains
+      - first_party_connected_apps_allowed_type
+      - allowed_first_party_connected_apps
+      - third_party_connected_apps_allowed_type
+      - allowed_third_party_connected_apps
+      - custom_roles
+    api_session_v1_SpotifyOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_GitLabOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartRequest:
+      type: object
+      properties:
+        email_address:
+          type: string
+          description: The email address of the Member to start the email reset process for.
+        reset_password_redirect_url:
+          type: string
+          description: "The URL that the Member is redirected to from the reset password magic link. This URL should display your application's reset password page.\n  Before rendering the reset page, extract the `token` from the query parameters. On the reset page, collect the new password and complete the flow by calling the corresponding Password Reset by Email endpoint.\n  If this parameter is not specified, the default Reset Password redirect URL configured in the Dashboard will be used. If you have not set a default Reset Password redirect URL, an error is returned."
+        discovery_redirect_url:
+          type: string
+          description: "The URL that the end user clicks from the discovery Magic Link. This URL should be an endpoint in the backend server that\n  verifies the request by querying Stytch's discovery authenticate endpoint and continues the flow. If this value is not passed, the default\n  discovery redirect URL that you set in your Dashboard is used. If you have not set a default discovery redirect URL, an error is returned."
+        reset_password_template_id:
+          type: string
+          description: Use a custom template for reset password emails. By default, it will use your default email template. Templates can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in customization options or custom HTML templates with type “Passwords - Reset Password”.
+        reset_password_expiration_minutes:
+          type: integer
+          format: int32
+          description: Sets a time limit after which the email link to reset the member's password will no longer be valid. The minimum allowed expiration is 5 minutes and the maximum is 10080 minutes (7 days). By default, the expiration is 30 minutes.
+        pkce_code_challenge:
+          type: string
+        locale:
+          type: string
+          description: 'Used to determine which language to use when sending the user this delivery method. Parameter is an [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+
+
+            Currently supported languages are English (`"en"`), Spanish (`"es"`), French (`"fr"`) and Brazilian Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
+
+
+            Request support for additional languages [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+
+            '
+        verify_email_template_id:
+          type: string
+          description: "Use a custom template for verification emails sent during password reset flows. When cross-organization passwords are enabled for your Project, this template will be used the first time a user sets a password via a\n  password reset flow. By default, it will use your default email template. Templates can be added in the [Stytch dashboard](https://stytch.com/dashboard/templates) using our built-in customization options or custom HTML templates with type “Passwords - Email Verification”."
+      description: Request type
+      required:
+      - email_address
+    api_organization_v1_ActiveSSOConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - identity_provider
+    api_session_v1_AuthenticationFactor:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/api_session_v1_AuthenticationFactorType'
+          description: "The type of authentication factor. The possible values are: `email_otp`, `impersonated`, `imported`,\n       `magic_link`, `oauth`, `otp`, `password`, `recovery_codes`, `sso`, `trusted_auth_token`, or `totp`."
+        delivery_method:
+          $ref: '#/components/schemas/api_session_v1_AuthenticationFactorDeliveryMethod'
+          description: "The method that was used to deliver the authentication factor. The possible values depend on the `type`:\n     \n      `email_otp` – Only `email`.\n     \n      `impersonated` – Only `impersonation`.\n      \n      `imported` – Only `imported_auth0`.\n     \n      `magic_link` – Only `email`.\n     \n      `oauth` – The delivery method is determined by the specific OAuth provider used. The possible values are `oauth_google`, `oauth_microsoft`, `oauth_hubspot`, `oauth_slack`, or `oauth_github`.\n      \n        In addition, you may see an 'exchange' delivery method when a non-email-verifying OAuth factor originally authenticated in one organization is exchanged for a factor in another organization.\n        This can happen during authentication flows such as [session exchange](https://stytch.com/docs/b2b/api/exchange-session).\n        The non-email-verifying OAuth providers are Hubspot, Slack, and Github.\n        Google is also considered non-email-verifying when the HD claim is empty.\n        The possible exchange values are `oauth_exchange_google`, `oauth_exchange_hubspot`, `oauth_exchange_slack`, or `oauth_exchange_github`.\n       \n        The final possible value is `oauth_access_token_exchange`, if this factor came from an [access token exchange flow](https://stytch.com/docs/b2b/api/connected-app-access-token-exchange).\n     \n      `otp` –  Only `sms`.\n     \n      `password` – Only `knowledge`.\n     \n      `recovery_codes` – Only `recovery_code`.\n     \n      `sso` – Either `sso_saml` or `sso_oidc`.\n     \n      `trusted_auth_token` – Only `trusted_token_exchange`.\n     \n      `totp` – Only `authenticator_app`.\n      "
+        last_authenticated_at:
+          type: string
+          description: The timestamp when the factor was last authenticated.
+        created_at:
+          type: string
+          description: The timestamp when the factor was initially authenticated.
+        updated_at:
+          type: string
+          description: The timestamp when the factor was last updated.
+        email_factor:
+          $ref: '#/components/schemas/api_session_v1_EmailFactor'
+          description: Information about the email factor, if one is present.
+        phone_number_factor:
+          $ref: '#/components/schemas/api_session_v1_PhoneNumberFactor'
+          description: Information about the phone number factor, if one is present.
+        google_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_GoogleOAuthFactor'
+          description: Information about the Google OAuth factor, if one is present.
+        microsoft_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_MicrosoftOAuthFactor'
+          description: Information about the Microsoft OAuth factor, if one is present.
+        apple_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_AppleOAuthFactor'
+        webauthn_factor:
+          $ref: '#/components/schemas/api_session_v1_WebAuthnFactor'
+        authenticator_app_factor:
+          $ref: '#/components/schemas/api_session_v1_AuthenticatorAppFactor'
+          description: Information about the TOTP-backed Authenticator App factor, if one is present.
+        github_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_GithubOAuthFactor'
+          description: Information about the Github OAuth factor, if one is present.
+        recovery_code_factor:
+          $ref: '#/components/schemas/api_session_v1_RecoveryCodeFactor'
+        facebook_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_FacebookOAuthFactor'
+        crypto_wallet_factor:
+          $ref: '#/components/schemas/api_session_v1_CryptoWalletFactor'
+        amazon_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_AmazonOAuthFactor'
+        bitbucket_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_BitbucketOAuthFactor'
+        coinbase_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_CoinbaseOAuthFactor'
+        discord_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_DiscordOAuthFactor'
+        figma_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_FigmaOAuthFactor'
+        git_lab_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_GitLabOAuthFactor'
+        instagram_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_InstagramOAuthFactor'
+        linked_in_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_LinkedInOAuthFactor'
+        shopify_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_ShopifyOAuthFactor'
+        slack_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_SlackOAuthFactor'
+          description: Information about the Slack OAuth factor, if one is present.
+        snapchat_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_SnapchatOAuthFactor'
+        spotify_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_SpotifyOAuthFactor'
+        steam_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_SteamOAuthFactor'
+        tik_tok_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_TikTokOAuthFactor'
+        twitch_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_TwitchOAuthFactor'
+        twitter_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_TwitterOAuthFactor'
+        embeddable_magic_link_factor:
+          $ref: '#/components/schemas/api_session_v1_EmbeddableMagicLinkFactor'
+        biometric_factor:
+          $ref: '#/components/schemas/api_session_v1_BiometricFactor'
+        saml_sso_factor:
+          $ref: '#/components/schemas/api_session_v1_SAMLSSOFactor'
+          description: Information about the SAML SSO factor, if one is present.
+        oidc_sso_factor:
+          $ref: '#/components/schemas/api_session_v1_OIDCSSOFactor'
+          description: Information about the OIDC SSO factor, if one is present.
+        salesforce_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_SalesforceOAuthFactor'
+        yahoo_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_YahooOAuthFactor'
+        hubspot_oauth_factor:
+          $ref: '#/components/schemas/api_session_v1_HubspotOAuthFactor'
+          description: Information about the Hubspot OAuth factor, if one is present.
+        slack_oauth_exchange_factor:
+          $ref: '#/components/schemas/api_session_v1_SlackOAuthExchangeFactor'
+          description: Information about the Slack OAuth Exchange factor, if one is present.
+        hubspot_oauth_exchange_factor:
+          $ref: '#/components/schemas/api_session_v1_HubspotOAuthExchangeFactor'
+          description: Information about the Hubspot OAuth Exchange factor, if one is present.
+        github_oauth_exchange_factor:
+          $ref: '#/components/schemas/api_session_v1_GithubOAuthExchangeFactor'
+          description: Information about the Github OAuth Exchange factor, if one is present.
+        google_oauth_exchange_factor:
+          $ref: '#/components/schemas/api_session_v1_GoogleOAuthExchangeFactor'
+          description: Information about the Google OAuth Exchange factor, if one is present.
+        impersonated_factor:
+          $ref: '#/components/schemas/api_session_v1_ImpersonatedFactor'
+          description: Information about the impersonated factor, if one is present.
+        oauth_access_token_exchange_factor:
+          $ref: '#/components/schemas/api_session_v1_OAuthAccessTokenExchangeFactor'
+          description: Information about the access token exchange factor, if one is present.
+        trusted_auth_token_factor:
+          $ref: '#/components/schemas/api_session_v1_TrustedAuthTokenFactor'
+          description: Information about the trusted auth token factor, if one is present.
+      required:
+      - type
+      - delivery_method
+    api_session_v1_PhoneNumberFactor:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The globally unique UUID of the Member's phone number.
+        phone_number:
+          type: string
+          description: The phone number of the Member.
+      required:
+      - phone_id
+      - phone_number
+    api_b2b_scim_v1_Manager:
+      type: object
+      properties:
+        value:
+          type: string
+        ref:
+          type: string
+        display_name:
+          type: string
+      required:
+      - value
+      - ref
+      - display_name
+    api_discovery_v1_discovery_organizations_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member.
+        session_token:
+          type: string
+          description: A secret token for a given Stytch Session.
+        session_jwt:
+          type: string
+          description: The JSON Web Token (JWT) for a given Stytch Session.
+        member:
+          $ref: '#/components/schemas/api_organization_v1_Member'
+          description: The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        member_authenticated:
+          type: boolean
+          description: Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step to log in to the Organization.
+        intermediate_session_token:
+          type: string
+          description: The returned Intermediate Session Token is identical to the one that was originally passed in to the request. If this value is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) to join a specific Organization that allows the factors represented by the intermediate session token; or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        member_session:
+          $ref: '#/components/schemas/api_b2b_session_v1_MemberSession'
+          description: The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        mfa_required:
+          $ref: '#/components/schemas/api_b2b_mfa_v1_MfaRequired'
+          description: Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
+        primary_required:
+          $ref: '#/components/schemas/api_b2b_session_v1_PrimaryRequired'
+          description: Information about the primary authentication requirements of the Organization.
+        member_device:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceInfo'
+          description: If a valid `telemetry_id` was passed in the request and the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) returned results, the `member_device` response field will contain information about the member's device attributes.
+      required:
+      - request_id
+      - member_id
+      - session_token
+      - session_jwt
+      - member
+      - organization
+      - member_authenticated
+      - intermediate_session_token
+      - status_code
+    api_session_v1_RecoveryCodeFactor:
+      type: object
+      properties:
+        totp_recovery_code_id:
+          type: string
+      required:
+      - totp_recovery_code_id
+    api_discovery_v1_discovery_ListRequest:
+      type: object
+      properties:
+        intermediate_session_token:
+          type: string
+          description: The Intermediate Session Token. This token does not necessarily belong to a specific instance of a Member, but represents a bag of factors that may be converted to a member session. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) to join a specific Organization that allows the factors represented by the intermediate session token; or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
+        session_token:
+          type: string
+          description: A secret token for a given Stytch Session.
+        session_jwt:
+          type: string
+          description: The JSON Web Token (JWT) for a given Stytch Session.
+      description: Request type
+    api_session_v1_HubspotOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_discovery_v1_CreateRequestFirstPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_Member:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member.
+        email_address:
+          type: string
+          description: The email address of the Member.
+        status:
+          type: string
+          description: 'The status of the Member. The possible values are: `pending`, `invited`, `active`, or `deleted`.'
+        name:
+          type: string
+          description: The name of the Member.
+        sso_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_SSORegistration'
+          description: An array of registered [SAML Connection](https://stytch.com/docs/b2b/api/saml-connection-object) or [OIDC Connection](https://stytch.com/docs/b2b/api/oidc-connection-object) objects the Member has authenticated with.
+        is_breakglass:
+          type: boolean
+          description: Identifies the Member as a break glass user - someone who has permissions to authenticate into an Organization by bypassing the Organization's settings. A break glass account is typically used for emergency purposes to gain access outside of normal authentication procedures. Refer to the [Organization object](https://stytch.com/docs/b2b/api/organization-object) and its `auth_methods` and `allowed_auth_methods` fields for more details.
+        member_password_id:
+          type: string
+          description: Globally unique UUID that identifies a Member's password.
+        oauth_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_OAuthRegistration'
+          description: A list of OAuth registrations for this member.
+        email_address_verified:
+          type: boolean
+          description: Whether or not the Member's email address is verified.
+        mfa_phone_number_verified:
+          type: boolean
+          description: Whether or not the Member's phone number is verified.
+        is_admin:
+          type: boolean
+          description: "Whether or not the Member has the `stytch_admin` Role. This Role is automatically granted to Members\n  who create an Organization through the [discovery flow](https://stytch.com/docs/b2b/api/create-organization-via-discovery). See the\n  [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for more details on this Role."
+        totp_registration_id:
+          type: string
+          description: Globally unique UUID that identifies a TOTP instance.
+        retired_email_addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_RetiredEmail'
+          description: "\n  A list of retired email addresses for this member.\n  A previously active email address can be marked as retired in one of two ways:\n  - It's replaced with a new primary email address during an explicit Member update.\n  - A new email address is surfaced by an OAuth, SAML or OIDC provider. In this case the new email address becomes the\n  Member's primary email address and the old primary email address is retired.\n \n  A retired email address cannot be used by other Members in the same Organization. However, unlinking retired email\n  addresses allows them to be subsequently re-used by other Organization Members. Retired email addresses can be unlinked\n  using the [Unlink Retired Email endpoint](https://stytch.com/docs/b2b/api/unlink-retired-member-email).\n  "
+        is_locked:
+          type: boolean
+          description: Whether the Member is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        mfa_enrolled:
+          type: boolean
+          description: Sets whether the Member is enrolled in MFA. If true, the Member must complete an MFA step whenever they wish to log in to their Organization. If false, the Member only needs to complete an MFA step if the Organization's MFA policy is set to `REQUIRED_FOR_ALL`.
+        mfa_phone_number:
+          type: string
+          description: The Member's phone number. A Member may only have one phone number. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+        default_mfa_method:
+          type: string
+          description: The Member's default MFA method. This value is used to determine which secondary MFA method to use in the case of multiple methods registered for a Member. The current possible values are `sms_otp` and `totp`.
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_MemberRole'
+          description: "Explicit or implicit Roles assigned to this Member, along with details about the role assignment source.\n   See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment) for more information about role assignment."
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: "An arbitrary JSON object of application-specific data. These fields can be edited directly by the\n  frontend SDK, and should not be used to store critical information. See the [Metadata resource](https://stytch.com/docs/b2b/api/metadata)\n  for complete field behavior details."
+        created_at:
+          type: string
+          description: The timestamp of the Member's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        updated_at:
+          type: string
+          description: The timestamp of when the Member was last updated. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        scim_registration:
+          $ref: '#/components/schemas/api_organization_v1_SCIMRegistration'
+          description: A scim member registration, referencing a [SCIM Connection](https://stytch.com/docs/b2b/api/scim-connection-object) object in use for the Member creation.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+        lock_created_at:
+          type: string
+          description: When the member lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        lock_expires_at:
+          type: string
+          description: When the member lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+      required:
+      - organization_id
+      - member_id
+      - email_address
+      - status
+      - name
+      - sso_registrations
+      - is_breakglass
+      - member_password_id
+      - oauth_registrations
+      - email_address_verified
+      - mfa_phone_number_verified
+      - is_admin
+      - totp_registration_id
+      - retired_email_addresses
+      - is_locked
+      - mfa_enrolled
+      - mfa_phone_number
+      - default_mfa_method
+      - roles
+    api_b2b_scim_v1_Address:
+      type: object
+      properties:
+        formatted:
+          type: string
+        street_address:
+          type: string
+        locality:
+          type: string
+        region:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - formatted
+      - street_address
+      - locality
+      - region
+      - postal_code
+      - country
+      - type
+      - primary
+    api_session_v1_BiometricFactor:
+      type: object
+      properties:
+        biometric_registration_id:
+          type: string
+      required:
+      - biometric_registration_id
+    api_b2b_scim_v1_Group:
+      type: object
+      properties:
+        value:
+          type: string
+        display:
+          type: string
+      required:
+      - value
+      - display
+    api_b2b_scim_v1_Photo:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_discovery_v1_discovery_ListResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        email_address:
+          type: string
+          description: The email address.
+        discovered_organizations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_discovery_v1_DiscoveredOrganization'
+          description: "An array of `discovered_organization` objects tied to the `intermediate_session_token`, `session_token`, or `session_jwt`. See the [Discovered Organization Object](https://stytch.com/docs/b2b/api/discovered-organization-object) for complete details.\n\n  Note that Organizations will only appear here under any of the following conditions:\n  1. The end user is already a Member of the Organization.\n  2. The end user is invited to the Organization.\n  3. The end user can join the Organization because:\n\n      a) The Organization allows JIT provisioning.\n\n      b) The Organizations' allowed domains list contains the Member's email domain.\n\n      c) The Organization has at least one other Member with a verified email address with the same domain as the end user (to prevent phishing attacks)."
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        organization_id_hint:
+          type: string
+          description: If the intermediate session token is associated with a specific Organization, that Organization ID will be returned here. The Organization ID will be null if the intermediate session token was generated by a email magic link discovery or OAuth discovery flow. If a session token or session JWT is provided, the Organization ID hint will be null.
+      required:
+      - request_id
+      - email_address
+      - discovered_organizations
+      - status_code
+    api_session_v1_TwitchOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_scim_v1_IMs:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_discovery_v1_discovery_organizations_CreateRequest:
+      type: object
+      properties:
+        intermediate_session_token:
+          type: string
+          description: The Intermediate Session Token. This token does not necessarily belong to a specific instance of a Member, but represents a bag of factors that may be converted to a member session. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) to join a specific Organization that allows the factors represented by the intermediate session token; or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
+        session_duration_minutes:
+          type: integer
+          format: int32
+          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration. If you don't want\n  to use the Stytch session product, you can ignore the session fields in the response."
+        session_custom_claims:
+          type: object
+          additionalProperties: true
+          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in\n  `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To\n  delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`, `exp`, `nbf`, `iat`, `jti`) will be ignored.\n  Total custom claims size cannot exceed four kilobytes."
+        organization_name:
+          type: string
+          description: The name of the Organization. If the name is not specified, a default name will be created based on the email used to initiate the discovery flow. If the email domain is a common email provider such as gmail.com, or if the email is a .edu email, the organization name will be generated based on the name portion of the email. Otherwise, the organization name will be generated based on the email domain.
+        organization_slug:
+          type: string
+          description: 'The unique URL slug of the Organization. A minimum of two characters is required. The slug only accepts alphanumeric characters and the following reserved characters: `-` `.` `_` `~`. If the slug is not specified, a default slug will be created based on the email used to initiate the discovery flow. If the email domain is a common email provider such as gmail.com, or if the email is a .edu email, the organization slug will be generated based on the name portion of the email. Otherwise, the organization slug will be generated based on the email domain.'
+        organization_external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a organization_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within a project, but may be reused across different projects in the same workspace.
+        organization_logo_url:
+          type: string
+          description: The image URL of the Organization logo.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data or identity-provider-specific data.
+        sso_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls the JIT provisioning of Members when authenticating via SSO. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, new Members will be automatically provisioned upon successful authentication via any of the Organization's `sso_active_connections`.\n \n  `RESTRICTED` – only new Members with SSO logins that comply with `sso_jit_provisioning_allowed_connections` can be provisioned upon authentication.\n \n  `NOT_ALLOWED` – disable JIT provisioning via SSO.\n  "
+        email_allowed_domains:
+          type: array
+          items:
+            type: string
+          description: "An array of email domains that allow invites or JIT provisioning for new Members. This list is enforced when either `email_invites` or `email_jit_provisioning` is set to `RESTRICTED`.\n   \n   \n    Common domains such as `gmail.com` are not allowed. See the [common email domains resource](https://stytch.com/docs/b2b/api/common-email-domains) for the full list."
+        email_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can be provisioned by authenticating via Email Magic Link or OAuth. The accepted values are:\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be provisioned upon authentication via Email Magic Link or OAuth.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning via Email Magic Link and OAuth.\n  "
+        email_invites:
+          type: string
+          description: "The authentication setting that controls how a new Member can be invited to an organization by email. The accepted values are:\n \n  `ALL_ALLOWED` – any new Member can be invited to join via email.\n \n  `RESTRICTED` – only new Members with verified emails that comply with `email_allowed_domains` can be invited via email.\n \n  `NOT_ALLOWED` – disable email invites.\n  "
+        auth_methods:
+          type: string
+          description: "The setting that controls which authentication methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_auth_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_auth_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed authentication methods. This list is enforced when `auth_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sso`, `magic_link`, `email_otp`, `password`, `google_oauth`, `microsoft_oauth`, `slack_oauth`, `github_oauth`, and `hubspot_oauth`.\n  "
+        mfa_policy:
+          type: string
+          description: "The setting that controls the MFA policy for all Members in the Organization. The accepted values are:\n \n  `REQUIRED_FOR_ALL` – All Members within the Organization will be required to complete MFA every time they wish to log in. However, any active Session that existed prior to this setting change will remain valid.\n \n  `OPTIONAL` – The default value. The Organization does not require MFA by default for all Members. Members will be required to complete MFA only if their `mfa_enrolled` status is set to true.\n  "
+        rbac_email_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_EmailImplicitRoleAssignment'
+          description: "Implicit role assignments based off of email domains.\n  For each domain-Role pair, all Members whose email addresses have the specified email domain will be granted the\n  associated Role, regardless of their login method. See the [RBAC guide](https://stytch.com/docs/b2b/guides/rbac/role-assignment)\n  for more information about role assignment."
+        mfa_methods:
+          type: string
+          description: "The setting that controls which MFA methods can be used by Members of an Organization. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting which allows all authentication methods to be used.\n \n  `RESTRICTED` – only methods that comply with `allowed_mfa_methods` can be used for authentication. This setting does not apply to Members with `is_breakglass` set to `true`.\n  "
+        allowed_mfa_methods:
+          type: array
+          items:
+            type: string
+          description: "An array of allowed MFA authentication methods. This list is enforced when `mfa_methods` is set to `RESTRICTED`.\n  The list's accepted values are: `sms_otp` and `totp`.\n  "
+        oauth_tenant_jit_provisioning:
+          type: string
+          description: "The authentication setting that controls how a new Member can JIT provision into an organization by tenant. The accepted values are:\n \n  `RESTRICTED` – only new Members with tenants in `allowed_oauth_tenants` can JIT provision via tenant.\n \n  `NOT_ALLOWED` – the default setting, disables JIT provisioning by OAuth Tenant.\n  "
+        allowed_oauth_tenants:
+          type: object
+          additionalProperties: true
+          description: A map of allowed OAuth tenants. If this field is not passed in, the Organization will not allow JIT provisioning by OAuth Tenant. Allowed keys are "slack", "hubspot", and "github".
+        first_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_discovery_v1_CreateRequestFirstPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards first party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any first party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only first party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no first party Connected Apps are permitted.\n  "
+        allowed_first_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of first party Connected App IDs that are allowed for the Organization. Only used when the Organization's `first_party_connected_apps_allowed_type` is `RESTRICTED`.
+        third_party_connected_apps_allowed_type:
+          $ref: '#/components/schemas/api_discovery_v1_CreateRequestThirdPartyConnectedAppsAllowedType'
+          description: "The authentication setting that sets the Organization's policy towards third party Connected Apps. The accepted values are:\n \n  `ALL_ALLOWED` – the default setting, any third party Connected App in the Project is permitted for use by Members.\n \n  `RESTRICTED` – only third party Connected Apps with IDs in `allowed_first_party_connected_apps` can be used by Members.\n \n  `NOT_ALLOWED` – no third party Connected Apps are permitted.\n  "
+        allowed_third_party_connected_apps:
+          type: array
+          items:
+            type: string
+          description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
+        telemetry_id:
+          type: string
+          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the Member. Your workspace must be enabled for Device Fingerprinting to use this feature.
+      description: Request type
+      required:
+      - intermediate_session_token
+    api_organization_v1_MemberRoleSource:
+      type: object
+      properties:
+        type:
+          type: string
+          description: "The type of role assignment. The possible values are:\n \n  `direct_assignment` – an explicitly assigned Role.\n\n  Directly assigned roles can be updated by passing in the `roles` argument to the\n  [Update Member](https://stytch.com/docs/b2b/api/update-member) endpoint.\n \n  `email_assignment` – an implicit Role granted by the Member's email domain, regardless of their login method.\n\n  Email implicit role assignments can be updated by passing in the `rbac_email_implicit_role_assignments` argument to\n  the [Update Organization](https://stytch.com/docs/b2b/api/update-organization) endpoint.\n \n  `sso_connection` – an implicit Role granted by the Member's SSO connection. This is currently only available\n  for SAML connections and not for OIDC. If the Member has a SAML Member registration with the given connection, this\n  role assignment will appear in the list. However, for authorization check purposes (in\n  [sessions authenticate](https://stytch.com/docs/b2b/api/authenticate-session) or in any endpoint that enforces RBAC with session\n  headers), the Member will only be granted the Role if their session contains an authentication factor with the\n  specified SAML connection.\n\n  SAML connection implicit role assignments can be updated by passing in the\n  `saml_connection_implicit_role_assignments` argument to the\n  [Update SAML connection](https://stytch.com/docs/b2b/api/update-saml-connection) endpoint.\n \n  `sso_connection_group` – an implicit Role granted by the Member's SSO connection and group. This is currently only\n  available for SAML connections and not for OIDC. If the Member has a SAML Member registration with the given\n  connection, and belongs to a specific group within the IdP, this role assignment will appear in the list. However,\n  for authorization check purposes (in [sessions authenticate](https://stytch.com/docs/b2b/api/authenticate-session) or in any endpoint\n  that enforces RBAC with session headers), the Member will only be granted the role if their session contains an\n  authentication factor with the specified SAML connection.\n\n  SAML group implicit role assignments can be updated by passing in the `saml_group_implicit_role_assignments`\n  argument to the [Update SAML connection](https://stytch.com/docs/b2b/api/update-saml-connection) endpoint.\n\n    `scim_connection_group` – an implicit Role granted by the Member's SCIM connection and group. If the Member has\n  a SCIM Member registration with the given connection, and belongs to a specific group within the IdP, this role assignment will appear in the list.\n\n  SCIM group implicit role assignments can be updated by passing in the `scim_group_implicit_role_assignments`\n  argument to the [Update SCIM connection](https://stytch.com/docs/b2b/api/update-scim-connection) endpoint.\n  "
+        details:
+          type: object
+          additionalProperties: true
+          description: "An object containing additional metadata about the source assignment. The fields will vary depending\n  on the role assignment type as follows:\n \n  `direct_assignment` – no additional details.\n \n  `email_assignment` – will contain the email domain that granted the assignment.\n  \n  `sso_connection` – will contain the `connection_id` of the SAML connection that granted the assignment.\n \n  `sso_connection_group` – will contain the `connection_id` of the SAML connection and the name of the `group`\n  that granted the assignment.\n \n  `scim_connection_group` – will contain the `connection_id` of the SAML connection and the `group_id`\n  that granted the assignment.\n  "
+      required:
+      - type
+    api_b2b_password_v1_b2b_passwords_discovery_email_ResetRequest:
+      type: object
+      properties:
+        password_reset_token:
+          type: string
+          description: The password reset token to authenticate.
+        password:
+          type: string
+          description: The password to authenticate, reset, or set for the first time. Any UTF8 character is allowed, e.g. spaces, emojis, non-English characters, etc.
+        pkce_code_verifier:
+          type: string
+      description: Request type
+      required:
+      - password_reset_token
+      - password
+    api_b2b_password_v1_b2b_passwords_discovery_email_ResetStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - status_code
+    api_session_v1_AmazonOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_CryptoWalletFactor:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+        crypto_wallet_address:
+          type: string
+        crypto_wallet_type:
+          type: string
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+    api_session_v1_OIDCSSOFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an SSO Registration.
+        provider_id:
+          type: string
+          description: Globally unique UUID that identifies a specific OIDC Connection.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+      required:
+      - id
+      - provider_id
+      - external_id
+    api_session_v1_GithubOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_session_v1_LinkedInOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_organization_v1_OAuthRegistration:
+      type: object
+      properties:
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        member_oauth_registration_id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        profile_picture_url:
+          type: string
+          description: If available, the `profile_picture_url` is a URL of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Google profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the Member's locale set in the OAuth identity provider that the user has authenticated with.
+      required:
+      - provider_type
+      - provider_subject
+      - member_oauth_registration_id
+    api_discovery_v1_discovery_intermediate_sessions_ExchangeRequest:
+      type: object
+      properties:
+        intermediate_session_token:
+          type: string
+          description: The Intermediate Session Token. This token does not necessarily belong to a specific instance of a Member, but represents a bag of factors that may be converted to a member session. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) to join a specific Organization that allows the factors represented by the intermediate session token; or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        session_duration_minutes:
+          type: integer
+          format: int32
+          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration. If you don't want\n  to use the Stytch session product, you can ignore the session fields in the response."
+        session_custom_claims:
+          type: object
+          additionalProperties: true
+          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in\n  `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To\n  delete a key, supply a null value. Custom claims made with reserved claims (`iss`, `sub`, `aud`, `exp`, `nbf`, `iat`, `jti`) will be ignored.\n  Total custom claims size cannot exceed four kilobytes."
+        locale:
+          $ref: '#/components/schemas/api_discovery_v1_ExchangeRequestLocale'
+          description: 'If the Member needs to complete an MFA step, and the Member has a phone number, this endpoint will pre-emptively send a one-time passcode (OTP) to the Member''s phone number. The locale argument will be used to determine which language to use when sending the passcode.
+
+
+            Parameter is an [IETF BCP 47 language tag](https://www.w3.org/International/articles/language-tags/), e.g. `"en"`.
+
+
+            Currently supported languages are English (`"en"`), Spanish (`"es"`), and Brazilian Portuguese (`"pt-br"`); if no value is provided, the copy defaults to English.
+
+
+            Request support for additional languages [here](https://docs.google.com/forms/d/e/1FAIpQLScZSpAu_m2AmLXRT3F3kap-s_mcV6UTBitYn6CdyWP0-o7YjQ/viewform?usp=sf_link")!
+
+            '
+        telemetry_id:
+          type: string
+          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the Member. Your workspace must be enabled for Device Fingerprinting to use this feature.
+      description: Request type
+      required:
+      - intermediate_session_token
+      - organization_id
+    api_organization_v1_ActiveSCIMConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        bearer_token_last_four:
+          type: string
+        bearer_token_expires_at:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - bearer_token_last_four
+    api_session_v1_GithubOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_session_v1_FacebookOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_discovery_v1_discovery_intermediate_sessions_ExchangeResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member.
+        session_token:
+          type: string
+          description: A secret token for a given Stytch Session.
+        session_jwt:
+          type: string
+          description: The JSON Web Token (JWT) for a given Stytch Session.
+        member:
+          $ref: '#/components/schemas/api_organization_v1_Member'
+          description: The [Member object](https://stytch.com/docs/b2b/api/member-object)
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        member_authenticated:
+          type: boolean
+          description: Indicates whether the Member is fully authenticated. If false, the Member needs to complete an MFA step to log in to the Organization.
+        intermediate_session_token:
+          type: string
+          description: The returned Intermediate Session Token is identical to the one that was originally passed in to the request. If this value is non-empty, the member must complete an MFA step to finish logging in to the Organization. The token can be used with the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), or [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete an MFA flow and log in to the Organization. The token has a default expiry of 10 minutes. It can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) to join a specific Organization that allows the factors represented by the intermediate session token; or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to create a new Organization and Member. Intermediate Session Tokens have a default expiry of 10 minutes.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        member_session:
+          $ref: '#/components/schemas/api_b2b_session_v1_MemberSession'
+          description: The [Session object](https://stytch.com/docs/b2b/api/session-object).
+        mfa_required:
+          $ref: '#/components/schemas/api_b2b_mfa_v1_MfaRequired'
+          description: Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
+        primary_required:
+          $ref: '#/components/schemas/api_b2b_session_v1_PrimaryRequired'
+          description: Information about the primary authentication requirements of the Organization.
+        member_device:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceInfo'
+          description: If a valid `telemetry_id` was passed in the request and the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) returned results, the `member_device` response field will contain information about the member's device attributes.
+      required:
+      - request_id
+      - member_id
+      - session_token
+      - session_jwt
+      - member
+      - organization
+      - member_authenticated
+      - intermediate_session_token
+      - status_code
+    api_session_v1_AuthenticatorAppFactor:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: Globally unique UUID that identifies a TOTP instance.
+      required:
+      - totp_id
+    api_b2b_scim_v1_Name:
+      type: object
+      properties:
+        formatted:
+          type: string
+        family_name:
+          type: string
+        given_name:
+          type: string
+        middle_name:
+          type: string
+        honorific_prefix:
+          type: string
+        honorific_suffix:
+          type: string
+      required:
+      - formatted
+      - family_name
+      - given_name
+      - middle_name
+      - honorific_prefix
+      - honorific_suffix
+    api_session_v1_EmailFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+        email_address:
+          type: string
+          description: The email address of the Member.
+      required:
+      - email_id
+      - email_address
+    api_session_v1_SteamOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_scim_v1_X509Certificate:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_session_v1_OAuthAccessTokenExchangeFactor:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+      required:
+      - client_id
+    api_session_v1_TrustedAuthTokenFactor:
+      type: object
+      properties:
+        token_id:
+          type: string
+          description: The ID of the trusted auth token.
+      required:
+      - token_id
+    api_session_v1_AppleOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_ShopifyOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_AuthenticationFactorDeliveryMethod:
+      type: string
+      enum:
+      - email
+      - sms
+      - whatsapp
+      - embedded
+      - oauth_google
+      - oauth_microsoft
+      - oauth_apple
+      - webauthn_registration
+      - authenticator_app
+      - oauth_github
+      - recovery_code
+      - oauth_facebook
+      - crypto_wallet
+      - oauth_amazon
+      - oauth_bitbucket
+      - oauth_coinbase
+      - oauth_discord
+      - oauth_figma
+      - oauth_gitlab
+      - oauth_instagram
+      - oauth_linkedin
+      - oauth_shopify
+      - oauth_slack
+      - oauth_snapchat
+      - oauth_spotify
+      - oauth_steam
+      - oauth_tiktok
+      - oauth_twitch
+      - oauth_twitter
+      - knowledge
+      - biometric
+      - sso_saml
+      - sso_oidc
+      - oauth_salesforce
+      - oauth_yahoo
+      - oauth_hubspot
+      - imported_auth0
+      - oauth_exchange_slack
+      - oauth_exchange_hubspot
+      - oauth_exchange_github
+      - oauth_exchange_google
+      - impersonation
+      - oauth_access_token_exchange
+      - trusted_token_exchange
+    api_session_v1_AuthenticationFactorType:
+      type: string
+      enum:
+      - magic_link
+      - otp
+      - oauth
+      - webauthn
+      - totp
+      - crypto
+      - password
+      - signature_challenge
+      - sso
+      - imported
+      - recovery_codes
+      - email_otp
+      - impersonated
+      - trusted_auth_token
+    api_session_v1_GoogleOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_organization_v1_EmailImplicitRoleAssignment:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: Email domain that grants the specified Role.
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+      required:
+      - domain
+      - role_id
+    api_device_history_v1_DeviceAttributeDetails:
+      type: object
+      properties:
+        is_new:
+          type: boolean
+          description: Whether this `ip_geo_country` has been seen before for this user.
+        first_seen_at:
+          type: string
+          description: When this `ip_geo_country` was first seen for this user. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        last_seen_at:
+          type: string
+          description: When this `ip_geo_country` was last seen for this user. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+      required:
+      - is_new
+    api_session_v1_FigmaOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_b2b_scim_v1_Role:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_b2b_scim_v1_PhoneNumber:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+        primary:
+          type: boolean
+      required:
+      - value
+      - type
+      - primary
+    api_session_v1_SnapchatOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_organization_v1_CustomRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - resource_id
+      - actions
+    api_session_v1_InstagramOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_GoogleOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_session_v1_WebAuthnFactor:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+        domain:
+          type: string
+        user_agent:
+          type: string
+      required:
+      - webauthn_registration_id
+      - domain
+    api_b2b_scim_v1_EnterpriseExtension:
+      type: object
+      properties:
+        employee_number:
+          type: string
+        cost_center:
+          type: string
+        division:
+          type: string
+        department:
+          type: string
+        organization:
+          type: string
+        manager:
+          $ref: '#/components/schemas/api_b2b_scim_v1_Manager'
+      required:
+      - employee_number
+      - cost_center
+      - division
+      - department
+      - organization
+    api_session_v1_SlackOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_discovery_v1_DiscoveredOrganization:
+      type: object
+      properties:
+        member_authenticated:
+          type: boolean
+          description: Indicates whether the Member has all of the factors needed to fully authenticate to this Organization. If false, the Member may need to complete an MFA step or complete a different primary authentication flow. See the `primary_required` and `mfa_required` fields for more details on each.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        membership:
+          $ref: '#/components/schemas/api_discovery_v1_Membership'
+          description: Information about the membership.
+        primary_required:
+          $ref: '#/components/schemas/api_b2b_session_v1_PrimaryRequired'
+          description: Information about the primary authentication requirements of the Organization.
+        mfa_required:
+          $ref: '#/components/schemas/api_b2b_mfa_v1_MfaRequired'
+          description: Information about the MFA requirements of the Organization and the Member's options for fulfilling MFA.
+      required:
+      - member_authenticated
+    api_session_v1_MicrosoftOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

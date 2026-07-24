@@ -1,0 +1,747 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Trusted Token Profile API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Trusted Token Profile
+paths:
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles:
+    post:
+      summary: Create
+      operationId: pwa_trusted_token_profile_v3_Create
+      tags:
+      - Trusted Token Profile
+      description: Create creates a trusted token profile for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_trusted_token_profile_v3_CreateRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    get:
+      summary: Getall
+      operationId: pwa_trusted_token_profile_v3_GetAll
+      tags:
+      - Trusted Token Profile
+      description: GetAll retrieves all the trusted token profiles for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_GetAllResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id:
+    get:
+      summary: Get
+      operationId: pwa_trusted_token_profile_v3_Get
+      tags:
+      - Trusted Token Profile
+      description: Get retrieves the trusted token profile for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    patch:
+      summary: Update
+      operationId: pwa_trusted_token_profile_v3_Update
+      tags:
+      - Trusted Token Profile
+      description: Update updates a trusted token profile for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_trusted_token_profile_v3_UpdateRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    delete:
+      summary: Delete
+      operationId: pwa_trusted_token_profile_v3_Delete
+      tags:
+      - Trusted Token Profile
+      description: Delete deletes a trusted token profile for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys:
+    post:
+      summary: Createpemfile
+      operationId: pwa_trusted_token_profile_v3_CreatePEMFile
+      tags:
+      - Trusted Token Profile
+      description: CreatePEM creates a PEM file for a trusted token profile for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_trusted_token_profile_v3_CreatePEMFileRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_CreatePEMFileResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys/:pem_file_id:
+    delete:
+      summary: Deletepemfile
+      operationId: pwa_trusted_token_profile_v3_DeletePEMFile
+      tags:
+      - Trusted Token Profile
+      description: DeletePEM deletes a PEM file for a trusted token profile for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pem_file_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_DeletePEMFileResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    get:
+      summary: Getpemfile
+      operationId: pwa_trusted_token_profile_v3_GetPEMFile
+      tags:
+      - Trusted Token Profile
+      description: GetPEM retrieves a PEM file for a trusted token profile for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: profile_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: pem_file_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_trusted_token_profile_v3_GetPEMFileResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+components:
+  schemas:
+    pwa_trusted_token_profile_v3_DeletePEMFileResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_trusted_token_profile_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        profile:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - profile
+      - status_code
+    pwa_trusted_token_profile_v3_CreatePEMFileResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        pem_file:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PEMFile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - pem_file
+      - status_code
+    pwa_trusted_token_profile_v3_GetPEMFileResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        pem_file:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PEMFile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - pem_file
+      - status_code
+    pwa_trusted_token_profile_v3_TrustedTokenProfile:
+      type: object
+      properties:
+        profile_id:
+          type: string
+        name:
+          type: string
+        audience:
+          type: string
+        issuer:
+          type: string
+        pem_files:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PEMFile'
+        can_jit_provision:
+          type: boolean
+        jwks_url:
+          type: string
+        attribute_mapping:
+          type: string
+        public_key_type:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType'
+      required:
+      - profile_id
+      - name
+      - audience
+      - issuer
+      - pem_files
+      - can_jit_provision
+    pwa_trusted_token_profile_v3_CreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        audience:
+          type: string
+        issuer:
+          type: string
+        pem_files:
+          type: array
+          items:
+            type: string
+        can_jit_provision:
+          type: boolean
+        jwks_url:
+          type: string
+        attribute_mapping:
+          type: string
+        public_key_type:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType'
+      description: Request type
+      required:
+      - name
+      - audience
+      - issuer
+      - pem_files
+      - can_jit_provision
+    pwa_trusted_token_profile_v3_CreatePEMFileRequest:
+      type: object
+      properties:
+        public_key:
+          type: string
+      description: Request type
+      required:
+      - public_key
+    pwa_trusted_token_profile_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_trusted_token_profile_v3_PublicKeyType:
+      type: string
+      enum:
+      - JWK
+      - PEM
+    pwa_trusted_token_profile_v3_GetAllResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        profiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - profiles
+      - status_code
+    pwa_trusted_token_profile_v3_UpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        audience:
+          type: string
+        issuer:
+          type: string
+        jwks_url:
+          type: string
+        attribute_mapping:
+          type: string
+        can_jit_provision:
+          type: boolean
+      description: Request type
+    pwa_trusted_token_profile_v3_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        profile:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - profile
+      - status_code
+    pwa_trusted_token_profile_v3_PEMFile:
+      type: object
+      properties:
+        pem_file_id:
+          type: string
+        public_key:
+          type: string
+      required:
+      - pem_file_id
+      - public_key
+    pwa_trusted_token_profile_v3_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        profile:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - profile
+      - status_code
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

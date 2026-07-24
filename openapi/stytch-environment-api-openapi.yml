@@ -1,0 +1,598 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Environment API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Environment
+paths:
+  /pwa/v3/projects/:project_slug/environments:
+    post:
+      summary: Create
+      operationId: pwa_environment_v3_Create
+      tags:
+      - Environment
+      description: Creates a new environment in a project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_environment_v3_CreateRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    get:
+      summary: Getall
+      operationId: pwa_environment_v3_GetAll
+      tags:
+      - Environment
+      description: Retrieves all environments in a project.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_GetAllResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug:
+    get:
+      summary: Get
+      operationId: pwa_environment_v3_Get
+      tags:
+      - Environment
+      description: Retrieves an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    patch:
+      summary: Update
+      operationId: pwa_environment_v3_Update
+      tags:
+      - Environment
+      description: Updates the environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_environment_v3_UpdateRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    delete:
+      summary: Delete
+      operationId: pwa_environment_v3_Delete
+      tags:
+      - Environment
+      description: Deletes an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/metrics:
+    get:
+      summary: Getmetrics
+      operationId: pwa_environment_v3_GetMetrics
+      tags:
+      - Environment
+      description: Retrieves metrics for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_environment_v3_GetMetricsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+components:
+  schemas:
+    pwa_environment_v3_Environment:
+      type: object
+      properties:
+        environment_slug:
+          type: string
+        project_slug:
+          type: string
+        name:
+          type: string
+        oauth_callback_id:
+          type: string
+        cross_org_passwords_enabled:
+          type: boolean
+        user_impersonation_enabled:
+          type: boolean
+        zero_downtime_session_migration_url:
+          type: string
+        use_custom_domain_in_magic_link_emails:
+          type: boolean
+        user_lock_self_serve_enabled:
+          type: boolean
+        user_lock_threshold:
+          type: integer
+          format: int32
+        user_lock_ttl:
+          type: integer
+          format: int32
+        idp_authorization_url:
+          type: string
+        idp_dynamic_client_registration_enabled:
+          type: boolean
+        idp_dynamic_client_registration_access_token_template_content:
+          type: string
+        project_id:
+          type: string
+        type:
+          $ref: '#/components/schemas/pwa_environment_v3_EnvironmentType'
+        created_at:
+          type: string
+      required:
+      - environment_slug
+      - project_slug
+      - name
+      - oauth_callback_id
+      - cross_org_passwords_enabled
+      - user_impersonation_enabled
+      - zero_downtime_session_migration_url
+      - use_custom_domain_in_magic_link_emails
+      - user_lock_self_serve_enabled
+      - user_lock_threshold
+      - user_lock_ttl
+      - idp_authorization_url
+      - idp_dynamic_client_registration_enabled
+      - idp_dynamic_client_registration_access_token_template_content
+      - project_id
+    pwa_environment_v3_EnvironmentType:
+      type: string
+      enum:
+      - LIVE
+      - TEST
+    pwa_environment_v3_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
+    pwa_environment_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
+    pwa_environment_v3_GetAllResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environments:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environments
+      - status_code
+    pwa_environment_v3_GetMetricsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        metrics:
+          $ref: '#/components/schemas/pwa_environment_v3_Metrics'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - metrics
+      - status_code
+    pwa_environment_v3_Metrics:
+      type: object
+      properties:
+        user_count:
+          type: integer
+          format: int32
+          minimum: 0
+        organization_count:
+          type: integer
+          format: int32
+          minimum: 0
+        member_count:
+          type: integer
+          format: int32
+          minimum: 0
+        m2m_client_count:
+          type: integer
+          format: int32
+          minimum: 0
+      required:
+      - user_count
+      - organization_count
+      - member_count
+      - m2m_client_count
+    pwa_environment_v3_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
+    pwa_environment_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_environment_v3_CreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/pwa_environment_v3_EnvironmentType'
+        environment_slug:
+          type: string
+        cross_org_passwords_enabled:
+          type: boolean
+        user_impersonation_enabled:
+          type: boolean
+        zero_downtime_session_migration_url:
+          type: string
+        user_lock_self_serve_enabled:
+          type: boolean
+        user_lock_threshold:
+          type: integer
+          format: int32
+        user_lock_ttl:
+          type: integer
+          format: int32
+        idp_authorization_url:
+          type: string
+        idp_dynamic_client_registration_enabled:
+          type: boolean
+        idp_dynamic_client_registration_access_token_template_content:
+          type: string
+      description: Request type
+      required:
+      - name
+    pwa_environment_v3_UpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        cross_org_passwords_enabled:
+          type: boolean
+        user_impersonation_enabled:
+          type: boolean
+        zero_downtime_session_migration_url:
+          type: string
+        use_custom_domain_in_magic_link_emails:
+          type: boolean
+        user_lock_self_serve_enabled:
+          type: boolean
+        user_lock_threshold:
+          type: integer
+          format: int32
+        user_lock_ttl:
+          type: integer
+          format: int32
+        idp_authorization_url:
+          type: string
+        idp_dynamic_client_registration_enabled:
+          type: boolean
+        idp_dynamic_client_registration_access_token_template_content:
+          type: string
+      description: Request type
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

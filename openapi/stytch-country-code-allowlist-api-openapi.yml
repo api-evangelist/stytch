@@ -1,0 +1,350 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Country Code Allowlist API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Country Code Allowlist
+paths:
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/sms:
+    get:
+      summary: Getallowedsmscountrycodes
+      operationId: pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodes
+      tags:
+      - Country Code Allowlist
+      description: GetAllowedSMSCountryCodes retrieves the allowed SMS country codes for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    post:
+      summary: Setallowedsmscountrycodes
+      operationId: pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodes
+      tags:
+      - Country Code Allowlist
+      description: SetAllowedSMSCountryCodes sets the allowed SMS country codes for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/allowed_country_codes/whatsapp:
+    get:
+      summary: Getallowedwhatsappcountrycodes
+      operationId: pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodes
+      tags:
+      - Country Code Allowlist
+      description: GetAllowedWhatsAppCountryCodes retrieves the allowed WhatsApp country codes for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    post:
+      summary: Setallowedwhatsappcountrycodes
+      operationId: pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodes
+      tags:
+      - Country Code Allowlist
+      description: SetAllowedWhatsAppCountryCodes sets the allowed WhatsApp country codes for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+components:
+  schemas:
+    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesRequest:
+      type: object
+      properties:
+        country_codes:
+          type: array
+          items:
+            type: string
+      description: Request type
+      required:
+      - country_codes
+    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        country_codes:
+          type: array
+          items:
+            type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - country_codes
+      - status_code
+    pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        country_codes:
+          type: array
+          items:
+            type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - country_codes
+      - status_code
+    pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        country_codes:
+          type: array
+          items:
+            type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - country_codes
+      - status_code
+    pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        country_codes:
+          type: array
+          items:
+            type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - country_codes
+      - status_code
+    pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesRequest:
+      type: object
+      properties:
+        country_codes:
+          type: array
+          items:
+            type: string
+      description: Request type
+      required:
+      - country_codes
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

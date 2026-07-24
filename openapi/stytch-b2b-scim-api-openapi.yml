@@ -1,0 +1,1241 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application B2B SCIM API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: B2B SCIM
+paths:
+  /v1/b2b/scim/{organization_id}/connection/{connection_id}:
+    put:
+      summary: Update
+      operationId: api_b2b_scim_v1_b2b_scim_connection_Update
+      tags:
+      - B2B SCIM
+      description: Update a SCIM Connection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_UpdateRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  display_name: \"Example SCIM connection\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.Update(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.UpdateParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t\tDisplayName:    \"Example SCIM connection\",\n\t}\n\n\toptions := &connection.UpdateParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.Update(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.UpdateRequest;\nimport com.stytch.java.b2b.models.scimconnection.UpdateRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        UpdateRequest params = new UpdateRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n        params.setDisplayName(\"Example SCIM connection\");\n\n        UpdateRequestOptions options = new UpdateRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().update(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.UpdateRequest\nimport com.stytch.java.b2b.models.scimconnection.UpdateRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.update(\n                UpdateRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                    displayName = \"Example SCIM connection\",\n                ),\n                UpdateRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  display_name: \"Example SCIM connection\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.update(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->update([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n    'display_name' => 'Example SCIM connection',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import UpdateRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.update(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    display_name=\"Example SCIM connection\",\n    method_options=UpdateRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.update(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  display_name: \"Example SCIM connection\",\n  method_options: StytchB2B::SCIM::Connection::UpdateRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::UpdateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.update(\n        UpdateRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            display_name: Some(String::from(\"Example SCIM connection\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# PUT /v1/b2b/scim/{organization_id}/connection/{connection_id}\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\" \\\n  -d '{\n    \"display_name\": \"Example SCIM connection\"\n  }'"
+    delete:
+      summary: Delete
+      operationId: api_b2b_scim_v1_b2b_scim_connection_Delete
+      tags:
+      - B2B SCIM
+      description: Deletes a SCIM Connection.
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.Delete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.DeleteParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t}\n\n\toptions := &connection.DeleteParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.Delete(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.DeleteRequest;\nimport com.stytch.java.b2b.models.scimconnection.DeleteRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteRequest params = new DeleteRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n\n        DeleteRequestOptions options = new DeleteRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().delete(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.DeleteRequest\nimport com.stytch.java.b2b.models.scimconnection.DeleteRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.delete(\n                DeleteRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                ),\n                DeleteRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.delete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->delete([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import DeleteRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.delete(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    method_options=DeleteRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.delete(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  method_options: StytchB2B::SCIM::Connection::DeleteRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::DeleteRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.delete(\n        DeleteRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/b2b/scim/{organization_id}/connection/{connection_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+    get:
+      summary: Getgroups
+      operationId: api_b2b_scim_v1_b2b_scim_connection_GetGroups
+      tags:
+      - B2B SCIM
+      description: Gets a paginated list of all SCIM Groups associated with a given Connection.
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: cursor
+        in: query
+        required: false
+        schema:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.GetGroups(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.GetGroupsParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t}\n\n\toptions := &connection.GetGroupsParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.GetGroups(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.GetGroupsRequest;\nimport com.stytch.java.b2b.models.scimconnection.GetGroupsRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetGroupsRequest params = new GetGroupsRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n\n        GetGroupsRequestOptions options = new GetGroupsRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().getGroups(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.GetGroupsRequest\nimport com.stytch.java.b2b.models.scimconnection.GetGroupsRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.getGroups(\n                GetGroupsRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                ),\n                GetGroupsRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.getGroups(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->get_groups([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import GetGroupsRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.get_groups(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    method_options=GetGroupsRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.get_groups(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  method_options: StytchB2B::SCIM::Connection::GetGroupsRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::GetGroupsRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.get_groups(\n        GetGroupsRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/scim/{organization_id}/connection/{connection_id}\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start:
+    post:
+      summary: Rotatestart
+      operationId: api_b2b_scim_v1_b2b_scim_connection_RotateStart
+      tags:
+      - B2B SCIM
+      description: Start a SCIM token rotation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateStartRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.RotateStart(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.RotateStartParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t}\n\n\toptions := &connection.RotateStartParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.RotateStart(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.RotateStartRequest;\nimport com.stytch.java.b2b.models.scimconnection.RotateStartRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateStartRequest params = new RotateStartRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n\n        RotateStartRequestOptions options = new RotateStartRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().rotateStart(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.RotateStartRequest\nimport com.stytch.java.b2b.models.scimconnection.RotateStartRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.rotateStart(\n                RotateStartRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                ),\n                RotateStartRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.rotateStart(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->rotate_start([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import RotateStartRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.rotate_start(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    method_options=RotateStartRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.rotate_start(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  method_options: StytchB2B::SCIM::Connection::RotateStartRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::RotateStartRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.rotate_start(\n        RotateStartRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/start\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId}/rotate/start \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete:
+    post:
+      summary: Rotatecomplete
+      operationId: api_b2b_scim_v1_b2b_scim_connection_RotateComplete
+      tags:
+      - B2B SCIM
+      description: Completes a SCIM token rotation. This will complete the current token rotation process and update the active token to be the new token supplied in the [start SCIM token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start) response.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateCompleteRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateCompleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.RotateComplete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.RotateCompleteParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t}\n\n\toptions := &connection.RotateCompleteParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.RotateComplete(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.RotateCompleteRequest;\nimport com.stytch.java.b2b.models.scimconnection.RotateCompleteRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateCompleteRequest params = new RotateCompleteRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n\n        RotateCompleteRequestOptions options = new RotateCompleteRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().rotateComplete(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.RotateCompleteRequest\nimport com.stytch.java.b2b.models.scimconnection.RotateCompleteRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.rotateComplete(\n                RotateCompleteRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                ),\n                RotateCompleteRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.rotateComplete(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->rotate_complete([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import RotateCompleteRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.rotate_complete(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    method_options=RotateCompleteRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.rotate_complete(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  method_options: StytchB2B::SCIM::Connection::RotateCompleteRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::RotateCompleteRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.rotate_complete(\n        RotateCompleteRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/complete\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId}/rotate/complete \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel:
+    post:
+      summary: Rotatecancel
+      operationId: api_b2b_scim_v1_b2b_scim_connection_RotateCancel
+      tags:
+      - B2B SCIM
+      description: Cancel a SCIM token rotation. This will cancel the current token rotation process, keeping the original token active.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateCancelRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: connection_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the SCIM connection.
+        description: The ID of the SCIM connection.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_RotateCancelResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.RotateCancel(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.RotateCancelParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tConnectionID:   \"${scimConnectionId}\",\n\t}\n\n\toptions := &connection.RotateCancelParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.RotateCancel(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.RotateCancelRequest;\nimport com.stytch.java.b2b.models.scimconnection.RotateCancelRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateCancelRequest params = new RotateCancelRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setConnectionId(\"${scimConnectionId}\");\n\n        RotateCancelRequestOptions options = new RotateCancelRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().rotateCancel(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.RotateCancelRequest\nimport com.stytch.java.b2b.models.scimconnection.RotateCancelRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.rotateCancel(\n                RotateCancelRequest(\n                    organizationId = \"${organizationId}\",\n                    connectionId = \"${scimConnectionId}\",\n                ),\n                RotateCancelRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.rotateCancel(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->rotate_cancel([\n    'organization_id' => '${organizationId}',\n    'connection_id' => '${scimConnectionId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import RotateCancelRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.rotate_cancel(\n    organization_id=\"${organizationId}\",\n    connection_id=\"${scimConnectionId}\",\n    method_options=RotateCancelRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.rotate_cancel(\n  organization_id: \"${organizationId}\",\n  connection_id: \"${scimConnectionId}\",\n  method_options: StytchB2B::SCIM::Connection::RotateCancelRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::RotateCancelRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.rotate_cancel(\n        RotateCancelRequest{\n            organization_id: \"${organizationId}\",\n            connection_id: \"${scimConnectionId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/scim/{organization_id}/connection/{connection_id}/rotate/cancel\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection/${scimConnectionId}/rotate/cancel \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+  /v1/b2b/scim/{organization_id}/connection:
+    post:
+      summary: Create
+      operationId: api_b2b_scim_v1_b2b_scim_connection_Create
+      tags:
+      - B2B SCIM
+      description: Create a new SCIM Connection.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_CreateRequest'
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  display_name: \"Example SCIM connection\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.Create(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.CreateParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t\tDisplayName:    \"Example SCIM connection\",\n\t}\n\n\toptions := &connection.CreateParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.Create(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.CreateRequest;\nimport com.stytch.java.b2b.models.scimconnection.CreateRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        CreateRequest params = new CreateRequest();\n        params.setOrganizationId(\"${organizationId}\");\n        params.setDisplayName(\"Example SCIM connection\");\n\n        CreateRequestOptions options = new CreateRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().create(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.CreateRequest\nimport com.stytch.java.b2b.models.scimconnection.CreateRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.create(\n                CreateRequest(\n                    organizationId = \"${organizationId}\",\n                    displayName = \"Example SCIM connection\",\n                ),\n                CreateRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n  display_name: \"Example SCIM connection\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.create(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->create([\n    'organization_id' => '${organizationId}',\n    'display_name' => 'Example SCIM connection',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/b2b/scim/{organization_id}/connection\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import CreateRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.create(\n    organization_id=\"${organizationId}\",\n    display_name=\"Example SCIM connection\",\n    method_options=CreateRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/b2b/scim/{organization_id}/connection\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.create(\n  organization_id: \"${organizationId}\",\n  display_name: \"Example SCIM connection\",\n  method_options: StytchB2B::SCIM::Connection::CreateRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/b2b/scim/{organization_id}/connection\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::CreateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.create(\n        CreateRequest{\n            organization_id: \"${organizationId}\",\n            display_name: Some(String::from(\"Example SCIM connection\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/b2b/scim/{organization_id}/connection\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\" \\\n  -d '{\n    \"display_name\": \"Example SCIM connection\"\n  }'"
+    get:
+      summary: Get
+      operationId: api_b2b_scim_v1_b2b_scim_connection_Get
+      tags:
+      - B2B SCIM
+      description: Get SCIM Connection.
+      parameters:
+      - name: organization_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+      - name: X-Stytch-Member-Session
+        in: header
+        required: false
+        description: A Stytch session that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      - name: X-Stytch-Member-SessionJWT
+        in: header
+        required: false
+        description: A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_b2b_scim_v1_b2b_scim_connection_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.SCIM.Connection.Get(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/scim/connection\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/methodoptions\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &connection.GetParams{\n\t\tOrganizationID: \"${organizationId}\",\n\t}\n\n\toptions := &connection.GetParamsOptions{\n\t\tAuthorization: methodoptions.Authorization{\n\t\t\tSessionToken: \"${sessionToken}\",\n\t\t},\n\t}\n\n\tresp, err := client.SCIM.Connection.Get(context.Background(), params, options)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\npackage com.example;\n\nimport com.stytch.java.b2b.models.scimconnection.GetRequest;\nimport com.stytch.java.b2b.models.scimconnection.GetRequestOptions;\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.methodoptions.Authorization;\nimport com.stytch.java.common.StytchResult;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetRequest params = new GetRequest();\n        params.setOrganizationId(\"${organizationId}\");\n\n        GetRequestOptions options = new GetRequestOptions();\n        Authorization authorization = new Authorization();\n        authorization.setSessionToken(\"${sessionToken}\");\n        options.setAuthorization(authorization);\n\n        Object result = StytchB2BClient.getSCIM().getConnection().get(params, options);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.b2b.models.scimconnection.GetRequest\nimport com.stytch.java.b2b.models.scimconnection.GetRequestOptions\nimport com.stytch.java.common.methodoptions.Authorization\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.scim.connection.get(\n                GetRequest(\n                    organizationId = \"${organizationId}\",\n                ),\n                GetRequestOptions(\n                    Authorization(\n                        sessionToken = \"${sessionToken}\",\n                    ),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  organization_id: \"${organizationId}\",\n};\n\nconst options = {\n  authorization: {\n    session_token: '${sessionToken}',\n  },\n};\n\nclient.scim.connection.get(params, options)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->scim->connection->get([\n    'organization_id' => '${organizationId}',\n], [\n        'authorization' => ['session_token' => '${sessionToken}'],\n\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/b2b/scim/{organization_id}/connection\nfrom stytch import B2BClient\nfrom stytch.b2b.models.scim_connection import GetRequestOptions\nfrom stytch.shared.method_options import Authorization\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.scim.connection.get(\n    organization_id=\"${organizationId}\",\n    method_options=GetRequestOptions(\n        authorization=Authorization(\n            session_token=\"${sessionToken}\",\n        ),\n    ),\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/b2b/scim/{organization_id}/connection\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.scim.connection.get(\n  organization_id: \"${organizationId}\",\n  method_options: StytchB2B::SCIM::Connection::GetRequestOptions.new(\n    authorization: Stytch::MethodOptions::Authorization.new(session_token: '${sessionToken}')\n  )\n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/b2b/scim/{organization_id}/connection\nuse stytch::b2b::client::Client;\nuse stytch::b2b::scim_connection::GetRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.scim.connection.get(\n        GetRequest{\n            organization_id: \"${organizationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/b2b/scim/{organization_id}/connection\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
+components:
+  schemas:
+    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_b2b_scim_v1_CreateRequestIdentityProvider:
+      type: string
+      enum:
+      - generic
+      - okta
+      - microsoft-entra
+      - cyberark
+      - jumpcloud
+      - onelogin
+      - pingfederate
+      - rippling
+    api_b2b_scim_v1_SCIMConnectionWithToken:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        status:
+          type: string
+          description: The status of the connection. The possible values are deleted or active.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+          description: "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
+        base_url:
+          type: string
+          description: The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints
+        bearer_token:
+          type: string
+          description: The token supplied to the Identity Provider (IdP) alongside the base URL that grants access to Stytch's SCIM API endpoints. It should be included in HTTP authorization headers. This field is supplied only on creation of the SCIM connection.
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+        bearer_token_expires_at:
+          type: string
+          description: The bearer token expiry time.
+      required:
+      - organization_id
+      - connection_id
+      - status
+      - display_name
+      - identity_provider
+      - base_url
+      - bearer_token
+      - scim_group_implicit_role_assignments
+    api_b2b_scim_v1_b2b_scim_connection_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_UpdateRequestIdentityProvider:
+      type: string
+      enum:
+      - generic
+      - okta
+      - microsoft-entra
+      - cyberark
+      - jumpcloud
+      - onelogin
+      - pingfederate
+      - rippling
+    api_b2b_scim_v1_b2b_scim_connection_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithToken'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_RotateCancelRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_b2b_scim_v1_SCIMConnectionWithNextToken:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        status:
+          type: string
+          description: The status of the connection. The possible values are deleted or active.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        base_url:
+          type: string
+          description: The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints
+        identity_provider:
+          type: string
+          description: "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
+        bearer_token_last_four:
+          type: string
+          description: The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to generate a new one, use the [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
+        next_bearer_token:
+          type: string
+          description: This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). This token should be used as the new bearer token for the SCIM connection after token rotation has been completed using the [SCIM rotate token complete endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-complete).
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+        bearer_token_expires_at:
+          type: string
+          description: The bearer token expiry time.
+        next_bearer_token_expires_at:
+          type: string
+          description: This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry time.
+      required:
+      - organization_id
+      - connection_id
+      - status
+      - display_name
+      - base_url
+      - identity_provider
+      - bearer_token_last_four
+      - next_bearer_token
+      - scim_group_implicit_role_assignments
+    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: The ID of the role.
+        group_id:
+          type: string
+          description: The ID of the group.
+        group_name:
+          type: string
+      required:
+      - role_id
+      - group_id
+      - group_name
+    api_b2b_scim_v1_b2b_scim_connection_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connection_id:
+          type: string
+          description: The `connection_id` that was deleted as part of the delete request.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connection_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_CreateRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          $ref: '#/components/schemas/api_b2b_scim_v1_CreateRequestIdentityProvider'
+      description: Request type
+    api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse:
+      type: object
+      properties:
+        scim_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroup'
+          description: A list of SCIM Connection Groups belonging to the connection.
+        status_code:
+          type: integer
+          format: int32
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - scim_groups
+      - status_code
+    api_b2b_scim_v1_SCIMGroup:
+      type: object
+      properties:
+        group_id:
+          type: string
+          description: Stytch-issued, globally unique UUID that identifies a specific SCIM Group. The entity `id` in the SCIM specification is issued by the Service Provider (SP) and returned to the Identity Provider (IdP) to store and use for uniquely identify and updating the Group moving forward.
+        group_name:
+          type: string
+          description: The displayName of the SCIM group, sent from the Identity Provider (IdP).
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform operations on an Organization, so be sure to preserve this value.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+      required:
+      - group_id
+      - group_name
+      - organization_id
+      - connection_id
+    api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithNextToken'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_RotateStartRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_b2b_scim_v1_b2b_scim_connection_UpdateRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          $ref: '#/components/schemas/api_b2b_scim_v1_UpdateRequestIdentityProvider'
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+      description: Request type
+    api_b2b_scim_v1_SCIMConnection:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        status:
+          type: string
+          description: The status of the connection. The possible values are deleted or active.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+          description: "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
+        base_url:
+          type: string
+          description: The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints
+        bearer_token_last_four:
+          type: string
+          description: The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to generate a new one, use the [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+        next_bearer_token_last_four:
+          type: string
+        bearer_token_expires_at:
+          type: string
+          description: The bearer token expiry time.
+        next_bearer_token_expires_at:
+          type: string
+          description: This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry time.
+      required:
+      - organization_id
+      - connection_id
+      - status
+      - display_name
+      - identity_provider
+      - base_url
+      - bearer_token_last_four
+      - scim_group_implicit_role_assignments
+      - next_bearer_token_last_four
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

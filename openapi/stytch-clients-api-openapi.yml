@@ -1,0 +1,921 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Clients API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Clients
+paths:
+  /v1/connected_apps/clients/{client_id}/secrets/rotate/start:
+    post:
+      summary: Rotatestart
+      operationId: api_connectedapps_v1_connected_apps_clients_secrets_RotateStart
+      tags:
+      - Clients
+      description: 'Initiate the rotation of a Connected App client secret. After this endpoint is called, both the client''s `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the Rotate Secret Endpoint to complete the flow.
+
+        Secret rotation can be cancelled using the Cancel Secret Rotation endpoint.
+
+
+        **Important:** This is the only time you will be able to view the generated `next_client_secret` in the API response. Stytch stores a hash of the `next_client_secret` and cannot recover the value if lost. Be sure to persist the `next_client_secret` in a secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateStartRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateStartResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.ConnectedApp.Clients.Secrets.RotateStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/connectedapps/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateStartParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.ConnectedApp.Clients.Secrets.RotateStart(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateStartRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateStartRequest params = new RotateStartRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getConnectedApp().getClients().getSecrets().rotateStart(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateStartRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.connectedApp.clients.secrets.rotateStart(\n                RotateStartRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.connectedApp.clients.secrets.rotateStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->connected_app->clients->secrets->rotate_start([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.connected_app.clients.secrets.rotate_start(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.connected_app.clients.secrets.rotate_start(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\nuse stytch::b2b::client::Client;\nuse stytch::consumer::connected_apps_clients_secrets::RotateStartRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.connected_app.clients.secrets.rotate_start(\n        RotateStartRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/start\ncurl --request POST \\\n  --url https://test.stytch.com/v1/connected_apps/clients/${exampleM2MClientID}/secrets/rotate/start \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel:
+    post:
+      summary: Rotatecancel
+      operationId: api_connectedapps_v1_connected_apps_clients_secrets_RotateCancel
+      tags:
+      - Clients
+      description: Cancel the rotation of a Connected App client secret started with the Start Secret Rotation Endpoint. After this endpoint is called, the client's `next_client_secret` is discarded and only the original `client_secret` will be valid.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.ConnectedApp.Clients.Secrets.RotateCancel(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/connectedapps/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateCancelParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.ConnectedApp.Clients.Secrets.RotateCancel(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateCancelRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateCancelRequest params = new RotateCancelRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getConnectedApp().getClients().getSecrets().rotateCancel(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateCancelRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.connectedApp.clients.secrets.rotateCancel(\n                RotateCancelRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.connectedApp.clients.secrets.rotateCancel(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->connected_app->clients->secrets->rotate_cancel([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.connected_app.clients.secrets.rotate_cancel(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.connected_app.clients.secrets.rotate_cancel(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\nuse stytch::b2b::client::Client;\nuse stytch::consumer::connected_apps_clients_secrets::RotateCancelRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.connected_app.clients.secrets.rotate_cancel(\n        RotateCancelRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate/cancel\ncurl --request POST \\\n  --url https://test.stytch.com/v1/connected_apps/clients/${exampleM2MClientID}/secrets/rotate/cancel \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/connected_apps/clients/{client_id}/secrets/rotate:
+    post:
+      summary: Rotate
+      operationId: api_connectedapps_v1_connected_apps_clients_secrets_Rotate
+      tags:
+      - Clients
+      description: 'Complete the rotation of a Connected App client secret started with the Rotate Secret Start Endpoint.
+
+        After this endpoint is called, the client''s `next_client_secret` becomes its `client_secret` and the previous `client_secret` will no longer be valid.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_connectedapps_v1_connected_apps_clients_secrets_RotateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.ConnectedApp.Clients.Secrets.Rotate(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/connectedapps/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.ConnectedApp.Clients.Secrets.Rotate(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateRequest params = new RotateRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getConnectedApp().getClients().getSecrets().rotate(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.connectedappsclientssecrets.RotateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.connectedApp.clients.secrets.rotate(\n                RotateRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.connectedApp.clients.secrets.rotate(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->connected_app->clients->secrets->rotate([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.connected_app.clients.secrets.rotate(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.connected_app.clients.secrets.rotate(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/connected_apps/clients/{client_id}/secrets/rotate\nuse stytch::b2b::client::Client;\nuse stytch::consumer::connected_apps_clients_secrets::RotateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.connected_app.clients.secrets.rotate(\n        RotateRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/connected_apps/clients/{client_id}/secrets/rotate\ncurl --request POST \\\n  --url https://test.stytch.com/v1/connected_apps/clients/${exampleM2MClientID}/secrets/rotate \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/m2m/clients/{client_id}/secrets/rotate/start:
+    post:
+      summary: Rotatestart
+      operationId: api_m2m_v1_m2m_clients_secrets_RotateStart
+      tags:
+      - Clients
+      description: 'Initiate the rotation of an M2M client secret. After this endpoint is called, both the client''s `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the [Rotate Secret Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret)[Rotate Secret Endpoint](https://stytch.com/docs/api/m2m-rotate-secret) to complete the flow.Secret rotation can be cancelled using the [Rotate Cancel Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-cancel)[Rotate Cancel Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-cancel).
+
+
+        **Important:** This is the only time you will be able to view the generated `next_client_secret` in the API response. Stytch stores a hash of the `next_client_secret` and cannot recover the value if lost. Be sure to persist the `next_client_secret` in a secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateStartRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateStartResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.M2M.Clients.Secrets.RotateStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateStartParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.M2M.Clients.Secrets.RotateStart(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateStartRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateStartRequest params = new RotateStartRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getM2M().getClients().getSecrets().rotateStart(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateStartRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.secrets.rotateStart(\n                RotateStartRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.m2m.clients.secrets.rotateStart(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->secrets->rotate_start([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/start\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.secrets.rotate_start(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/start\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.secrets.rotate_start(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/start\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients_secrets::RotateStartRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.secrets.rotate_start(\n        RotateStartRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/start\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID}/secrets/rotate/start \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/m2m/clients/{client_id}/secrets/rotate/cancel:
+    post:
+      summary: Rotatecancel
+      operationId: api_m2m_v1_m2m_clients_secrets_RotateCancel
+      tags:
+      - Clients
+      description: 'Cancel the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).
+
+        After this endpoint is called, the client''s `next_client_secret` is discarded and only the original `client_secret` will be valid.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateCancelRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateCancelResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.M2M.Clients.Secrets.RotateCancel(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateCancelParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.M2M.Clients.Secrets.RotateCancel(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateCancelRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateCancelRequest params = new RotateCancelRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getM2M().getClients().getSecrets().rotateCancel(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateCancelRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.secrets.rotateCancel(\n                RotateCancelRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.m2m.clients.secrets.rotateCancel(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->secrets->rotate_cancel([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.secrets.rotate_cancel(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.secrets.rotate_cancel(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients_secrets::RotateCancelRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.secrets.rotate_cancel(\n        RotateCancelRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate/cancel\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID}/secrets/rotate/cancel \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/m2m/clients/{client_id}/secrets/rotate:
+    post:
+      summary: Rotate
+      operationId: api_m2m_v1_m2m_clients_secrets_Rotate
+      tags:
+      - Clients
+      description: 'Complete the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).
+
+        After this endpoint is called, the client''s `next_client_secret` becomes its `client_secret` and the previous `client_secret` will no longer be valid.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_secrets_RotateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.M2M.Clients.Secrets.Rotate(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients/secrets\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &secrets.RotateParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.M2M.Clients.Secrets.Rotate(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        RotateRequest params = new RotateRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getM2M().getClients().getSecrets().rotate(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclientssecrets.RotateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.secrets.rotate(\n                RotateRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.m2m.clients.secrets.rotate(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->secrets->rotate([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.secrets.rotate(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.secrets.rotate(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/m2m/clients/{client_id}/secrets/rotate\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients_secrets::RotateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.secrets.rotate(\n        RotateRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID}/secrets/rotate \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+components:
+  schemas:
+    api_m2m_v1_m2m_clients_secrets_RotateStartRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppWithNextClientSecret'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_m2m_clients_secrets_RotateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_m2m_v1_m2m_clients_secrets_RotateRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_M2MClient:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the client.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - status
+      - scopes
+      - client_secret_last_four
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_connectedapps_v1_ConnectedAppWithNextClientSecret:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        full_access_allowed:
+          type: boolean
+          description: Valid for first party clients only. If `true`, an authorization token granted to this Client can be exchanged for a full Stytch session.
+        client_type:
+          type: string
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        redirect_urls:
+          type: array
+          items:
+            type: string
+          description: Array of redirect URI values for use in OAuth Authorization flows.
+        next_client_secret:
+          type: string
+        access_token_expiry_minutes:
+          type: integer
+          format: int32
+        access_token_template_content:
+          type: string
+        post_logout_redirect_urls:
+          type: array
+          items:
+            type: string
+          description: Array of redirect URI values for use in OIDC Logout flows.
+        bypass_consent_for_offline_access:
+          type: boolean
+          description: Valid for first party clients only. If true, the client does not need to request explicit user consent for the `offline_access` scope.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+        access_token_custom_audience:
+          type: string
+        logo_url:
+          type: string
+          description: The logo URL of the Connected App, if any.
+        client_id_metadata_url:
+          type: string
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - status
+      - client_secret_last_four
+      - full_access_allowed
+      - client_type
+      - redirect_urls
+      - next_client_secret
+      - access_token_expiry_minutes
+      - access_token_template_content
+      - post_logout_redirect_urls
+      - bypass_consent_for_offline_access
+    api_connectedapps_v1_ConnectedApp:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+        full_access_allowed:
+          type: boolean
+          description: Valid for first party clients only. If `true`, an authorization token granted to this Client can be exchanged for a full Stytch session.
+        client_type:
+          type: string
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        redirect_urls:
+          type: array
+          items:
+            type: string
+          description: Array of redirect URI values for use in OAuth Authorization flows.
+        access_token_expiry_minutes:
+          type: integer
+          format: int32
+        access_token_template_content:
+          type: string
+        post_logout_redirect_urls:
+          type: array
+          items:
+            type: string
+          description: Array of redirect URI values for use in OIDC Logout flows.
+        bypass_consent_for_offline_access:
+          type: boolean
+          description: Valid for first party clients only. If true, the client does not need to request explicit user consent for the `offline_access` scope.
+        creation_method:
+          type: string
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+        access_token_custom_audience:
+          type: string
+        logo_url:
+          type: string
+          description: The logo URL of the Connected App, if any.
+        client_id_metadata_url:
+          type: string
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - status
+      - full_access_allowed
+      - client_type
+      - redirect_urls
+      - access_token_expiry_minutes
+      - access_token_template_content
+      - post_logout_redirect_urls
+      - bypass_consent_for_offline_access
+      - creation_method
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_M2MClientWithNextClientSecret:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the client.
+        next_client_secret:
+          type: string
+          description: The newly created secret that's next in rotation for the client. **Important:** this is the only time you will be able to view the `next_client_secret`. Be sure to persist the `next_client_secret` in a secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      required:
+      - client_id
+      - next_client_secret
+      - client_name
+      - client_description
+      - status
+      - scopes
+      - client_secret_last_four
+    api_m2m_v1_m2m_clients_secrets_RotateStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClientWithNextClientSecret'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_m2m_v1_m2m_clients_secrets_RotateCancelRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_m2m_clients_secrets_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateRequest:
+      type: object
+      properties: {}
+      description: Request type
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

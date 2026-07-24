@@ -1,0 +1,291 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Rbac API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Rbac
+paths:
+  /pwa/v3/projects/:project_slug/environments/:environment_slug/rbac_policy:
+    get:
+      summary: Get
+      operationId: pwa_rbac_v3_Get
+      tags:
+      - Rbac
+      description: Get retrieves the RBAC policy for an environment.
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_rbac_v3_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    put:
+      summary: Set
+      operationId: pwa_rbac_v3_Set
+      tags:
+      - Rbac
+      description: Set updates the RBAC policy for an environment.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/pwa_rbac_v3_SetRequest'
+      parameters:
+      - name: project_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: environment_slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/pwa_rbac_v3_SetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+components:
+  schemas:
+    pwa_rbac_v3_Resource:
+      type: object
+      properties:
+        resource_id:
+          type: string
+        description:
+          type: string
+        available_actions:
+          type: array
+          items:
+            type: string
+      required:
+      - resource_id
+      - description
+      - available_actions
+    pwa_rbac_v3_Policy:
+      type: object
+      properties:
+        stytch_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Resource'
+        custom_roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Role'
+        custom_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Resource'
+        custom_scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Scope'
+        stytch_member:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+        stytch_admin:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+        stytch_user:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+      required:
+      - stytch_resources
+      - custom_roles
+      - custom_resources
+      - custom_scopes
+    pwa_rbac_v3_Scope:
+      type: object
+      properties:
+        scope:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Permission'
+      required:
+      - scope
+      - description
+      - permissions
+    pwa_rbac_v3_SetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        policy:
+          $ref: '#/components/schemas/pwa_rbac_v3_Policy'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - policy
+      - status_code
+    pwa_rbac_v3_Role:
+      type: object
+      properties:
+        role_id:
+          type: string
+        description:
+          type: string
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Permission'
+      required:
+      - role_id
+      - description
+      - permissions
+    pwa_rbac_v3_SetRequest:
+      type: object
+      properties:
+        stytch_member:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+        stytch_admin:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+        stytch_user:
+          $ref: '#/components/schemas/pwa_rbac_v3_DefaultRole'
+        custom_roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Role'
+        custom_resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Resource'
+        custom_scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Scope'
+      description: Request type
+    pwa_rbac_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        policy:
+          $ref: '#/components/schemas/pwa_rbac_v3_Policy'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - policy
+      - status_code
+    pwa_rbac_v3_DefaultRole:
+      type: object
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_rbac_v3_Permission'
+      required:
+      - permissions
+    pwa_rbac_v3_Permission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - resource_id
+      - actions
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

@@ -1,0 +1,119 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Debug API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Debug
+paths:
+  /v1/debug/whoami:
+    get:
+      summary: Whoami
+      operationId: api_debug_v1_Whoami
+      tags:
+      - Debug
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_debug_v1_WhoamiResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/debug/whoami\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.Debug.Whoami(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/debug/whoami\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/debug\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &debug.WhoamiParams{}\n\n\tresp, err := client.Debug.Whoami(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/debug/whoami\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.debug.WhoamiRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        WhoamiRequest params = new WhoamiRequest();\n\n        Object result = StytchB2BClient.getDebug().whoami(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/debug/whoami\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.debug.WhoamiRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.debug.whoami(\n                WhoamiRequest(),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/debug/whoami\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.debug.whoami(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: '$response = $client->debug->whoami([
+
+          ]);'
+      - lang: python
+        label: Python
+        source: "# GET /v1/debug/whoami\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.debug.whoami()\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/debug/whoami\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.debug.whoami(\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/debug/whoami\nuse stytch::b2b::client::Client;\nuse stytch::consumer::debug::WhoamiRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.debug.whoami(\n        WhoamiRequest{\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/debug/whoami\ncurl --request GET \\\n  --url https://test.stytch.com/v1/debug/whoami \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+components:
+  schemas:
+    api_debug_v1_WhoamiResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        project_id:
+          type: string
+        name:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - project_id
+      - name
+      - status_code
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

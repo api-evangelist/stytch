@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application Consumer RBAC API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: Consumer RBAC
+paths:
+  /v1/rbac/policy:
+    get:
+      summary: Policy
+      operationId: api_consumer_rbac_v1_Policy
+      tags:
+      - Consumer RBAC
+      description: 'Get the active RBAC Policy for your current Stytch Project. An RBAC Policy is the canonical document that stores all defined Resources and Roles within your RBAC permissioning model.
+
+
+        When using the backend SDKs, the RBAC Policy will be cached to allow for local evaluations, eliminating the need for an extra request to Stytch.
+
+        The policy will be refreshed if an authorization check is requested and the RBAC policy was last updated more than 5 minutes ago.
+
+
+        Resources and Roles can be created and managed within the [RBAC page](https://stytch.com/dashboard/rbac) in the Dashboard.
+
+        Additionally, [Role assignment](https://stytch.com/docs/guides/rbac/role-assignment) can be programmatically managed through certain Stytch API endpoints.
+
+
+        Check out the [RBAC overview](https://stytch.com/docs/guides/rbac/overview) to learn more about Stytch''s RBAC permissioning model.'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/rbac/policy\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.RBAC.Policy(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/rbac/policy\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/rbac\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &rbac.PolicyParams{}\n\n\tresp, err := client.RBAC.Policy(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/rbac/policy\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.rbac.PolicyRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        PolicyRequest params = new PolicyRequest();\n\n        Object result = StytchClient.getRBAC().policy(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/rbac/policy\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.rbac.PolicyRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.rbac.policy(\n                PolicyRequest(),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/rbac/policy\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n};\n\nclient.rbac.policy(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: '$response = $client->rbac->policy([
+
+          ]);'
+      - lang: python
+        label: Python
+        source: "# GET /v1/rbac/policy\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.rbac.policy()\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/rbac/policy\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.rbac.policy(\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/rbac/policy\nuse stytch::consumer::client::Client;\nuse stytch::consumer::rbac::PolicyRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.rbac.policy(\n        PolicyRequest{\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/rbac/policy\ncurl --request GET \\\n  --url https://test.stytch.com/v1/rbac/policy \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+components:
+  schemas:
+    api_consumer_rbac_v1_PolicyScopePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
+    api_consumer_rbac_v1_PolicyScope:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: The unique identifier of the RBAC Scope, provided by the developer and intended to be human-readable.
+        description:
+          type: string
+          description: The description of the RBAC Scope.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyScopePermission'
+          description: A list of permissions that link a [Resource](https://stytch.com/docs/api/rbac-resource-object) to a list of actions.
+      required:
+      - scope
+      - description
+      - permissions
+    api_consumer_rbac_v1_PolicyResource:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        description:
+          type: string
+          description: The description of the RBAC Resource.
+        actions:
+          type: array
+          items:
+            type: string
+          description: A list of all possible actions for a provided Resource.
+      required:
+      - resource_id
+      - description
+      - actions
+    api_consumer_rbac_v1_PolicyRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*` as a wildcard to grant a Role permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
+    api_consumer_rbac_v1_Policy:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyRole'
+          description: An array of [Role objects](https://stytch.com/docs/api/rbac-role-object).
+        resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyResource'
+          description: An array of [Resource objects](https://stytch.com/docs/api/rbac-resource-object).
+        scopes:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyScope'
+          description: An array of [Scope objects](https://stytch.com/docs/api/rbac-scope-object).
+      required:
+      - roles
+      - resources
+      - scopes
+    api_consumer_rbac_v1_PolicyResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        policy:
+          $ref: '#/components/schemas/api_consumer_rbac_v1_Policy'
+          description: The RBAC Policy document that contains all defined Roles and Resources – which are managed in the [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our [RBAC overview](https://stytch.com/docs/guides/rbac/overview).
+      required:
+      - request_id
+      - status_code
+    api_consumer_rbac_v1_PolicyRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  The `stytch_user` `role_id` is predefined by Stytch.\n  Check out the [RBAC guide](https://stytch.com/docs/guides/rbac/overview) for a more detailed explanation.\n  "
+        description:
+          type: string
+          description: The description of the RBAC Role.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_consumer_rbac_v1_PolicyRolePermission'
+          description: A list of permissions that link a [Resource](https://stytch.com/docs/api/rbac-resource-object) to a list of actions.
+      required:
+      - role_id
+      - description
+      - permissions
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

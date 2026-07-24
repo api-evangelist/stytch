@@ -1,0 +1,2304 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application User API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: User
+paths:
+  /v1/users:
+    post:
+      summary: Create
+      operationId: api_user_v1_Create
+      tags:
+      - User
+      description: Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other operations within Stytch. An `email` or a `phone_number` is required.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_user_v1_CreateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/users\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email: \"${email}\",\n  external_id: \"my-external-id\",\n};\n\nclient.Users.Create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/users\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.CreateParams{\n\t\tEmail:      \"${email}\",\n\t\tExternalID: \"my-external-id\",\n\t}\n\n\tresp, err := client.Users.Create(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/users\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.CreateRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        CreateRequest params = new CreateRequest();\n        params.setEmail(\"${email}\");\n        params.setExternalId(\"my-external-id\");\n\n        Object result = StytchClient.getUsers().create(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/users\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.CreateRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.create(\n                CreateRequest(\n                    email = \"${email}\",\n                    externalId = \"my-external-id\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/users\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email: \"${email}\",\n  external_id: \"my-external-id\",\n};\n\nclient.users.create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->create([\n    'email' => '${email}',\n    'external_id' => 'my-external-id',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/users\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.create(\n    email=\"${email}\",\n    external_id=\"my-external-id\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/users\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.create(\n  email: \"${email}\",\n  external_id: \"my-external-id\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/users\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::CreateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.create(\n        CreateRequest{\n            email: Some(String::from(\"${email}\")),\n            external_id: Some(String::from(\"my-external-id\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/users\ncurl --request POST \\\n  --url https://test.stytch.com/v1/users \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"email\": \"${email}\",\n    \"external_id\": \"my-external-id\"\n  }'"
+  /v1/users/{user_id}:
+    get:
+      summary: Get
+      operationId: api_user_v1_Get
+      tags:
+      - User
+      description: Get information about a specific User.
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/users/{user_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.Users.Get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/users/{user_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.GetParams{\n\t\tUserID: \"${userId}\",\n\t}\n\n\tresp, err := client.Users.Get(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/users/{user_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.GetRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetRequest params = new GetRequest();\n        params.setUserId(\"${userId}\");\n\n        Object result = StytchClient.getUsers().get(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/users/{user_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.GetRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.get(\n                GetRequest(\n                    userId = \"${userId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/users/{user_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.users.get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->get([\n    'user_id' => '${userId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/users/{user_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.get(\n    user_id=\"${userId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/users/{user_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.get(\n  user_id: \"${userId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/users/{user_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::GetRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.get(\n        GetRequest{\n            user_id: \"${userId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/users/{user_id}\ncurl --request GET \\\n  --url https://test.stytch.com/v1/users/${userId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+    put:
+      summary: Update
+      operationId: api_user_v1_Update
+      tags:
+      - User
+      description: 'Update a User''s attributes.
+
+
+        **Note:** In order to add a new email address or phone number to an existing User object, pass the new email address or phone number into the respective `/send` endpoint for the authentication method of your choice. If you specify the existing User''s `user_id` while calling the `/send` endpoint, the new, unverified email address or phone number will be added to the existing User object. If the user successfully authenticates within 5 minutes of the `/send` request, the new email address or phone number will be marked as verified and remain permanently on the existing Stytch User. Otherwise, it will be removed from the User object, and any subsequent login requests using that phone number will create a new User. We require this process to guard against an account takeover vulnerability.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_user_v1_UpdateRequest'
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+    delete:
+      summary: Delete
+      operationId: api_user_v1_Delete
+      tags:
+      - User
+      description: Delete a User from Stytch.
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/{user_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.Users.Delete(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/{user_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteParams{\n\t\tUserID: \"${userId}\",\n\t}\n\n\tresp, err := client.Users.Delete(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/{user_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteRequest params = new DeleteRequest();\n        params.setUserId(\"${userId}\");\n\n        Object result = StytchClient.getUsers().delete(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/{user_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.delete(\n                DeleteRequest(\n                    userId = \"${userId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/{user_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.users.delete(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete([\n    'user_id' => '${userId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/{user_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete(\n    user_id=\"${userId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/{user_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete(\n  user_id: \"${userId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/{user_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete(\n        DeleteRequest{\n            user_id: \"${userId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/{user_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/${userId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/search:
+    post:
+      summary: Search
+      operationId: api_user_v1_Search
+      tags:
+      - User
+      description: '
+
+        **Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 150 requests/minute.
+
+
+        Search for Users within your Stytch Project.
+
+
+        Use the `query` object to filter by different fields. See the `query.operands.filter_value` documentation below for a list of available filters.
+
+
+        ### Export all User data
+
+
+        Submit an empty `query` in your Search Users request to return all of your Stytch Project''s Users.
+
+
+        [This Github repository](https://github.com/stytchauth/stytch-node-export-users) contains a utility that leverages the Search Users endpoint to export all of your User data to a CSV or JSON file.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_user_v1_SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_SearchResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+  /v1/users/{user_id}/exchange_primary_factor:
+    put:
+      summary: Exchangeprimaryfactor
+      operationId: api_user_v1_ExchangePrimaryFactor
+      tags:
+      - User
+      description: 'Exchange a user''s email address or phone number for another.
+
+
+        Must pass either an `email_address` or a `phone_number`.
+
+
+        This endpoint only works if the user has exactly one factor. You are able to exchange the type of factor for another as well, i.e. exchange an `email_address` for a `phone_number`.
+
+
+        Use this endpoint with caution as it performs an admin level action.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_user_v1_ExchangePrimaryFactorRequest'
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_ExchangePrimaryFactorResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.Users.ExchangePrimaryFactor(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.ExchangePrimaryFactorParams{\n\t\tUserID: \"${userId}\",\n\t}\n\n\tresp, err := client.Users.ExchangePrimaryFactor(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.ExchangePrimaryFactorRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        ExchangePrimaryFactorRequest params = new ExchangePrimaryFactorRequest();\n        params.setUserId(\"${userId}\");\n\n        Object result = StytchClient.getUsers().exchangePrimaryFactor(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.ExchangePrimaryFactorRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.exchangePrimaryFactor(\n                ExchangePrimaryFactorRequest(\n                    userId = \"${userId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.users.exchangePrimaryFactor(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->exchange_primary_factor([\n    'user_id' => '${userId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# PUT /v1/users/{user_id}/exchange_primary_factor\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.exchange_primary_factor(\n    user_id=\"${userId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# PUT /v1/users/{user_id}/exchange_primary_factor\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.exchange_primary_factor(\n  user_id: \"${userId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// PUT /v1/users/{user_id}/exchange_primary_factor\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::ExchangePrimaryFactorRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.exchange_primary_factor(\n        ExchangePrimaryFactorRequest{\n            user_id: \"${userId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# PUT /v1/users/{user_id}/exchange_primary_factor\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/users/${userId}/exchange_primary_factor \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/emails/{email_id}:
+    delete:
+      summary: Deleteemail
+      operationId: api_user_v1_DeleteEmail
+      tags:
+      - User
+      description: Delete an email from a User.
+      parameters:
+      - name: email_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `email_id` to be deleted.
+        description: The `email_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteEmailResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/emails/{email_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_id: \"${emailId}\",\n};\n\nclient.Users.DeleteEmail(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/emails/{email_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteEmailParams{\n\t\tEmailID: \"${emailId}\",\n\t}\n\n\tresp, err := client.Users.DeleteEmail(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/emails/{email_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteEmailRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteEmailRequest params = new DeleteEmailRequest();\n        params.setEmailId(\"${emailId}\");\n\n        Object result = StytchClient.getUsers().deleteEmail(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/emails/{email_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteEmailRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteEmail(\n                DeleteEmailRequest(\n                    emailId = \"${emailId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/emails/{email_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  email_id: \"${emailId}\",\n};\n\nclient.users.deleteEmail(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_email([\n    'email_id' => '${emailId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/emails/{email_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_email(\n    email_id=\"${emailId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/emails/{email_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_email(\n  email_id: \"${emailId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/emails/{email_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteEmailRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_email(\n        DeleteEmailRequest{\n            email_id: \"${emailId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/emails/{email_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/emails/${emailId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/phone_numbers/{phone_id}:
+    delete:
+      summary: Deletephonenumber
+      operationId: api_user_v1_DeletePhoneNumber
+      tags:
+      - User
+      description: Delete a phone number from a User.
+      parameters:
+      - name: phone_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `phone_id` to be deleted.
+        description: The `phone_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeletePhoneNumberResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  phone_id: \"${phoneId}\",\n};\n\nclient.Users.DeletePhoneNumber(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeletePhoneNumberParams{\n\t\tPhoneID: \"${phoneId}\",\n\t}\n\n\tresp, err := client.Users.DeletePhoneNumber(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeletePhoneNumberRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeletePhoneNumberRequest params = new DeletePhoneNumberRequest();\n        params.setPhoneId(\"${phoneId}\");\n\n        Object result = StytchClient.getUsers().deletePhoneNumber(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeletePhoneNumberRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deletePhoneNumber(\n                DeletePhoneNumberRequest(\n                    phoneId = \"${phoneId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  phone_id: \"${phoneId}\",\n};\n\nclient.users.deletePhoneNumber(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_phone_number([\n    'phone_id' => '${phoneId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/phone_numbers/{phone_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_phone_number(\n    phone_id=\"${phoneId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/phone_numbers/{phone_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_phone_number(\n  phone_id: \"${phoneId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/phone_numbers/{phone_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeletePhoneNumberRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_phone_number(\n        DeletePhoneNumberRequest{\n            phone_id: \"${phoneId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/phone_numbers/{phone_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/phone_numbers/${phoneId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/webauthn_registrations/{webauthn_registration_id}:
+    delete:
+      summary: Deletewebauthnregistration
+      operationId: api_user_v1_DeleteWebAuthnRegistration
+      tags:
+      - User
+      description: Delete a WebAuthn registration from a User.
+      parameters:
+      - name: webauthn_registration_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `webauthn_registration_id` to be deleted.
+        description: The `webauthn_registration_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteWebAuthnRegistrationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  webauthn_registration_id: \"${webauthnRegistrationId}\",\n};\n\nclient.Users.DeleteWebAuthnRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteWebAuthnRegistrationParams{\n\t\tWebAuthnRegistrationID: \"${webauthnRegistrationId}\",\n\t}\n\n\tresp, err := client.Users.DeleteWebAuthnRegistration(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteWebAuthnRegistrationRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteWebAuthnRegistrationRequest params = new DeleteWebAuthnRegistrationRequest();\n        params.setWebAuthnRegistrationId(\"${webauthnRegistrationId}\");\n\n        Object result = StytchClient.getUsers().deleteWebAuthnRegistration(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteWebAuthnRegistrationRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteWebAuthnRegistration(\n                DeleteWebAuthnRegistrationRequest(\n                    webauthnRegistrationId = \"${webauthnRegistrationId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  webauthn_registration_id: \"${webauthnRegistrationId}\",\n};\n\nclient.users.deleteWebAuthnRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_webauthn_registration([\n    'webauthn_registration_id' => '${webauthnRegistrationId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_webauthn_registration(\n    webauthn_registration_id=\"${webauthnRegistrationId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_webauthn_registration(\n  webauthn_registration_id: \"${webauthnRegistrationId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteWebAuthnRegistrationRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_webauthn_registration(\n        DeleteWebAuthnRegistrationRequest{\n            webauthn_registration_id: \"${webauthnRegistrationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/webauthn_registrations/{webauthn_registration_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/webauthn_registrations/${webauthnRegistrationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/biometric_registrations/{biometric_registration_id}:
+    delete:
+      summary: Deletebiometricregistration
+      operationId: api_user_v1_DeleteBiometricRegistration
+      tags:
+      - User
+      description: Delete a biometric registration from a User.
+      parameters:
+      - name: biometric_registration_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `biometric_registration_id` to be deleted.
+        description: The `biometric_registration_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteBiometricRegistrationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  biometric_registration_id: \"${biometricRegistrationId}\",\n};\n\nclient.Users.DeleteBiometricRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteBiometricRegistrationParams{\n\t\tBiometricRegistrationID: \"${biometricRegistrationId}\",\n\t}\n\n\tresp, err := client.Users.DeleteBiometricRegistration(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteBiometricRegistrationRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteBiometricRegistrationRequest params = new DeleteBiometricRegistrationRequest();\n        params.setBiometricRegistrationId(\"${biometricRegistrationId}\");\n\n        Object result = StytchClient.getUsers().deleteBiometricRegistration(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteBiometricRegistrationRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteBiometricRegistration(\n                DeleteBiometricRegistrationRequest(\n                    biometricRegistrationId = \"${biometricRegistrationId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  biometric_registration_id: \"${biometricRegistrationId}\",\n};\n\nclient.users.deleteBiometricRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_biometric_registration([\n    'biometric_registration_id' => '${biometricRegistrationId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/biometric_registrations/{biometric_registration_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_biometric_registration(\n    biometric_registration_id=\"${biometricRegistrationId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/biometric_registrations/{biometric_registration_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_biometric_registration(\n  biometric_registration_id: \"${biometricRegistrationId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/biometric_registrations/{biometric_registration_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteBiometricRegistrationRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_biometric_registration(\n        DeleteBiometricRegistrationRequest{\n            biometric_registration_id: \"${biometricRegistrationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/biometric_registrations/{biometric_registration_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/biometric_registrations/${biometricRegistrationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/totps/{totp_id}:
+    delete:
+      summary: Deletetotp
+      operationId: api_user_v1_DeleteTOTP
+      tags:
+      - User
+      description: Delete a TOTP from a User.
+      parameters:
+      - name: totp_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `totp_id` to be deleted.
+        description: The `totp_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteTOTPResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/totps/{totp_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  totp_id: \"${totpId}\",\n};\n\nclient.Users.DeleteTOTP(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/totps/{totp_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteTOTPParams{\n\t\tTOTPID: \"${totpId}\",\n\t}\n\n\tresp, err := client.Users.DeleteTOTP(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/totps/{totp_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteTOTPRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteTOTPRequest params = new DeleteTOTPRequest();\n        params.setTOTPId(\"${totpId}\");\n\n        Object result = StytchClient.getUsers().deleteTOTP(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/totps/{totp_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteTOTPRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteTOTP(\n                DeleteTOTPRequest(\n                    totpId = \"${totpId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/totps/{totp_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  totp_id: \"${totpId}\",\n};\n\nclient.users.deleteTOTP(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_totp([\n    'totp_id' => '${totpId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/totps/{totp_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_totp(\n    totp_id=\"${totpId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/totps/{totp_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_totp(\n  totp_id: \"${totpId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/totps/{totp_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteTOTPRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_totp(\n        DeleteTOTPRequest{\n            totp_id: \"${totpId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/totps/{totp_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/totps/${totpId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/crypto_wallets/{crypto_wallet_id}:
+    delete:
+      summary: Deletecryptowallet
+      operationId: api_user_v1_DeleteCryptoWallet
+      tags:
+      - User
+      description: Delete a crypto wallet from a User.
+      parameters:
+      - name: crypto_wallet_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `crypto_wallet_id` to be deleted.
+        description: The `crypto_wallet_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteCryptoWalletResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  crypto_wallet_id: \"${cryptoWalletId}\",\n};\n\nclient.Users.DeleteCryptoWallet(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteCryptoWalletParams{\n\t\tCryptoWalletID: \"${cryptoWalletId}\",\n\t}\n\n\tresp, err := client.Users.DeleteCryptoWallet(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteCryptoWalletRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteCryptoWalletRequest params = new DeleteCryptoWalletRequest();\n        params.setCryptoWalletId(\"${cryptoWalletId}\");\n\n        Object result = StytchClient.getUsers().deleteCryptoWallet(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteCryptoWalletRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteCryptoWallet(\n                DeleteCryptoWalletRequest(\n                    cryptoWalletId = \"${cryptoWalletId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  crypto_wallet_id: \"${cryptoWalletId}\",\n};\n\nclient.users.deleteCryptoWallet(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_crypto_wallet([\n    'crypto_wallet_id' => '${cryptoWalletId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_crypto_wallet(\n    crypto_wallet_id=\"${cryptoWalletId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_crypto_wallet(\n  crypto_wallet_id: \"${cryptoWalletId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteCryptoWalletRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_crypto_wallet(\n        DeleteCryptoWalletRequest{\n            crypto_wallet_id: \"${cryptoWalletId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/crypto_wallets/{crypto_wallet_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/crypto_wallets/${cryptoWalletId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/passwords/{password_id}:
+    delete:
+      summary: Deletepassword
+      operationId: api_user_v1_DeletePassword
+      tags:
+      - User
+      description: Delete a password from a User.
+      parameters:
+      - name: password_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `password_id` to be deleted.
+        description: The `password_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeletePasswordResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/passwords/{password_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  password_id: \"${passwordId}\",\n};\n\nclient.Users.DeletePassword(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/passwords/{password_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeletePasswordParams{\n\t\tPasswordID: \"${passwordId}\",\n\t}\n\n\tresp, err := client.Users.DeletePassword(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/passwords/{password_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeletePasswordRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeletePasswordRequest params = new DeletePasswordRequest();\n        params.setPasswordId(\"${passwordId}\");\n\n        Object result = StytchClient.getUsers().deletePassword(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/passwords/{password_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeletePasswordRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deletePassword(\n                DeletePasswordRequest(\n                    passwordId = \"${passwordId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/passwords/{password_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  password_id: \"${passwordId}\",\n};\n\nclient.users.deletePassword(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_password([\n    'password_id' => '${passwordId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/passwords/{password_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_password(\n    password_id=\"${passwordId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/passwords/{password_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_password(\n  password_id: \"${passwordId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/passwords/{password_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeletePasswordRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_password(\n        DeletePasswordRequest{\n            password_id: \"${passwordId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/passwords/{password_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/passwords/${passwordId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/oauth/{oauth_user_registration_id}:
+    delete:
+      summary: Deleteoauthregistration
+      operationId: api_user_v1_DeleteOAuthRegistration
+      tags:
+      - User
+      description: Delete an OAuth registration from a User.
+      parameters:
+      - name: oauth_user_registration_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The `oauth_user_registration_id` to be deleted.
+        description: The `oauth_user_registration_id` to be deleted.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteOAuthRegistrationResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  oauth_user_registration_id: \"${oauthUserRegistrationId}\",\n};\n\nclient.Users.DeleteOAuthRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteOAuthRegistrationParams{\n\t\tOAuthUserRegistrationID: \"${oauthUserRegistrationId}\",\n\t}\n\n\tresp, err := client.Users.DeleteOAuthRegistration(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteOAuthRegistrationRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteOAuthRegistrationRequest params = new DeleteOAuthRegistrationRequest();\n        params.setOAuthUserRegistrationId(\"${oauthUserRegistrationId}\");\n\n        Object result = StytchClient.getUsers().deleteOAuthRegistration(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteOAuthRegistrationRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteOAuthRegistration(\n                DeleteOAuthRegistrationRequest(\n                    oauthUserRegistrationId = \"${oauthUserRegistrationId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  oauth_user_registration_id: \"${oauthUserRegistrationId}\",\n};\n\nclient.users.deleteOAuthRegistration(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_oauth_registration([\n    'oauth_user_registration_id' => '${oauthUserRegistrationId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/oauth/{oauth_user_registration_id}\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_oauth_registration(\n    oauth_user_registration_id=\"${oauthUserRegistrationId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/oauth/{oauth_user_registration_id}\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_oauth_registration(\n  oauth_user_registration_id: \"${oauthUserRegistrationId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/oauth/{oauth_user_registration_id}\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteOAuthRegistrationRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_oauth_registration(\n        DeleteOAuthRegistrationRequest{\n            oauth_user_registration_id: \"${oauthUserRegistrationId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/oauth/{oauth_user_registration_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/oauth/${oauthUserRegistrationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/{user_id}/external_id:
+    delete:
+      summary: Deleteexternalid
+      operationId: api_user_v1_DeleteExternalId
+      tags:
+      - User
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_DeleteExternalIdResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/users/{user_id}/external_id\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nclient.Users.DeleteExternalId(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/users/{user_id}/external_id\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.DeleteExternalIDParams{\n\t\tUserID: \"TODO_MISSING_EXAMPLE_VALUE\",\n\t}\n\n\tresp, err := client.Users.DeleteExternalID(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/users/{user_id}/external_id\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.DeleteExternalIdRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteExternalIdRequest params = new DeleteExternalIdRequest();\n        params.setUserId(\"TODO_MISSING_EXAMPLE_VALUE\");\n\n        Object result = StytchClient.getUsers().deleteExternalId(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/users/{user_id}/external_id\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.DeleteExternalIdRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.deleteExternalId(\n                DeleteExternalIdRequest(\n                    userId = \"TODO_MISSING_EXAMPLE_VALUE\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/users/{user_id}/external_id\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n};\n\nclient.users.deleteExternalId(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->delete_external_id([\n    'user_id' => 'TODO_MISSING_EXAMPLE_VALUE',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/users/{user_id}/external_id\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.delete_external_id(\n    user_id=\"TODO_MISSING_EXAMPLE_VALUE\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/users/{user_id}/external_id\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.delete_external_id(\n  user_id: \"TODO_MISSING_EXAMPLE_VALUE\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/users/{user_id}/external_id\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::DeleteExternalIdRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.delete_external_id(\n        DeleteExternalIdRequest{\n            user_id: \"TODO_MISSING_EXAMPLE_VALUE\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/users/{user_id}/external_id\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/users/TODO_MISSING_EXAMPLE_VALUE/external_id \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/{user_id}/connected_apps:
+    get:
+      summary: Connectedapps
+      operationId: api_user_v1_ConnectedApps
+      tags:
+      - User
+      description: 'User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully completed an
+
+        authorization flow.
+
+        If the User revokes a Connected App''s access (e.g. via the Revoke Connected App endpoint) then the Connected App will
+
+        no longer be returned in the response.'
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_ConnectedAppsResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/users/{user_id}/connected_apps\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.Users.ConnectedApps(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/users/{user_id}/connected_apps\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.ConnectedAppsParams{\n\t\tUserID: \"${userId}\",\n\t}\n\n\tresp, err := client.Users.ConnectedApps(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/users/{user_id}/connected_apps\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.ConnectedAppsRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        ConnectedAppsRequest params = new ConnectedAppsRequest();\n        params.setUserId(\"${userId}\");\n\n        Object result = StytchClient.getUsers().connectedApps(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/users/{user_id}/connected_apps\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.ConnectedAppsRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.connectedApps(\n                ConnectedAppsRequest(\n                    userId = \"${userId}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/users/{user_id}/connected_apps\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n};\n\nclient.users.connectedApps(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->connected_apps([\n    'user_id' => '${userId}',\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/users/{user_id}/connected_apps\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.connected_apps(\n    user_id=\"${userId}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/users/{user_id}/connected_apps\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.connected_apps(\n  user_id: \"${userId}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/users/{user_id}/connected_apps\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::ConnectedAppsRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.connected_apps(\n        ConnectedAppsRequest{\n            user_id: \"${userId}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/users/{user_id}/connected_apps\ncurl --request GET \\\n  --url https://test.stytch.com/v1/users/${userId}/connected_apps \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke:
+    post:
+      summary: Revoke
+      operationId: api_user_v1_Revoke
+      tags:
+      - User
+      description: 'Revoke Connected App revokes a Connected App''s access to a User and revokes all active tokens that have been created
+
+        on the User''s behalf. New tokens cannot be created until the User completes a new authorization flow with the
+
+        Connected App.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_user_v1_RevokeRequest'
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+      - name: connected_app_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the Connected App.
+        description: The ID of the Connected App.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_user_v1_RevokeResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\",\n};\n\nclient.Users.Revoke(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/stytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/users\"\n)\n\nfunc main() {\n\tclient, err := stytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &users.RevokeParams{\n\t\tUserID:         \"${userId}\",\n\t\tConnectedAppID: \"${exampleConnectedAppClientID}\",\n\t}\n\n\tresp, err := client.Users.Revoke(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\npackage com.example;\n\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.users.RevokeRequest;\nimport com.stytch.java.consumer.StytchClient;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchClient.configure(\"${projectId}\", \"${secret}\");\n\n        RevokeRequest params = new RevokeRequest();\n        params.setUserId(\"${userId}\");\n        params.setConnectedAppId(\"${exampleConnectedAppClientID}\");\n\n        Object result = StytchClient.getUsers().revoke(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\npackage com.example\n\nimport com.stytch.java.consumer.StytchClient\nimport com.stytch.java.consumer.models.users.RevokeRequest\n\nfun main() {\n    StytchClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchClient.users.revoke(\n                RevokeRequest(\n                    userId = \"${userId}\",\n                    connectedAppId = \"${exampleConnectedAppClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\nconst stytch = require('stytch');\n\nconst client = new stytch.Client({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  user_id: \"${userId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\",\n};\n\nclient.users.revoke(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->users->revoke([\n    'user_id' => '${userId}',\n    'connected_app_id' => '${exampleConnectedAppClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\nfrom stytch import Client\n\nclient = Client(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.users.revoke(\n    user_id=\"${userId}\",\n    connected_app_id=\"${exampleConnectedAppClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\nrequire 'stytch'\n\nclient = Stytch::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.users.revoke(\n  user_id: \"${userId}\",\n  connected_app_id: \"${exampleConnectedAppClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\nuse stytch::consumer::client::Client;\nuse stytch::consumer::users::RevokeRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.users.revoke(\n        RevokeRequest{\n            user_id: \"${userId}\",\n            connected_app_id: \"${exampleConnectedAppClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\ncurl --request POST \\\n  --url https://test.stytch.com/v1/users/${userId}/connected_apps/${exampleConnectedAppClientID}/revoke \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+components:
+  schemas:
+    api_user_v1_UserConnectedApp:
+      type: object
+      properties:
+        connected_app_id:
+          type: string
+          description: The ID of the Connected App.
+        name:
+          type: string
+          description: The name of the Connected App.
+        description:
+          type: string
+          description: A description of the Connected App.
+        client_type:
+          type: string
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        scopes_granted:
+          type: string
+          description: The scopes granted to the Connected App at the completion of the last authorization flow.
+        logo_url:
+          type: string
+          description: The logo URL of the Connected App, if any.
+      required:
+      - connected_app_id
+      - name
+      - description
+      - client_type
+      - scopes_granted
+    api_user_v1_ExchangePrimaryFactorResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_CreateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the end user.
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the user. Each field in the name object is optional.
+        attributes:
+          $ref: '#/components/schemas/api_attribute_v1_Attributes'
+        phone_number:
+          type: string
+          description: The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX). You may use +10000000000 to test this endpoint, see [Testing](https://stytch.com/docs/home#resources_testing) for more detail.
+        create_user_as_pending:
+          type: boolean
+          description: "Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.\n        If true, users will be saved with status pending in Stytch's backend until authenticated.\n        If false, users will be created as active. An example usage of\n        a true flag would be to require users to verify their phone by entering the OTP code before creating\n        an account for them."
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+      description: Request type
+    api_user_v1_ExchangePrimaryFactorRequest:
+      type: object
+      properties:
+        email_address:
+          type: string
+          description: The email address to exchange to.
+        phone_number:
+          type: string
+          description: The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+      description: Request type
+    api_user_v1_SearchResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_User'
+          description: An array of results that match your search query.
+        results_metadata:
+          $ref: '#/components/schemas/api_user_v1_ResultsMetadata'
+          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - results
+      - results_metadata
+      - status_code
+    api_user_v1_BiometricRegistration:
+      type: object
+      properties:
+        biometric_registration_id:
+          type: string
+          description: The unique ID for a biometric registration.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - biometric_registration_id
+      - verified
+    api_user_v1_DeleteWebAuthnRegistrationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_attribute_v1_Attributes:
+      type: object
+      properties:
+        ip_address:
+          type: string
+          description: The IP address of the user.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+    api_user_v1_DeleteOAuthRegistrationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_TOTP:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - totp_id
+      - verified
+    api_user_v1_DeleteCryptoWalletResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - phone_id
+      - phone_number
+      - verified
+    api_user_v1_Name:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the user.
+        middle_name:
+          type: string
+          description: The middle name(s) of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_user_v1_User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_Email'
+          description: An array of email objects for the User.
+        status:
+          type: string
+          description: The status of the User. The possible values are `pending` and `active`.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
+          description: An array of phone number objects linked to the User.
+        webauthn_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_WebAuthnRegistration'
+          description: An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API.
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_OAuthProvider'
+          description: An array of OAuth `provider` objects linked to the User.
+        totps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_TOTP'
+          description: An array containing a list of all TOTP instances for a given User in the Stytch API.
+        crypto_wallets:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
+          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
+        biometric_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_BiometricRegistration'
+          description: An array that contains a list of all biometric registrations for a given User in the Stytch API.
+        is_locked:
+          type: boolean
+          description: Whether the User is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the User. Each field in the `name` object is optional.
+        created_at:
+          type: string
+          description: The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        password:
+          $ref: '#/components/schemas/api_user_v1_Password'
+          description: The password object is returned for users with a password.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in most API calls where a `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within the project.
+        lock_created_at:
+          type: string
+          description: When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        lock_expires_at:
+          type: string
+          description: When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+      required:
+      - user_id
+      - emails
+      - status
+      - phone_numbers
+      - webauthn_registrations
+      - providers
+      - totps
+      - crypto_wallets
+      - biometric_registrations
+      - is_locked
+      - roles
+    api_user_v1_RevokeResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - status_code
+    api_user_v1_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the returned User.
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_Email'
+          description: An array of email objects for the User.
+        status:
+          type: string
+          description: The status of the User. The possible values are `pending` and `active`.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
+          description: An array of phone number objects linked to the User.
+        webauthn_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_WebAuthnRegistration'
+          description: An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API.
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_OAuthProvider'
+          description: An array of OAuth `provider` objects linked to the User.
+        totps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_TOTP'
+          description: An array containing a list of all TOTP instances for a given User in the Stytch API.
+        crypto_wallets:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
+          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
+        biometric_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_BiometricRegistration'
+          description: An array that contains a list of all biometric registrations for a given User in the Stytch API.
+        is_locked:
+          type: boolean
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the User. Each field in the `name` object is optional.
+        created_at:
+          type: string
+          description: The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        password:
+          $ref: '#/components/schemas/api_user_v1_Password'
+          description: The password object is returned for users with a password.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+        lock_created_at:
+          type: string
+        lock_expires_at:
+          type: string
+      required:
+      - request_id
+      - user_id
+      - emails
+      - status
+      - phone_numbers
+      - webauthn_registrations
+      - providers
+      - totps
+      - crypto_wallets
+      - biometric_registrations
+      - is_locked
+      - roles
+      - status_code
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_user_v1_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_user_v1_SearchUsersQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
+      description: Request type
+    api_user_v1_DeleteBiometricRegistrationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_UpdateRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the user. Each field in the name object is optional.
+        attributes:
+          $ref: '#/components/schemas/api_attribute_v1_Attributes'
+          description: Provided attributes to help with fraud detection. These values are pulled and passed into Stytch endpoints by your application.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+      description: Request type
+    api_user_v1_Email:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        email:
+          type: string
+          description: The email address.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - email_id
+      - email
+      - verified
+    api_user_v1_SearchUsersQueryOperator:
+      type: string
+      enum:
+      - OR
+      - AND
+    api_user_v1_DeletePhoneNumberResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_DeleteTOTPResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_DeleteExternalIdResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        user_id:
+          type: string
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_OAuthProvider:
+      type: object
+      properties:
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
+        profile_picture_url:
+          type: string
+          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
+        oauth_user_registration_id:
+          type: string
+          description: The unique ID for an OAuth registration.
+      required:
+      - provider_type
+      - provider_subject
+      - profile_picture_url
+      - locale
+      - oauth_user_registration_id
+    api_user_v1_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the deleted User.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - status_code
+    api_user_v1_RevokeRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_user_v1_ConnectedAppsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_UserConnectedApp'
+          description: An array of Connected Apps with which the User has successfully completed an authorization flow.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - connected_apps
+      - status_code
+    api_user_v1_SearchUsersQuery:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/api_user_v1_SearchUsersQueryOperator'
+          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
+        operands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: An array of operand objects that contains all of the filters and values to apply to your search search query.
+      required:
+      - operator
+      - operands
+    api_user_v1_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        status:
+          type: string
+          description: The status of the User. The possible values are `pending` and `active`.
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - email_id
+      - status
+      - phone_id
+      - user
+      - status_code
+    api_user_v1_WebAuthnRegistration:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+          description: The unique ID for the Passkey or WebAuthn registration.
+        domain:
+          type: string
+          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+        authenticator_type:
+          type: string
+          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+        name:
+          type: string
+          description: The `name` of the Passkey or WebAuthn registration.
+      required:
+      - webauthn_registration_id
+      - domain
+      - user_agent
+      - verified
+      - authenticator_type
+      - name
+    api_user_v1_DeleteEmailResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_ResultsMetadata:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - total
+    api_user_v1_DeletePasswordResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the updated User.
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_Email'
+          description: An array of email objects for the User.
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
+          description: An array of phone number objects linked to the User.
+        crypto_wallets:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
+          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - emails
+      - phone_numbers
+      - crypto_wallets
+      - user
+      - status_code
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

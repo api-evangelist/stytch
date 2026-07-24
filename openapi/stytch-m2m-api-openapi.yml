@@ -1,0 +1,741 @@
+openapi: 3.0.3
+info:
+  title: Stytch B2B Authentication Application M2M API
+  version: 2.0.0
+  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  contact:
+    name: Stytch
+    url: https://stytch.com/docs
+  license:
+    name: Proprietary
+servers:
+- url: https://api.stytch.com
+  description: Production
+- url: https://test.stytch.com
+  description: Test
+tags:
+- name: M2M
+paths:
+  /v1/m2m/clients/{client_id}:
+    get:
+      summary: Get
+      operationId: api_m2m_v1_m2m_clients_Get
+      tags:
+      - M2M
+      description: Gets information about an existing M2M Client.
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_GetResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// GET /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.M2M.Clients.Get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// GET /v1/m2m/clients/{client_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &clients.GetParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.M2M.Clients.Get(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// GET /v1/m2m/clients/{client_id}\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclients.GetRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        GetRequest params = new GetRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getM2M().getClients().get(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// GET /v1/m2m/clients/{client_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclients.GetRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.get(\n                GetRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// GET /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.m2m.clients.get(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->get([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# GET /v1/m2m/clients/{client_id}\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.get(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# GET /v1/m2m/clients/{client_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.get(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// GET /v1/m2m/clients/{client_id}\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients::GetRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.get(\n        GetRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# GET /v1/m2m/clients/{client_id}\ncurl --request GET \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+    put:
+      summary: Update
+      operationId: api_m2m_v1_m2m_clients_Update
+      tags:
+      - M2M
+      description: 'Updates an existing M2M Client. You can use this endpoint to activate or deactivate an M2M Client by changing its `status`. A deactivated M2M Client will not be allowed to perform future token exchange flows until it is reactivated.
+
+
+        **Important:** Deactivating an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.
+
+        To protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_UpdateRequest'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_UpdateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// PUT /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\",\n  scopes: [\"read:users\", \"write:users\"],\n};\n\nclient.M2M.Clients.Update(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// PUT /v1/m2m/clients/{client_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &clients.UpdateParams{\n\t\tClientID:          \"${exampleM2MClientID}\",\n\t\tClientName:        \"My Sample Client\",\n\t\tClientDescription: \"My sample client for testing out M2M authentication.\",\n\t\tScopes:            []string{\"read:users\", \"write:users\"},\n\t}\n\n\tresp, err := client.M2M.Clients.Update(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// PUT /v1/m2m/clients/{client_id}\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclients.UpdateRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        UpdateRequest params = new UpdateRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n        params.setClientName(\"My Sample Client\");\n        params.setClientDescription(\"My sample client for testing out M2M authentication.\");\n        params.setScopes(new String(\"read:users\", \"write:users\"));\n\n        Object result = StytchB2BClient.getM2M().getClients().update(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// PUT /v1/m2m/clients/{client_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclients.UpdateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.update(\n                UpdateRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                    clientName = \"My Sample Client\",\n                    clientDescription = \"My sample client for testing out M2M authentication.\",\n                    scopes = arrayOf(\"read:users\", \"write:users\"),\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// PUT /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\",\n  scopes: [\"read:users\", \"write:users\"],\n};\n\nclient.m2m.clients.update(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->update([\n    'client_id' => '${exampleM2MClientID}',\n    'client_name' => 'My Sample Client',\n    'client_description' => 'My sample client for testing out M2M authentication.',\n    'scopes' => ['read:users', 'write:users'],\n]);"
+      - lang: python
+        label: Python
+        source: "# PUT /v1/m2m/clients/{client_id}\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.update(\n    client_id=\"${exampleM2MClientID}\",\n    client_name=\"My Sample Client\",\n    client_description=\"My sample client for testing out M2M authentication.\",\n    scopes=[\"read:users\", \"write:users\"],\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# PUT /v1/m2m/clients/{client_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.update(\n  client_id: \"${exampleM2MClientID}\",\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\",\n  scopes: ['read:users', 'write:users']\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// PUT /v1/m2m/clients/{client_id}\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients::UpdateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.update(\n        UpdateRequest{\n            client_id: \"${exampleM2MClientID}\",\n            client_name: Some(String::from(\"My Sample Client\")),\n            client_description: Some(String::from(\"My sample client for testing out M2M authentication.\")),\n            scopes: vec![\"read:users\", \"write:users\"],\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# PUT /v1/m2m/clients/{client_id}\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"client_name\": \"My Sample Client\",\n    \"client_description\": \"My sample client for testing out M2M authentication.\",\n    \"scopes\": [\"read:users\", \"write:users\"]\n  }'"
+    delete:
+      summary: Delete
+      operationId: api_m2m_v1_m2m_clients_Delete
+      tags:
+      - M2M
+      description: 'Deletes the M2M Client.
+
+
+        **Important:** Deleting an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.
+
+        To protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).'
+      parameters:
+      - name: client_id
+        in: path
+        required: true
+        schema:
+          type: string
+          description: The ID of the client.
+        description: The ID of the client.
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_DeleteResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// DELETE /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.M2M.Clients.Delete(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// DELETE /v1/m2m/clients/{client_id}\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &clients.DeleteParams{\n\t\tClientID: \"${exampleM2MClientID}\",\n\t}\n\n\tresp, err := client.M2M.Clients.Delete(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// DELETE /v1/m2m/clients/{client_id}\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclients.DeleteRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        DeleteRequest params = new DeleteRequest();\n        params.setClientId(\"${exampleM2MClientID}\");\n\n        Object result = StytchB2BClient.getM2M().getClients().delete(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// DELETE /v1/m2m/clients/{client_id}\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclients.DeleteRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.delete(\n                DeleteRequest(\n                    clientId = \"${exampleM2MClientID}\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// DELETE /v1/m2m/clients/{client_id}\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  client_id: \"${exampleM2MClientID}\",\n};\n\nclient.m2m.clients.delete(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->delete([\n    'client_id' => '${exampleM2MClientID}',\n]);"
+      - lang: python
+        label: Python
+        source: "# DELETE /v1/m2m/clients/{client_id}\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.delete(\n    client_id=\"${exampleM2MClientID}\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# DELETE /v1/m2m/clients/{client_id}\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.delete(\n  client_id: \"${exampleM2MClientID}\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// DELETE /v1/m2m/clients/{client_id}\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients::DeleteRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.delete(\n        DeleteRequest{\n            client_id: \"${exampleM2MClientID}\",\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# DELETE /v1/m2m/clients/{client_id}\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
+  /v1/m2m/clients/search:
+    post:
+      summary: Search
+      operationId: api_m2m_v1_m2m_clients_Search
+      tags:
+      - M2M
+      description: 'Search for M2M Clients within your Stytch Project. Submit an empty `query` in the request to return all M2M Clients.
+
+
+        The following search filters are supported today:
+
+        - `client_id`: Pass in a list of client IDs to get many clients in a single request
+
+        - `client_name`: Search for clients by exact match on client name
+
+        - `scopes`: Search for clients assigned a specific scope'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_SearchRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_SearchResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/m2m/clients/search\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  limit: 10,\n};\n\nclient.M2M.Clients.Search(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/m2m/clients/search\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &clients.SearchParams{\n\t\tLimit: 10,\n\t}\n\n\tresp, err := client.M2M.Clients.Search(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/m2m/clients/search\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclients.SearchRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        SearchRequest params = new SearchRequest();\n        params.setLimit(10);\n\n        Object result = StytchB2BClient.getM2M().getClients().search(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/m2m/clients/search\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclients.SearchRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.search(\n                SearchRequest(\n                    limit = 10,\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/m2m/clients/search\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  limit: 10,\n};\n\nclient.m2m.clients.search(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->search([\n    'limit' => 10,\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/m2m/clients/search\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.search(\n    limit=10,\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/m2m/clients/search\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.search(\n  limit: 10\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/m2m/clients/search\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients::SearchRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.search(\n        SearchRequest{\n            limit: 10,\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/m2m/clients/search\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients/search \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"limit\": 10\n  }'"
+  /v1/m2m/clients:
+    post:
+      summary: Create
+      operationId: api_m2m_v1_m2m_clients_Create
+      tags:
+      - M2M
+      description: 'Creates a new M2M Client. On initial client creation, you may pass in a custom `client_id` or `client_secret` to import an existing M2M client. If you do not pass in a custom `client_id` or `client_secret`, one will be generated automatically. The `client_id` must be unique among all clients in your project.
+
+
+        **Important:** This is the only time you will be able to view the generated `client_secret` in the API response. Stytch stores a hash of the `client_secret` and cannot recover the value if lost. Be sure to persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/api_m2m_v1_m2m_clients_CreateRequest'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api_m2m_v1_m2m_clients_CreateResponse'
+        '400':
+          description: Bad request
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              example:
+                status_code: 401
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: unauthorized_credentials
+                error_message: Unauthorized credentials.
+                error_url: https://stytch.com/docs/api/errors/401
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              example:
+                status_code: 429
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: too_many_requests
+                error_message: Too many requests have been made.
+                error_url: https://stytch.com/docs/api/errors/429
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              example:
+                status_code: 500
+                request_id: request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141
+                error_type: internal_server_error
+                error_message: Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.
+                error_url: https://stytch.com/docs/api/errors/500
+      x-code-samples:
+      - lang: csharp
+        label: C#
+        source: "// POST /v1/m2m/clients\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  scopes: [\"read:users\", \"write:users\"],\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\",\n};\n\nclient.M2M.Clients.Create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: go
+        label: Go
+        source: "// POST /v1/m2m/clients\npackage main\n\nimport (\n\t\"context\"\n\t\"log\"\n\n\t\"github.com/stytchauth/stytch-go/v17/stytch/b2b/b2bstytchapi\"\n\t\"github.com/stytchauth/stytch-go/v17/stytch/consumer/m2m/clients\"\n)\n\nfunc main() {\n\tclient, err := b2bstytchapi.NewClient(\n\t\t\"${projectId}\",\n\t\t\"${secret}\",\n\t)\n\tif err != nil {\n\t\tlog.Fatalf(\"error instantiating client: %v\", err)\n\t}\n\n\tparams := &clients.CreateParams{\n\t\tScopes:            []string{\"read:users\", \"write:users\"},\n\t\tClientName:        \"My Sample Client\",\n\t\tClientDescription: \"My sample client for testing out M2M authentication.\",\n\t}\n\n\tresp, err := client.M2M.Clients.Create(context.Background(), params)\n\tif err != nil {\n\t\tlog.Fatalf(\"error in method call: %v\", err)\n\t}\n\n\tlog.Println(resp)\n}\n"
+      - lang: java
+        label: Java
+        source: "// POST /v1/m2m/clients\npackage com.example;\n\nimport com.stytch.java.b2b.StytchB2BClient;\nimport com.stytch.java.common.StytchResult;\nimport com.stytch.java.consumer.models.m2mclients.CreateRequest;\n\npublic class Main {\n    public static void main(String[] args) {\n        StytchB2BClient.configure(\"${projectId}\", \"${secret}\");\n\n        CreateRequest params = new CreateRequest();\n        params.setScopes(new String(\"read:users\", \"write:users\"));\n        params.setClientName(\"My Sample Client\");\n        params.setClientDescription(\"My sample client for testing out M2M authentication.\");\n\n        Object result = StytchB2BClient.getM2M().getClients().create(params);\n        if (result instanceof StytchResult.Success) {\n          System.out.println(((StytchResult.Success) result).getValue());\n        } else {\n          System.out.println(((StytchResult.Error) result).getException());\n        }\n    }\n}"
+      - lang: kotlin
+        label: Kotlin
+        source: "// POST /v1/m2m/clients\npackage com.example\n\nimport com.stytch.java.b2b.StytchB2BClient\nimport com.stytch.java.consumer.models.m2mclients.CreateRequest\n\nfun main() {\n    StytchB2BClient.configure(\n        projectId = \"${projectId}\",\n        secret = \"${secret}\",\n    )\n\n    when (\n        val result =\n            StytchB2BClient.m2m.clients.create(\n                CreateRequest(\n                    scopes = arrayOf(\"read:users\", \"write:users\"),\n                    clientName = \"My Sample Client\",\n                    clientDescription = \"My sample client for testing out M2M authentication.\",\n                ),\n            )\n    ) {\n        is StytchResult.Success -> println(result.value)\n        is StytchResult.Error -> println(result.exception)\n    }\n}\n"
+      - lang: javascript
+        label: Node.js
+        source: "// POST /v1/m2m/clients\nconst stytch = require('stytch');\n\nconst client = new stytch.B2BClient({\n  project_id: '${projectId}',\n  secret: '${secret}',\n});\n\nconst params = {\n  scopes: [\"read:users\", \"write:users\"],\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\",\n};\n\nclient.m2m.clients.create(params)\n  .then(resp => { console.log(resp) })\n  .catch(err => { console.log(err) });"
+      - lang: php
+        label: PHP
+        source: "$response = $client->m2m->clients->create([\n    'scopes' => ['read:users', 'write:users'],\n    'client_name' => 'My Sample Client',\n    'client_description' => 'My sample client for testing out M2M authentication.',\n]);"
+      - lang: python
+        label: Python
+        source: "# POST /v1/m2m/clients\nfrom stytch import B2BClient\n\nclient = B2BClient(\n    project_id=\"${projectId}\",\n    secret=\"${secret}\",\n)\n\nresp = client.m2m.clients.create(\n    scopes=[\"read:users\", \"write:users\"],\n    client_name=\"My Sample Client\",\n    client_description=\"My sample client for testing out M2M authentication.\",\n)\n\nprint(resp)\n"
+      - lang: ruby
+        label: Ruby
+        source: "# POST /v1/m2m/clients\nrequire 'stytch'\n\nclient = StytchB2B::Client.new(\n  project_id: \"${projectId}\",\n  secret: \"${secret}\"\n)\n\nresp = client.m2m.clients.create(\n  scopes: ['read:users', 'write:users'],\n  client_name: \"My Sample Client\",\n  client_description: \"My sample client for testing out M2M authentication.\"\n  \n)\n\nputs resp"
+      - lang: rust
+        label: Rust
+        source: "// POST /v1/m2m/clients\nuse stytch::b2b::client::Client;\nuse stytch::consumer::m2m_clients::CreateRequest;\n\nfn main() {\n    let client = Client::new(\"${projectId}\", \"${secret}\").unwrap();\n    let resp = client.m2m.clients.create(\n        CreateRequest{\n            scopes: vec![\"read:users\", \"write:users\"],\n            client_name: Some(String::from(\"My Sample Client\")),\n            client_description: Some(String::from(\"My sample client for testing out M2M authentication.\")),\n            ..Default::default()\n        }\n    ).await;\n    println!(\"The response is {:?}\", resp);\n}"
+      - lang: bash
+        label: cURL
+        source: "# POST /v1/m2m/clients\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"scopes\": [\"read:users\", \"write:users\"],\n    \"client_name\": \"My Sample Client\",\n    \"client_description\": \"My sample client for testing out M2M authentication.\"\n  }'"
+components:
+  schemas:
+    api_m2m_v1_m2m_clients_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_m2m_v1_m2m_clients_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_m2m_v1_M2MSearchQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
+      description: Request type
+    api_m2m_v1_m2m_clients_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        client_id:
+          type: string
+          description: The ID of the client.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - client_id
+      - status_code
+    api_m2m_v1_M2MClient:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the client.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - status
+      - scopes
+      - client_secret_last_four
+    api_m2m_v1_M2MSearchQueryOperator:
+      type: string
+      enum:
+      - OR
+      - AND
+    api_m2m_v1_m2m_clients_UpdateRequest:
+      type: object
+      properties:
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          $ref: '#/components/schemas/api_m2m_v1_UpdateRequestStatus'
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+      description: Request type
+    api_m2m_v1_UpdateRequestStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+    api_m2m_v1_m2m_clients_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClientWithClientSecret'
+          description: The M2M Client created by this API call.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_m2m_v1_m2m_clients_CreateRequest:
+      type: object
+      properties:
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_id:
+          type: string
+          description: If provided, the ID of the client to create. If not provided, Stytch will generate this value for you. The `client_id` must be unique within your project.
+        client_secret:
+          type: string
+          description: If provided, the stored secret of the client to create. If not provided, Stytch will generate this value for you. If provided, the `client_secret` must be at least 8 characters long and pass entropy requirements.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+      description: Request type
+      required:
+      - scopes
+    api_m2m_v1_ResultsMetadata:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - total
+    api_m2m_v1_m2m_clients_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_m2m_v1_m2m_clients_SearchResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_clients:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: An array of M2M Clients that match your search query.
+        results_metadata:
+          $ref: '#/components/schemas/api_m2m_v1_ResultsMetadata'
+          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_clients
+      - results_metadata
+      - status_code
+    api_m2m_v1_M2MClientWithClientSecret:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the client.
+        client_secret:
+          type: string
+          description: The secret of the client. **Important:** this is the only time you will be able to view the `client_secret`. Be sure to persist the `client_secret` in a secure location. If the `client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      required:
+      - client_id
+      - client_secret
+      - client_name
+      - client_description
+      - status
+      - scopes
+      - client_secret_last_four
+    api_m2m_v1_M2MSearchQuery:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/api_m2m_v1_M2MSearchQueryOperator'
+          description: "The action to perform on the operands. The accepted value are:\n\n  `AND` – all the operand values provided must match.\n  \n  `OR` – the operator will return any matches to at least one of the operand values you supply."
+        operands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: An array of operand objects that contains all of the filters and values to apply to your search search query.
+      required:
+      - operator
+      - operands
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
