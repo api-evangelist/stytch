@@ -1,97 +1,1604 @@
 aid: stytch
 url: https://raw.githubusercontent.com/api-evangelist/stytch/refs/heads/main/apis.yml
 apis:
-- aid: stytch:stytch-consumer-api
-  name: Stytch Consumer Authentication API
-  tags:
-  - Authentication
-  - Passwordless
-  - Magic Links
-  - OTP
-  - OAuth
-  - WebAuthn
-  - Passkeys
-  - Consumer
-  - M2M
-  - Connected Apps
-  - Fraud
+- aid: stytch:stytch-application-api
+  name: Stytch Application API
+  description: The Application API from Stytch — 2 operation(s) for application.
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
-  properties:
-  - url: https://stytch.com/docs/api
-    type: Documentation
-  - url: https://stytch.com/docs/api/reference/library/overview
-    type: APIReference
-  - url: openapi/stytch-consumer-openapi.yml
-    type: OpenAPI
-  - url: https://github.com/stytchauth/stytch-openapi
-    type: OpenAPISource
-  - url: graphql/stytch-graphql.md
-    type: GraphQL
-  description: Stytch's Consumer API for end-user authentication. Covers Magic Links,
-    SMS / email / WhatsApp OTP, OAuth social login, Passwords, TOTP, WebAuthn / Passkeys,
-    Crypto Wallets, Sessions, Users, plus the M2M (client credentials) surface, Connected
-    Apps (OAuth provider for third-party tools, AI agents, and MCP servers), Fraud
-    / Device Fingerprinting, Impersonation, IDP introspection, and Consumer RBAC.
-- aid: stytch:stytch-b2b-api
-  name: Stytch B2B Authentication API
   tags:
-  - Authentication
-  - B2B
-  - SSO
-  - SAML
-  - OIDC
-  - SCIM
-  - Multi-Tenant
-  - Organizations
-  - RBAC
+  - Application
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-application-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-idp-api
+  name: Stytch B2B IDP API
+  description: The B2B IDP API from Stytch — 2 operation(s) for b2b idp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B IDP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-idp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-impersonation-api
+  name: Stytch B2B Impersonation API
+  description: The B2B Impersonation API from Stytch — 1 operation(s) for b2b impersonation.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B Impersonation
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-impersonation-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-magic-links-api
+  name: Stytch B2B Magic Links API
+  description: The B2B Magic Links API from Stytch — 4 operation(s) for b2b magic links.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B Magic Links
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-magic-links-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-oauth-api
+  name: Stytch B2B OAuth API
+  description: The B2B OAuth API from Stytch — 2 operation(s) for b2b oauth.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-otp-api
+  name: Stytch B2B OTP API
+  description: The B2B OTP API from Stytch — 4 operation(s) for b2b otp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B OTP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-otp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-passwords-api
+  name: Stytch B2B Passwords API
+  description: The B2B Passwords API from Stytch — 6 operation(s) for b2b passwords.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B Passwords
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-passwords-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-rbac-api
+  name: Stytch B2B RBAC API
+  description: The B2B RBAC API from Stytch — 2 operation(s) for b2b rbac.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B RBAC
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-rbac-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-recovery-codes-api
+  name: Stytch B2B Recovery Codes API
+  description: The B2B Recovery Codes API from Stytch — 3 operation(s) for b2b recovery codes.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B Recovery Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-recovery-codes-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-scim-api
+  name: Stytch B2B SCIM API
+  description: The B2B SCIM API from Stytch — 5 operation(s) for b2b scim.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B SCIM
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-scim-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-b2b-totp-api
+  name: Stytch B2B TOTP API
+  description: The B2B TOTP API from Stytch — 3 operation(s) for b2b totp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - B2B TOTP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-b2b-totp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-clients-api
+  name: Stytch Clients API
+  description: The Clients API from Stytch — 6 operation(s) for clients.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-clients-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-connected-apps-api
+  name: Stytch Connected Apps API
+  description: The Connected Apps API from Stytch — 3 operation(s) for connected apps.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
   - Connected Apps
-  humanURL: https://stytch.com/docs/b2b
-  baseURL: https://api.stytch.com/v1/b2b
   properties:
-  - url: https://stytch.com/docs/b2b
-    type: Documentation
-  - url: https://stytch.com/docs/b2b/api/overview
-    type: APIReference
-  - url: openapi/stytch-b2b-openapi.yml
-    type: OpenAPI
-  - url: https://github.com/stytchauth/stytch-openapi
-    type: OpenAPISource
-  description: Stytch's B2B API for multi-tenant SaaS authentication. Covers Organizations,
-    Members, SSO (SAML and OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B
-    RBAC, SCIM directory sync, TOTP, Recovery Codes, Passwords, Impersonation, and
-    the B2B IDP surface used by Connected Apps.
-- aid: stytch:stytch-management-api
-  name: Stytch Management API
+  - type: OpenAPI
+    url: openapi/stytch-connected-apps-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-consumer-rbac-api
+  name: Stytch Consumer RBAC API
+  description: The Consumer RBAC API from Stytch — 1 operation(s) for consumer rbac.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
   tags:
-  - Management
-  - Configuration
-  - Projects
-  - Secrets
-  - RBAC
-  - SDKConfig
-  humanURL: https://stytch.com/docs/workspace-management-api
-  baseURL: https://management.stytch.com
+  - Consumer RBAC
   properties:
-  - url: https://stytch.com/docs/workspace-management-api
-    type: Documentation
-  - url: openapi/stytch-management-openapi.yml
-    type: OpenAPI
-  - url: https://github.com/stytchauth/stytch-management-openapi
-    type: OpenAPISource
-  - url: https://github.com/stytchauth/terraform-provider-stytch
-    type: TerraformProvider
-  - url: https://github.com/stytchauth/stytch-management-node
-    type: SDKs
-  - url: https://github.com/stytchauth/stytch-management-go
-    type: SDKs
-  - url: https://github.com/stytchauth/stytch-management-python
-    type: SDKs
-  description: Stytch's Workspace Management API (management.stytch.com) for programmatic
-    configuration — projects, environments, secrets, redirect URLs, allowed country
-    codes, RBAC policies, email templates, JWT templates, event log streaming, public
-    tokens, trusted token profiles, and Consumer / B2B SDK configuration. Backs the
-    Terraform provider and the language-specific management SDKs.
+  - type: OpenAPI
+    url: openapi/stytch-consumer-rbac-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-country-code-allowlist-api
+  name: Stytch Country Code Allowlist API
+  description: The Country Code Allowlist API from Stytch — 2 operation(s) for country code allowlist.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Country Code Allowlist
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-country-code-allowlist-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-crypto-wallet-api
+  name: Stytch Crypto Wallet API
+  description: The Crypto Wallet API from Stytch — 2 operation(s) for crypto wallet.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Crypto Wallet
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-crypto-wallet-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-debug-api
+  name: Stytch Debug API
+  description: The Debug API from Stytch — 1 operation(s) for debug.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Debug
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-debug-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-discovery-api
+  name: Stytch Discovery API
+  description: The Discovery API from Stytch — 5 operation(s) for discovery.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Discovery
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-discovery-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-email-api
+  name: Stytch Email API
+  description: The Email API from Stytch — 3 operation(s) for email.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Email
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-email-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-email-template-api
+  name: Stytch Email Template API
+  description: The Email Template API from Stytch — 3 operation(s) for email template.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Email Template
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-email-template-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-environment-api
+  name: Stytch Environment API
+  description: The Environment API from Stytch — 3 operation(s) for environment.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Environment
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-environment-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-event-log-streaming-api
+  name: Stytch Event Log Streaming API
+  description: The Event Log Streaming API from Stytch — 4 operation(s) for event log streaming.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Event Log Streaming
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-event-log-streaming-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-fraud-api
+  name: Stytch Fraud API
+  description: The Fraud API from Stytch — 6 operation(s) for fraud.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Fraud
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-fraud-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-idp-api
+  name: Stytch IDP API
+  description: The IDP API from Stytch — 2 operation(s) for idp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - IDP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-idp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-impersonation-api
+  name: Stytch Impersonation API
+  description: The Impersonation API from Stytch — 1 operation(s) for impersonation.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Impersonation
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-impersonation-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-jwt-template-api
+  name: Stytch Jwt Template API
+  description: The Jwt Template API from Stytch — 1 operation(s) for jwt template.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Jwt Template
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-jwt-template-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-m2m-api
+  name: Stytch M2M API
+  description: The M2M API from Stytch — 3 operation(s) for m2m.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - M2M
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-m2m-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-magic-links-api
+  name: Stytch Magic Links API
+  description: The Magic Links API from Stytch — 6 operation(s) for magic links.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Magic Links
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-magic-links-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-members-api
+  name: Stytch Members API
+  description: The Members API from Stytch — 6 operation(s) for members.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Members
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-members-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-oauth-api
+  name: Stytch OAuth API
+  description: The OAuth API from Stytch — 2 operation(s) for oauth.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - OAuth
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-oauth-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-organization-api
+  name: Stytch Organization API
+  description: The Organization API from Stytch — 7 operation(s) for organization.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Organization
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-organization-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-organizations-api
+  name: Stytch Organizations API
+  description: The Organizations API from Stytch — 14 operation(s) for organizations.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-otp-api
+  name: Stytch OTP API
+  description: The OTP API from Stytch — 7 operation(s) for otp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - OTP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-otp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-password-api
+  name: Stytch Password API
+  description: The Password API from Stytch — 8 operation(s) for password.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Password
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-password-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-passwords-api
+  name: Stytch Passwords API
+  description: The Passwords API from Stytch — 4 operation(s) for passwords.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Passwords
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-passwords-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-project-api
+  name: Stytch Project API
+  description: The Project API from Stytch — 1 operation(s) for project.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Project
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-project-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-public-token-api
+  name: Stytch Public Token API
+  description: The Public Token API from Stytch — 2 operation(s) for public token.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Public Token
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-public-token-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-rbac-api
+  name: Stytch Rbac API
+  description: The Rbac API from Stytch — 1 operation(s) for rbac.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Rbac
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-rbac-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-redirect-url-api
+  name: Stytch Redirect Url API
+  description: The Redirect Url API from Stytch — 2 operation(s) for redirect url.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Redirect Url
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-redirect-url-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-sdk-api
+  name: Stytch Sdk API
+  description: The Sdk API from Stytch — 2 operation(s) for sdk.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Sdk
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-sdk-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-secret-api
+  name: Stytch Secret API
+  description: The Secret API from Stytch — 2 operation(s) for secret.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Secret
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-secret-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-session-api
+  name: Stytch Session API
+  description: The Session API from Stytch — 15 operation(s) for session.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Session
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-session-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-sso-api
+  name: Stytch SSO API
+  description: The SSO API from Stytch — 12 operation(s) for sso.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - SSO
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-sso-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-totp-api
+  name: Stytch TOTP API
+  description: The TOTP API from Stytch — 4 operation(s) for totp.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - TOTP
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-totp-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-trusted-token-profile-api
+  name: Stytch Trusted Token Profile API
+  description: The Trusted Token Profile API from Stytch — 4 operation(s) for trusted token profile.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - Trusted Token Profile
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-trusted-token-profile-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-user-api
+  name: Stytch User API
+  description: The User API from Stytch — 15 operation(s) for user.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - User
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-user-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-webauthn-api
+  name: Stytch WebAuthn API
+  description: The WebAuthn API from Stytch — 6 operation(s) for webauthn.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - WebAuthn
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-webauthn-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
 name: Stytch
 tags:
 - Authentication
@@ -104,7 +1611,20 @@ tags:
 - AI Agents
 - Developer Tools
 kind: contract
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/stytch.png
 access: 3rd-Party
 created: '2024-11-15'
 modified: '2026-05-22'
