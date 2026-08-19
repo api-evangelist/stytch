@@ -1,0 +1,301 @@
+{
+  "item": [
+    {
+      "id": "f449196f-c549-443f-9f0f-4a9c795e69a4",
+      "name": "Impersonation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0b6efc72-0fe8-4f58-b3ef-cae36e199fe8",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Authenticate an impersonation token to impersonate a User. This endpoint requires an impersonation token that is not expired or previously used.\nA Stytch session will be created for the impersonated user with a 60 minute duration. Impersonated sessions cannot be extended.\n\nPrior to this step, you can generate an impersonation token by visiting the Stytch Dashboard, viewing a user, and clicking the `Impersonate User` button.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "impersonation",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c72724c5-af93-4045-88a8-0b564bfa8c34",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "impersonation",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"is_locked\": true,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": true\n    },\n    \"trusted_metadata\": {\n      \"key_0\": false\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": 3818,\n      \"key_1\": 5419\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"status_code\": 6559,\n  \"session\": {\n    \"session_id\": \"string\",\n    \"user_id\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"crypto\",\n        \"delivery_method\": \"oauth_slack\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"otp\",\n        \"delivery_method\": \"sms\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"attributes\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\"\n    },\n    \"custom_claims\": {\n      \"key_0\": 5466.798210673884\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e0e578d-a3ea-42b5-93e4-420f6d84275d",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "impersonation",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c9f34cee-f941-4ef8-93ae-9de6a84236cb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "impersonation",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "554dcb59-8564-4fd9-a17c-cd7929463f59",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "impersonation",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "839b32e1-3b9a-4b56-b7d8-9305bd708596",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "impersonation",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"impersonation_token\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3d796c3d-1ddb-40d6-8090-c6468e748144",
+    "name": "Stytch B2B Authentication Application Impersonation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

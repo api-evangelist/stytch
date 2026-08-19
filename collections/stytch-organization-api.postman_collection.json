@@ -1,0 +1,2955 @@
+{
+  "item": [
+    {
+      "id": "4ffe544f-a07b-419d-af7b-e255fb758c17",
+      "name": "Organization",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b46624de-d505-4ce6-8ab5-90f398667d77",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Creates an Organization. An `organization_name` and a unique `organization_slug` are required.\n\nIf no Organization authentication setting parameters are passed in, `email_invites` will default to `ALL_ALLOWED` so that the Organization has a way to add Members. Otherwise, `email_invites` will default to `NOT_ALLOWED`.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 2407,\n    \"key_1\": 7401,\n    \"key_2\": false,\n    \"key_3\": 4851,\n    \"key_4\": false\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": false,\n    \"key_1\": \"string\"\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d710778-1c96-4dcb-995a-0d7314c0dff2",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6309,\n    \"key_1\": \"string\",\n    \"key_2\": 5347\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      },\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": false,\n      \"key_1\": 4161\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": 510.50210134635176,\n      \"key_1\": false,\n      \"key_2\": 3557.8516141458895\n    }\n  },\n  \"status_code\": 3377\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c62bb57b-6a81-46b3-ac84-25bea9c87661",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6309,\n    \"key_1\": \"string\",\n    \"key_2\": 5347\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7df66803-aa73-4e9f-adf8-aa02e1d03eb9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6309,\n    \"key_1\": \"string\",\n    \"key_2\": 5347\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9594681-a664-4313-a616-7a2d72fd6662",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6309,\n    \"key_1\": \"string\",\n    \"key_2\": 5347\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba2b2b32-1c3e-46d4-a24f-8ff96fbb024f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6309,\n    \"key_1\": \"string\",\n    \"key_2\": 5347\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "76b280f4-91fc-4074-b0ee-1d73fa77b85e",
+          "name": "Get",
+          "request": {
+            "name": "Get",
+            "description": {
+              "content": "Returns an Organization specified by `organization_id`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6453c34b-7ab0-497a-bdea-f075ac069392",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      },\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 3161.1131818971116,\n      \"key_1\": false,\n      \"key_2\": false,\n      \"key_3\": 3341.9127154293114\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3096\n    }\n  },\n  \"status_code\": 5563\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc687c34-eb4f-4214-9f2d-c403bf399341",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81e07160-ab8a-49f2-b1c1-cb475cb76449",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eca926e3-9a84-4e46-933b-e0e2636abea8",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b07df97f-c40d-4762-8fb9-1d921c8eb563",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35c1662a-d7d8-4828-9e2e-1e4eec8e5bd6",
+          "name": "Update",
+          "request": {
+            "name": "Update",
+            "description": {
+              "content": "Updates an Organization specified by `organization_id`. An Organization must always have at least one auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-Session",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-SessionJWT",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 8473.461381411411,\n    \"key_1\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": false,\n    \"key_1\": \"string\",\n    \"key_2\": \"string\",\n    \"key_3\": \"string\"\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "98697123-bec6-441c-ba2e-d1a4392fe2da",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6160,\n    \"key_1\": 5882,\n    \"key_2\": false\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      },\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 3161.1131818971116,\n      \"key_1\": false,\n      \"key_2\": false,\n      \"key_3\": 3341.9127154293114\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": \"string\",\n      \"key_1\": 3096\n    }\n  },\n  \"status_code\": 5563\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d69be52f-c302-4fba-9497-8c7fb016807f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6160,\n    \"key_1\": 5882,\n    \"key_2\": false\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9222d0fb-b946-4559-ad99-bb0684adf904",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6160,\n    \"key_1\": 5882,\n    \"key_2\": false\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03f35e97-42f1-4b11-8533-11ac5da38ad0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6160,\n    \"key_1\": 5882,\n    \"key_2\": false\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0bb80a7e-408e-4845-865c-2a4569d552dc",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_name\": \"<string>\",\n  \"organization_slug\": \"<string>\",\n  \"organization_logo_url\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": \"string\"\n  },\n  \"organization_external_id\": \"<string>\",\n  \"sso_default_connection_id\": \"<string>\",\n  \"sso_jit_provisioning\": \"<string>\",\n  \"sso_jit_provisioning_allowed_connections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"email_jit_provisioning\": \"<string>\",\n  \"email_invites\": \"<string>\",\n  \"auth_methods\": \"<string>\",\n  \"allowed_auth_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mfa_policy\": \"<string>\",\n  \"rbac_email_implicit_role_assignments\": [\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    },\n    {\n      \"domain\": \"<string>\",\n      \"role_id\": \"<string>\"\n    }\n  ],\n  \"mfa_methods\": \"<string>\",\n  \"allowed_mfa_methods\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"oauth_tenant_jit_provisioning\": \"<string>\",\n  \"allowed_oauth_tenants\": {\n    \"key_0\": 6160,\n    \"key_1\": 5882,\n    \"key_2\": false\n  },\n  \"claimed_email_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"first_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_first_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"third_party_connected_apps_allowed_type\": \"<string>\",\n  \"allowed_third_party_connected_apps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f9df50fe-9830-4ec6-9b20-e4fbe4378175",
+          "name": "Delete",
+          "request": {
+            "name": "Delete",
+            "description": {
+              "content": "Deletes an Organization specified by `organization_id`. All Members of the Organization will also be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-Session",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-SessionJWT",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e1f4cbba-bc62-4cf0-adec-0c47b3632443",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"status_code\": 8847\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8eed5229-adeb-4151-9efe-d804af63cf72",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8aa06b54-9fad-4d23-ac77-c7eb57325829",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a014af70-7b68-43d5-8488-a5d142fc947b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ac2bd2f-fc91-4b07-97a7-6864fd778228",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8eb1b9e3-c776-4782-87a2-f58476fd9bce",
+          "name": "Search",
+          "request": {
+            "name": "Search",
+            "description": {
+              "content": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 100 requests/minute.\n\nSearch across your Organizations. Returns an array of Organization objects.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                "search"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 8149,\n        \"key_1\": true\n      },\n      {\n        \"key_0\": true,\n        \"key_1\": 2707.5294990771135,\n        \"key_2\": 7644.131126728111,\n        \"key_3\": 3556.382915985814\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "036a883f-e226-45c4-a57a-3a93e8da06df",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 4499,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": 7362.548560487156,\n        \"key_2\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organizations\": [\n    {\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"organization_logo_url\": \"string\",\n      \"organization_slug\": \"string\",\n      \"sso_jit_provisioning\": \"string\",\n      \"sso_jit_provisioning_allowed_connections\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sso_active_connections\": [\n        {\n          \"connection_id\": \"string\",\n          \"display_name\": \"string\",\n          \"identity_provider\": \"string\"\n        },\n        {\n          \"connection_id\": \"string\",\n          \"display_name\": \"string\",\n          \"identity_provider\": \"string\"\n        }\n      ],\n      \"email_allowed_domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"email_jit_provisioning\": \"string\",\n      \"email_invites\": \"string\",\n      \"auth_methods\": \"string\",\n      \"allowed_auth_methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"mfa_policy\": \"string\",\n      \"rbac_email_implicit_role_assignments\": [\n        {\n          \"domain\": \"<string>\",\n          \"role_id\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"role_id\": \"<string>\"\n        }\n      ],\n      \"mfa_methods\": \"string\",\n      \"allowed_mfa_methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"oauth_tenant_jit_provisioning\": \"string\",\n      \"claimed_email_domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"first_party_connected_apps_allowed_type\": \"string\",\n      \"allowed_first_party_connected_apps\": [\n        \"string\",\n        \"string\"\n      ],\n      \"third_party_connected_apps_allowed_type\": \"string\",\n      \"allowed_third_party_connected_apps\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom_roles\": [\n        {\n          \"role_id\": \"string\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"role_id\": \"string\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"trusted_metadata\": {\n        \"key_0\": 8067.377708389546,\n        \"key_1\": 1204\n      },\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"organization_external_id\": \"string\",\n      \"sso_default_connection_id\": \"string\",\n      \"scim_active_connection\": {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"bearer_token_last_four\": \"string\",\n        \"bearer_token_expires_at\": \"string\"\n      },\n      \"allowed_oauth_tenants\": {\n        \"key_0\": 9833\n      }\n    },\n    {\n      \"organization_id\": \"string\",\n      \"organization_name\": \"string\",\n      \"organization_logo_url\": \"string\",\n      \"organization_slug\": \"string\",\n      \"sso_jit_provisioning\": \"string\",\n      \"sso_jit_provisioning_allowed_connections\": [\n        \"string\",\n        \"string\"\n      ],\n      \"sso_active_connections\": [\n        {\n          \"connection_id\": \"string\",\n          \"display_name\": \"string\",\n          \"identity_provider\": \"string\"\n        },\n        {\n          \"connection_id\": \"string\",\n          \"display_name\": \"string\",\n          \"identity_provider\": \"string\"\n        }\n      ],\n      \"email_allowed_domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"email_jit_provisioning\": \"string\",\n      \"email_invites\": \"string\",\n      \"auth_methods\": \"string\",\n      \"allowed_auth_methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"mfa_policy\": \"string\",\n      \"rbac_email_implicit_role_assignments\": [\n        {\n          \"domain\": \"<string>\",\n          \"role_id\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"role_id\": \"<string>\"\n        }\n      ],\n      \"mfa_methods\": \"string\",\n      \"allowed_mfa_methods\": [\n        \"string\",\n        \"string\"\n      ],\n      \"oauth_tenant_jit_provisioning\": \"string\",\n      \"claimed_email_domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"first_party_connected_apps_allowed_type\": \"string\",\n      \"allowed_first_party_connected_apps\": [\n        \"string\",\n        \"string\"\n      ],\n      \"third_party_connected_apps_allowed_type\": \"string\",\n      \"allowed_third_party_connected_apps\": [\n        \"string\",\n        \"string\"\n      ],\n      \"custom_roles\": [\n        {\n          \"role_id\": \"string\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"role_id\": \"string\",\n          \"description\": \"string\",\n          \"permissions\": [\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"resource_id\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"actions\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"trusted_metadata\": {\n        \"key_0\": false\n      },\n      \"created_at\": \"string\",\n      \"updated_at\": \"string\",\n      \"organization_external_id\": \"string\",\n      \"sso_default_connection_id\": \"string\",\n      \"scim_active_connection\": {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"bearer_token_last_four\": \"string\",\n        \"bearer_token_expires_at\": \"string\"\n      },\n      \"allowed_oauth_tenants\": {\n        \"key_0\": 1967.074351158359,\n        \"key_1\": 705,\n        \"key_2\": 5929\n      }\n    }\n  ],\n  \"results_metadata\": {\n    \"total\": 7580,\n    \"next_cursor\": \"string\"\n  },\n  \"status_code\": 5804\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "335c4ce3-9d0e-4bbc-861d-f7083420a78e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 4499,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": 7362.548560487156,\n        \"key_2\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42116770-06af-4d30-81f6-eee70d6a7a79",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 4499,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": 7362.548560487156,\n        \"key_2\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2ee4000c-79b9-47df-8814-1700e5c49f93",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 4499,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": 7362.548560487156,\n        \"key_2\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "275ec764-6ef8-4dbb-9078-4149a3529a4c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    "search"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\",\n  \"query\": {\n    \"operator\": \"<string>\",\n    \"operands\": [\n      {\n        \"key_0\": 4499,\n        \"key_1\": \"string\"\n      },\n      {\n        \"key_0\": false,\n        \"key_1\": 7362.548560487156,\n        \"key_2\": \"string\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "85f9fafa-1d36-4186-9313-8a027a783a59",
+          "name": "Metrics",
+          "request": {
+            "name": "Metrics",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf9d6d11-db9b-4dc1-975e-724741b9d6d1",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"member_count\": 9170,\n  \"status_code\": 8057\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19ba7447-d496-447a-a337-e0ada36aae23",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53f72f69-9f7f-4b83-bd2e-905ba6071ae9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b09c8912-403b-4477-92f9-4e685e257929",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eb8a1071-487f-42e7-9185-a452fdfc58a1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5be84b8-d1d7-49b0-a74e-3340a8a791b5",
+          "name": "Connectedapps",
+          "request": {
+            "name": "Connectedapps",
+            "description": {
+              "content": "Retrieves a list of Connected Apps for the Organization that have been installed by Members. Installation comprises\nsuccessful completion of an authorization flow with a Connected App that has not been revoked.\n\nConnected Apps may be uninstalled if an Organization changes its `first_party_connected_apps_allowed_type`\nor `third_party_connected_apps_allowed_type` policies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id",
+                "connected_apps"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-Session",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-SessionJWT",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6ae270e-db95-4c18-8f91-0ac0ebf50594",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"connected_apps\": [\n    {\n      \"connected_app_id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"client_type\": \"string\",\n      \"logo_url\": \"string\"\n    },\n    {\n      \"connected_app_id\": \"string\",\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"client_type\": \"string\",\n      \"logo_url\": \"string\"\n    }\n  ],\n  \"status_code\": 5198\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7381260c-a7db-4362-91c2-680d1f0eb487",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "30d4b47a-1151-4840-b1c5-61e59924bab1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "532b2446-7587-4af7-b32e-5158c22e2ca6",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a0a983f2-778a-47f8-ab50-6ab00e986471",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d462bb2a-e691-4c72-9e21-7db4dc689fec",
+          "name": "Getconnectedapp",
+          "request": {
+            "name": "Getconnectedapp",
+            "description": {
+              "content": "Get Connected App for Organization retrieves information about the specified Connected App as well as a list of the\nOrganization's Members who have the App installed along with the scopes they requested at completion of their last\nauthorization with the App.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id",
+                "connected_apps",
+                ":connected_app_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "connected_app_id",
+                  "description": "(Required) The ID of the Connected App."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-Session",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-SessionJWT",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "08319f4c-8158-4eb9-83b6-da06d5876d5c",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps",
+                    ":connected_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connected_app_id",
+                      "description": "(Required) The ID of the Connected App."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"connected_app_id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"client_type\": \"string\",\n  \"active_members\": [\n    {\n      \"member_id\": \"string\",\n      \"granted_scopes\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"member_id\": \"string\",\n      \"granted_scopes\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"status_code\": 1366,\n  \"logo_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a38825b4-4250-4607-9b4c-1db9c7fff7b1",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps",
+                    ":connected_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connected_app_id",
+                      "description": "(Required) The ID of the Connected App."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dc7cea69-3782-40a7-9735-a55d08738c17",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps",
+                    ":connected_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connected_app_id",
+                      "description": "(Required) The ID of the Connected App."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa8681a6-d13f-4052-86b4-513c84611d70",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps",
+                    ":connected_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connected_app_id",
+                      "description": "(Required) The ID of the Connected App."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e90ad54b-3235-4954-b57a-4f938e7f81e6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "connected_apps",
+                    ":connected_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "connected_app_id",
+                      "description": "(Required) The ID of the Connected App."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c7a19da7-536d-4c47-981c-6b817ffe92a4",
+          "name": "Deleteexternalid",
+          "request": {
+            "name": "Deleteexternalid",
+            "description": {},
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "organizations",
+                ":organization_id",
+                "external_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-Session",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                "key": "X-Stytch-Member-SessionJWT",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "477e1694-57b5-4f4f-8a50-266839a975dc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "external_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      },\n      {\n        \"domain\": \"<string>\",\n        \"role_id\": \"<string>\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 5805.015941797829\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": 8861.845214490653,\n      \"key_1\": 2581\n    }\n  },\n  \"status_code\": 4744\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "82b734c1-e81d-4757-9ee1-91682cb8edb5",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "external_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "81d2ecda-2155-4de0-afe4-f7642a73d3db",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "external_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b001f350-3ca7-4942-923c-e04b76ff6598",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "external_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "077b2530-239b-4ab7-ae72-45ac2f6cb44a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "organizations",
+                    ":organization_id",
+                    "external_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "A Stytch session that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-Session",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A Stytch Session JSON Web Token (JWT) that can be used to run the request with the given member's permissions.",
+                    "key": "X-Stytch-Member-SessionJWT",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2e819436-e765-42a3-a61c-ed084f0e7209",
+    "name": "Stytch B2B Authentication Application Organization API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

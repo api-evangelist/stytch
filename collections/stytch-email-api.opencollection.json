@@ -1,0 +1,63 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Email API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Email",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/magic_links/email/discovery/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a discovery magic link to an email address. The magic link is valid for 60 minutes."
+        },
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/discovery/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a discovery OTP to an email address. The OTP is valid for 10 minutes. Only the most recently sent OTP is valid: when an OTP is sent, all OTPs previously sent to the same email address are invalidated, even if unused or unexpired."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/discovery/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticates the OTP and returns an intermediate session token. Intermediate session tokens can be used for various Discovery login flows and are valid for 10 minutes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

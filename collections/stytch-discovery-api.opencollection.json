@@ -1,0 +1,93 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Discovery API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discovery",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/intermediate_sessions/exchange",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange an Intermediate Session for a fully realized [Member Session](https://stytch.com/docs/b2b/api/session-object) for the [Organization](https://stytch.com/docs/b2b/api/organization-object) that the user wishes to log into.\n\nThis endpoint can be used to accept invites and JIT Provision into a new Organization on the basis of the user's email domain or OAuth tenant.\n\nIf the user **has** already satisfied the authentication requirements of the Organization they are trying to exchange into and"
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/organizations/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This endpoint allows you to exchange the `intermediate_session_token` returned when the user successfully completes a Discovery authentication flow to create a new\n[Organization](https://stytch.com/docs/b2b/api/organization-object) and [Member](https://stytch.com/docs/b2b/api/member-object) and log the user in. If the user wants to log into an existing Organization, use the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) instead.\n\nStytch **"
+        },
+        {
+          "info": {
+            "name": "List",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/discovery/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all possible organization relationships connected to a [Member Session](https://stytch.com/docs/b2b/api/session-object) or Intermediate Session.\n\nWhen a Member Session is passed in, relationships with a type of `active_member`, `pending_member`, or `invited_member`\nwill be returned, and any membership can be assumed by calling the [Exchange Session](https://stytch.com/docs/b2b/api/exchange-session) endpoint.\n\nWhen an Intermediate Session is passed in, all relationship types - `active_member"
+        },
+        {
+          "info": {
+            "name": "Resetstart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/discovery/email/reset/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a password reset for the email address provided, when cross-org passwords are enabled. This will trigger an email to be sent to the address, containing a magic link that will allow them to set a new password and authenticate.\n\nThis endpoint adapts to your Project's password strength configuration.\nIf you're using [zxcvbn](https://stytch.com/docs/guides/passwords/strength-policy), the default, your passwords are considered valid\nif the strength score is >= 3. If you're using [LUDS](http"
+        },
+        {
+          "info": {
+            "name": "Reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/passwords/discovery/email/reset",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the password associated with an email and start an intermediate session. This endpoint checks that the password reset token is valid, hasn’t expired, or already been used.\n\nThe provided password needs to meet the project's password strength requirements, which can be checked in advance with the password strength endpoint. If the token and password are accepted, the password is securely stored for future authentication and the user is authenticated.\n\nResetting a password will start an inter"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

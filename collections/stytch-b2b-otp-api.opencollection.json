@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application B2B OTP API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "B2B OTP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/sms/send",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send a One-Time Passcode (OTP) to a Member's phone number.\n\nIf the Member already has a phone number, the `mfa_phone_number` field is not needed; the endpoint will send an OTP to the number associated with the Member.\nIf the Member does not have a phone number, the endpoint will send an OTP to the `mfa_phone_number` provided and link the `mfa_phone_number` with the Member.\n\nAn error will be thrown if the Member already has a phone number and the provided `mfa_phone_number` does not match the exi"
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/sms/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SMS OTPs may not be used as a primary authentication mechanism. They can be used to complete an MFA requirement, or they can be used as a step-up factor to be added to an existing session.\n\nThis endpoint verifies that the one-time passcode (OTP) is valid and hasn't expired or been previously used. OTP codes expire after two minutes.\n\nA given Member may only have a single active OTP code at any given time. If a Member requests another OTP code before the first one has expired, the first one will "
+        },
+        {
+          "info": {
+            "name": "Loginorsignup",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/login_or_signup",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send either a login or signup email OTP to a Member. A new, pending, or invited Member will receive a signup email OTP. Non-active members will have a pending status until they successfully authenticate. An active Member will receive a login email OTP.\n\nThe OTP is valid for 10 minutes. Only the most recently sent OTP is valid: when an OTP is sent, all OTPs previously sent to the same email address are invalidated, even if unused or unexpired."
+        },
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/otps/email/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate a Member with a one-time passcode (OTP). This endpoint requires an OTP that is not expired or previously used. \nOTPs have a default expiry of 10 minutes. If the Member's status is `pending` or `invited`, they will be updated to `active`.\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\n\nIf the Member is required to complete MFA"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

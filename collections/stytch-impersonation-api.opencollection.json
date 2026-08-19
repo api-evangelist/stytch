@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Impersonation API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Impersonation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authenticate",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/impersonation/authenticate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Authenticate an impersonation token to impersonate a User. This endpoint requires an impersonation token that is not expired or previously used.\nA Stytch session will be created for the impersonated user with a 60 minute duration. Impersonated sessions cannot be extended.\n\nPrior to this step, you can generate an impersonation token by visiting the Stytch Dashboard, viewing a user, and clicking the `Impersonate User` button."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

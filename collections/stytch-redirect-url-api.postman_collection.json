@@ -1,0 +1,1915 @@
+{
+  "item": [
+    {
+      "id": "f39d7875-5008-4a66-b588-4d41065d169a",
+      "name": "Redirect Url",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2e9cc4a2-ad58-4d4b-a09e-94db41bae4c6",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Create creates a redirect URL for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "redirect_urls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cf90498-07ac-4620-b714-7fa2b8ffeb8d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"redirect_url\": {\n    \"url\": \"string\",\n    \"valid_types\": [\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      }\n    ]\n  },\n  \"status_code\": 6910\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ed663cc-7783-4294-b90f-a31adbd66824",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c67c43ec-c0ca-4bd0-b2e2-0b153ed3184b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca5ad661-43af-4405-be8e-6d2be847acd5",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8a91a46b-c601-489e-ab8f-5548764a72f6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c826328f-1418-4478-bf02-b364f5403fe2",
+          "name": "Get",
+          "request": {
+            "name": "Get",
+            "description": {
+              "content": "Get retrieves a redirect URL for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "redirect_urls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5e3e9cf2-b42d-4438-a3eb-f26eddef0c9d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"redirect_url\": {\n    \"url\": \"string\",\n    \"valid_types\": [\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      }\n    ]\n  },\n  \"status_code\": 4940\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef9ac6a2-95f4-4cf1-885a-0cb6e7ba630e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e59f63b1-488f-4fdd-b961-82549c032f5b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4636a8b0-8b08-409a-8f32-5c66e1e75bd7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab92d28f-92d8-4c62-88c3-35aae9eafa0b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "383b3901-8554-461a-b342-b8ec291a9e4e",
+          "name": "Update",
+          "request": {
+            "name": "Update",
+            "description": {
+              "content": "Update updates the valid types for a redirect URL for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "redirect_urls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "764ef69e-36f9-4a3a-983d-04d57fa6b331",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"redirect_url\": {\n    \"url\": \"string\",\n    \"valid_types\": [\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      },\n      {\n        \"is_default\": \"<boolean>\",\n        \"type\": \"<string>\"\n      }\n    ]\n  },\n  \"status_code\": 4940\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da488086-61cf-4df3-9318-aab0cf8849f3",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c717740-8e67-4c70-9d09-2d2f0924c8e0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cb303e3-e870-40ae-a0ca-a945ccbac805",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2fbf31c1-ea37-495a-8ef8-c6915c87edc9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"valid_types\": [\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    },\n    {\n      \"is_default\": \"<boolean>\",\n      \"type\": \"<string>\"\n    }\n  ],\n  \"do_not_promote_defaults\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b24bbcd9-357d-46b9-adf4-73ac1e26a535",
+          "name": "Delete",
+          "request": {
+            "name": "Delete",
+            "description": {
+              "content": "Delete deletes a redirect URL for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "redirect_urls"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "url",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "do_not_promote_defaults",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3a264d06-8ecc-473d-9fc2-7629245ebec3",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "do_not_promote_defaults",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"status_code\": 2245\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "612803a9-72ef-423b-8736-32be2e33e776",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "do_not_promote_defaults",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e99a5eaa-519f-4cd2-ad66-cb21d0f11691",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "do_not_promote_defaults",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "335acb93-88cf-49fc-9090-d217357ecf7c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "do_not_promote_defaults",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5ffbb494-1ad0-4ced-aa49-738afe2724e4",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "url",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "do_not_promote_defaults",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a4b274d-7f17-4d29-805d-39d63f773059",
+          "name": "Getall",
+          "request": {
+            "name": "Getall",
+            "description": {
+              "content": "GetAll retrieves all redirect URLs for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "redirect_urls",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7492836-1201-4c56-b8d0-03f443de37e4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"redirect_urls\": [\n    {\n      \"url\": \"string\",\n      \"valid_types\": [\n        {\n          \"is_default\": \"<boolean>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"is_default\": \"<boolean>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"url\": \"string\",\n      \"valid_types\": [\n        {\n          \"is_default\": \"<boolean>\",\n          \"type\": \"<string>\"\n        },\n        {\n          \"is_default\": \"<boolean>\",\n          \"type\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"status_code\": 9012\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a03b5be4-b78f-4402-bfcc-f79e127e9688",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d8c4fa1c-d240-4d8a-b777-e9d9b1704057",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6df2d973-1088-4fe2-a30b-8ec1afb5824d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1ad252b1-c839-49f7-8283-c7f01a8716de",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "redirect_urls",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1e928be7-123b-4e2c-9a01-5ba3bb09bcad",
+    "name": "Stytch B2B Authentication Application Redirect Url API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

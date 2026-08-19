@@ -1,0 +1,78 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Jwt Template API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jwt Template",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/jwt_templates/:jwt_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "jwt_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves a JWT template for a project"
+        },
+        {
+          "info": {
+            "name": "Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/jwt_templates/:jwt_template_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "jwt_template_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set updates a specific JWT template for a project"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

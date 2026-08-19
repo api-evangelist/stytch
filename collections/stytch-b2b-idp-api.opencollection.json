@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application B2B IDP API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "B2B IDP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorizestart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/idp/oauth/authorize/start",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a request for authorization of a Connected App to access a Member's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request.\nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ consent must be granted before p"
+        },
+        {
+          "info": {
+            "name": "Authorize",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/idp/oauth/authorize",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Completes a request for authorization of a Connected App to access a Member's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/b2b/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirec"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

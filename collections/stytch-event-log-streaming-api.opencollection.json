@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Event Log Streaming API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Event Log Streaming",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates an event log streaming config for an environment."
+        },
+        {
+          "info": {
+            "name": "Enable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type/enable",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable starts streaming event logs for an environment to a destination."
+        },
+        {
+          "info": {
+            "name": "Disable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming/:destination_type/disable",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "destination_type",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disable stops streaming event logs for an environment to a destination."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,588 @@
+{
+  "item": [
+    {
+      "id": "8d9f782f-a782-4be9-a814-9613f5c9a44e",
+      "name": "IDP",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "20448059-0851-470d-b84b-a9d089718938",
+          "name": "Authorizestart",
+          "request": {
+            "name": "Authorizestart",
+            "description": {
+              "content": "Initiates a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request. \nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ user consent must be granted before proceeding with the authorization\n- A list of scopes the user has the ability to grant the Connected App\n\nUse this response to prompt the user for consent (if necessary) before calling the [Submit OAuth Authorization](https://stytch.com/docs/api/connected-apps-oauth-authorize) endpoint.\n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "idp",
+                "oauth",
+                "authorize",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f9042eef-f890-492c-9923-fb2a8c2a0722",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"is_locked\": true,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": true\n    },\n    \"trusted_metadata\": {\n      \"key_0\": 8481.237570469457,\n      \"key_1\": 224.85800048600123\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": true,\n      \"key_1\": 170.41643724991172\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"client\": {\n    \"client_id\": \"string\",\n    \"client_name\": \"string\",\n    \"client_description\": \"string\",\n    \"client_type\": \"string\",\n    \"logo_url\": \"string\"\n  },\n  \"consent_required\": true,\n  \"scope_results\": [\n    {\n      \"scope\": \"string\",\n      \"description\": \"string\",\n      \"is_grantable\": true\n    },\n    {\n      \"scope\": \"string\",\n      \"description\": \"string\",\n      \"is_grantable\": false\n    }\n  ],\n  \"status_code\": 4455\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f78f9fe-9846-4e49-bf0f-abed73de74d9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6e11ab49-9f78-451d-8a8a-98efa73aaab5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "324ef5a3-1313-4ffb-a7dc-7636b0fa9988",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dea827b7-68f6-4d5b-bb5e-2d527b63a89e",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9565a53e-17a5-47fe-b5ce-9a2205215e6e",
+          "name": "Authorize",
+          "request": {
+            "name": "Authorize",
+            "description": {
+              "content": "Completes a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirect_uri` will contain a valid `authorization_code` embedded as a query parameter.\nIf the authorization was unsuccessful, the `redirect_uri` will contain an OAuth2.1 `error_code`.\nIn both cases, redirect the user to the location for the response to be consumed by the Connected App. \n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "idp",
+                "oauth",
+                "authorize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2a013208-6e8f-48f6-b6fe-535ee817d230",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"redirect_uri\": \"string\",\n  \"status_code\": 98,\n  \"authorization_code\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1761c1f2-0ea3-4a07-aa3c-dbf2bb9da7a2",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1e110e3a-8f25-47f2-b6fa-2ba5ae05c3f2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f6e5c39e-b79e-47ea-9d28-46ff27fbc541",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f570189c-a29c-479e-9199-74ef5e43d9cf",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "idp",
+                    "oauth",
+                    "authorize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"consent_granted\": \"<boolean>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"client_id\": \"<string>\",\n  \"redirect_uri\": \"<string>\",\n  \"response_type\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"prompt\": \"<string>\",\n  \"state\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"code_challenge\": \"<string>\",\n  \"resources\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "29459ca4-5313-48ad-8ecc-4981aed5a92c",
+    "name": "Stytch B2B Authentication Application IDP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

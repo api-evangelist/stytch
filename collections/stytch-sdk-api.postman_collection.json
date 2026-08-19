@@ -1,0 +1,1482 @@
+{
+  "item": [
+    {
+      "id": "4401ca6f-82ae-4fb0-b8dc-840d9f42af87",
+      "name": "Sdk",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3635194f-3ef4-4a2b-a985-2b5e9be9f39e",
+          "name": "Getconsumerconfig",
+          "request": {
+            "name": "Getconsumerconfig",
+            "description": {
+              "content": "GetConsumerConfig retrieves the SDK configuration for a B2C project environment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "sdk",
+                "consumer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a0f04075-a084-4824-98c3-9793cb59fff3",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"config\": {\n    \"basic\": {\n      \"enabled\": false,\n      \"domains\": [\n        \"string\",\n        \"string\"\n      ],\n      \"bundle_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": 5332\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": false,\n      \"send_enabled\": true,\n      \"pkce_required\": false\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": true,\n      \"whatsapp_login_or_create_enabled\": false,\n      \"email_login_or_create_enabled\": true,\n      \"sms_send_enabled\": false,\n      \"whatsapp_send_enabled\": false,\n      \"email_send_enabled\": false,\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"hash\",\n          \"metadata_value\": \"string\",\n          \"bundle_id\": \"string\"\n        },\n        {\n          \"metadata_type\": \"domain\",\n          \"metadata_value\": \"string\",\n          \"bundle_id\": \"string\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": true,\n      \"pkce_required\": true\n    },\n    \"totps\": {\n      \"create_totps\": true,\n      \"enabled\": false\n    },\n    \"webauthn\": {\n      \"create_webauthns\": true,\n      \"enabled\": false\n    },\n    \"crypto_wallets\": {\n      \"enabled\": false,\n      \"siwe_required\": true\n    },\n    \"dfppa\": {\n      \"enabled\": \"ENABLED\",\n      \"on_challenge\": \"ALLOW\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": false,\n      \"enabled\": true\n    },\n    \"passwords\": {\n      \"enabled\": false,\n      \"pkce_required_for_password_resets\": true\n    },\n    \"cookies\": {\n      \"http_only\": \"ENABLED\"\n    }\n  },\n  \"status_code\": 7993\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f35f88d-3e3f-4c6c-874d-f7ac89294a4f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "69d27d0c-7bd3-46dd-9c9d-428b2efc720e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35566597-9637-4497-98f9-769922c6af03",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5099bb2f-6c3a-43a5-b061-aa8953478ea6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ec2e936c-7a70-4944-95ce-483e48a088fb",
+          "name": "Setconsumerconfig",
+          "request": {
+            "name": "Setconsumerconfig",
+            "description": {
+              "content": "SetConsumerConfig updates the SDK configuration for a B2C project environment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "sdk",
+                "consumer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dbb33424-9a8a-4987-8ad7-8960767e0872",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  },\n  \"status_code\": 8369\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61edfe55-4ec6-4e59-8936-e9bce53cd38b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8791861d-9ee4-412b-a493-d32a878dd3bf",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6794bea9-f0fa-499c-93fd-d1ae599042f3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6d197549-c33f-483e-91b8-252ca2ebfdf0",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "consumer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"domains\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"login_or_create_enabled\": \"<boolean>\",\n      \"send_enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_login_or_create_enabled\": \"<boolean>\",\n      \"whatsapp_login_or_create_enabled\": \"<boolean>\",\n      \"email_login_or_create_enabled\": \"<boolean>\",\n      \"sms_send_enabled\": \"<boolean>\",\n      \"whatsapp_send_enabled\": \"<boolean>\",\n      \"email_send_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ]\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"webauthn\": {\n      \"create_webauthns\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"crypto_wallets\": {\n      \"enabled\": \"<boolean>\",\n      \"siwe_required\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"biometrics\": {\n      \"create_biometrics_enabled\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1829c76f-bde7-473d-b5ae-01f47dfef2c9",
+          "name": "Getb2bconfig",
+          "request": {
+            "name": "Getb2bconfig",
+            "description": {
+              "content": "GetB2BConfig retrieves the SDK configuration for a B2B project environment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "sdk",
+                "b2b"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2c3d8ff3-d208-40bd-acf9-753157c4f605",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"config\": {\n    \"basic\": {\n      \"enabled\": false,\n      \"allow_self_onboarding\": false,\n      \"enable_member_permissions\": false,\n      \"domains\": [\n        {\n          \"domain\": \"string\",\n          \"slug_pattern\": \"string\"\n        },\n        {\n          \"domain\": \"string\",\n          \"slug_pattern\": \"string\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": 1746\n    },\n    \"magic_links\": {\n      \"enabled\": false,\n      \"pkce_required\": false\n    },\n    \"oauth\": {\n      \"enabled\": true,\n      \"pkce_required\": false\n    },\n    \"totps\": {\n      \"create_totps\": false,\n      \"enabled\": true\n    },\n    \"sso\": {\n      \"enabled\": false,\n      \"pkce_required\": true\n    },\n    \"otps\": {\n      \"sms_enabled\": false,\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": false\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": true,\n      \"pkce_required_for_password_resets\": true\n    },\n    \"cookies\": {\n      \"http_only\": \"DISABLED\"\n    }\n  },\n  \"status_code\": 8777\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3172d2b8-50a8-478c-9da9-7a491df4844f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fc713e3d-151e-4ab5-ae20-994446f0be5f",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8c4cb74-a332-479b-907c-5ed4043ccf1b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "591803db-8055-4194-8685-a92367a0e268",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e0cb6c1-806b-45fa-950c-b5b71abc8561",
+          "name": "Setb2bconfig",
+          "request": {
+            "name": "Setb2bconfig",
+            "description": {
+              "content": "SetB2BConfig updates the SDK configuration for a B2B project environment",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "sdk",
+                "b2b"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6be0fed1-2cb1-402a-b6a6-9b66a699ca95",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  },\n  \"status_code\": 4223\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af943331-f6d5-4a31-b340-1e289ebdd49e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8f40021-3cbc-4f40-b3d4-58d8115d0d01",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37796b08-1bf5-456b-a39b-6bcd7ee40830",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3689de2d-65fa-450e-9582-3a10230b9499",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "sdk",
+                    "b2b"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"config\": {\n    \"basic\": {\n      \"enabled\": \"<boolean>\",\n      \"allow_self_onboarding\": \"<boolean>\",\n      \"enable_member_permissions\": \"<boolean>\",\n      \"domains\": [\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        },\n        {\n          \"domain\": \"<string>\",\n          \"slug_pattern\": \"<string>\"\n        }\n      ],\n      \"bundle_ids\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    \"sessions\": {\n      \"max_session_duration_minutes\": \"<integer>\"\n    },\n    \"magic_links\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"oauth\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"totps\": {\n      \"create_totps\": \"<boolean>\",\n      \"enabled\": \"<boolean>\"\n    },\n    \"sso\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required\": \"<boolean>\"\n    },\n    \"otps\": {\n      \"sms_enabled\": \"<boolean>\",\n      \"sms_autofill_metadata\": [\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        },\n        {\n          \"metadata_type\": \"<string>\",\n          \"metadata_value\": \"<string>\",\n          \"bundle_id\": \"<string>\"\n        }\n      ],\n      \"email_enabled\": \"<boolean>\"\n    },\n    \"dfppa\": {\n      \"enabled\": \"<string>\",\n      \"on_challenge\": \"<string>\"\n    },\n    \"passwords\": {\n      \"enabled\": \"<boolean>\",\n      \"pkce_required_for_password_resets\": \"<boolean>\"\n    },\n    \"cookies\": {\n      \"http_only\": \"<string>\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "00f5f0ef-af63-4f04-99e3-1f30803f27d9",
+    "name": "Stytch B2B Authentication Application Sdk API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

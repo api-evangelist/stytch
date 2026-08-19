@@ -1,0 +1,239 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Organization API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Organization. An `organization_name` and a unique `organization_slug` are required.\n\nIf no Organization authentication setting parameters are passed in, `email_invites` will default to `ALL_ALLOWED` so that the Organization has a way to add Members. Otherwise, `email_invites` will default to `NOT_ALLOWED`.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites"
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Returns an Organization specified by `organization_id`."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an Organization specified by `organization_id`. An Organization must always have at least one auth setting set to either `RESTRICTED` or `ALL_ALLOWED` in order to provision new Members.\n\n*See the [Organization authentication settings](https://stytch.com/docs/b2b/api/org-auth-settings) resource to learn more about fields like `email_jit_provisioning`, `email_invites`, `sso_jit_provisioning`, etc., and their behaviors."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Deletes an Organization specified by `organization_id`. All Members of the Organization will also be deleted."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 100 requests/minute.\n\nSearch across your Organizations. Returns an array of Organization objects."
+        },
+        {
+          "info": {
+            "name": "Metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/metrics",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Metrics"
+        },
+        {
+          "info": {
+            "name": "Connectedapps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/connected_apps",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of Connected Apps for the Organization that have been installed by Members. Installation comprises\nsuccessful completion of an authorization flow with a Connected App that has not been revoked.\n\nConnected Apps may be uninstalled if an Organization changes its `first_party_connected_apps_allowed_type`\nor `third_party_connected_apps_allowed_type` policies."
+        },
+        {
+          "info": {
+            "name": "Getconnectedapp",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/connected_apps/:connected_app_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ]
+          },
+          "docs": "Get Connected App for Organization retrieves information about the specified Connected App as well as a list of the\nOrganization's Members who have the App installed along with the scopes they requested at completion of their last\nauthorization with the App."
+        },
+        {
+          "info": {
+            "name": "Deleteexternalid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/external_id",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deleteexternalid"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

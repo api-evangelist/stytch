@@ -1,0 +1,254 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Trusted Token Profile API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trusted Token Profile",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getall",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetAll retrieves all the trusted token profiles for an environment."
+        },
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create creates a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get retrieves the trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update updates a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete deletes a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Createpemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "CreatePEM creates a PEM file for a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Getpemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys/:pem_file_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pem_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetPEM retrieves a PEM file for a trusted token profile for an environment."
+        },
+        {
+          "info": {
+            "name": "Deletepemfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/trusted_token_profiles/:profile_id/keys/:pem_file_id",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "profile_id",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "pem_file_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "DeletePEM deletes a PEM file for a trusted token profile for an environment."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1755 @@
+{
+  "item": [
+    {
+      "id": "003324a3-5680-4b67-a4db-8bae64012c58",
+      "name": "WebAuthn",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2fbbdcd0-7f6d-405c-92c8-04574c117ec1",
+          "name": "Registerstart",
+          "request": {
+            "name": "Registerstart",
+            "description": {
+              "content": "Initiate the process of creating a new Passkey or WebAuthn registration. \n\nTo optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.\n\nAfter calling this endpoint, the browser will need to call [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) with the data from [public_key_credential_creation_options](https://w3c.github.io/webauthn/#dictionary-makecredentialoptions) passed to the [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) request via the public key argument.\n\nWhen using built-in browser methods like `navigator.credentials.create()`, set the `use_base64_url_encoding` option to `true`.\n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                "register",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2c34d42b-d368-4213-b878-0d4b9be994ab",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"public_key_credential_creation_options\": \"string\",\n  \"status_code\": 4047\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7466db57-b071-4642-ad31-db58a2e55939",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2e550004-1fb9-4286-9257-ee6d4d4d2219",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d2a63f4-c766-4b43-a894-9411b990b66a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a2172e4-cb8a-4763-812d-a45a6df57257",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"domain\": \"<string>\",\n  \"user_agent\": \"<string>\",\n  \"authenticator_type\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"override_id\": \"<string>\",\n  \"override_name\": \"<string>\",\n  \"override_display_name\": \"<string>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cfd75a82-2dd7-4a42-9724-18c1d7a55b96",
+          "name": "Register",
+          "request": {
+            "name": "Register",
+            "description": {
+              "content": "Complete the creation of a WebAuthn registration by passing the response from the [navigator.credentials.create()](https://www.w3.org/TR/webauthn-2/#sctn-createCredential) request to this endpoint as the `public_key_credential` parameter. \n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                "register"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true,\n    \"key_1\": true,\n    \"key_2\": 9252.271367471934\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "36b9d36e-bc79-4ead-87cd-7355a0e694c0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"webauthn_registration_id\": \"string\",\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"is_locked\": true,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": true\n    },\n    \"trusted_metadata\": {\n      \"key_0\": 7740,\n      \"key_1\": false\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": 6775\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"status_code\": 8608,\n  \"session\": {\n    \"session_id\": \"string\",\n    \"user_id\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"webauthn\",\n        \"delivery_method\": \"oauth_google\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"otp\",\n        \"delivery_method\": \"oauth_apple\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"attributes\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\"\n    },\n    \"custom_claims\": {\n      \"key_0\": true,\n      \"key_1\": true\n    }\n  },\n  \"user_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7bb9e68d-48d8-4d6d-bcf7-47c60350ee4f",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9d64254f-2eac-4d84-be62-7d17d74b95b0",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8f5b764-89c0-402d-abfe-a7aeb203a776",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d607cf15-b276-42cf-8cac-b86030a13116",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "register"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "70b6b759-0bea-462f-bf65-edd1ace901f1",
+          "name": "Authenticatestart",
+          "request": {
+            "name": "Authenticatestart",
+            "description": {
+              "content": "Initiate the authentication of a Passkey or WebAuthn registration. \n\nTo optimize for Passkeys, set the `return_passkey_credential_options` field to `true`.\n\nAfter calling this endpoint, the browser will need to call [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) with the data from `public_key_credential_request_options` passed to the [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request via the public key argument.\n\nWhen using built-in browser methods like `navigator.credentials.get()`, set the `use_base64_url_encoding` option to `true`.\n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                "authenticate",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f0b44faa-42e8-42c8-8a65-f6207d48cbfe",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"public_key_credential_request_options\": \"string\",\n  \"status_code\": 2437\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15a441f1-1979-4b9b-80b9-67899ec58230",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9a641ce6-80da-4489-930f-ff6e217edaa1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4a677936-d168-4331-9656-3db76369f276",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c62d7fa8-4a92-40d5-854b-8be5ab444ae5",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"return_passkey_credential_options\": \"<boolean>\",\n  \"use_base64_url_encoding\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5b11fdea-8a64-43ea-ae16-cac18bcc7e7c",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Complete the authentication of a Passkey or WebAuthn registration by passing the response from the [navigator.credentials.get()](https://www.w3.org/TR/webauthn-2/#sctn-getAssertion) request to the authenticate endpoint. \n\nSee our [WebAuthn setup guide](https://stytch.com/docs/guides/webauthn/api) for additional usage instructions and example code.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8970,\n    \"key_1\": 9993.431465029162\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2d96723b-beae-4373-906a-5c38bf31f567",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": \"string\"\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"webauthn_registration_id\": \"string\",\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"is_locked\": false,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": false\n    },\n    \"trusted_metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": true,\n      \"key_1\": 6785.190698887832\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"status_code\": 2199,\n  \"session\": {\n    \"session_id\": \"string\",\n    \"user_id\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"webauthn\",\n        \"delivery_method\": \"knowledge\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"trusted_auth_token\",\n        \"delivery_method\": \"oauth_gitlab\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"attributes\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\"\n    },\n    \"custom_claims\": {\n      \"key_0\": true,\n      \"key_1\": true,\n      \"key_2\": \"string\"\n    }\n  },\n  \"user_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8602259f-50c7-46d7-ab69-3927a27e88cd",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": \"string\"\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a19a0338-e5c2-48d6-a294-97966714e4d3",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": \"string\"\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "69ebd645-cbef-4695-8816-2dcd2ba3c639",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": \"string\"\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "09f5299d-7dd9-4e50-a7ef-c3f69ee05531",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"public_key_credential\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": \"string\"\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3c8aadca-f145-4c9e-927f-cc5383dfe13d",
+          "name": "Update",
+          "request": {
+            "name": "Update",
+            "description": {
+              "content": "Updates a Passkey or WebAuthn registration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                ":webauthn_registration_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "webauthn_registration_id",
+                  "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9d0b6e09-9d09-44eb-87f5-411242c89c5d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    ":webauthn_registration_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webauthn_registration_id",
+                      "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"status_code\": 8910,\n  \"webauthn_registration\": {\n    \"webauthn_registration_id\": \"string\",\n    \"domain\": \"string\",\n    \"user_agent\": \"string\",\n    \"verified\": false,\n    \"authenticator_type\": \"string\",\n    \"name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d56b6aba-1cf6-4c50-a7cf-9ae7a4352ee3",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    ":webauthn_registration_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webauthn_registration_id",
+                      "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "230edf3e-ec66-4f06-952a-2fa966d24894",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    ":webauthn_registration_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webauthn_registration_id",
+                      "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b12d6d1-ce48-4de5-a734-ad31a6f0b155",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    ":webauthn_registration_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webauthn_registration_id",
+                      "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b3e23ad4-f1fd-4875-8484-9a5822fda0e1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    ":webauthn_registration_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "webauthn_registration_id",
+                      "description": "(Required) Globally unique UUID that identifies a Passkey or WebAuthn registration in the Stytch API. The `webauthn_registration_id` is used when you need to operate on a specific User's WebAuthn registration."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fec3f1ac-0afa-4460-99b3-a50e767b4761",
+          "name": "Listcredentials",
+          "request": {
+            "name": "Listcredentials",
+            "description": {
+              "content": "List the public key credentials of the WebAuthn Registrations or Passkeys registered to a specific User.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "webauthn",
+                "credentials",
+                ":user_id",
+                ":domain"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "user_id",
+                  "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "domain",
+                  "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "77492140-efdb-4d75-b8ac-1ea9fbec8acf",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "credentials",
+                    ":user_id",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"credentials\": [\n    {\n      \"credential_id\": \"string\",\n      \"webauthn_registration_id\": \"string\",\n      \"type\": \"string\",\n      \"public_key\": \"string\"\n    },\n    {\n      \"credential_id\": \"string\",\n      \"webauthn_registration_id\": \"string\",\n      \"type\": \"string\",\n      \"public_key\": \"string\"\n    }\n  ],\n  \"request_id\": \"string\",\n  \"status_code\": 5305\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c151bec-f31c-49c7-a89c-ee0d229d17ce",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "credentials",
+                    ":user_id",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2b7e7299-7b62-473f-a110-b8d1be362dfa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "credentials",
+                    ":user_id",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1af399d1-e599-4059-9266-26e1e6e9d931",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "credentials",
+                    ":user_id",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9015489f-6e52-44c7-baee-8cbcd67d7b56",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "webauthn",
+                    "credentials",
+                    ":user_id",
+                    ":domain"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "user_id",
+                      "description": "(Required) The `user_id` of an active user the Passkey or WebAuthn registration should be tied to."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "domain",
+                      "description": "(Required) The domain for Passkeys or WebAuthn. Defaults to `window.location.hostname`."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "83c3e8c3-8ee0-407e-87d6-88a017b02f86",
+    "name": "Stytch B2B Authentication Application WebAuthn API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

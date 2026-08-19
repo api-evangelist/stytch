@@ -1,0 +1,1664 @@
+{
+  "item": [
+    {
+      "id": "cf6fd471-173c-43d8-8da3-c21d9e586841",
+      "name": "Magic Links",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fd22f5cd-0681-43c1-a318-b60053673cfb",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Authenticate a User given a Magic Link. This endpoint verifies that the Magic Link token is valid, hasn't expired or been previously used, and any optional security settings such as IP match or user agent match are satisfied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": true,\n    \"key_1\": 5053,\n    \"key_2\": \"string\"\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2699251-a0f8-4237-b772-6c66b700184e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 1756,\n    \"key_1\": \"string\",\n    \"key_2\": 5843.741026109766\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"method_id\": \"string\",\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"is_locked\": true,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": true\n    },\n    \"trusted_metadata\": {\n      \"key_0\": 5519,\n      \"key_1\": \"string\"\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": true,\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"reset_sessions\": true,\n  \"status_code\": 5812,\n  \"session\": {\n    \"session_id\": \"string\",\n    \"user_id\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"password\",\n        \"delivery_method\": \"oauth_exchange_google\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"trusted_auth_token\",\n        \"delivery_method\": \"oauth_exchange_github\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"attributes\": {\n      \"ip_address\": \"<string>\",\n      \"user_agent\": \"<string>\"\n    },\n    \"custom_claims\": {\n      \"key_0\": 1244,\n      \"key_1\": \"string\"\n    }\n  },\n  \"user_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3094670a-5851-4399-9760-e8abf7339ee2",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 1756,\n    \"key_1\": \"string\",\n    \"key_2\": 5843.741026109766\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d03993f6-014e-4778-a4dd-44f6ea16f4b9",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 1756,\n    \"key_1\": \"string\",\n    \"key_2\": 5843.741026109766\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13700262-192e-42ef-bb84-a5e5ae6975da",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 1756,\n    \"key_1\": \"string\",\n    \"key_2\": 5843.741026109766\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c3f53d5-f306-4d0b-a1ae-a2c277b46fed",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"options\": {\n    \"ip_match_required\": \"<boolean>\",\n    \"user_agent_match_required\": \"<boolean>\"\n  },\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 1756,\n    \"key_1\": \"string\",\n    \"key_2\": 5843.741026109766\n  },\n  \"code_verifier\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "13becfea-42e3-471c-94c8-cbe1800c6f23",
+          "name": "Create",
+          "request": {
+            "name": "Create",
+            "description": {
+              "content": "Create an Embeddable Magic Link token for a User.\n\n### Important usage notes\n\nCarefully review the following notes before using Embeddable Magic Links:\n\n* Embeddable Magic Link tokens are **sensitive values**. You should handle and store them securely.\n* Authenticating an Embeddable Magic Link token will not mark any of a user's delivery factors (email address or phone number) as verified, since we cannot confirm how the token was sent to the user.\n* Embeddable Magic Links are only available in our Consumer API, and not our B2B API.\n\nWhen sending Embeddable Magic Links via email:\n\n* Deliverability is paramount. Carefully test your email copy to ensure it reaches your users' inboxes. Small changes can result in your emails being sent to spam.\n* In some cases, email security bots may follow links within incoming emails before your users open them. This consumes the Embeddable Magic Link token, preventing the user from logging in when they later click the link. Our Email Magic Links product automatically prevents this (details [here](https://stytch.com/docs/consumer-auth/authentication/magic-links/redirect-routing)). However, when sending your own emails containing Embeddable Magic Links, you'll be responsible for detecting and stopping bot traffic using tools like CAPTCHA or [Device Fingerprinting](https://stytch.com/docs/fraud-risk/device-fingerprinting/overview).\n\nWe also recommend checking out our [Trusted Auth Tokens](https://stytch.com/docs/consumer-auth/authentication/trusted-auth-tokens/overview) product, which is available in both our Consumer and B2B APIs and can be a better fit for some use cases.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c602a0fc-0aba-4d50-a8a8-cabf5dae6591",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"token\": \"string\",\n  \"status_code\": 2062\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b244620-95e6-4b00-bbbe-9ba19837c913",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0bf3150f-52a8-4209-be71-347b6c55d0df",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "933611c0-3db5-4894-9076-1efcf1fa5eec",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d830d336-f168-4233-8beb-b57c07b5bee7",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"user_id\": \"<string>\",\n  \"expiration_minutes\": \"<integer>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2f8aa3b7-6621-462a-aa40-484b73c0a068",
+          "name": "Send",
+          "request": {
+            "name": "Send",
+            "description": {
+              "content": "Send a magic link to an existing Stytch user using their email address. If you'd like to create a user and send them a magic link by email with one request, use our [log in or create endpoint](https://stytch.com/docs/api/log-in-or-create-user-by-email).\n\n### Add an email to an existing user\nThis endpoint also allows you to add a new email address to an existing Stytch User. Including a `user_id`, `session_token`, or `session_jwt` in your Send Magic Link by email request will add the new, unverified email address to the existing Stytch User. If the user successfully authenticates within 5 minutes, the new email address will be marked as verified and remain permanently on the existing Stytch User. Otherwise, it will be removed from the User object, and any subsequent login requests using that email address will create a new User.\n\n### Next steps\nThe user is emailed a magic link which redirects them to the provided [redirect URL](https://stytch.com/docs/guides/magic-links/email-magic-links/redirect-routing). Collect the `token` from the URL query parameters, and call [Authenticate magic link](https://stytch.com/docs/api/authenticate-magic-link) to complete authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links",
+                "email",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fdb0e5a3-3ecb-4726-855a-1b7f409f011a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"email_id\": \"string\",\n  \"status_code\": 9999\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8508ac7d-bd2b-4367-94f5-7340816f52d8",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "62425c3e-97a5-4ff5-b72e-ffba9744feb2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f43c66fc-7fac-46cf-9697-bbb40231dd63",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "84285208-efee-44e2-9c45-512f0855769a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"code_challenge\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"signup_template_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c443667a-36f5-4dc8-b5a2-df385102a8ca",
+          "name": "Loginorcreate",
+          "request": {
+            "name": "Loginorcreate",
+            "description": {
+              "content": "Send either a login or signup Magic Link to the User based on if the email is associated with a User already. A new or pending User will receive a signup Magic Link. An active User will receive a login Magic Link. For more information on how to control the status your Users are created in see the `create_user_as_pending` flag.\n\n### Next steps\nThe User is emailed a Magic Link which redirects them to the provided [redirect URL](https://stytch.com/docs/guides/magic-links/email-magic-links/redirect-routing). Collect the `token` from the URL query parameters and call [Authenticate Magic Link](https://stytch.com/docs/api/authenticate-magic-link) to complete authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links",
+                "email",
+                "login_or_create"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "af77ed51-2ea0-47ff-8630-1fd498bc5dd4",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "login_or_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"email_id\": \"string\",\n  \"user_created\": true,\n  \"status_code\": 5149\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a966631-f906-40b6-90a5-f181f51b8743",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "login_or_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "18cbd45c-a45e-4a11-8d90-1fecfeaf957d",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "login_or_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d04d5ec-ec86-444d-ac63-543a5d98c604",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "login_or_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a35ad730-1afb-4d89-9e9a-57b5ce464c9c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "login_or_create"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"login_magic_link_url\": \"<string>\",\n  \"signup_magic_link_url\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"create_user_as_pending\": \"<boolean>\",\n  \"code_challenge\": \"<string>\",\n  \"locale\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c23244d-de45-4c50-8190-cfaaf9340bce",
+          "name": "Invite",
+          "request": {
+            "name": "Invite",
+            "description": {
+              "content": "Create a User and send an invite Magic Link to the provided `email`. The User will be created with a `pending` status until they click the Magic Link in the invite email.\n\n### Next steps\nThe User is emailed a Magic Link which redirects them to the provided [redirect URL](https://stytch.com/docs/guides/magic-links/email-magic-links/redirect-routing). Collect the `token` from the URL query parameters and call [Authenticate Magic Link](https://stytch.com/docs/api/authenticate-magic-link) to complete authentication.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links",
+                "email",
+                "invite"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 2162.4984938220805,\n    \"key_1\": \"string\"\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": 1539.4859976391563\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "699c486c-b3d6-468c-8906-58c3067618df",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 284,\n    \"key_1\": false\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"email_id\": \"string\",\n  \"status_code\": 9999\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c702116d-d44b-4a5b-81a0-18dc6dbf94f6",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 284,\n    \"key_1\": false\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a55bf1cf-fd3f-4962-8d86-08538c6269d7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 284,\n    \"key_1\": false\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8e837222-3b8f-42d0-960a-418f70eaa12c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 284,\n    \"key_1\": false\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "44883d4c-1d3a-468b-9c1c-13f416ef351d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\",\n  \"invite_template_id\": \"<string>\",\n  \"attributes\": {\n    \"ip_address\": \"<string>\",\n    \"user_agent\": \"<string>\"\n  },\n  \"name\": {\n    \"first_name\": \"<string>\",\n    \"middle_name\": \"<string>\",\n    \"last_name\": \"<string>\"\n  },\n  \"invite_magic_link_url\": \"<string>\",\n  \"invite_expiration_minutes\": \"<integer>\",\n  \"locale\": \"<string>\",\n  \"trusted_metadata\": {\n    \"key_0\": 284,\n    \"key_1\": false\n  },\n  \"untrusted_metadata\": {\n    \"key_0\": \"string\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71d507f4-3b50-4fbf-b59c-c2c761acddf5",
+          "name": "Revokeinvite",
+          "request": {
+            "name": "Revokeinvite",
+            "description": {
+              "content": "Revoke a pending invite based on the `email` provided.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "magic_links",
+                "email",
+                "revoke_invite"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf31f504-72e7-49ca-8eac-f0282c5ea15e",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "revoke_invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"status_code\": 5316\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "85fa1f24-a710-497b-8a1c-7f0892c46843",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "revoke_invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f71afe13-eb80-4761-9b59-8aadb1d3c516",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "revoke_invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "827d430b-6977-49dc-af4f-27c4e75dd24c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "revoke_invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "505f6071-8d95-44ba-940b-730ee4579075",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "magic_links",
+                    "email",
+                    "revoke_invite"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "87aca3e2-98ee-4859-9a1e-e7471f68fb29",
+    "name": "Stytch B2B Authentication Application Magic Links API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

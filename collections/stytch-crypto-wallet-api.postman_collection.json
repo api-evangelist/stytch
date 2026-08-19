@@ -1,0 +1,576 @@
+{
+  "item": [
+    {
+      "id": "a6b88056-56dc-419e-8448-fdc427bfc4d5",
+      "name": "Crypto Wallet",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "586cacfd-d4f6-468a-8e1d-d75c8803fdac",
+          "name": "Authenticatestart",
+          "request": {
+            "name": "Authenticatestart",
+            "description": {
+              "content": "Initiate the authentication of a crypto wallet. After calling this endpoint, the user will need to sign a message containing the returned `challenge` field.\n\nFor Ethereum crypto wallets, you can optionally use the Sign In With Ethereum (SIWE) protocol for the message by passing in the `siwe_params`. The only required fields are `domain` and `uri`.\nIf the crypto wallet detects that the domain in the message does not match the website's domain, it will display a warning to the user.\n\nIf not using the SIWE protocol, the message will simply consist of the project name and a random string.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "crypto_wallets",
+                "authenticate",
+                "start"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ceedf635-90f0-495d-a4ea-ce33495bfe6a",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"challenge\": \"string\",\n  \"user_created\": false,\n  \"status_code\": 6359\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b582e49-f97a-4af4-b847-c727b5caa211",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bee0b470-4ac1-4864-938c-ee54756a3ea8",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d7cb1d3a-767b-4142-b2f2-162f1aac614a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6d15236-bb3c-49af-a782-8a807b26f3d6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate",
+                    "start"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"user_id\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"siwe_params\": {\n    \"domain\": \"<string>\",\n    \"uri\": \"<string>\",\n    \"resources\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"chain_id\": \"<string>\",\n    \"statement\": \"<string>\",\n    \"issued_at\": \"<string>\",\n    \"not_before\": \"<string>\",\n    \"message_request_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e799f8e-5221-4d7b-908b-1301d3fa5733",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Complete the authentication of a crypto wallet by passing the signature.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "crypto_wallets",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8409.793355102669,\n    \"key_1\": true\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e87484ed-0533-495a-a38b-63b2042fe906",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5902.519436429297,\n    \"key_1\": 6872.030833301695,\n    \"key_2\": 1160,\n    \"key_3\": 3091\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"user_id\": \"string\",\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"user\": {\n    \"user_id\": \"string\",\n    \"emails\": [\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": true\n      },\n      {\n        \"email_id\": \"string\",\n        \"email\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"status\": \"string\",\n    \"phone_numbers\": [\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"phone_id\": \"string\",\n        \"phone_number\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"webauthn_registrations\": [\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": true,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"webauthn_registration_id\": \"string\",\n        \"domain\": \"string\",\n        \"user_agent\": \"string\",\n        \"verified\": false,\n        \"authenticator_type\": \"string\",\n        \"name\": \"string\"\n      }\n    ],\n    \"providers\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\",\n        \"oauth_user_registration_id\": \"string\"\n      }\n    ],\n    \"totps\": [\n      {\n        \"totp_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"totp_id\": \"string\",\n        \"verified\": true\n      }\n    ],\n    \"crypto_wallets\": [\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"crypto_wallet_id\": \"string\",\n        \"crypto_wallet_address\": \"string\",\n        \"crypto_wallet_type\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"biometric_registrations\": [\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      },\n      {\n        \"biometric_registration_id\": \"string\",\n        \"verified\": false\n      }\n    ],\n    \"is_locked\": false,\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"name\": {\n      \"first_name\": \"string\",\n      \"middle_name\": \"string\",\n      \"last_name\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"password\": {\n      \"password_id\": \"string\",\n      \"requires_reset\": false\n    },\n    \"trusted_metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 7449.513034867226\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": 1149\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"status_code\": 252,\n  \"session\": {\n    \"session_id\": \"string\",\n    \"user_id\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"imported\",\n        \"delivery_method\": \"oauth_figma\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"imported\",\n        \"delivery_method\": \"imported_auth0\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"attributes\": {\n      \"ip_address\": \"string\",\n      \"user_agent\": \"string\"\n    },\n    \"custom_claims\": {\n      \"key_0\": 9682.175720149653,\n      \"key_1\": 3118.1066464680384,\n      \"key_2\": 5825\n    }\n  },\n  \"siwe_params\": {\n    \"domain\": \"string\",\n    \"uri\": \"string\",\n    \"chain_id\": \"string\",\n    \"resources\": [\n      \"string\",\n      \"string\"\n    ],\n    \"status_code\": 9752,\n    \"issued_at\": \"string\",\n    \"message_request_id\": \"string\"\n  },\n  \"user_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0312264c-2e1c-4e76-9169-2d047c2476ab",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5902.519436429297,\n    \"key_1\": 6872.030833301695,\n    \"key_2\": 1160,\n    \"key_3\": 3091\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a130241-fab0-4d96-9a41-523f700636a2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5902.519436429297,\n    \"key_1\": 6872.030833301695,\n    \"key_2\": 1160,\n    \"key_3\": 3091\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eab47efc-ba26-4af0-af8f-0fbf948f7405",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5902.519436429297,\n    \"key_1\": 6872.030833301695,\n    \"key_2\": 1160,\n    \"key_3\": 3091\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "746ba613-d700-4f05-911c-3772a1ef4b5b",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "crypto_wallets",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"crypto_wallet_type\": \"<string>\",\n  \"crypto_wallet_address\": \"<string>\",\n  \"signature\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_jwt\": \"<string>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5902.519436429297,\n    \"key_1\": 6872.030833301695,\n    \"key_2\": 1160,\n    \"key_3\": 3091\n  },\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "2e18abb9-4637-46ce-87bc-0219e3733d7a",
+    "name": "Stytch B2B Authentication Application Crypto Wallet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

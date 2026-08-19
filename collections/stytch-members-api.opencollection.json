@@ -1,0 +1,208 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Members API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Members",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Google",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/google",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Google access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the \naccess token automatically.\n\nGoogle One Tap does not return access tokens. If the member has only authenticated through Google One Tap and not through a regular Google OAuth flow, this endpoint will not return any tokens.\n\n__Note:__ Google does not issue a r"
+        },
+        {
+          "info": {
+            "name": "Microsoft",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/microsoft",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Microsoft access token and ID token for a member. After a successful OAuth login, Stytch will save the\nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the\naccess token automatically."
+        },
+        {
+          "info": {
+            "name": "Slack",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/slack",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Slack access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider."
+        },
+        {
+          "info": {
+            "name": "Hubspot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/hubspot",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved Hubspot access token and ID token for a member. After a successful OAuth login, Stytch will save the \nissued access token and ID token from the identity provider. If a refresh token has been issued, Stytch will refresh the \naccess token automatically."
+        },
+        {
+          "info": {
+            "name": "Github",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/oauth_providers/github",
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "include_refresh_token",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Retrieve the saved GitHub access token for a Member. After a successful OAuth login, Stytch will save the \nissued access token from the identity provider. GitHub does not issue refresh tokens, but will invalidate access\ntokens after very long periods of inactivity."
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/b2b/organizations/:organization_id/members/:member_id/connected_apps/:connected_app_id/revoke",
+            "headers": [
+              {
+                "name": "X-Stytch-Member-Session",
+                "value": ""
+              },
+              {
+                "name": "X-Stytch-Member-SessionJWT",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "organization_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience."
+              },
+              {
+                "name": "member_id",
+                "value": "",
+                "type": "path",
+                "description": "Globally unique UUID that identifies a specific Member. The `member_id` is critical to perform operations on a Member, so be sure to preserve this value. You may use an external_id here if one is set for the member."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke Connected App revokes a Connected App's access to a Member and revokes all active tokens that have been created\non the Member's behalf. New tokens cannot be created until the Member completes a new authorization flow with the\nConnected App."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1156 @@
+{
+  "item": [
+    {
+      "id": "c510ce21-5acd-4e72-8892-ff9a72e2351a",
+      "name": "B2B OTP",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "918dd851-5122-4153-b68c-7d2e574a1d6b",
+          "name": "Send",
+          "request": {
+            "name": "Send",
+            "description": {
+              "content": "Send a One-Time Passcode (OTP) to a Member's phone number.\n\nIf the Member already has a phone number, the `mfa_phone_number` field is not needed; the endpoint will send an OTP to the number associated with the Member.\nIf the Member does not have a phone number, the endpoint will send an OTP to the `mfa_phone_number` provided and link the `mfa_phone_number` with the Member.\n\nAn error will be thrown if the Member already has a phone number and the provided `mfa_phone_number` does not match the existing one.\n\nOTP codes expire after two minutes. Note that sending another OTP code before the first has expired will invalidate the first code.\n\nIf a Member has a phone number and is enrolled in MFA, then after a successful primary authentication event (e.g. [email magic link](https://stytch.com/docs/b2b/api/authenticate-magic-link) or [SSO](https://stytch.com/docs/b2b/api/sso-authenticate) login is complete), an SMS OTP will automatically be sent to their phone number. In that case, this endpoint should only be used for subsequent authentication events, such as prompting a Member for an OTP again after a period of inactivity.\n\nIf the Member already has an active MFA factor, then passing an intermediate session token, session token, or session JWT with the existing MFA factor on it is required to prevent bypassing MFA.  \n\nOtherwise, passing an intermediate session token, session token, or session JWT is not required, but if passed must match the `member_id` passed.\n\n### Cost to send SMS OTP\nBefore configuring SMS or WhatsApp OTPs, please review how Stytch [bills the costs of international OTPs](https://stytch.com/pricing) and understand how to protect your app against [toll fraud](https://stytch.com/docs/guides/passcodes/toll-fraud/overview).\n\nEven when international SMS is enabled, we do not support sending SMS to countries on our [Unsupported countries list](https://stytch.com/docs/guides/passcodes/unsupported-countries).\n\n__Note:__ SMS to phone numbers outside of the US and Canada is disabled by default for customers who did not use SMS prior to October 2023. If you're interested in sending international SMS, please add those countries to your Project's allowlist via the [Dashboard](https://stytch.com/dashboard/country-code-allowlists) or [Programmatic Workspace Actions](https://stytch.com/docs/workspace-management/pwa/set-allowed-country-codes), and [add credit card details](https://stytch.com/dashboard/settings/billing) to your account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "otps",
+                "sms",
+                "send"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "71f2d31a-d60d-40b1-b6f6-22fec41b1357",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"member_id\": \"string\",\n  \"member\": {\n    \"organization_id\": \"string\",\n    \"member_id\": \"string\",\n    \"email_address\": \"string\",\n    \"status\": \"string\",\n    \"name\": \"string\",\n    \"sso_registrations\": [\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 4431\n        }\n      },\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 9524.021221650457\n        }\n      }\n    ],\n    \"is_breakglass\": false,\n    \"member_password_id\": \"string\",\n    \"oauth_registrations\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      }\n    ],\n    \"email_address_verified\": false,\n    \"mfa_phone_number_verified\": false,\n    \"is_admin\": false,\n    \"totp_registration_id\": \"string\",\n    \"retired_email_addresses\": [\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      },\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      }\n    ],\n    \"is_locked\": true,\n    \"mfa_enrolled\": false,\n    \"mfa_phone_number\": \"string\",\n    \"default_mfa_method\": \"string\",\n    \"roles\": [\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": true,\n              \"key_1\": 9825\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": \"string\",\n              \"key_1\": 9042.837148575773\n            }\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 2133,\n              \"key_1\": \"string\"\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 2456.556236839915,\n              \"key_1\": false,\n              \"key_2\": 4983.910304975815\n            }\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 5171\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": false,\n      \"key_1\": true\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"scim_registration\": {\n      \"connection_id\": \"string\",\n      \"registration_id\": \"string\",\n      \"external_id\": \"string\",\n      \"scim_attributes\": {\n        \"user_name\": \"string\",\n        \"id\": \"string\",\n        \"external_id\": \"string\",\n        \"active\": false,\n        \"groups\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"display_name\": \"string\",\n        \"nick_name\": \"string\",\n        \"profile_url\": \"string\",\n        \"user_type\": \"string\",\n        \"title\": \"string\",\n        \"preferred_language\": \"string\",\n        \"locale\": \"string\",\n        \"timezone\": \"string\",\n        \"emails\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"phone_numbers\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"addresses\": [\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"ims\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"photos\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"entitlements\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"roles\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"x509certificates\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": {\n          \"formatted\": \"string\",\n          \"family_name\": \"string\",\n          \"given_name\": \"string\",\n          \"middle_name\": \"string\",\n          \"honorific_prefix\": \"string\",\n          \"honorific_suffix\": \"string\"\n        },\n        \"enterprise_extension\": {\n          \"employee_number\": \"string\",\n          \"cost_center\": \"string\",\n          \"division\": \"string\",\n          \"department\": \"string\",\n          \"organization\": \"string\",\n          \"manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      },\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 3031.0800504273516,\n      \"key_1\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": 1751\n    }\n  },\n  \"status_code\": 8867\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d2ea13f-dcc0-415b-bc4b-f4cab8b5fd8e",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ab3b5f6d-31ca-4086-8f34-473b168bd10b",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8510a37a-88a9-4bd1-9c0a-3ad04c13f491",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f54fc09b-456d-4587-a8bc-fa79ba9f62d1",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "send"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"mfa_phone_number\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "31a1e4a8-ef6e-47b5-9db8-ce8d340aa69e",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "SMS OTPs may not be used as a primary authentication mechanism. They can be used to complete an MFA requirement, or they can be used as a step-up factor to be added to an existing session.\n\nThis endpoint verifies that the one-time passcode (OTP) is valid and hasn't expired or been previously used. OTP codes expire after two minutes.\n\nA given Member may only have a single active OTP code at any given time. If a Member requests another OTP code before the first one has expired, the first one will be invalidated.\n\nExactly one of `intermediate_session_token`, `session_token`, or `session_jwt` must be provided in the request.\nIf an intermediate session token is provided, this operation will consume it.\n\nIntermediate session tokens are generated upon successful calls to primary authenticate methods in the case where MFA is required,\nsuch as [email magic link authenticate](https://stytch.com/docs/b2b/api/authenticate-magic-link),\nor upon successful calls to discovery authenticate methods, such as [email magic link discovery authenticate](https://stytch.com/docs/b2b/api/authenticate-discovery-magic-link).\n\nIf the Organization's MFA policy is `REQUIRED_FOR_ALL`, a successful OTP authentication will change the Member's `mfa_enrolled` status to `true` if it is not already `true`.\nIf the Organization's MFA policy is `OPTIONAL`, the Member's MFA enrollment can be toggled by passing in a value for the `set_mfa_enrollment` field.\nThe Member's MFA enrollment can also be toggled through the [Update Member](https://stytch.com/docs/b2b/api/update-member) endpoint.\n\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a duration of 60 minutes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "otps",
+                "sms",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": false\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "577b6190-77c0-4a1f-aec3-cb236d108413",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 2437,\n    \"key_1\": 8421\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"member_id\": \"string\",\n  \"member\": {\n    \"organization_id\": \"string\",\n    \"member_id\": \"string\",\n    \"email_address\": \"string\",\n    \"status\": \"string\",\n    \"name\": \"string\",\n    \"sso_registrations\": [\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": \"string\",\n          \"key_1\": 4149.609803641699,\n          \"key_2\": \"string\",\n          \"key_3\": 9530.48772769116\n        }\n      },\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 7930,\n          \"key_1\": 8505.23501385388\n        }\n      }\n    ],\n    \"is_breakglass\": false,\n    \"member_password_id\": \"string\",\n    \"oauth_registrations\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      }\n    ],\n    \"email_address_verified\": true,\n    \"mfa_phone_number_verified\": false,\n    \"is_admin\": false,\n    \"totp_registration_id\": \"string\",\n    \"retired_email_addresses\": [\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      },\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      }\n    ],\n    \"is_locked\": false,\n    \"mfa_enrolled\": true,\n    \"mfa_phone_number\": \"string\",\n    \"default_mfa_method\": \"string\",\n    \"roles\": [\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 8237.11624282645\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": \"string\"\n            }\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 8152,\n              \"key_1\": 4931.856075850624\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 7126.8967155171,\n              \"key_1\": 6333.249413957131\n            }\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 61.136406428027314\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": 4869\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"scim_registration\": {\n      \"connection_id\": \"string\",\n      \"registration_id\": \"string\",\n      \"external_id\": \"string\",\n      \"scim_attributes\": {\n        \"user_name\": \"string\",\n        \"id\": \"string\",\n        \"external_id\": \"string\",\n        \"active\": false,\n        \"groups\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"display_name\": \"string\",\n        \"nick_name\": \"string\",\n        \"profile_url\": \"string\",\n        \"user_type\": \"string\",\n        \"title\": \"string\",\n        \"preferred_language\": \"string\",\n        \"locale\": \"string\",\n        \"timezone\": \"string\",\n        \"emails\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"phone_numbers\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"addresses\": [\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"ims\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"photos\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"entitlements\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"roles\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"x509certificates\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": {\n          \"formatted\": \"string\",\n          \"family_name\": \"string\",\n          \"given_name\": \"string\",\n          \"middle_name\": \"string\",\n          \"honorific_prefix\": \"string\",\n          \"honorific_suffix\": \"string\"\n        },\n        \"enterprise_extension\": {\n          \"employee_number\": \"string\",\n          \"cost_center\": \"string\",\n          \"division\": \"string\",\n          \"department\": \"string\",\n          \"organization\": \"string\",\n          \"manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      },\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 9628\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": 7776\n    }\n  },\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"status_code\": 7492,\n  \"member_session\": {\n    \"member_session_id\": \"string\",\n    \"member_id\": \"string\",\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"crypto\",\n        \"delivery_method\": \"oauth_google\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"impersonated\",\n        \"delivery_method\": \"oauth_exchange_slack\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"organization_id\": \"string\",\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"organization_slug\": \"string\",\n    \"custom_claims\": {\n      \"key_0\": true,\n      \"key_1\": 956.5801988775546\n    }\n  },\n  \"member_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8247c8d2-64aa-4a53-8b01-203cb6309ce7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 2437,\n    \"key_1\": 8421\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3664b175-8487-448f-b551-2cf8a5f228ca",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 2437,\n    \"key_1\": 8421\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d24bad11-064b-4fbd-873c-27ebc96ba624",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 2437,\n    \"key_1\": 8421\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "545c1060-663c-4232-ae97-e051c5715bda",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "sms",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"member_id\": \"<string>\",\n  \"code\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 2437,\n    \"key_1\": 8421\n  },\n  \"set_mfa_enrollment\": \"<string>\",\n  \"set_default_mfa\": \"<boolean>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4c5c462b-7a94-4feb-bec3-cadc0de2d84b",
+          "name": "Loginorsignup",
+          "request": {
+            "name": "Loginorsignup",
+            "description": {
+              "content": "Send either a login or signup email OTP to a Member. A new, pending, or invited Member will receive a signup email OTP. Non-active members will have a pending status until they successfully authenticate. An active Member will receive a login email OTP.\n\nThe OTP is valid for 10 minutes. Only the most recently sent OTP is valid: when an OTP is sent, all OTPs previously sent to the same email address are invalidated, even if unused or unexpired.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "otps",
+                "email",
+                "login_or_signup"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "48f5161e-8d71-4885-b0ae-8272d5699593",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "login_or_signup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"member_id\": \"string\",\n  \"member_created\": true,\n  \"member\": {\n    \"organization_id\": \"string\",\n    \"member_id\": \"string\",\n    \"email_address\": \"string\",\n    \"status\": \"string\",\n    \"name\": \"string\",\n    \"sso_registrations\": [\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 1726,\n          \"key_1\": \"string\",\n          \"key_2\": false\n        }\n      },\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ],\n    \"is_breakglass\": false,\n    \"member_password_id\": \"string\",\n    \"oauth_registrations\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      }\n    ],\n    \"email_address_verified\": false,\n    \"mfa_phone_number_verified\": false,\n    \"is_admin\": true,\n    \"totp_registration_id\": \"string\",\n    \"retired_email_addresses\": [\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      },\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      }\n    ],\n    \"is_locked\": false,\n    \"mfa_enrolled\": false,\n    \"mfa_phone_number\": \"string\",\n    \"default_mfa_method\": \"string\",\n    \"roles\": [\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": true,\n              \"key_1\": true,\n              \"key_2\": \"string\"\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 3028,\n              \"key_1\": \"string\"\n            }\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": true,\n              \"key_1\": 807.1074774938746\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 7852,\n              \"key_1\": false\n            }\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": 3981\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": 5065,\n      \"key_1\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"scim_registration\": {\n      \"connection_id\": \"string\",\n      \"registration_id\": \"string\",\n      \"external_id\": \"string\",\n      \"scim_attributes\": {\n        \"user_name\": \"string\",\n        \"id\": \"string\",\n        \"external_id\": \"string\",\n        \"active\": false,\n        \"groups\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"display_name\": \"string\",\n        \"nick_name\": \"string\",\n        \"profile_url\": \"string\",\n        \"user_type\": \"string\",\n        \"title\": \"string\",\n        \"preferred_language\": \"string\",\n        \"locale\": \"string\",\n        \"timezone\": \"string\",\n        \"emails\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"phone_numbers\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"addresses\": [\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"ims\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"photos\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"entitlements\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"roles\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"x509certificates\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": {\n          \"formatted\": \"string\",\n          \"family_name\": \"string\",\n          \"given_name\": \"string\",\n          \"middle_name\": \"string\",\n          \"honorific_prefix\": \"string\",\n          \"honorific_suffix\": \"string\"\n        },\n        \"enterprise_extension\": {\n          \"employee_number\": \"string\",\n          \"cost_center\": \"string\",\n          \"division\": \"string\",\n          \"department\": \"string\",\n          \"organization\": \"string\",\n          \"manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      },\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": \"string\",\n      \"key_1\": false,\n      \"key_2\": 578\n    }\n  },\n  \"status_code\": 159\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d9e8a34a-ec17-44d8-977d-fe56d7c0f731",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "login_or_signup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a0fcd74d-0b55-4e46-8d84-b38a620633fd",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "login_or_signup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d49ee3f2-959f-4a22-8acc-1b5f4404abfd",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "login_or_signup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc483bc5-dca7-49cb-9587-b7213eb3cba6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "login_or_signup"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"login_template_id\": \"<string>\",\n  \"signup_template_id\": \"<string>\",\n  \"locale\": \"<string>\",\n  \"login_expiration_minutes\": \"<integer>\",\n  \"signup_expiration_minutes\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c194d06a-7f7d-43a2-902d-b3cc89451dfe",
+          "name": "Authenticate",
+          "request": {
+            "name": "Authenticate",
+            "description": {
+              "content": "Authenticate a Member with a one-time passcode (OTP). This endpoint requires an OTP that is not expired or previously used. \nOTPs have a default expiry of 10 minutes. If the Member's status is `pending` or `invited`, they will be updated to `active`.\nProvide the `session_duration_minutes` parameter to set the lifetime of the session. If the `session_duration_minutes` parameter is not specified, a Stytch session will be created with a 60 minute duration.\n\nIf the Member is required to complete MFA to log in to the Organization, the returned value of `member_authenticated` will be `false`, and an `intermediate_session_token` will be returned.\nThe `intermediate_session_token` can be passed into the [OTP SMS Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-otp-sms), [TOTP Authenticate endpoint](https://stytch.com/docs/b2b/api/authenticate-totp), \nor [Recovery Codes Recover endpoint](https://stytch.com/docs/b2b/api/recovery-codes-recover) to complete the MFA step and acquire a full member session.\nThe `intermediate_session_token` can also be used with the [Exchange Intermediate Session endpoint](https://stytch.com/docs/b2b/api/exchange-intermediate-session) or the [Create Organization via Discovery endpoint](https://stytch.com/docs/b2b/api/create-organization-via-discovery) to join a different Organization or create a new one.\nThe `session_duration_minutes` and `session_custom_claims` parameters will be ignored.\n\nIf a valid `session_token` or `session_jwt` is passed in, the Member will not be required to complete an MFA step.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "b2b",
+                "otps",
+                "email",
+                "authenticate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 5966,\n    \"key_1\": 9086.942578196327,\n    \"key_2\": true,\n    \"key_3\": 2427.540346321074\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d52d84d4-0191-4c8c-bb28-0160ccdee1a7",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8811.681398441131,\n    \"key_1\": \"string\",\n    \"key_2\": 4938.709597247257\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"member_id\": \"string\",\n  \"method_id\": \"string\",\n  \"organization_id\": \"string\",\n  \"member\": {\n    \"organization_id\": \"string\",\n    \"member_id\": \"string\",\n    \"email_address\": \"string\",\n    \"status\": \"string\",\n    \"name\": \"string\",\n    \"sso_registrations\": [\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 2748,\n          \"key_1\": 2737.6640900741345,\n          \"key_2\": true\n        }\n      },\n      {\n        \"connection_id\": \"string\",\n        \"external_id\": \"string\",\n        \"registration_id\": \"string\",\n        \"sso_attributes\": {\n          \"key_0\": 4174.5458257130795,\n          \"key_1\": true\n        }\n      }\n    ],\n    \"is_breakglass\": false,\n    \"member_password_id\": \"string\",\n    \"oauth_registrations\": [\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      },\n      {\n        \"provider_type\": \"string\",\n        \"provider_subject\": \"string\",\n        \"member_oauth_registration_id\": \"string\",\n        \"profile_picture_url\": \"string\",\n        \"locale\": \"string\"\n      }\n    ],\n    \"email_address_verified\": true,\n    \"mfa_phone_number_verified\": false,\n    \"is_admin\": true,\n    \"totp_registration_id\": \"string\",\n    \"retired_email_addresses\": [\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      },\n      {\n        \"email_id\": \"string\",\n        \"email_address\": \"string\"\n      }\n    ],\n    \"is_locked\": true,\n    \"mfa_enrolled\": false,\n    \"mfa_phone_number\": \"string\",\n    \"default_mfa_method\": \"string\",\n    \"roles\": [\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": \"string\"\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": 7776,\n              \"key_1\": 5272\n            }\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"sources\": [\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": \"string\",\n              \"key_1\": false\n            }\n          },\n          {\n            \"type\": \"string\",\n            \"details\": {\n              \"key_0\": true\n            }\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": \"string\"\n    },\n    \"untrusted_metadata\": {\n      \"key_0\": 8541.014462424031\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"scim_registration\": {\n      \"connection_id\": \"string\",\n      \"registration_id\": \"string\",\n      \"external_id\": \"string\",\n      \"scim_attributes\": {\n        \"user_name\": \"string\",\n        \"id\": \"string\",\n        \"external_id\": \"string\",\n        \"active\": true,\n        \"groups\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"display\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"display_name\": \"string\",\n        \"nick_name\": \"string\",\n        \"profile_url\": \"string\",\n        \"user_type\": \"string\",\n        \"title\": \"string\",\n        \"preferred_language\": \"string\",\n        \"locale\": \"string\",\n        \"timezone\": \"string\",\n        \"emails\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"phone_numbers\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"addresses\": [\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"formatted\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"street_address\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"locality\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"region\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"postal_code\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"country\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"ims\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"photos\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"entitlements\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"roles\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"x509certificates\": [\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"primary\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"name\": {\n          \"formatted\": \"string\",\n          \"family_name\": \"string\",\n          \"given_name\": \"string\",\n          \"middle_name\": \"string\",\n          \"honorific_prefix\": \"string\",\n          \"honorific_suffix\": \"string\"\n        },\n        \"enterprise_extension\": {\n          \"employee_number\": \"string\",\n          \"cost_center\": \"string\",\n          \"division\": \"string\",\n          \"department\": \"string\",\n          \"organization\": \"string\",\n          \"manager\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      }\n    },\n    \"external_id\": \"string\",\n    \"lock_created_at\": \"string\",\n    \"lock_expires_at\": \"string\"\n  },\n  \"session_token\": \"string\",\n  \"session_jwt\": \"string\",\n  \"organization\": {\n    \"organization_id\": \"string\",\n    \"organization_name\": \"string\",\n    \"organization_logo_url\": \"string\",\n    \"organization_slug\": \"string\",\n    \"sso_jit_provisioning\": \"string\",\n    \"sso_jit_provisioning_allowed_connections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"sso_active_connections\": [\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      },\n      {\n        \"connection_id\": \"string\",\n        \"display_name\": \"string\",\n        \"identity_provider\": \"string\"\n      }\n    ],\n    \"email_allowed_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email_jit_provisioning\": \"string\",\n    \"email_invites\": \"string\",\n    \"auth_methods\": \"string\",\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"mfa_policy\": \"string\",\n    \"rbac_email_implicit_role_assignments\": [\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      },\n      {\n        \"domain\": \"string\",\n        \"role_id\": \"string\"\n      }\n    ],\n    \"mfa_methods\": \"string\",\n    \"allowed_mfa_methods\": [\n      \"string\",\n      \"string\"\n    ],\n    \"oauth_tenant_jit_provisioning\": \"string\",\n    \"claimed_email_domains\": [\n      \"string\",\n      \"string\"\n    ],\n    \"first_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_first_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"third_party_connected_apps_allowed_type\": \"string\",\n    \"allowed_third_party_connected_apps\": [\n      \"string\",\n      \"string\"\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"trusted_metadata\": {\n      \"key_0\": true,\n      \"key_1\": \"string\"\n    },\n    \"created_at\": \"string\",\n    \"updated_at\": \"string\",\n    \"organization_external_id\": \"string\",\n    \"sso_default_connection_id\": \"string\",\n    \"scim_active_connection\": {\n      \"connection_id\": \"string\",\n      \"display_name\": \"string\",\n      \"bearer_token_last_four\": \"string\",\n      \"bearer_token_expires_at\": \"string\"\n    },\n    \"allowed_oauth_tenants\": {\n      \"key_0\": 3677,\n      \"key_1\": 2342\n    }\n  },\n  \"intermediate_session_token\": \"string\",\n  \"member_authenticated\": true,\n  \"status_code\": 9698,\n  \"member_session\": {\n    \"member_session_id\": \"string\",\n    \"member_id\": \"string\",\n    \"started_at\": \"string\",\n    \"last_accessed_at\": \"string\",\n    \"expires_at\": \"string\",\n    \"authentication_factors\": [\n      {\n        \"type\": \"webauthn\",\n        \"delivery_method\": \"oauth_twitch\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      },\n      {\n        \"type\": \"trusted_auth_token\",\n        \"delivery_method\": \"oauth_github\",\n        \"last_authenticated_at\": \"string\",\n        \"created_at\": \"string\",\n        \"updated_at\": \"string\",\n        \"email_factor\": {\n          \"email_id\": \"string\",\n          \"email_address\": \"string\"\n        },\n        \"phone_number_factor\": {\n          \"phone_id\": \"string\",\n          \"phone_number\": \"string\"\n        },\n        \"google_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"microsoft_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"apple_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"webauthn_factor\": {\n          \"webauthn_registration_id\": \"string\",\n          \"domain\": \"string\",\n          \"user_agent\": \"string\"\n        },\n        \"authenticator_app_factor\": {\n          \"totp_id\": \"string\"\n        },\n        \"github_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"recovery_code_factor\": {\n          \"totp_recovery_code_id\": \"string\"\n        },\n        \"facebook_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"crypto_wallet_factor\": {\n          \"crypto_wallet_id\": \"string\",\n          \"crypto_wallet_address\": \"string\",\n          \"crypto_wallet_type\": \"string\"\n        },\n        \"amazon_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"bitbucket_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"coinbase_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"discord_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"figma_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"git_lab_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"instagram_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"linked_in_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"shopify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"snapchat_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"spotify_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"steam_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"tik_tok_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitch_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"twitter_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"embeddable_magic_link_factor\": {\n          \"embedded_id\": \"string\"\n        },\n        \"biometric_factor\": {\n          \"biometric_registration_id\": \"string\"\n        },\n        \"saml_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"oidc_sso_factor\": {\n          \"id\": \"string\",\n          \"provider_id\": \"string\",\n          \"external_id\": \"string\"\n        },\n        \"salesforce_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"yahoo_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_factor\": {\n          \"id\": \"string\",\n          \"provider_subject\": \"string\",\n          \"email_id\": \"string\"\n        },\n        \"slack_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"hubspot_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"github_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"google_oauth_exchange_factor\": {\n          \"email_id\": \"string\"\n        },\n        \"impersonated_factor\": {\n          \"impersonator_id\": \"string\",\n          \"impersonator_email_address\": \"string\"\n        },\n        \"oauth_access_token_exchange_factor\": {\n          \"client_id\": \"string\"\n        },\n        \"trusted_auth_token_factor\": {\n          \"token_id\": \"string\"\n        }\n      }\n    ],\n    \"organization_id\": \"string\",\n    \"roles\": [\n      \"string\",\n      \"string\"\n    ],\n    \"organization_slug\": \"string\",\n    \"custom_claims\": {\n      \"key_0\": 2109.0277861519467,\n      \"key_1\": 2742.3383316000695\n    }\n  },\n  \"mfa_required\": {\n    \"member_options\": {\n      \"mfa_phone_number\": \"string\",\n      \"totp_registration_id\": \"string\"\n    },\n    \"secondary_auth_initiated\": \"string\"\n  },\n  \"primary_required\": {\n    \"allowed_auth_methods\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"member_device\": {\n    \"visitor_id\": \"string\",\n    \"visitor_id_details\": {\n      \"is_new\": false,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_address\": \"string\",\n    \"ip_address_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    },\n    \"ip_geo_city\": \"string\",\n    \"ip_geo_region\": \"string\",\n    \"ip_geo_country\": \"string\",\n    \"ip_geo_country_details\": {\n      \"is_new\": true,\n      \"first_seen_at\": \"string\",\n      \"last_seen_at\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8ad083a-cb2e-4e98-9429-24e48b841651",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8811.681398441131,\n    \"key_1\": \"string\",\n    \"key_2\": 4938.709597247257\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3f52a77d-43ad-4563-afa8-be908a8a231a",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8811.681398441131,\n    \"key_1\": \"string\",\n    \"key_2\": 4938.709597247257\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89883bfd-613a-4ca5-badd-1122f7178da8",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8811.681398441131,\n    \"key_1\": \"string\",\n    \"key_2\": 4938.709597247257\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "70c1ba2d-7f8c-4136-91b9-98c1bc1750da",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "b2b",
+                    "otps",
+                    "email",
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"organization_id\": \"<string>\",\n  \"email_address\": \"<string>\",\n  \"code\": \"<string>\",\n  \"session_token\": \"<string>\",\n  \"session_jwt\": \"<string>\",\n  \"intermediate_session_token\": \"<string>\",\n  \"session_duration_minutes\": \"<integer>\",\n  \"session_custom_claims\": {\n    \"key_0\": 8811.681398441131,\n    \"key_1\": \"string\",\n    \"key_2\": 4938.709597247257\n  },\n  \"locale\": \"<string>\",\n  \"telemetry_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "36ba9495-5d0d-4c70-ac4c-1b2736cbcb6b",
+    "name": "Stytch B2B Authentication Application B2B OTP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

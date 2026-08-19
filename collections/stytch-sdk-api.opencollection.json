@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application Sdk API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sdk",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Getconsumerconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/consumer",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetConsumerConfig retrieves the SDK configuration for a B2C project environment"
+        },
+        {
+          "info": {
+            "name": "Setconsumerconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/consumer",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetConsumerConfig updates the SDK configuration for a B2C project environment"
+        },
+        {
+          "info": {
+            "name": "Getb2bconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/b2b",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "GetB2BConfig retrieves the SDK configuration for a B2B project environment"
+        },
+        {
+          "info": {
+            "name": "Setb2bconfig",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/pwa/v3/projects/:project_slug/environments/:environment_slug/sdk/b2b",
+            "params": [
+              {
+                "name": "project_slug",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "environment_slug",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "SetB2BConfig updates the SDK configuration for a B2B project environment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

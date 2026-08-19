@@ -1,0 +1,350 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Stytch B2B Authentication Application User API",
+    "version": "2.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a User to Stytch. A `user_id` is returned in the response that can then be used to perform other operations within Stytch. An `email` or a `phone_number` is required."
+        },
+        {
+          "info": {
+            "name": "Get",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "Get information about a specific User."
+        },
+        {
+          "info": {
+            "name": "Update",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a User's attributes.\n\n**Note:** In order to add a new email address or phone number to an existing User object, pass the new email address or phone number into the respective `/send` endpoint for the authentication method of your choice. If you specify the existing User's `user_id` while calling the `/send` endpoint, the new, unverified email address or phone number will be added to the existing User object. If the user successfully authenticates within 5 minutes of the `/send` request, t"
+        },
+        {
+          "info": {
+            "name": "Delete",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "Delete a User from Stytch."
+        },
+        {
+          "info": {
+            "name": "Search",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users/search",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n**Warning**: This endpoint is not recommended for use in login flows. Scaling issues may occur, as search performance may vary from ~150 milliseconds to 9 seconds depending on query complexity and rate limits are set to 150 requests/minute.\n\nSearch for Users within your Stytch Project.\n\nUse the `query` object to filter by different fields. See the `query.operands.filter_value` documentation below for a list of available filters.\n\n### Export all User data\n\nSubmit an empty `query` in your Search "
+        },
+        {
+          "info": {
+            "name": "Exchangeprimaryfactor",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.stytch.com/v1/users/:user_id/exchange_primary_factor",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Exchange a user's email address or phone number for another.\n\nMust pass either an `email_address` or a `phone_number`.\n\nThis endpoint only works if the user has exactly one factor. You are able to exchange the type of factor for another as well, i.e. exchange an `email_address` for a `phone_number`.\n\nUse this endpoint with caution as it performs an admin level action."
+        },
+        {
+          "info": {
+            "name": "Deleteemail",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/emails/:email_id",
+            "params": [
+              {
+                "name": "email_id",
+                "value": "",
+                "type": "path",
+                "description": "The `email_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete an email from a User."
+        },
+        {
+          "info": {
+            "name": "Deletephonenumber",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/phone_numbers/:phone_id",
+            "params": [
+              {
+                "name": "phone_id",
+                "value": "",
+                "type": "path",
+                "description": "The `phone_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a phone number from a User."
+        },
+        {
+          "info": {
+            "name": "Deletewebauthnregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/webauthn_registrations/:webauthn_registration_id",
+            "params": [
+              {
+                "name": "webauthn_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `webauthn_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a WebAuthn registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deletebiometricregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/biometric_registrations/:biometric_registration_id",
+            "params": [
+              {
+                "name": "biometric_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `biometric_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a biometric registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deletetotp",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/totps/:totp_id",
+            "params": [
+              {
+                "name": "totp_id",
+                "value": "",
+                "type": "path",
+                "description": "The `totp_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a TOTP from a User."
+        },
+        {
+          "info": {
+            "name": "Deletecryptowallet",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/crypto_wallets/:crypto_wallet_id",
+            "params": [
+              {
+                "name": "crypto_wallet_id",
+                "value": "",
+                "type": "path",
+                "description": "The `crypto_wallet_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a crypto wallet from a User."
+        },
+        {
+          "info": {
+            "name": "Deletepassword",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/passwords/:password_id",
+            "params": [
+              {
+                "name": "password_id",
+                "value": "",
+                "type": "path",
+                "description": "The `password_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete a password from a User."
+        },
+        {
+          "info": {
+            "name": "Deleteoauthregistration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/oauth/:oauth_user_registration_id",
+            "params": [
+              {
+                "name": "oauth_user_registration_id",
+                "value": "",
+                "type": "path",
+                "description": "The `oauth_user_registration_id` to be deleted."
+              }
+            ]
+          },
+          "docs": "Delete an OAuth registration from a User."
+        },
+        {
+          "info": {
+            "name": "Deleteexternalid",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.stytch.com/v1/users/:user_id/external_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Deleteexternalid"
+        },
+        {
+          "info": {
+            "name": "Connectedapps",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.stytch.com/v1/users/:user_id/connected_apps",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              }
+            ]
+          },
+          "docs": "User Get Connected Apps retrieves a list of Connected Apps with which the User has successfully completed an\nauthorization flow.\nIf the User revokes a Connected App's access (e.g. via the Revoke Connected App endpoint) then the Connected App will\nno longer be returned in the response."
+        },
+        {
+          "info": {
+            "name": "Revoke",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.stytch.com/v1/users/:user_id/connected_apps/:connected_app_id/revoke",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The unique ID of a specific User. You may use an `external_id` here if one is set for the user."
+              },
+              {
+                "name": "connected_app_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the Connected App."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Revoke Connected App revokes a Connected App's access to a User and revokes all active tokens that have been created\non the User's behalf. New tokens cannot be created until the User completes a new authorization flow with the\nConnected App."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,745 @@
+{
+  "item": [
+    {
+      "id": "5aeb7225-f6f6-4831-b993-e44aea483caf",
+      "name": "Rbac",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e8f401a1-27da-4ce2-b9f4-3b1ffb8ad557",
+          "name": "Get",
+          "request": {
+            "name": "Get",
+            "description": {
+              "content": "Get retrieves the RBAC policy for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "rbac_policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6fe1bc60-114d-4552-8487-2388c7373827",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"policy\": {\n    \"stytch_resources\": [\n      {\n        \"resource_id\": \"string\",\n        \"description\": \"string\",\n        \"available_actions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"resource_id\": \"string\",\n        \"description\": \"string\",\n        \"available_actions\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"custom_resources\": [\n      {\n        \"resource_id\": \"string\",\n        \"description\": \"string\",\n        \"available_actions\": [\n          \"string\",\n          \"string\"\n        ]\n      },\n      {\n        \"resource_id\": \"string\",\n        \"description\": \"string\",\n        \"available_actions\": [\n          \"string\",\n          \"string\"\n        ]\n      }\n    ],\n    \"custom_scopes\": [\n      {\n        \"scope\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"scope\": \"string\",\n        \"description\": \"string\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"string\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"stytch_member\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    \"stytch_admin\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    },\n    \"stytch_user\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        },\n        {\n          \"resource_id\": \"string\",\n          \"actions\": [\n            \"string\",\n            \"string\"\n          ]\n        }\n      ]\n    }\n  },\n  \"status_code\": 157\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cdbbebf6-4531-44ff-bfef-3f8b3cc760f7",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aab772fa-6f91-45bb-9699-eb767a1f3aea",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "98fd84b6-cd79-4c2b-a843-32d3f9873cd7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c4770bb-b9cd-4ade-8c90-48d944abe819",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "73425b2f-ca28-4f1e-8089-46150dcc1b67",
+          "name": "Set",
+          "request": {
+            "name": "Set",
+            "description": {
+              "content": "Set updates the RBAC policy for an environment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pwa",
+                "v3",
+                "projects",
+                ":project_slug",
+                "environments",
+                ":environment_slug",
+                "rbac_policy"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project_slug",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment_slug",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0b30f04c-d6ca-44f2-b619-c04560e2e3b6",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"policy\": {\n    \"stytch_resources\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"available_actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"available_actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"custom_roles\": [\n      {\n        \"role_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"role_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"custom_resources\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"available_actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"description\": \"<string>\",\n        \"available_actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ],\n    \"custom_scopes\": [\n      {\n        \"scope\": \"<string>\",\n        \"description\": \"<string>\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      },\n      {\n        \"scope\": \"<string>\",\n        \"description\": \"<string>\",\n        \"permissions\": [\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          },\n          {\n            \"resource_id\": \"<string>\",\n            \"actions\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        ]\n      }\n    ],\n    \"stytch_member\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    \"stytch_admin\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    \"stytch_user\": {\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  },\n  \"status_code\": 8759\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57acf596-b007-4cdb-ab42-306e72424190",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "140e3af8-16aa-49cb-a736-69f4137ce30e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d1bc4a9-405f-4e5d-8908-99971e549fef",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62bff06e-f319-415d-aa75-1ea0c4e3b61f",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pwa",
+                    "v3",
+                    "projects",
+                    ":project_slug",
+                    "environments",
+                    ":environment_slug",
+                    "rbac_policy"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project_slug",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment_slug",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"stytch_member\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_admin\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"stytch_user\": {\n    \"permissions\": [\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      },\n      {\n        \"resource_id\": \"<string>\",\n        \"actions\": [\n          \"<string>\",\n          \"<string>\"\n        ]\n      }\n    ]\n  },\n  \"custom_roles\": [\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"role_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ],\n  \"custom_resources\": [\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"resource_id\": \"<string>\",\n      \"description\": \"<string>\",\n      \"available_actions\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"custom_scopes\": [\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    },\n    {\n      \"scope\": \"<string>\",\n      \"description\": \"<string>\",\n      \"permissions\": [\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        },\n        {\n          \"resource_id\": \"<string>\",\n          \"actions\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3b6bf553-9d3c-4964-8657-1256c20ede74",
+    "name": "Stytch B2B Authentication Application Rbac API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}

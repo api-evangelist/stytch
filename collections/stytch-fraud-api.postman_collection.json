@@ -1,0 +1,1676 @@
+{
+  "item": [
+    {
+      "id": "b4a92ae4-0921-4cb4-92f0-4fe391b599b8",
+      "name": "Fraud",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e5d1eb98-1423-49cf-90e5-4d6b1de83aa0",
+          "name": "Lookup",
+          "request": {
+            "name": "Lookup",
+            "description": {
+              "content": "Lookup the associated fingerprint for the `telemetry_id` returned from the `GetTelemetryID()` function.\nLearn more about the different fingerprint types and verdicts in our [DFP guide](https://stytch.com/docs/fraud/guides/device-fingerprinting/overview).\n\nYou can make a decision based on the recommended `verdict` in the response:\n* `ALLOW` - This is a known valid device grouping or device profile that is part of the default `ALLOW` listed set of known devices by Stytch. This grouping is made up of  verified device profiles that match the characteristics of known/authentic traffic origins.\n* `BLOCK` - This is a known bad or malicious device profile that is undesirable and should be blocked from completing the privileged action in question.\n* `CHALLENGE` - This is an unknown or potentially malicious device that should be put through increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.\n\nIf the `telemetry_id` is expired or not found, this endpoint returns a 404 `telemetry_id_not_found` [error](https://stytch.com/docs/fraud/api/errors/404#telemetry_id_not_found).\nWe recommend treating 404 errors as a `BLOCK`, since it could be a sign of an attacker trying to bypass DFP protections.\nSee [Attacker-controlled telemetry IDs](https://stytch.com/docs/fraud/guides/device-fingerprinting/integration-steps/test-your-integration#attacker-controlled-telemetry-ids) for more information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "fingerprint",
+                "lookup"
+              ],
+              "host": [
+                "{{v1-fingerprint-lookup-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c4206e52-3c32-463a-8e9e-01003c52f0f8",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fingerprint",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{v1-fingerprint-lookup-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"telemetry_id\": \"string\",\n  \"fingerprints\": {\n    \"network_fingerprint\": \"string\",\n    \"hardware_fingerprint\": \"string\",\n    \"browser_fingerprint\": \"string\",\n    \"visitor_fingerprint\": \"string\",\n    \"visitor_id\": \"string\",\n    \"browser_id\": \"string\"\n  },\n  \"verdict\": {\n    \"action\": \"ALLOW\",\n    \"reasons\": [\n      \"string\",\n      \"string\"\n    ],\n    \"detected_device_type\": \"string\",\n    \"is_authentic_device\": true,\n    \"verdict_reason_overrides\": [\n      {\n        \"verdict_reason\": \"string\",\n        \"override_action\": \"ALLOW\"\n      },\n      {\n        \"verdict_reason\": \"string\",\n        \"override_action\": \"BLOCK\"\n      }\n    ],\n    \"rule_match_type\": \"CIDR_BLOCK\",\n    \"rule_match_identifier\": \"string\"\n  },\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  },\n  \"created_at\": \"string\",\n  \"expires_at\": \"string\",\n  \"status_code\": 6742,\n  \"properties\": {\n    \"network_properties\": {\n      \"ip_address\": \"string\",\n      \"asn\": {\n        \"asn\": \"string\",\n        \"name\": \"string\",\n        \"network\": \"string\"\n      },\n      \"ip_geolocation\": {\n        \"city\": \"string\",\n        \"region\": \"string\",\n        \"country\": \"string\"\n      },\n      \"is_proxy\": true,\n      \"is_vpn\": false\n    },\n    \"browser_properties\": {\n      \"user_agent\": \"string\"\n    }\n  },\n  \"raw_signals\": {\n    \"key_0\": \"string\",\n    \"key_1\": true,\n    \"key_2\": 9724.728820760538\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e72bc866-e6ad-47a8-bce2-ddcd63af4c0b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fingerprint",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{v1-fingerprint-lookup-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2483949a-5221-4290-8ced-6f781d1e2ab1",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fingerprint",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{v1-fingerprint-lookup-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b293f751-62e1-41b8-8fdf-db7fab742fb8",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fingerprint",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{v1-fingerprint-lookup-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c898f55-6532-4428-ab64-d75677a17de0",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "fingerprint",
+                    "lookup"
+                  ],
+                  "host": [
+                    "{{v1-fingerprint-lookup-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"telemetry_id\": \"<string>\",\n  \"external_metadata\": {\n    \"external_id\": \"<string>\",\n    \"organization_id\": \"<string>\",\n    \"user_action\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "adbcbec7-6280-4a40-904d-e7b485b85662",
+          "name": "Set",
+          "request": {
+            "name": "Set",
+            "description": {
+              "content": "Set a rule for a particular `visitor_id`, `browser_id`, `visitor_fingerprint`, `browser_fingerprint`, `hardware_fingerprint`, `network_fingerprint`, `cidr_block`, `asn`, or `country_code`. This is helpful in cases where you want to allow or block a specific user or fingerprint. You should be careful when setting rules for `browser_fingerprint`, `hardware_fingerprint`, or `network_fingerprint` as they can be shared across multiple users, and you could affect more users than intended.\n\nYou may not set an `ALLOW` rule for a `country_code`.\n\nRules are applied in the order specified above. For example, if an end user has an `ALLOW` rule set for their `visitor_id` but a `BLOCK` rule set for their `hardware_fingerprint`, they will receive an `ALLOW` verdict because the `visitor_id` rule takes precedence.\n\nIf there are conflicts between multiple `cidr_block` rules (for example, if the `ip_address` of the end user overlaps with multiple CIDR blocks that have rules set), the conflicts are resolved as follows:\n- The smallest block size takes precedence. For example, if an `ip_address` overlaps with a `cidr_block` rule of `ALLOW` for a block with a prefix of `/32` and a `cidr_block` rule of `BLOCK` with a prefix of `/24`, the rule match verdict will be `ALLOW`.\n- Among equivalent size blocks, `BLOCK` takes precedence over `CHALLENGE`, which takes precedence over `ALLOW`. For example, if an `ip_address` overlaps with two `cidr_block` rules with blocks of the same size that return `CHALLENGE` and `ALLOW`, the rule match verdict will be `CHALLENGE`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rules",
+                "set"
+              ],
+              "host": [
+                "{{v1-rules-set-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "7e04e5e1-7d23-46eb-971e-1068621d0fa0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "set"
+                  ],
+                  "host": [
+                    "{{v1-rules-set-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"action\": \"<string>\",\n  \"status_code\": 6155,\n  \"visitor_id\": \"string\",\n  \"browser_id\": \"string\",\n  \"visitor_fingerprint\": \"string\",\n  \"browser_fingerprint\": \"string\",\n  \"hardware_fingerprint\": \"string\",\n  \"network_fingerprint\": \"string\",\n  \"expires_at\": \"string\",\n  \"cidr_block\": \"string\",\n  \"country_code\": \"string\",\n  \"asn\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e644a5a8-f60d-49fb-8ba0-9173b30c4e03",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "set"
+                  ],
+                  "host": [
+                    "{{v1-rules-set-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "978f5339-3a47-4ce7-848b-6c2896aa3aeb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "set"
+                  ],
+                  "host": [
+                    "{{v1-rules-set-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "689c45b4-75fa-44c6-bc4f-c32e4fa9e6f4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "set"
+                  ],
+                  "host": [
+                    "{{v1-rules-set-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "04bd6f37-3fb0-44b2-a5a0-3cbfcec09b8c",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "set"
+                  ],
+                  "host": [
+                    "{{v1-rules-set-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"visitor_id\": \"<string>\",\n  \"browser_id\": \"<string>\",\n  \"visitor_fingerprint\": \"<string>\",\n  \"browser_fingerprint\": \"<string>\",\n  \"hardware_fingerprint\": \"<string>\",\n  \"network_fingerprint\": \"<string>\",\n  \"expires_in_minutes\": \"<integer>\",\n  \"description\": \"<string>\",\n  \"cidr_block\": \"<string>\",\n  \"country_code\": \"<string>\",\n  \"asn\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f217ab23-98cb-484b-ae08-d5e912c8fa42",
+          "name": "List",
+          "request": {
+            "name": "List",
+            "description": {
+              "content": "Get all rules that have been set for your project.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "rules",
+                "list"
+              ],
+              "host": [
+                "{{v1-rules-list-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b5b4c7df-e152-4c9e-b1bd-4ea07b3e9bbc",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-rules-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"next_cursor\": \"string\",\n  \"rules\": [\n    {\n      \"rule_type\": \"BROWSER_ID\",\n      \"action\": \"<string>\",\n      \"created_at\": \"string\",\n      \"visitor_id\": \"string\",\n      \"browser_id\": \"string\",\n      \"visitor_fingerprint\": \"string\",\n      \"browser_fingerprint\": \"string\",\n      \"hardware_fingerprint\": \"string\",\n      \"network_fingerprint\": \"string\",\n      \"cidr_block\": \"string\",\n      \"country_code\": \"string\",\n      \"asn\": \"string\",\n      \"description\": \"string\",\n      \"expires_at\": \"string\",\n      \"last_updated_at\": \"string\"\n    },\n    {\n      \"rule_type\": \"COUNTRY_CODE\",\n      \"action\": \"<string>\",\n      \"created_at\": \"string\",\n      \"visitor_id\": \"string\",\n      \"browser_id\": \"string\",\n      \"visitor_fingerprint\": \"string\",\n      \"browser_fingerprint\": \"string\",\n      \"hardware_fingerprint\": \"string\",\n      \"network_fingerprint\": \"string\",\n      \"cidr_block\": \"string\",\n      \"country_code\": \"string\",\n      \"asn\": \"string\",\n      \"description\": \"string\",\n      \"expires_at\": \"string\",\n      \"last_updated_at\": \"string\"\n    }\n  ],\n  \"status_code\": 451\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "71a87057-f929-4015-b84c-4d0b7d04556c",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-rules-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1037be03-51f2-427c-ae94-a2532746afeb",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-rules-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4745984b-8314-4bed-b887-388e6b0c3511",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-rules-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6af7e09b-b69c-4aad-b78e-2b2aa070ca1d",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "rules",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-rules-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98c5eec5-1352-40da-987d-de4d63f063f1",
+          "name": "Override",
+          "request": {
+            "name": "Override",
+            "description": {
+              "content": "Use this endpoint to override the action returned for a specific verdict reason during a fingerprint lookup. For example, Stytch Device Fingerprinting returns a `CHALLENGE` verdict action by default for the verdict reason `VIRTUAL_MACHINE`. You can use this endpoint to override that reason to return an `ALLOW` verdict instead if you expect many legitimate users to be using a browser that runs in a virtual machine.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "verdict_reasons",
+                "override"
+              ],
+              "host": [
+                "{{v1-verdict_reasons-override-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e31f9d4b-d5c4-4f89-816c-c0a7cc0079d0",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "override"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-override-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"verdict_reason_action\": {\n    \"verdict_reason\": \"string\",\n    \"default_action\": \"ALLOW\",\n    \"override_action\": \"ALLOW\",\n    \"override_created_at\": \"string\",\n    \"override_description\": \"string\"\n  },\n  \"status_code\": 3542\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3826109-5e54-49ed-adef-650d1a6b2211",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "override"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-override-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa4bfcae-f0f6-4c90-a09b-c7e6f31009cc",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "override"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-override-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "892d43bf-15ad-4868-b607-9268d38c2e6f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "override"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-override-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4aa035ac-7d32-4469-8868-aa01ea9c4122",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "override"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-override-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"verdict_reason\": \"<string>\",\n  \"override_action\": \"<string>\",\n  \"override_description\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "57324ec3-2532-4d92-a577-a9a4316dc0f9",
+          "name": "List",
+          "request": {
+            "name": "List",
+            "description": {
+              "content": "Get the list of verdict reasons returned by the Stytch Device Fingerprinting product along with their default actions and any overrides you may have defined. This is not an exhaustive list of verdict reasons, but it contains all verdict reasons that you may set an override on.\n\nFor a full list of possible verdict reasons, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "verdict_reasons",
+                "list"
+              ],
+              "host": [
+                "{{v1-verdict_reasons-list-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9e2040bf-53fe-4210-afc7-1591f0f0ead6",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"verdict_reason_actions\": [\n    {\n      \"verdict_reason\": \"string\",\n      \"default_action\": \"CHALLENGE\",\n      \"override_action\": \"CHALLENGE\",\n      \"override_created_at\": \"string\",\n      \"override_description\": \"string\"\n    },\n    {\n      \"verdict_reason\": \"string\",\n      \"default_action\": \"CHALLENGE\",\n      \"override_action\": \"BLOCK\",\n      \"override_created_at\": \"string\",\n      \"override_description\": \"string\"\n    }\n  ],\n  \"status_code\": 4639\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a31eb7da-9e5c-4bed-a383-8d6353c98015",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "112d57f4-e6c1-4792-87f6-cd9c8fd495b2",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7c36a90e-067c-47bc-a5be-072e397af555",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19e582c5-057f-4721-9773-c148bf9d710a",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "verdict_reasons",
+                    "list"
+                  ],
+                  "host": [
+                    "{{v1-verdict_reasons-list-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"overrides_only\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7afd69df-3648-4aa5-a7c4-99649f7a8c22",
+          "name": "Risk",
+          "request": {
+            "name": "Risk",
+            "description": {
+              "content": "Get risk information for a specific email address.\nThe response will contain a recommended action (`ALLOW`, `BLOCK`, or `CHALLENGE`) and a more granular `risk_score`.\nYou can also check the `address_information` and `domain_information` fields for more information about the email address and email domain.\n\nThis feature is in beta. Reach out to us [here](mailto:fraud-team@stytch.com?subject=Email_Intelligence_Early_Access) if you'd like to request early access.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "email",
+                "risk"
+              ],
+              "host": [
+                "{{v1-email-risk-Url}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email_address\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a7025e4-fc2a-4fe5-a859-62af1f84641d",
+              "name": "Successful response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email",
+                    "risk"
+                  ],
+                  "host": [
+                    "{{v1-email-risk-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"request_id\": \"string\",\n  \"address_information\": {\n    \"has_known_bounces\": false,\n    \"has_valid_syntax\": false,\n    \"is_suspected_role_address\": false,\n    \"normalized_email\": \"string\",\n    \"tumbling_character_count\": 2674\n  },\n  \"domain_information\": {\n    \"has_mx_or_a_record\": false,\n    \"is_disposable_domain\": true\n  },\n  \"action\": \"BLOCK\",\n  \"risk_score\": 865,\n  \"status_code\": 775\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8c67879b-0a9f-41d1-90bf-a612c8c4c3d2",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email",
+                    "risk"
+                  ],
+                  "host": [
+                    "{{v1-email-risk-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9dd81446-184c-4e75-8d90-4044bf331698",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email",
+                    "risk"
+                  ],
+                  "host": [
+                    "{{v1-email-risk-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 401,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"unauthorized_credentials\",\n  \"error_message\": \"Unauthorized credentials.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/401\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "13c0ff22-c96c-4c9c-96a9-47b1330e78a3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email",
+                    "risk"
+                  ],
+                  "host": [
+                    "{{v1-email-risk-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 429,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"too_many_requests\",\n  \"error_message\": \"Too many requests have been made.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/429\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f60a702-1b6a-4533-8a95-77e0bd1227b6",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "email",
+                    "risk"
+                  ],
+                  "host": [
+                    "{{v1-email-risk-Url}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email_address\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status_code\": 500,\n  \"request_id\": \"request-id-test-b05c992f-ebdc-489d-a754-c7e70ba13141\",\n  \"error_type\": \"internal_server_error\",\n  \"error_message\": \"Oops, something seems to have gone wrong, please reach out to support@stytch.com to let us know what went wrong.\",\n  \"error_url\": \"https://stytch.com/docs/api/errors/500\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.stytch.com",
+      "key": "baseUrl"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-fingerprint-lookup-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-rules-set-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-rules-list-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-verdict_reasons-override-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-verdict_reasons-list-Url"
+    },
+    {
+      "type": "string",
+      "value": "https://telemetry.stytch.com",
+      "key": "v1-email-risk-Url"
+    }
+  ],
+  "info": {
+    "_postman_id": "04881655-1ce3-402a-ac47-6604b6136a1d",
+    "name": "Stytch B2B Authentication Application Fraud API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.\n\nContact Support:\n Name: Stytch",
+      "type": "text/plain"
+    }
+  }
+}
