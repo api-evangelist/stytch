@@ -653,6 +653,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - EmailTemplate
+  tags_raw:
   - Email Template
   properties:
   - type: OpenAPI
@@ -993,6 +995,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
@@ -1061,6 +1065,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -1265,6 +1271,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - RBAC
+  tags_raw:
   - Rbac
   properties:
   - type: OpenAPI
@@ -1333,6 +1341,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - SDK
+  tags_raw:
   - Sdk
   properties:
   - type: OpenAPI
