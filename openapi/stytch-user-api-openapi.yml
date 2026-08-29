@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application User API
+  title: Stytch Consumer Authentication User API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs
@@ -1456,121 +1456,6 @@ paths:
         source: "# POST /v1/users/{user_id}/connected_apps/{connected_app_id}/revoke\ncurl --request POST \\\n  --url https://test.stytch.com/v1/users/${userId}/connected_apps/${exampleConnectedAppClientID}/revoke \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
 components:
   schemas:
-    api_user_v1_UserConnectedApp:
-      type: object
-      properties:
-        connected_app_id:
-          type: string
-          description: The ID of the Connected App.
-        name:
-          type: string
-          description: The name of the Connected App.
-        description:
-          type: string
-          description: A description of the Connected App.
-        client_type:
-          type: string
-          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
-        scopes_granted:
-          type: string
-          description: The scopes granted to the Connected App at the completion of the last authorization flow.
-        logo_url:
-          type: string
-          description: The logo URL of the Connected App, if any.
-      required:
-      - connected_app_id
-      - name
-      - description
-      - client_type
-      - scopes_granted
-    api_user_v1_ExchangePrimaryFactorResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - user
-      - status_code
-    api_user_v1_CreateRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          description: The email address of the end user.
-        name:
-          $ref: '#/components/schemas/api_user_v1_Name'
-          description: The name of the user. Each field in the name object is optional.
-        attributes:
-          $ref: '#/components/schemas/api_attribute_v1_Attributes'
-        phone_number:
-          type: string
-          description: The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX). You may use +10000000000 to test this endpoint, see [Testing](https://stytch.com/docs/home#resources_testing) for more detail.
-        create_user_as_pending:
-          type: boolean
-          description: "Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.\n        If true, users will be saved with status pending in Stytch's backend until authenticated.\n        If false, users will be created as active. An example usage of\n        a true flag would be to require users to verify their phone by entering the OTP code before creating\n        an account for them."
-        trusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        untrusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        external_id:
-          type: string
-          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
-        roles:
-          type: array
-          items:
-            type: string
-          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
-      description: Request type
-    api_user_v1_ExchangePrimaryFactorRequest:
-      type: object
-      properties:
-        email_address:
-          type: string
-          description: The email address to exchange to.
-        phone_number:
-          type: string
-          description: The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
-      description: Request type
-    api_user_v1_SearchResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_User'
-          description: An array of results that match your search query.
-        results_metadata:
-          $ref: '#/components/schemas/api_user_v1_ResultsMetadata'
-          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - results
-      - results_metadata
-      - status_code
     api_user_v1_BiometricRegistration:
       type: object
       properties:
@@ -1583,7 +1468,25 @@ components:
       required:
       - biometric_registration_id
       - verified
-    api_user_v1_DeleteWebAuthnRegistrationResponse:
+    api_user_v1_ConnectedAppsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_UserConnectedApp'
+          description: An array of Connected Apps with which the User has successfully completed an authorization flow.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - connected_apps
+      - status_code
+    api_user_v1_DeletePhoneNumberResponse:
       type: object
       properties:
         request_id:
@@ -1603,219 +1506,6 @@ components:
       - request_id
       - user_id
       - user
-      - status_code
-    api_attribute_v1_Attributes:
-      type: object
-      properties:
-        ip_address:
-          type: string
-          description: The IP address of the user.
-        user_agent:
-          type: string
-          description: The user agent of the User.
-    api_user_v1_DeleteOAuthRegistrationResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - user
-      - status_code
-    api_user_v1_TOTP:
-      type: object
-      properties:
-        totp_id:
-          type: string
-          description: The unique ID for a TOTP instance.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - totp_id
-      - verified
-    api_user_v1_DeleteCryptoWalletResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - user
-      - status_code
-    api_user_v1_PhoneNumber:
-      type: object
-      properties:
-        phone_id:
-          type: string
-          description: The unique ID for the phone number.
-        phone_number:
-          type: string
-          description: The phone number.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - phone_id
-      - phone_number
-      - verified
-    api_user_v1_Name:
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: The first name of the user.
-        middle_name:
-          type: string
-          description: The middle name(s) of the user.
-        last_name:
-          type: string
-          description: The last name of the user.
-    api_user_v1_CryptoWallet:
-      type: object
-      properties:
-        crypto_wallet_id:
-          type: string
-          description: The unique ID for a crypto wallet
-        crypto_wallet_address:
-          type: string
-          description: The actual blockchain address of the User's crypto wallet.
-        crypto_wallet_type:
-          type: string
-          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - crypto_wallet_id
-      - crypto_wallet_address
-      - crypto_wallet_type
-      - verified
-    api_user_v1_User:
-      type: object
-      properties:
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        emails:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_Email'
-          description: An array of email objects for the User.
-        status:
-          type: string
-          description: The status of the User. The possible values are `pending` and `active`.
-        phone_numbers:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
-          description: An array of phone number objects linked to the User.
-        webauthn_registrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_WebAuthnRegistration'
-          description: An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API.
-        providers:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_OAuthProvider'
-          description: An array of OAuth `provider` objects linked to the User.
-        totps:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_TOTP'
-          description: An array containing a list of all TOTP instances for a given User in the Stytch API.
-        crypto_wallets:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
-          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
-        biometric_registrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_BiometricRegistration'
-          description: An array that contains a list of all biometric registrations for a given User in the Stytch API.
-        is_locked:
-          type: boolean
-          description: Whether the User is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
-        roles:
-          type: array
-          items:
-            type: string
-          description: "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
-        name:
-          $ref: '#/components/schemas/api_user_v1_Name'
-          description: The name of the User. Each field in the `name` object is optional.
-        created_at:
-          type: string
-          description: The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        password:
-          $ref: '#/components/schemas/api_user_v1_Password'
-          description: The password object is returned for users with a password.
-        trusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        untrusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        external_id:
-          type: string
-          description: An identifier that can be used in most API calls where a `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within the project.
-        lock_created_at:
-          type: string
-          description: When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        lock_expires_at:
-          type: string
-          description: When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-      required:
-      - user_id
-      - emails
-      - status
-      - phone_numbers
-      - webauthn_registrations
-      - providers
-      - totps
-      - crypto_wallets
-      - biometric_registrations
-      - is_locked
-      - roles
-    api_user_v1_RevokeResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
       - status_code
     api_user_v1_GetResponse:
       type: object
@@ -1912,34 +1602,19 @@ components:
       - is_locked
       - roles
       - status_code
-    api_user_v1_Password:
+    api_user_v1_RevokeResponse:
       type: object
       properties:
-        password_id:
+        request_id:
           type: string
-          description: The unique ID of a specific password
-        requires_reset:
-          type: boolean
-          description: Indicates whether this password requires a password reset
-      required:
-      - password_id
-      - requires_reset
-    api_user_v1_SearchRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-        limit:
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
           type: integer
           format: int32
-          minimum: 0
-          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
-        query:
-          $ref: '#/components/schemas/api_user_v1_SearchUsersQuery'
-          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
-      description: Request type
-    api_user_v1_DeleteBiometricRegistrationResponse:
+      required:
+      - request_id
+      - status_code
+    api_user_v1_CreateResponse:
       type: object
       properties:
         request_id:
@@ -1948,74 +1623,15 @@ components:
         user_id:
           type: string
           description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - user
-      - status_code
-    api_user_v1_UpdateRequest:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/api_user_v1_Name'
-          description: The name of the user. Each field in the name object is optional.
-        attributes:
-          $ref: '#/components/schemas/api_attribute_v1_Attributes'
-          description: Provided attributes to help with fraud detection. These values are pulled and passed into Stytch endpoints by your application.
-        trusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        untrusted_metadata:
-          type: object
-          additionalProperties: true
-          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
-        external_id:
-          type: string
-          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
-        roles:
-          type: array
-          items:
-            type: string
-          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
-      description: Request type
-    api_user_v1_Email:
-      type: object
-      properties:
         email_id:
           type: string
           description: The unique ID of a specific email address.
-        email:
+        status:
           type: string
-          description: The email address.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - email_id
-      - email
-      - verified
-    api_user_v1_SearchUsersQueryOperator:
-      type: string
-      enum:
-      - OR
-      - AND
-    api_user_v1_DeletePhoneNumberResponse:
-      type: object
-      properties:
-        request_id:
+          description: The status of the User. The possible values are `pending` and `active`.
+        phone_id:
           type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
+          description: The unique ID for the phone number.
         user:
           $ref: '#/components/schemas/api_user_v1_User'
           description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
@@ -2026,6 +1642,9 @@ components:
       required:
       - request_id
       - user_id
+      - email_id
+      - status
+      - phone_id
       - user
       - status_code
     api_user_v1_DeleteTOTPResponse:
@@ -2049,18 +1668,22 @@ components:
       - user_id
       - user
       - status_code
-    api_user_v1_DeleteExternalIdResponse:
+    api_user_v1_DeleteBiometricRegistrationResponse:
       type: object
       properties:
         request_id:
           type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         user_id:
           type: string
+          description: The unique ID of the affected User.
         user:
           $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
         status_code:
           type: integer
           format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
       required:
       - request_id
       - user_id
@@ -2107,44 +1730,7 @@ components:
       - request_id
       - user_id
       - status_code
-    api_user_v1_RevokeRequest:
-      type: object
-      properties: {}
-      description: Request type
-    api_user_v1_ConnectedAppsResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_user_v1_UserConnectedApp'
-          description: An array of Connected Apps with which the User has successfully completed an authorization flow.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - connected_apps
-      - status_code
-    api_user_v1_SearchUsersQuery:
-      type: object
-      properties:
-        operator:
-          $ref: '#/components/schemas/api_user_v1_SearchUsersQueryOperator'
-          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
-        operands:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-          description: An array of operand objects that contains all of the filters and values to apply to your search search query.
-      required:
-      - operator
-      - operands
-    api_user_v1_CreateResponse:
+    api_user_v1_DeleteCryptoWalletResponse:
       type: object
       properties:
         request_id:
@@ -2153,79 +1739,146 @@ components:
         user_id:
           type: string
           description: The unique ID of the affected User.
-        email_id:
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_SearchResponse:
+      type: object
+      properties:
+        request_id:
           type: string
-          description: The unique ID of a specific email address.
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_User'
+          description: An array of results that match your search query.
+        results_metadata:
+          $ref: '#/components/schemas/api_user_v1_ResultsMetadata'
+          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - results
+      - results_metadata
+      - status_code
+    api_user_v1_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_user_v1_SearchUsersQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
+      description: Request type
+    api_user_v1_User:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        emails:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_Email'
+          description: An array of email objects for the User.
         status:
           type: string
           description: The status of the User. The possible values are `pending` and `active`.
-        phone_id:
-          type: string
-          description: The unique ID for the phone number.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - email_id
-      - status
-      - phone_id
-      - user
-      - status_code
-    api_user_v1_WebAuthnRegistration:
-      type: object
-      properties:
-        webauthn_registration_id:
-          type: string
-          description: The unique ID for the Passkey or WebAuthn registration.
-        domain:
-          type: string
-          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
-        user_agent:
-          type: string
-          description: The user agent of the User.
-        verified:
+        phone_numbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_PhoneNumber'
+          description: An array of phone number objects linked to the User.
+        webauthn_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_WebAuthnRegistration'
+          description: An array that contains a list of all Passkey or WebAuthn registrations for a given User in the Stytch API.
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_OAuthProvider'
+          description: An array of OAuth `provider` objects linked to the User.
+        totps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_TOTP'
+          description: An array containing a list of all TOTP instances for a given User in the Stytch API.
+        crypto_wallets:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_CryptoWallet'
+          description: An array contains a list of all crypto wallets for a given User in the Stytch API.
+        biometric_registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_user_v1_BiometricRegistration'
+          description: An array that contains a list of all biometric registrations for a given User in the Stytch API.
+        is_locked:
           type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-        authenticator_type:
-          type: string
-          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+          description: Whether the User is temporarily locked due to too many failed authentication attempts. See the [User Locking Guide](https://stytch.com/docs/resources/platform/user-locks) for more information.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles assigned to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
         name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the User. Each field in the `name` object is optional.
+        created_at:
           type: string
-          description: The `name` of the Passkey or WebAuthn registration.
+          description: The timestamp of the User's creation. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        password:
+          $ref: '#/components/schemas/api_user_v1_Password'
+          description: The password object is returned for users with a password.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in most API calls where a `member_id` is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters. External IDs must be unique within the project.
+        lock_created_at:
+          type: string
+          description: When the user lock was created, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        lock_expires_at:
+          type: string
+          description: When the user lock expires, if there is one. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
       required:
-      - webauthn_registration_id
-      - domain
-      - user_agent
-      - verified
-      - authenticator_type
-      - name
-    api_user_v1_DeleteEmailResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
       - user_id
-      - user
-      - status_code
+      - emails
+      - status
+      - phone_numbers
+      - webauthn_registrations
+      - providers
+      - totps
+      - crypto_wallets
+      - biometric_registrations
+      - is_locked
+      - roles
     api_user_v1_ResultsMetadata:
       type: object
       properties:
@@ -2238,7 +1891,78 @@ components:
           description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
       required:
       - total
+    api_user_v1_DeleteExternalIdResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        user_id:
+          type: string
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_user_v1_ExchangePrimaryFactorResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
     api_user_v1_DeletePasswordResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_DeleteEmailResponse:
       type: object
       properties:
         request_id:
@@ -2298,6 +2022,282 @@ components:
       - crypto_wallets
       - user
       - status_code
+    api_user_v1_WebAuthnRegistration:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+          description: The unique ID for the Passkey or WebAuthn registration.
+        domain:
+          type: string
+          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+        authenticator_type:
+          type: string
+          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+        name:
+          type: string
+          description: The `name` of the Passkey or WebAuthn registration.
+      required:
+      - webauthn_registration_id
+      - domain
+      - user_agent
+      - verified
+      - authenticator_type
+      - name
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_user_v1_DeleteOAuthRegistrationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_ExchangePrimaryFactorRequest:
+      type: object
+      properties:
+        email_address:
+          type: string
+          description: The email address to exchange to.
+        phone_number:
+          type: string
+          description: The phone number to exchange to. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX).
+      description: Request type
+    api_user_v1_DeleteWebAuthnRegistrationResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - user_id
+      - user
+      - status_code
+    api_user_v1_UserConnectedApp:
+      type: object
+      properties:
+        connected_app_id:
+          type: string
+          description: The ID of the Connected App.
+        name:
+          type: string
+          description: The name of the Connected App.
+        description:
+          type: string
+          description: A description of the Connected App.
+        client_type:
+          type: string
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        scopes_granted:
+          type: string
+          description: The scopes granted to the Connected App at the completion of the last authorization flow.
+        logo_url:
+          type: string
+          description: The logo URL of the Connected App, if any.
+      required:
+      - connected_app_id
+      - name
+      - description
+      - client_type
+      - scopes_granted
+    api_user_v1_SearchUsersQuery:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/api_user_v1_SearchUsersQueryOperator'
+          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
+        operands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: An array of operand objects that contains all of the filters and values to apply to your search search query.
+      required:
+      - operator
+      - operands
+    api_user_v1_CreateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the end user.
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the user. Each field in the name object is optional.
+        attributes:
+          $ref: '#/components/schemas/api_attribute_v1_Attributes'
+        phone_number:
+          type: string
+          description: The phone number to use for one-time passcodes. The phone number should be in E.164 format (i.e. +1XXXXXXXXXX). You may use +10000000000 to test this endpoint, see [Testing](https://stytch.com/docs/home#resources_testing) for more detail.
+        create_user_as_pending:
+          type: boolean
+          description: "Flag for whether or not to save a user as pending vs active in Stytch. Defaults to false.\n        If true, users will be saved with status pending in Stytch's backend until authenticated.\n        If false, users will be created as active. An example usage of\n        a true flag would be to require users to verify their phone by entering the OTP code before creating\n        an account for them."
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+      description: Request type
+    api_user_v1_Email:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        email:
+          type: string
+          description: The email address.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - email_id
+      - email
+      - verified
+    api_user_v1_RevokeRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_user_v1_Name:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the user.
+        middle_name:
+          type: string
+          description: The middle name(s) of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+    api_user_v1_SearchUsersQueryOperator:
+      type: string
+      enum:
+      - OR
+      - AND
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - phone_id
+      - phone_number
+      - verified
+    api_user_v1_TOTP:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - totp_id
+      - verified
+    api_user_v1_UpdateRequest:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/api_user_v1_Name'
+          description: The name of the user. Each field in the name object is optional.
+        attributes:
+          $ref: '#/components/schemas/api_attribute_v1_Attributes'
+          description: Provided attributes to help with fraud detection. These values are pulled and passed into Stytch endpoints by your application.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        untrusted_metadata:
+          type: object
+          additionalProperties: true
+          description: The `untrusted_metadata` field contains an arbitrary JSON object of application-specific data. Untrusted metadata can be edited by end users directly via the SDK, and **cannot be used to store critical information.** See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
+        external_id:
+          type: string
+          description: An identifier that can be used in API calls wherever a user_id is expected. This is a string consisting of alphanumeric, `.`, `_`, `-`, or `|` characters with a maximum length of 128 characters.
+        roles:
+          type: array
+          items:
+            type: string
+          description: "Roles to explicitly assign to this User.\n   See the [RBAC guide](https://stytch.com/docs/guides/rbac/role-assignment) for more information about role assignment."
+      description: Request type
+    api_attribute_v1_Attributes:
+      type: object
+      properties:
+        ip_address:
+          type: string
+          description: The IP address of the user.
+        user_agent:
+          type: string
+          description: The user agent of the User.
   securitySchemes:
     basicAuth:
       type: http

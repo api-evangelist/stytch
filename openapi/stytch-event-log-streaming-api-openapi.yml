@@ -1,18 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Event Log Streaming API
-  version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  title: Stytch Management Event Log Streaming API
+  description: Stytch's Management API for programmatic workspace actions — projects, environments, secrets, redirect URLs, RBAC policies, JWT templates, email templates, event log streaming, trusted token profiles, public tokens, and SDK configuration.
+  version: 1.0.0
   contact:
-    name: Stytch
+    name: Stytch Support
     url: https://stytch.com/docs
-  license:
-    name: Proprietary
+    email: support@stytch.com
 servers:
-- url: https://api.stytch.com
-  description: Production
-- url: https://test.stytch.com
-  description: Test
+- url: https://management.stytch.com
+  description: Production server
+security:
+- basicAuth: []
 tags:
 - name: Event Log Streaming
 paths:
@@ -407,39 +406,6 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_event_log_streaming_v3_DisableRequest:
-      type: object
-      properties: {}
-      description: Request type
-    pwa_event_log_streaming_v3_EventLogStreaming:
-      type: object
-      properties:
-        destination_type:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationType'
-        destination_config:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig'
-        streaming_status:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_StreamingStatus'
-    pwa_event_log_streaming_v3_DestinationConfig:
-      type: object
-      properties:
-        datadog:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogConfig'
-        grafana_loki:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_GrafanaLokiConfig'
-    pwa_event_log_streaming_v3_GrafanaLokiConfig:
-      type: object
-      properties:
-        hostname:
-          type: string
-        username:
-          type: string
-        password:
-          type: string
-      required:
-      - hostname
-      - username
-      - password
     pwa_event_log_streaming_v3_DatadogConfigMasked:
       type: object
       properties:
@@ -449,29 +415,59 @@ components:
           $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogSite'
       required:
       - api_key_last_four
-    pwa_event_log_streaming_v3_CreateRequest:
+    pwa_event_log_streaming_v3_StreamingStatus:
+      type: string
+      enum:
+      - ACTIVE
+      - DISABLED
+      - PENDING
+    pwa_event_log_streaming_v3_DestinationConfig:
+      type: object
+      properties:
+        datadog:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogConfig'
+        grafana_loki:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_GrafanaLokiConfig'
+    pwa_event_log_streaming_v3_DestinationType:
+      type: string
+      enum:
+      - DATADOG
+      - GRAFANA_LOKI
+    pwa_event_log_streaming_v3_EventLogStreaming:
       type: object
       properties:
         destination_type:
           $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationType'
         destination_config:
           $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig'
+        streaming_status:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_StreamingStatus'
+    pwa_event_log_streaming_v3_DisableRequest:
+      type: object
+      properties: {}
       description: Request type
-    pwa_event_log_streaming_v3_CreateResponse:
+    pwa_event_log_streaming_v3_DatadogConfig:
       type: object
       properties:
-        request_id:
+        api_key:
           type: string
-        event_log_streaming_config:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_EventLogStreaming'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
+        site:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogSite'
       required:
-      - request_id
-      - event_log_streaming_config
-      - status_code
+      - api_key
+    pwa_event_log_streaming_v3_GrafanaLokiConfigMasked:
+      type: object
+      properties:
+        hostname:
+          type: string
+        username:
+          type: string
+        password_last_four:
+          type: string
+      required:
+      - hostname
+      - username
+      - password_last_four
     pwa_event_log_streaming_v3_EnableResponse:
       type: object
       properties:
@@ -484,43 +480,15 @@ components:
       required:
       - request_id
       - status_code
-    pwa_event_log_streaming_v3_DestinationConfigMasked:
+    pwa_event_log_streaming_v3_EventLogStreamingMasked:
       type: object
       properties:
-        datadog:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogConfigMasked'
-        grafana_loki:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_GrafanaLokiConfigMasked'
-    pwa_event_log_streaming_v3_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        event_log_streaming_config:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_EventLogStreamingMasked'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - event_log_streaming_config
-      - status_code
-    pwa_event_log_streaming_v3_UpdateRequest:
-      type: object
-      properties:
+        destination_type:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationType'
         destination_config:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig'
-      description: Request type
-    pwa_event_log_streaming_v3_DatadogConfig:
-      type: object
-      properties:
-        api_key:
-          type: string
-        site:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogSite'
-      required:
-      - api_key
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfigMasked'
+        streaming_status:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_StreamingStatus'
     pwa_event_log_streaming_v3_DisableResponse:
       type: object
       properties:
@@ -533,6 +501,16 @@ components:
       required:
       - request_id
       - status_code
+    pwa_event_log_streaming_v3_EnableRequest:
+      type: object
+      properties: {}
+      description: Request type
+    pwa_event_log_streaming_v3_UpdateRequest:
+      type: object
+      properties:
+        destination_config:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig'
+      description: Request type
     pwa_event_log_streaming_v3_UpdateResponse:
       type: object
       properties:
@@ -548,26 +526,6 @@ components:
       - request_id
       - event_log_streaming_config
       - status_code
-    pwa_event_log_streaming_v3_EventLogStreamingMasked:
-      type: object
-      properties:
-        destination_type:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationType'
-        destination_config:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfigMasked'
-        streaming_status:
-          $ref: '#/components/schemas/pwa_event_log_streaming_v3_StreamingStatus'
-    pwa_event_log_streaming_v3_DestinationType:
-      type: string
-      enum:
-      - DATADOG
-      - GRAFANA_LOKI
-    pwa_event_log_streaming_v3_StreamingStatus:
-      type: string
-      enum:
-      - ACTIVE
-      - DISABLED
-      - PENDING
     pwa_event_log_streaming_v3_DeleteResponse:
       type: object
       properties:
@@ -580,19 +538,19 @@ components:
       required:
       - request_id
       - status_code
-    pwa_event_log_streaming_v3_GrafanaLokiConfigMasked:
+    pwa_event_log_streaming_v3_GrafanaLokiConfig:
       type: object
       properties:
         hostname:
           type: string
         username:
           type: string
-        password_last_four:
+        password:
           type: string
       required:
       - hostname
       - username
-      - password_last_four
+      - password
     pwa_event_log_streaming_v3_DatadogSite:
       type: string
       enum:
@@ -601,9 +559,50 @@ components:
       - US5
       - EU
       - AP1
-    pwa_event_log_streaming_v3_EnableRequest:
+    pwa_event_log_streaming_v3_GetResponse:
       type: object
-      properties: {}
+      properties:
+        request_id:
+          type: string
+        event_log_streaming_config:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_EventLogStreamingMasked'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - event_log_streaming_config
+      - status_code
+    pwa_event_log_streaming_v3_DestinationConfigMasked:
+      type: object
+      properties:
+        datadog:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DatadogConfigMasked'
+        grafana_loki:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_GrafanaLokiConfigMasked'
+    pwa_event_log_streaming_v3_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        event_log_streaming_config:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_EventLogStreaming'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - event_log_streaming_config
+      - status_code
+    pwa_event_log_streaming_v3_CreateRequest:
+      type: object
+      properties:
+        destination_type:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationType'
+        destination_config:
+          $ref: '#/components/schemas/pwa_event_log_streaming_v3_DestinationConfig'
       description: Request type
   securitySchemes:
     basicAuth:

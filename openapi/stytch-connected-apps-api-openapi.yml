@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Connected Apps API
+  title: Stytch Consumer Authentication Connected Apps API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs
@@ -446,28 +446,6 @@ paths:
         source: "# POST /v1/connected_apps/clients\ncurl --request POST \\\n  --url https://test.stytch.com/v1/connected_apps/clients \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"client_type\": \"first_party\",\n    \"client_name\": \"My Sample Client\",\n    \"client_description\": \"My sample client for testing out Connected Apps\",\n    \"redirect_urls\": [\"https://example.com/callback\"],\n    \"full_access_allowed\": false\n  }'"
 components:
   schemas:
-    api_connectedapps_v1_connected_apps_clients_SearchResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
-        results_metadata:
-          $ref: '#/components/schemas/api_connectedapps_v1_ResultsMetadata'
-          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_apps
-      - results_metadata
-      - status_code
     api_connectedapps_v1_ResultsMetadata:
       type: object
       properties:
@@ -480,12 +458,28 @@ components:
           description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
       required:
       - total
-    api_connectedapps_v1_connected_apps_clients_CreateRequest:
+    api_connectedapps_v1_connected_apps_clients_SearchRequest:
       type: object
       properties:
-        client_type:
-          $ref: '#/components/schemas/api_connectedapps_v1_CreateRequestClientType'
-          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+      description: Request type
+    api_connectedapps_v1_CreateRequestClientType:
+      type: string
+      enum:
+      - first_party
+      - first_party_public
+      - third_party
+      - third_party_public
+    api_connectedapps_v1_connected_apps_clients_UpdateRequest:
+      type: object
+      properties:
         client_name:
           type: string
           description: A human-readable name for the client.
@@ -522,25 +516,6 @@ components:
           type: boolean
           description: Valid for first party clients only. If true, the client does not need to request explicit user consent for the `offline_access` scope.
       description: Request type
-      required:
-      - client_type
-    api_connectedapps_v1_connected_apps_clients_CreateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_app:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppWithClientSecret'
-          description: The Connected App created by this API call.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_app
-      - status_code
     api_connectedapps_v1_ConnectedAppWithClientSecret:
       type: object
       properties:
@@ -607,23 +582,6 @@ components:
       - access_token_template_content
       - post_logout_redirect_urls
       - bypass_consent_for_offline_access
-    api_connectedapps_v1_connected_apps_clients_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_app:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
-          description: The Connected App affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_app
-      - status_code
     api_connectedapps_v1_ConnectedApp:
       type: object
       properties:
@@ -690,9 +648,29 @@ components:
       - post_logout_redirect_urls
       - bypass_consent_for_offline_access
       - creation_method
-    api_connectedapps_v1_connected_apps_clients_UpdateRequest:
+    api_connectedapps_v1_connected_apps_clients_UpdateResponse:
       type: object
       properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_CreateRequest:
+      type: object
+      properties:
+        client_type:
+          $ref: '#/components/schemas/api_connectedapps_v1_CreateRequestClientType'
+          description: The type of Connected App. Supported values are `first_party`, `first_party_public`, `third_party`, and `third_party_public`.
         client_name:
           type: string
           description: A human-readable name for the client.
@@ -729,6 +707,25 @@ components:
           type: boolean
           description: Valid for first party clients only. If true, the client does not need to request explicit user consent for the `offline_access` scope.
       description: Request type
+      required:
+      - client_type
+    api_connectedapps_v1_connected_apps_clients_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppWithClientSecret'
+          description: The Connected App created by this API call.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
     api_connectedapps_v1_connected_apps_clients_DeleteResponse:
       type: object
       properties:
@@ -744,19 +741,7 @@ components:
       - request_id
       - client_id
       - status_code
-    api_connectedapps_v1_connected_apps_clients_SearchRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-        limit:
-          type: integer
-          format: int32
-          minimum: 0
-          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
-      description: Request type
-    api_connectedapps_v1_connected_apps_clients_UpdateResponse:
+    api_connectedapps_v1_connected_apps_clients_GetResponse:
       type: object
       properties:
         request_id:
@@ -773,13 +758,28 @@ components:
       - request_id
       - connected_app
       - status_code
-    api_connectedapps_v1_CreateRequestClientType:
-      type: string
-      enum:
-      - first_party
-      - first_party_public
-      - third_party
-      - third_party_public
+    api_connectedapps_v1_connected_apps_clients_SearchResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+        results_metadata:
+          $ref: '#/components/schemas/api_connectedapps_v1_ResultsMetadata'
+          description: The search `results_metadata` object contains metadata relevant to your specific query like total and `next_cursor`.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_apps
+      - results_metadata
+      - status_code
   securitySchemes:
     basicAuth:
       type: http

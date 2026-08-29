@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Project API
+  title: Stytch Consumer Authentication Project API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs

@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application B2B SCIM API
+  title: Stytch B2B Authentication B2B SCIM API
   version: 2.0.0
   description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
   contact:
@@ -877,21 +877,26 @@ paths:
         source: "# GET /v1/b2b/scim/{organization_id}/connection\ncurl --request GET \\\n  --url https://test.stytch.com/v1/b2b/scim/${organizationId}/connection \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
 components:
   schemas:
-    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteRequest:
+    api_b2b_scim_v1_SCIMGroup:
       type: object
-      properties: {}
-      description: Request type
-    api_b2b_scim_v1_CreateRequestIdentityProvider:
-      type: string
-      enum:
-      - generic
-      - okta
-      - microsoft-entra
-      - cyberark
-      - jumpcloud
-      - onelogin
-      - pingfederate
-      - rippling
+      properties:
+        group_id:
+          type: string
+          description: Stytch-issued, globally unique UUID that identifies a specific SCIM Group. The entity `id` in the SCIM specification is issued by the Service Provider (SP) and returned to the Identity Provider (IdP) to store and use for uniquely identify and updating the Group moving forward.
+        group_name:
+          type: string
+          description: The displayName of the SCIM group, sent from the Identity Provider (IdP).
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform operations on an Organization, so be sure to preserve this value.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+      required:
+      - group_id
+      - group_name
+      - organization_id
+      - connection_id
     api_b2b_scim_v1_SCIMConnectionWithToken:
       type: object
       properties:
@@ -933,7 +938,11 @@ components:
       - base_url
       - bearer_token
       - scim_group_implicit_role_assignments
-    api_b2b_scim_v1_b2b_scim_connection_RotateCancelResponse:
+    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteResponse:
       type: object
       properties:
         request_id:
@@ -960,6 +969,69 @@ components:
       - onelogin
       - pingfederate
       - rippling
+    api_b2b_scim_v1_SCIMConnection:
+      type: object
+      properties:
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        status:
+          type: string
+          description: The status of the connection. The possible values are deleted or active.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+          description: "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
+        base_url:
+          type: string
+          description: The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints
+        bearer_token_last_four:
+          type: string
+          description: The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to generate a new one, use the [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+        next_bearer_token_last_four:
+          type: string
+        bearer_token_expires_at:
+          type: string
+          description: The bearer token expiry time.
+        next_bearer_token_expires_at:
+          type: string
+          description: This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry time.
+      required:
+      - organization_id
+      - connection_id
+      - status
+      - display_name
+      - identity_provider
+      - base_url
+      - bearer_token_last_four
+      - scim_group_implicit_role_assignments
+      - next_bearer_token_last_four
+    api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithNextToken'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
     api_b2b_scim_v1_b2b_scim_connection_GetResponse:
       type: object
       properties:
@@ -976,22 +1048,21 @@ components:
       required:
       - request_id
       - status_code
-    api_b2b_scim_v1_b2b_scim_connection_CreateResponse:
+    api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments:
       type: object
       properties:
-        request_id:
+        role_id:
           type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        connection:
-          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithToken'
-          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+          description: The ID of the role.
+        group_id:
+          type: string
+          description: The ID of the group.
+        group_name:
+          type: string
       required:
-      - request_id
-      - status_code
+      - role_id
+      - group_id
+      - group_name
     api_b2b_scim_v1_b2b_scim_connection_UpdateResponse:
       type: object
       properties:
@@ -1008,9 +1079,31 @@ components:
       required:
       - request_id
       - status_code
-    api_b2b_scim_v1_b2b_scim_connection_RotateCancelRequest:
+    api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse:
       type: object
-      properties: {}
+      properties:
+        scim_groups:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroup'
+          description: A list of SCIM Connection Groups belonging to the connection.
+        status_code:
+          type: integer
+          format: int32
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - scim_groups
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_CreateRequest:
+      type: object
+      properties:
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          $ref: '#/components/schemas/api_b2b_scim_v1_CreateRequestIdentityProvider'
       description: Request type
     api_b2b_scim_v1_SCIMConnectionWithNextToken:
       type: object
@@ -1060,37 +1153,20 @@ components:
       - bearer_token_last_four
       - next_bearer_token
       - scim_group_implicit_role_assignments
-    api_b2b_scim_v1_b2b_scim_connection_RotateCompleteResponse:
+    api_b2b_scim_v1_b2b_scim_connection_UpdateRequest:
       type: object
       properties:
-        request_id:
+        display_name:
           type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        connection:
-          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
-          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
-      required:
-      - request_id
-      - status_code
-    api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments:
-      type: object
-      properties:
-        role_id:
-          type: string
-          description: The ID of the role.
-        group_id:
-          type: string
-          description: The ID of the group.
-        group_name:
-          type: string
-      required:
-      - role_id
-      - group_id
-      - group_name
+          description: A human-readable display name for the connection.
+        identity_provider:
+          $ref: '#/components/schemas/api_b2b_scim_v1_UpdateRequestIdentityProvider'
+        scim_group_implicit_role_assignments:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
+          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+      description: Request type
     api_b2b_scim_v1_b2b_scim_connection_DeleteResponse:
       type: object
       properties:
@@ -1108,53 +1184,18 @@ components:
       - request_id
       - connection_id
       - status_code
-    api_b2b_scim_v1_b2b_scim_connection_CreateRequest:
-      type: object
-      properties:
-        display_name:
-          type: string
-          description: A human-readable display name for the connection.
-        identity_provider:
-          $ref: '#/components/schemas/api_b2b_scim_v1_CreateRequestIdentityProvider'
-      description: Request type
-    api_b2b_scim_v1_b2b_scim_connection_GetGroupsResponse:
-      type: object
-      properties:
-        scim_groups:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroup'
-          description: A list of SCIM Connection Groups belonging to the connection.
-        status_code:
-          type: integer
-          format: int32
-        next_cursor:
-          type: string
-          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
-      required:
-      - scim_groups
-      - status_code
-    api_b2b_scim_v1_SCIMGroup:
-      type: object
-      properties:
-        group_id:
-          type: string
-          description: Stytch-issued, globally unique UUID that identifies a specific SCIM Group. The entity `id` in the SCIM specification is issued by the Service Provider (SP) and returned to the Identity Provider (IdP) to store and use for uniquely identify and updating the Group moving forward.
-        group_name:
-          type: string
-          description: The displayName of the SCIM group, sent from the Identity Provider (IdP).
-        organization_id:
-          type: string
-          description: Globally unique UUID that identifies a specific Organization. The organization_id is critical to perform operations on an Organization, so be sure to preserve this value.
-        connection_id:
-          type: string
-          description: The ID of the SCIM connection.
-      required:
-      - group_id
-      - group_name
-      - organization_id
-      - connection_id
-    api_b2b_scim_v1_b2b_scim_connection_RotateStartResponse:
+    api_b2b_scim_v1_CreateRequestIdentityProvider:
+      type: string
+      enum:
+      - generic
+      - okta
+      - microsoft-entra
+      - cyberark
+      - jumpcloud
+      - onelogin
+      - pingfederate
+      - rippling
+    api_b2b_scim_v1_b2b_scim_connection_CreateResponse:
       type: object
       properties:
         request_id:
@@ -1165,7 +1206,23 @@ components:
           format: int32
           description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
         connection:
-          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithNextToken'
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnectionWithToken'
+          description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
+      required:
+      - request_id
+      - status_code
+    api_b2b_scim_v1_b2b_scim_connection_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        connection:
+          $ref: '#/components/schemas/api_b2b_scim_v1_SCIMConnection'
           description: The [SCIM Connection Object](https://stytch.com/docs/b2b/api/scim-connection-object).
       required:
       - request_id
@@ -1174,67 +1231,10 @@ components:
       type: object
       properties: {}
       description: Request type
-    api_b2b_scim_v1_b2b_scim_connection_UpdateRequest:
+    api_b2b_scim_v1_b2b_scim_connection_RotateCancelRequest:
       type: object
-      properties:
-        display_name:
-          type: string
-          description: A human-readable display name for the connection.
-        identity_provider:
-          $ref: '#/components/schemas/api_b2b_scim_v1_UpdateRequestIdentityProvider'
-        scim_group_implicit_role_assignments:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
-          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
+      properties: {}
       description: Request type
-    api_b2b_scim_v1_SCIMConnection:
-      type: object
-      properties:
-        organization_id:
-          type: string
-          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value. You may also use the organization_slug or organization_external_id here as a convenience.
-        connection_id:
-          type: string
-          description: The ID of the SCIM connection.
-        status:
-          type: string
-          description: The status of the connection. The possible values are deleted or active.
-        display_name:
-          type: string
-          description: A human-readable display name for the connection.
-        identity_provider:
-          type: string
-          description: "Name of the IdP. Enum with possible values: `okta`, `microsoft-entra`, `cyberark`, `jumpcloud`, `onelogin`, `pingfederate`, `rippling` or `generic`. \n\nSpecifying a known provider allows Stytch to handle any provider-specific logic, such as automatically appending `?aadOptscim062020` to the returned BaseURL for `microsoft-entra` SCIM Connections to [enable the SCIM 2.0 compliant flag](https://learn.microsoft.com/en-us/entra/identity/app-provisioning/application-provisioning-config-problem-scim-compatibility#scim-20-compliance-issues-and-status)."
-        base_url:
-          type: string
-          description: The URL supplied to the Identity Provider (IdP) alongside the bearer token enabling access to Stytch's SCIM API endpoints
-        bearer_token_last_four:
-          type: string
-          description: The last four digits of the bearer token. If you've lost access to your `bearer_token` and need to generate a new one, use the [SCIM rotate token start endpoint](https://stytch.com/docs/b2b/api/scim-rotate-token-start).
-        scim_group_implicit_role_assignments:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_scim_v1_SCIMGroupImplicitRoleAssignments'
-          description: An array of SCIM group implicit role assignments. Each object in the array must contain a `group_id` and a `role_id`.
-        next_bearer_token_last_four:
-          type: string
-        bearer_token_expires_at:
-          type: string
-          description: The bearer token expiry time.
-        next_bearer_token_expires_at:
-          type: string
-          description: This field is supplied only during [token rotation](https://stytch.com/docs/b2b/api/scim-rotate-token-start). The next bearer token expiry time.
-      required:
-      - organization_id
-      - connection_id
-      - status
-      - display_name
-      - identity_provider
-      - base_url
-      - bearer_token_last_four
-      - scim_group_implicit_role_assignments
-      - next_bearer_token_last_four
   securitySchemes:
     basicAuth:
       type: http

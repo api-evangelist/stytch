@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application B2B RBAC API
+  title: Stytch B2B Authentication B2B RBAC API
   version: 2.0.0
   description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
   contact:
@@ -332,6 +332,30 @@ paths:
         source: "# PUT /v1/b2b/rbac/organizations/{organization_id}\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/b2b/rbac/organizations/${organizationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"org_policy\": TODO_MISSING_EXAMPLE_VALUE\n  }'"
 components:
   schemas:
+    api_b2b_rbac_v1_PolicyScopePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
+    api_b2b_rbac_v1_OrgPolicy:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRole'
+          description: An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
+      required:
+      - roles
     api_b2b_rbac_v1_PolicyScope:
       type: object
       properties:
@@ -350,64 +374,6 @@ components:
       - scope
       - description
       - permissions
-    api_b2b_rbac_v1_OrgPolicy:
-      type: object
-      properties:
-        roles:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRole'
-          description: An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
-      required:
-      - roles
-    api_b2b_rbac_v1_PolicyResource:
-      type: object
-      properties:
-        resource_id:
-          type: string
-          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
-        description:
-          type: string
-          description: The description of the RBAC Resource.
-        actions:
-          type: array
-          items:
-            type: string
-          description: "A list of all possible actions for a provided Resource.\n\n  Reserved `actions` that are predefined by Stytch include:\n\n  * `*`\n  * For the `stytch.organization` Resource:\n    * `update.info.name`\n    * `update.info.slug`\n    * `update.info.untrusted_metadata`\n    * `update.info.email_jit_provisioning`\n    * `update.info.logo_url`\n    * `update.info.email_invites`\n    * `update.info.allowed_domains`\n    * `update.info.default_sso_connection`\n    * `update.info.sso_jit_provisioning`\n    * `update.info.mfa_policy`\n    * `update.info.implicit_roles`\n    * `delete`\n  * For the `stytch.member` Resource:\n    * `create`\n    * `update.info.name`\n    * `update.info.untrusted_metadata`\n    * `update.info.mfa-phone`\n    * `update.info.delete.mfa-phone`\n    * `update.settings.is-breakglass`\n    * `update.settings.mfa_enrolled`\n    * `update.settings.roles`\n    * `search`\n    * `delete`\n  * For the `stytch.sso` Resource:\n    * `create`\n    * `update`\n    * `delete`\n  * For the `stytch.self` Resource:\n    * `update.info.name`\n    * `update.info.untrusted_metadata`\n    * `update.info.mfa-phone`\n    * `update.info.delete.mfa-phone`\n    * `update.info.delete.password`\n    * `update.settings.mfa_enrolled`\n    * `delete`\n  "
-      required:
-      - resource_id
-      - description
-      - actions
-    api_b2b_rbac_v1_PolicyRolePermission:
-      type: object
-      properties:
-        resource_id:
-          type: string
-          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
-        actions:
-          type: array
-          items:
-            type: string
-          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
-      required:
-      - resource_id
-      - actions
-    api_b2b_rbac_v1_PolicyResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        policy:
-          $ref: '#/components/schemas/api_b2b_rbac_v1_Policy'
-          description: The RBAC Policy document that contains all defined Roles and Resources – which are managed in the [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
-      required:
-      - request_id
-      - status_code
     api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyResponse:
       type: object
       properties:
@@ -425,6 +391,63 @@ components:
       - request_id
       - org_policy
       - status_code
+    api_b2b_rbac_v1_PolicyResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        policy:
+          $ref: '#/components/schemas/api_b2b_rbac_v1_Policy'
+          description: The RBAC Policy document that contains all defined Roles and Resources – which are managed in the [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
+      required:
+      - request_id
+      - status_code
+    api_b2b_rbac_v1_PolicyRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
+    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyRequest:
+      type: object
+      properties:
+        org_policy:
+          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
+          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
+      description: Request type
+      required:
+      - org_policy
+    api_b2b_rbac_v1_PolicyRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        description:
+          type: string
+          description: The description of the RBAC Role.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRolePermission'
+          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
+      required:
+      - role_id
+      - description
+      - permissions
     api_b2b_rbac_v1_Policy:
       type: object
       properties:
@@ -447,15 +470,6 @@ components:
       - roles
       - resources
       - scopes
-    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyRequest:
-      type: object
-      properties:
-        org_policy:
-          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
-          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
-      description: Request type
-      required:
-      - org_policy
     api_b2b_rbac_v1_b2b_rbac_organizations_GetOrgPolicyResponse:
       type: object
       properties:
@@ -473,37 +487,23 @@ components:
       - request_id
       - org_policy
       - status_code
-    api_b2b_rbac_v1_PolicyRole:
-      type: object
-      properties:
-        role_id:
-          type: string
-          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
-        description:
-          type: string
-          description: The description of the RBAC Role.
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRolePermission'
-          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
-      required:
-      - role_id
-      - description
-      - permissions
-    api_b2b_rbac_v1_PolicyScopePermission:
+    api_b2b_rbac_v1_PolicyResource:
       type: object
       properties:
         resource_id:
           type: string
           description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        description:
+          type: string
+          description: The description of the RBAC Resource.
         actions:
           type: array
           items:
             type: string
-          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+          description: "A list of all possible actions for a provided Resource.\n\n  Reserved `actions` that are predefined by Stytch include:\n\n  * `*`\n  * For the `stytch.organization` Resource:\n    * `update.info.name`\n    * `update.info.slug`\n    * `update.info.untrusted_metadata`\n    * `update.info.email_jit_provisioning`\n    * `update.info.logo_url`\n    * `update.info.email_invites`\n    * `update.info.allowed_domains`\n    * `update.info.default_sso_connection`\n    * `update.info.sso_jit_provisioning`\n    * `update.info.mfa_policy`\n    * `update.info.implicit_roles`\n    * `delete`\n  * For the `stytch.member` Resource:\n    * `create`\n    * `update.info.name`\n    * `update.info.untrusted_metadata`\n    * `update.info.mfa-phone`\n    * `update.info.delete.mfa-phone`\n    * `update.settings.is-breakglass`\n    * `update.settings.mfa_enrolled`\n    * `update.settings.roles`\n    * `search`\n    * `delete`\n  * For the `stytch.sso` Resource:\n    * `create`\n    * `update`\n    * `delete`\n  * For the `stytch.self` Resource:\n    * `update.info.name`\n    * `update.info.untrusted_metadata`\n    * `update.info.mfa-phone`\n    * `update.info.delete.mfa-phone`\n    * `update.info.delete.password`\n    * `update.settings.mfa_enrolled`\n    * `delete`\n  "
       required:
       - resource_id
+      - description
       - actions
   securitySchemes:
     basicAuth:

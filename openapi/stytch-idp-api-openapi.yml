@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application IDP API
+  title: Stytch Consumer Authentication IDP API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs
@@ -184,182 +184,42 @@ paths:
         source: "# POST /v1/idp/oauth/authorize\ncurl --request POST \\\n  --url https://test.stytch.com/v1/idp/oauth/authorize \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"consent_granted\": true,\n    \"scopes\": [\"openid\"],\n    \"client_id\": \"${exampleConnectedAppClientID}\",\n    \"redirect_uri\": \"https://app.example/oauth/callback\",\n    \"response_type\": \"code\"\n  }'"
 components:
   schemas:
-    api_user_v1_Password:
+    api_user_v1_BiometricRegistration:
       type: object
       properties:
-        password_id:
+        biometric_registration_id:
           type: string
-          description: The unique ID of a specific password
-        requires_reset:
-          type: boolean
-          description: Indicates whether this password requires a password reset
-      required:
-      - password_id
-      - requires_reset
-    api_idp_v1_ScopeResult:
-      type: object
-      properties:
-        scope:
-          type: string
-          description: The name of the scope.
-        description:
-          type: string
-          description: A human-readable description of the scope, taken from the RBAC Policy.
-        is_grantable:
-          type: boolean
-          description: Indicates whether the scope can be granted. Users can only grant scopes if they have the required permissions.
-      required:
-      - scope
-      - description
-      - is_grantable
-    api_idp_v1_idp_oauth_AuthorizeStartRequest:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The ID of the Connected App client.
-        redirect_uri:
-          type: string
-          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
-        response_type:
-          type: string
-          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
-        scopes:
-          type: array
-          items:
-            type: string
-          description: An array of scopes requested by the client.
-        user_id:
-          type: string
-          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
-        session_token:
-          type: string
-          description: The `session_token` associated with a User's existing Session.
-        session_jwt:
-          type: string
-          description: The `session_jwt` associated with a User's existing Session.
-        prompt:
-          type: string
-          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
-      description: Request type
-      required:
-      - client_id
-      - redirect_uri
-      - response_type
-      - scopes
-    api_idp_v1_idp_oauth_AuthorizeStartResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        client:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppPublic'
-        consent_required:
-          type: boolean
-          description: Whether the user must provide explicit consent for the authorization request.
-        scope_results:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_idp_v1_ScopeResult'
-          description: Details about each requested scope.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - user_id
-      - user
-      - client
-      - consent_required
-      - scope_results
-      - status_code
-    api_idp_v1_idp_oauth_AuthorizeRequest:
-      type: object
-      properties:
-        consent_granted:
-          type: boolean
-          description: Indicates whether the user granted the requested scopes.
-        scopes:
-          type: array
-          items:
-            type: string
-          description: An array of scopes requested by the client.
-        client_id:
-          type: string
-          description: The ID of the Connected App client.
-        redirect_uri:
-          type: string
-          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
-        response_type:
-          type: string
-          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
-        user_id:
-          type: string
-          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
-        session_token:
-          type: string
-          description: The `session_token` associated with a User's existing Session.
-        session_jwt:
-          type: string
-          description: The `session_jwt` associated with a User's existing Session.
-        prompt:
-          type: string
-          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
-        state:
-          type: string
-          description: An opaque value used to maintain state between the request and callback.
-        nonce:
-          type: string
-          description: A string used to associate a client session with an ID token to mitigate replay attacks.
-        code_challenge:
-          type: string
-          description: A base64url encoded challenge derived from the code verifier for PKCE flows.
-        resources:
-          type: array
-          items:
-            type: string
-      description: Request type
-      required:
-      - consent_granted
-      - scopes
-      - client_id
-      - redirect_uri
-      - response_type
-    api_user_v1_WebAuthnRegistration:
-      type: object
-      properties:
-        webauthn_registration_id:
-          type: string
-          description: The unique ID for the Passkey or WebAuthn registration.
-        domain:
-          type: string
-          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
-        user_agent:
-          type: string
-          description: The user agent of the User.
+          description: The unique ID for a biometric registration.
         verified:
           type: boolean
           description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-        authenticator_type:
-          type: string
-          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
-        name:
-          type: string
-          description: The `name` of the Passkey or WebAuthn registration.
       required:
-      - webauthn_registration_id
-      - domain
-      - user_agent
+      - biometric_registration_id
       - verified
-      - authenticator_type
-      - name
+    api_user_v1_OAuthProvider:
+      type: object
+      properties:
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
+        profile_picture_url:
+          type: string
+          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
+        oauth_user_registration_id:
+          type: string
+          description: The unique ID for an OAuth registration.
+      required:
+      - provider_type
+      - provider_subject
+      - profile_picture_url
+      - locale
+      - oauth_user_registration_id
     api_user_v1_Email:
       type: object
       properties:
@@ -375,115 +235,6 @@ components:
       required:
       - email_id
       - email
-      - verified
-    api_idp_v1_idp_oauth_AuthorizeResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        redirect_uri:
-          type: string
-          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
-        status_code:
-          type: integer
-          format: int32
-        authorization_code:
-          type: string
-          description: A one-time use code that can be exchanged for tokens.
-      required:
-      - request_id
-      - redirect_uri
-      - status_code
-    api_user_v1_TOTP:
-      type: object
-      properties:
-        totp_id:
-          type: string
-          description: The unique ID for a TOTP instance.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - totp_id
-      - verified
-    api_user_v1_Name:
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: The first name of the user.
-        middle_name:
-          type: string
-          description: The middle name(s) of the user.
-        last_name:
-          type: string
-          description: The last name of the user.
-    api_user_v1_PhoneNumber:
-      type: object
-      properties:
-        phone_id:
-          type: string
-          description: The unique ID for the phone number.
-        phone_number:
-          type: string
-          description: The phone number.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - phone_id
-      - phone_number
-      - verified
-    api_user_v1_BiometricRegistration:
-      type: object
-      properties:
-        biometric_registration_id:
-          type: string
-          description: The unique ID for a biometric registration.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - biometric_registration_id
-      - verified
-    api_connectedapps_v1_ConnectedAppPublic:
-      type: object
-      properties:
-        client_id:
-          type: string
-        client_name:
-          type: string
-        client_description:
-          type: string
-        client_type:
-          type: string
-        logo_url:
-          type: string
-      required:
-      - client_id
-      - client_name
-      - client_description
-      - client_type
-    api_user_v1_CryptoWallet:
-      type: object
-      properties:
-        crypto_wallet_id:
-          type: string
-          description: The unique ID for a crypto wallet
-        crypto_wallet_address:
-          type: string
-          description: The actual blockchain address of the User's crypto wallet.
-        crypto_wallet_type:
-          type: string
-          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - crypto_wallet_id
-      - crypto_wallet_address
-      - crypto_wallet_type
       - verified
     api_user_v1_User:
       type: object
@@ -575,30 +326,279 @@ components:
       - biometric_registrations
       - is_locked
       - roles
-    api_user_v1_OAuthProvider:
+    api_user_v1_Name:
       type: object
       properties:
-        provider_type:
+        first_name:
           type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
-        provider_subject:
+          description: The first name of the user.
+        middle_name:
           type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
-        profile_picture_url:
+          description: The middle name(s) of the user.
+        last_name:
           type: string
-          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
-        locale:
+          description: The last name of the user.
+    api_idp_v1_idp_oauth_AuthorizeStartRequest:
+      type: object
+      properties:
+        client_id:
           type: string
-          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
-        oauth_user_registration_id:
+          description: The ID of the Connected App client.
+        redirect_uri:
           type: string
-          description: The unique ID for an OAuth registration.
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        response_type:
+          type: string
+          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes requested by the client.
+        user_id:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        prompt:
+          type: string
+          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
+      description: Request type
       required:
-      - provider_type
-      - provider_subject
-      - profile_picture_url
-      - locale
-      - oauth_user_registration_id
+      - client_id
+      - redirect_uri
+      - response_type
+      - scopes
+    api_idp_v1_idp_oauth_AuthorizeResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        redirect_uri:
+          type: string
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        status_code:
+          type: integer
+          format: int32
+        authorization_code:
+          type: string
+          description: A one-time use code that can be exchanged for tokens.
+      required:
+      - request_id
+      - redirect_uri
+      - status_code
+    api_connectedapps_v1_ConnectedAppPublic:
+      type: object
+      properties:
+        client_id:
+          type: string
+        client_name:
+          type: string
+        client_description:
+          type: string
+        client_type:
+          type: string
+        logo_url:
+          type: string
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - client_type
+    api_user_v1_WebAuthnRegistration:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+          description: The unique ID for the Passkey or WebAuthn registration.
+        domain:
+          type: string
+          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+        authenticator_type:
+          type: string
+          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+        name:
+          type: string
+          description: The `name` of the Passkey or WebAuthn registration.
+      required:
+      - webauthn_registration_id
+      - domain
+      - user_agent
+      - verified
+      - authenticator_type
+      - name
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - phone_id
+      - phone_number
+      - verified
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_idp_v1_idp_oauth_AuthorizeStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        client:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppPublic'
+        consent_required:
+          type: boolean
+          description: Whether the user must provide explicit consent for the authorization request.
+        scope_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_idp_v1_ScopeResult'
+          description: Details about each requested scope.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - user_id
+      - user
+      - client
+      - consent_required
+      - scope_results
+      - status_code
+    api_user_v1_TOTP:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - totp_id
+      - verified
+    api_idp_v1_ScopeResult:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: The name of the scope.
+        description:
+          type: string
+          description: A human-readable description of the scope, taken from the RBAC Policy.
+        is_grantable:
+          type: boolean
+          description: Indicates whether the scope can be granted. Users can only grant scopes if they have the required permissions.
+      required:
+      - scope
+      - description
+      - is_grantable
+    api_idp_v1_idp_oauth_AuthorizeRequest:
+      type: object
+      properties:
+        consent_granted:
+          type: boolean
+          description: Indicates whether the user granted the requested scopes.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes requested by the client.
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+        redirect_uri:
+          type: string
+          description: The callback URI used to redirect the user after authentication. This is the same URI provided at the start of the OAuth flow.  This field is required when using the `authorization_code` grant.
+        response_type:
+          type: string
+          description: The OAuth 2.0 response type. For authorization code flows this value is `code`.
+        user_id:
+          type: string
+          description: The unique ID of a specific User. You may use an `external_id` here if one is set for the user.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        prompt:
+          type: string
+          description: Space separated list that specifies how the Authorization Server should prompt the user for reauthentication and consent. Only `consent` is supported today.
+        state:
+          type: string
+          description: An opaque value used to maintain state between the request and callback.
+        nonce:
+          type: string
+          description: A string used to associate a client session with an ID token to mitigate replay attacks.
+        code_challenge:
+          type: string
+          description: A base64url encoded challenge derived from the code verifier for PKCE flows.
+        resources:
+          type: array
+          items:
+            type: string
+      description: Request type
+      required:
+      - consent_granted
+      - scopes
+      - client_id
+      - redirect_uri
+      - response_type
   securitySchemes:
     basicAuth:
       type: http

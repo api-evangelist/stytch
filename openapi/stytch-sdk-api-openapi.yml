@@ -1,18 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Sdk API
-  version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  title: Stytch Management SDK API
+  description: Stytch's Management API for programmatic workspace actions — projects, environments, secrets, redirect URLs, RBAC policies, JWT templates, email templates, event log streaming, trusted token profiles, public tokens, and SDK configuration.
+  version: 1.0.0
   contact:
-    name: Stytch
+    name: Stytch Support
     url: https://stytch.com/docs
-  license:
-    name: Proprietary
+    email: support@stytch.com
 servers:
-- url: https://api.stytch.com
-  description: Production
-- url: https://test.stytch.com
-  description: Test
+- url: https://management.stytch.com
+  description: Production server
+security:
+- basicAuth: []
 tags:
 - name: Sdk
 paths:
@@ -256,11 +255,77 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_sdk_v3_SetConsumerConfigRequest:
+    pwa_sdk_v3_B2BCookiesConfig:
+      type: object
+      properties:
+        http_only:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BCookiesConfigHttpOnly'
+      required:
+      - http_only
+    pwa_sdk_v3_ConsumerPasswordsConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        pkce_required_for_password_resets:
+          type: boolean
+      required:
+      - enabled
+      - pkce_required_for_password_resets
+    pwa_sdk_v3_ConsumerCryptoWalletsConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        siwe_required:
+          type: boolean
+      required:
+      - enabled
+      - siwe_required
+    pwa_sdk_v3_ConsumerDFPPAConfig:
+      type: object
+      properties:
+        enabled:
+          $ref: '#/components/schemas/pwa_sdk_v3_DFPPASetting'
+        on_challenge:
+          $ref: '#/components/schemas/pwa_sdk_v3_DFPPAOnChallengeAction'
+    pwa_sdk_v3_ConsumerBasicConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        domains:
+          type: array
+          items:
+            type: string
+        bundle_ids:
+          type: array
+          items:
+            type: string
+      required:
+      - enabled
+      - domains
+      - bundle_ids
+    pwa_sdk_v3_SetB2BConfigResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        config:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - config
+      - status_code
+    pwa_sdk_v3_SetB2BConfigRequest:
       type: object
       properties:
         config:
-          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerConfig'
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
       description: Request type
     pwa_sdk_v3_B2BOTPsConfig:
       type: object
@@ -277,82 +342,12 @@ components:
       - sms_enabled
       - sms_autofill_metadata
       - email_enabled
-    pwa_sdk_v3_B2BMagicLinksConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        pkce_required:
-          type: boolean
-      required:
-      - enabled
-      - pkce_required
-    pwa_sdk_v3_SMSAutofillMetadataMetadataType:
+    pwa_sdk_v3_DFPPAOnChallengeAction:
       type: string
       enum:
-      - domain
-      - hash
-    pwa_sdk_v3_SetB2BConfigResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        config:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - config
-      - status_code
-    pwa_sdk_v3_B2BBasicConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        allow_self_onboarding:
-          type: boolean
-        enable_member_permissions:
-          type: boolean
-        domains:
-          type: array
-          items:
-            $ref: '#/components/schemas/pwa_sdk_v3_AuthorizedB2BDomain'
-        bundle_ids:
-          type: array
-          items:
-            type: string
-      required:
-      - enabled
-      - allow_self_onboarding
-      - enable_member_permissions
-      - domains
-      - bundle_ids
-    pwa_sdk_v3_B2BCookiesConfig:
-      type: object
-      properties:
-        http_only:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BCookiesConfigHttpOnly'
-      required:
-      - http_only
-    pwa_sdk_v3_SetB2BConfigRequest:
-      type: object
-      properties:
-        config:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
-      description: Request type
-    pwa_sdk_v3_ConsumerCryptoWalletsConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        siwe_required:
-          type: boolean
-      required:
-      - enabled
-      - siwe_required
+      - ALLOW
+      - BLOCK
+      - TRIGGER_CAPTCHA
     pwa_sdk_v3_ConsumerOTPsConfig:
       type: object
       properties:
@@ -380,6 +375,141 @@ components:
       - whatsapp_send_enabled
       - email_send_enabled
       - sms_autofill_metadata
+    pwa_sdk_v3_B2BBasicConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        allow_self_onboarding:
+          type: boolean
+        enable_member_permissions:
+          type: boolean
+        domains:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_sdk_v3_AuthorizedB2BDomain'
+        bundle_ids:
+          type: array
+          items:
+            type: string
+      required:
+      - enabled
+      - allow_self_onboarding
+      - enable_member_permissions
+      - domains
+      - bundle_ids
+    pwa_sdk_v3_B2BTOTPsConfig:
+      type: object
+      properties:
+        create_totps:
+          type: boolean
+        enabled:
+          type: boolean
+      required:
+      - create_totps
+      - enabled
+    pwa_sdk_v3_B2BSSOConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        pkce_required:
+          type: boolean
+      required:
+      - enabled
+      - pkce_required
+    pwa_sdk_v3_B2BCookiesConfigHttpOnly:
+      type: string
+      enum:
+      - DISABLED
+      - ENABLED
+      - ENFORCED
+    pwa_sdk_v3_B2BConfig:
+      type: object
+      properties:
+        basic:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BBasicConfig'
+        sessions:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BSessionsConfig'
+        magic_links:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BMagicLinksConfig'
+        oauth:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BOAuthConfig'
+        totps:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BTOTPsConfig'
+        sso:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BSSOConfig'
+        otps:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BOTPsConfig'
+        dfppa:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BDFPPAConfig'
+        passwords:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BPasswordsConfig'
+        cookies:
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BCookiesConfig'
+    pwa_sdk_v3_DFPPASetting:
+      type: string
+      enum:
+      - ENABLED
+      - PASSIVE
+      - DISABLED
+    pwa_sdk_v3_ConsumerCookiesConfigHttpOnly:
+      type: string
+      enum:
+      - DISABLED
+      - ENABLED
+      - ENFORCED
+    pwa_sdk_v3_B2BSessionsConfig:
+      type: object
+      properties:
+        max_session_duration_minutes:
+          type: integer
+          format: int32
+      required:
+      - max_session_duration_minutes
+    pwa_sdk_v3_B2BOAuthConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        pkce_required:
+          type: boolean
+      required:
+      - enabled
+      - pkce_required
+    pwa_sdk_v3_ConsumerSessionsConfig:
+      type: object
+      properties:
+        max_session_duration_minutes:
+          type: integer
+          format: int32
+      required:
+      - max_session_duration_minutes
+    pwa_sdk_v3_B2BMagicLinksConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        pkce_required:
+          type: boolean
+      required:
+      - enabled
+      - pkce_required
+    pwa_sdk_v3_SetConsumerConfigResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        config:
+          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerConfig'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - config
+      - status_code
     pwa_sdk_v3_ConsumerConfig:
       type: object
       properties:
@@ -427,43 +557,7 @@ components:
       required:
       - create_webauthns
       - enabled
-    pwa_sdk_v3_ConsumerMagicLinksConfig:
-      type: object
-      properties:
-        login_or_create_enabled:
-          type: boolean
-        send_enabled:
-          type: boolean
-        pkce_required:
-          type: boolean
-      required:
-      - login_or_create_enabled
-      - send_enabled
-      - pkce_required
-    pwa_sdk_v3_ConsumerCookiesConfigHttpOnly:
-      type: string
-      enum:
-      - DISABLED
-      - ENABLED
-      - ENFORCED
-    pwa_sdk_v3_ConsumerBasicConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        domains:
-          type: array
-          items:
-            type: string
-        bundle_ids:
-          type: array
-          items:
-            type: string
-      required:
-      - enabled
-      - domains
-      - bundle_ids
-    pwa_sdk_v3_B2BOAuthConfig:
+    pwa_sdk_v3_ConsumerOAuthConfig:
       type: object
       properties:
         enabled:
@@ -483,86 +577,6 @@ components:
       required:
       - create_biometrics_enabled
       - enabled
-    pwa_sdk_v3_B2BSSOConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        pkce_required:
-          type: boolean
-      required:
-      - enabled
-      - pkce_required
-    pwa_sdk_v3_AuthorizedB2BDomain:
-      type: object
-      properties:
-        domain:
-          type: string
-        slug_pattern:
-          type: string
-      required:
-      - domain
-      - slug_pattern
-    pwa_sdk_v3_ConsumerPasswordsConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        pkce_required_for_password_resets:
-          type: boolean
-      required:
-      - enabled
-      - pkce_required_for_password_resets
-    pwa_sdk_v3_B2BPasswordsConfig:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-        pkce_required_for_password_resets:
-          type: boolean
-      required:
-      - enabled
-      - pkce_required_for_password_resets
-    pwa_sdk_v3_B2BTOTPsConfig:
-      type: object
-      properties:
-        create_totps:
-          type: boolean
-        enabled:
-          type: boolean
-      required:
-      - create_totps
-      - enabled
-    pwa_sdk_v3_GetB2BConfigResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        config:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - config
-      - status_code
-    pwa_sdk_v3_ConsumerSessionsConfig:
-      type: object
-      properties:
-        max_session_duration_minutes:
-          type: integer
-          format: int32
-      required:
-      - max_session_duration_minutes
-    pwa_sdk_v3_ConsumerCookiesConfig:
-      type: object
-      properties:
-        http_only:
-          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerCookiesConfigHttpOnly'
-      required:
-      - http_only
     pwa_sdk_v3_SMSAutofillMetadata:
       type: object
       properties:
@@ -583,12 +597,41 @@ components:
           $ref: '#/components/schemas/pwa_sdk_v3_DFPPASetting'
         on_challenge:
           $ref: '#/components/schemas/pwa_sdk_v3_DFPPAOnChallengeAction'
-    pwa_sdk_v3_DFPPAOnChallengeAction:
+    pwa_sdk_v3_B2BPasswordsConfig:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        pkce_required_for_password_resets:
+          type: boolean
+      required:
+      - enabled
+      - pkce_required_for_password_resets
+    pwa_sdk_v3_ConsumerMagicLinksConfig:
+      type: object
+      properties:
+        login_or_create_enabled:
+          type: boolean
+        send_enabled:
+          type: boolean
+        pkce_required:
+          type: boolean
+      required:
+      - login_or_create_enabled
+      - send_enabled
+      - pkce_required
+    pwa_sdk_v3_SMSAutofillMetadataMetadataType:
       type: string
       enum:
-      - ALLOW
-      - BLOCK
-      - TRIGGER_CAPTCHA
+      - domain
+      - hash
+    pwa_sdk_v3_ConsumerCookiesConfig:
+      type: object
+      properties:
+        http_only:
+          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerCookiesConfigHttpOnly'
+      required:
+      - http_only
     pwa_sdk_v3_GetConsumerConfigResponse:
       type: object
       properties:
@@ -604,19 +647,19 @@ components:
       - request_id
       - config
       - status_code
-    pwa_sdk_v3_DFPPASetting:
-      type: string
-      enum:
-      - ENABLED
-      - PASSIVE
-      - DISABLED
-    pwa_sdk_v3_SetConsumerConfigResponse:
+    pwa_sdk_v3_SetConsumerConfigRequest:
+      type: object
+      properties:
+        config:
+          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerConfig'
+      description: Request type
+    pwa_sdk_v3_GetB2BConfigResponse:
       type: object
       properties:
         request_id:
           type: string
         config:
-          $ref: '#/components/schemas/pwa_sdk_v3_ConsumerConfig'
+          $ref: '#/components/schemas/pwa_sdk_v3_B2BConfig'
         status_code:
           type: integer
           format: int32
@@ -625,60 +668,16 @@ components:
       - request_id
       - config
       - status_code
-    pwa_sdk_v3_ConsumerOAuthConfig:
+    pwa_sdk_v3_AuthorizedB2BDomain:
       type: object
       properties:
-        enabled:
-          type: boolean
-        pkce_required:
-          type: boolean
+        domain:
+          type: string
+        slug_pattern:
+          type: string
       required:
-      - enabled
-      - pkce_required
-    pwa_sdk_v3_ConsumerDFPPAConfig:
-      type: object
-      properties:
-        enabled:
-          $ref: '#/components/schemas/pwa_sdk_v3_DFPPASetting'
-        on_challenge:
-          $ref: '#/components/schemas/pwa_sdk_v3_DFPPAOnChallengeAction'
-    pwa_sdk_v3_B2BConfig:
-      type: object
-      properties:
-        basic:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BBasicConfig'
-        sessions:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BSessionsConfig'
-        magic_links:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BMagicLinksConfig'
-        oauth:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BOAuthConfig'
-        totps:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BTOTPsConfig'
-        sso:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BSSOConfig'
-        otps:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BOTPsConfig'
-        dfppa:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BDFPPAConfig'
-        passwords:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BPasswordsConfig'
-        cookies:
-          $ref: '#/components/schemas/pwa_sdk_v3_B2BCookiesConfig'
-    pwa_sdk_v3_B2BSessionsConfig:
-      type: object
-      properties:
-        max_session_duration_minutes:
-          type: integer
-          format: int32
-      required:
-      - max_session_duration_minutes
-    pwa_sdk_v3_B2BCookiesConfigHttpOnly:
-      type: string
-      enum:
-      - DISABLED
-      - ENABLED
-      - ENFORCED
+      - domain
+      - slug_pattern
   securitySchemes:
     basicAuth:
       type: http

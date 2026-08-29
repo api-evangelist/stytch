@@ -1,18 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Trusted Token Profile API
-  version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  title: Stytch Management Trusted Token Profile API
+  description: Stytch's Management API for programmatic workspace actions — projects, environments, secrets, redirect URLs, RBAC policies, JWT templates, email templates, event log streaming, trusted token profiles, public tokens, and SDK configuration.
+  version: 1.0.0
   contact:
-    name: Stytch
+    name: Stytch Support
     url: https://stytch.com/docs
-  license:
-    name: Proprietary
+    email: support@stytch.com
 servers:
-- url: https://api.stytch.com
-  description: Production
-- url: https://test.stytch.com
-  description: Test
+- url: https://management.stytch.com
+  description: Production server
+security:
+- basicAuth: []
 tags:
 - name: Trusted Token Profile
 paths:
@@ -540,36 +539,47 @@ components:
       required:
       - request_id
       - status_code
-    pwa_trusted_token_profile_v3_GetResponse:
+    pwa_trusted_token_profile_v3_CreateRequest:
       type: object
       properties:
-        request_id:
+        name:
           type: string
-        profile:
-          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
+        audience:
+          type: string
+        issuer:
+          type: string
+        pem_files:
+          type: array
+          items:
+            type: string
+        can_jit_provision:
+          type: boolean
+        jwks_url:
+          type: string
+        attribute_mapping:
+          type: string
+        public_key_type:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType'
+      description: Request type
       required:
-      - request_id
-      - profile
-      - status_code
-    pwa_trusted_token_profile_v3_CreatePEMFileResponse:
+      - name
+      - audience
+      - issuer
+      - pem_files
+      - can_jit_provision
+    pwa_trusted_token_profile_v3_PublicKeyType:
+      type: string
+      enum:
+      - JWK
+      - PEM
+    pwa_trusted_token_profile_v3_CreatePEMFileRequest:
       type: object
       properties:
-        request_id:
+        public_key:
           type: string
-        pem_file:
-          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PEMFile'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
+      description: Request type
       required:
-      - request_id
-      - pem_file
-      - status_code
+      - public_key
     pwa_trusted_token_profile_v3_GetPEMFileResponse:
       type: object
       properties:
@@ -615,42 +625,21 @@ components:
       - issuer
       - pem_files
       - can_jit_provision
-    pwa_trusted_token_profile_v3_CreateRequest:
+    pwa_trusted_token_profile_v3_CreatePEMFileResponse:
       type: object
       properties:
-        name:
+        request_id:
           type: string
-        audience:
-          type: string
-        issuer:
-          type: string
-        pem_files:
-          type: array
-          items:
-            type: string
-        can_jit_provision:
-          type: boolean
-        jwks_url:
-          type: string
-        attribute_mapping:
-          type: string
-        public_key_type:
-          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PublicKeyType'
-      description: Request type
+        pem_file:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_PEMFile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
       required:
-      - name
-      - audience
-      - issuer
-      - pem_files
-      - can_jit_provision
-    pwa_trusted_token_profile_v3_CreatePEMFileRequest:
-      type: object
-      properties:
-        public_key:
-          type: string
-      description: Request type
-      required:
-      - public_key
+      - request_id
+      - pem_file
+      - status_code
     pwa_trusted_token_profile_v3_DeleteResponse:
       type: object
       properties:
@@ -663,11 +652,16 @@ components:
       required:
       - request_id
       - status_code
-    pwa_trusted_token_profile_v3_PublicKeyType:
-      type: string
-      enum:
-      - JWK
-      - PEM
+    pwa_trusted_token_profile_v3_PEMFile:
+      type: object
+      properties:
+        pem_file_id:
+          type: string
+        public_key:
+          type: string
+      required:
+      - pem_file_id
+      - public_key
     pwa_trusted_token_profile_v3_GetAllResponse:
       type: object
       properties:
@@ -716,17 +710,22 @@ components:
       - request_id
       - profile
       - status_code
-    pwa_trusted_token_profile_v3_PEMFile:
+    pwa_trusted_token_profile_v3_UpdateResponse:
       type: object
       properties:
-        pem_file_id:
+        request_id:
           type: string
-        public_key:
-          type: string
+        profile:
+          $ref: '#/components/schemas/pwa_trusted_token_profile_v3_TrustedTokenProfile'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
       required:
-      - pem_file_id
-      - public_key
-    pwa_trusted_token_profile_v3_UpdateResponse:
+      - request_id
+      - profile
+      - status_code
+    pwa_trusted_token_profile_v3_GetResponse:
       type: object
       properties:
         request_id:

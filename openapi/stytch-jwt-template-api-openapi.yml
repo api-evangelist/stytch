@@ -1,18 +1,17 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Jwt Template API
-  version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  title: Stytch Management Jwt Template API
+  description: Stytch's Management API for programmatic workspace actions — projects, environments, secrets, redirect URLs, RBAC policies, JWT templates, email templates, event log streaming, trusted token profiles, public tokens, and SDK configuration.
+  version: 1.0.0
   contact:
-    name: Stytch
+    name: Stytch Support
     url: https://stytch.com/docs
-  license:
-    name: Proprietary
+    email: support@stytch.com
 servers:
-- url: https://api.stytch.com
-  description: Production
-- url: https://test.stytch.com
-  description: Test
+- url: https://management.stytch.com
+  description: Production server
+security:
+- basicAuth: []
 tags:
 - name: Jwt Template
 paths:
@@ -152,7 +151,7 @@ components:
       enum:
       - SESSION
       - M2M
-    pwa_jwt_template_v3_SetResponse:
+    pwa_jwt_template_v3_GetResponse:
       type: object
       properties:
         request_id:
@@ -179,7 +178,7 @@ components:
       required:
       - template_content
       - custom_audience
-    pwa_jwt_template_v3_GetResponse:
+    pwa_jwt_template_v3_SetResponse:
       type: object
       properties:
         request_id:

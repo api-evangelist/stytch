@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Fraud API
+  title: Stytch Consumer Authentication Fraud API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs
@@ -571,36 +571,71 @@ paths:
         source: "# POST /v1/email/risk\ncurl --request POST \\\n  --url https://telemetry.stytch.com/v1/email/risk \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"email_address\": \"${email}\"\n  }'"
 components:
   schemas:
-    api_fraud_v1_fraud_verdict_reasons_ListResponse:
+    api_fraud_v1_fraud_email_RiskResponse:
       type: object
       properties:
         request_id:
           type: string
           description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        verdict_reason_actions:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_fraud_v1_VerdictReasonAction'
-          description: Information about verdict reasons and any overrides that were set on them.
+        address_information:
+          $ref: '#/components/schemas/api_fraud_v1_AddressInformation'
+          description: Information about the email address.
+        domain_information:
+          $ref: '#/components/schemas/api_fraud_v1_DomainInformation'
+          description: Information about the email domain.
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RiskResponseAction'
+          description: "The suggested action based on the attributes of the email address. The available actions are:\n  * `ALLOW` - This email is most likely safe to send to and not fraudulent.\n  * `BLOCK` - This email is invalid or exhibits signs of fraud. We recommend blocking the end user.\n  * `CHALLENGE` - This email has some potentially fraudulent attributes. We recommend increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.\n  "
+        risk_score:
+          type: integer
+          format: int32
+          description: A score from 0 to 100 indicating how risky the email is. 100 is the most risky.
         status_code:
           type: integer
           format: int32
           description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
       required:
       - request_id
-      - verdict_reason_actions
+      - address_information
+      - domain_information
+      - action
+      - risk_score
       - status_code
-    api_fraud_v1_fraud_rules_ListRequest:
+    api_fraud_v1_fraud_rules_ListResponse:
       type: object
       properties:
-        cursor:
+        request_id:
           type: string
-          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 100 results. If your query returns more than 100 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor`, repeat the request with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make requests until the `next_cursor` in the response is null.
-        limit:
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your result contains more than one page of results. This value is passed into your next request in the `cursor` field.
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_fraud_v1_Rule'
+          description: A list of rules for the project
+        status_code:
           type: integer
           format: int32
-          description: The number of results to return per page. The default limit is 10. A maximum of 100 results can be returned by a single get request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
-      description: Request type
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - next_cursor
+      - rules
+      - status_code
+    api_fraud_v1_VerdictAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_VerdictReasonOverrideAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
     api_fraud_v1_Verdict:
       type: object
       properties:
@@ -635,59 +670,6 @@ components:
       - detected_device_type
       - is_authentic_device
       - verdict_reason_overrides
-    api_fraud_v1_RiskResponseAction:
-      type: string
-      enum:
-      - ALLOW
-      - CHALLENGE
-      - BLOCK
-    api_fraud_v1_fraud_rules_SetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        action:
-          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
-          description: The action that will be returned for the specified identifier.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        visitor_id:
-          type: string
-          description: The visitor ID that a rule was set for.
-        browser_id:
-          type: string
-          description: The browser ID that a rule was set for.
-        visitor_fingerprint:
-          type: string
-          description: The visitor fingerprint that a rule was set for.
-        browser_fingerprint:
-          type: string
-          description: The browser fingerprint that a rule was set for.
-        hardware_fingerprint:
-          type: string
-          description: The hardware fingerprint that a rule was set for.
-        network_fingerprint:
-          type: string
-          description: The network fingerprint that a rule was set for.
-        expires_at:
-          type: string
-          description: The timestamp when the rule expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        cidr_block:
-          type: string
-          description: The CIDR block that a rule was set for. If an end user's IP address is within this CIDR block, this rule will be applied.
-        country_code:
-          type: string
-          description: The country code that a rule was set for.
-        asn:
-          type: string
-          description: The ASN that a rule was set for.
-      required:
-      - request_id
-      - action
-      - status_code
     api_fraud_v1_AddressInformation:
       type: object
       properties:
@@ -713,45 +695,52 @@ components:
       - is_suspected_role_address
       - normalized_email
       - tumbling_character_count
-    api_fraud_v1_VerdictReasonAction:
+    api_fraud_v1_Fingerprints:
       type: object
       properties:
-        verdict_reason:
+        network_fingerprint:
           type: string
-          description: The verdict reason.
-        default_action:
-          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
-          description: The default action returned for the specified verdict reason in a fingerprint lookup when no overrides are specified.
-        override_action:
-          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
-          description: If not null, this action will be returned for the specified verdict reason in a fingerprint lookup, in place of the default action.
-        override_created_at:
+          description: 'Combination of signals associated with a specific network commonly known as TLS fingerprinting. '
+        hardware_fingerprint:
           type: string
-          description: The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        override_description:
+          description: Combinations of signals to identify an operating system and architecture.
+        browser_fingerprint:
           type: string
-          description: A description of the override, if one exists.
+          description: Combination of signals to identify a browser and its specific version.
+        visitor_fingerprint:
+          type: string
+          description: Cookie-less way of identifying a unique user.
+        visitor_id:
+          type: string
+          description: The cookie stored on the user's device that uniquely identifies them.
+        browser_id:
+          type: string
+          description: Combination of VisitorID and NetworkFingerprint to create a clear identifier of a browser.
       required:
-      - verdict_reason
-      - default_action
-    api_fraud_v1_Metadata:
+      - network_fingerprint
+      - hardware_fingerprint
+      - browser_fingerprint
+      - visitor_fingerprint
+    api_fraud_v1_BrowserProperties:
       type: object
       properties:
-        external_id:
+        user_agent:
           type: string
-          description: An external ID, such as a user ID, that you wish to associate with the telemetry ID.
-        organization_id:
-          type: string
-          description: The organization ID you wish to associate with the telemetry ID.
-        user_action:
-          type: string
-          description: The user action, such as 'login', that you wish to associate with the telemetry ID.
-    api_fraud_v1_VerdictAction:
+          description: The user agent of the user's browser.
+      required:
+      - user_agent
+    api_fraud_v1_RuleType:
       type: string
       enum:
-      - ALLOW
-      - CHALLENGE
-      - BLOCK
+      - VISITOR_ID
+      - BROWSER_ID
+      - VISITOR_FINGERPRINT
+      - BROWSER_FINGERPRINT
+      - HARDWARE_FINGERPRINT
+      - NETWORK_FINGERPRINT
+      - CIDR_BLOCK
+      - ASN
+      - COUNTRY_CODE
     api_fraud_v1_NetworkProperties:
       type: object
       properties:
@@ -776,20 +765,76 @@ components:
       - ip_geolocation
       - is_proxy
       - is_vpn
-    api_fraud_v1_BrowserProperties:
+    api_fraud_v1_fraud_rules_ListRequest:
       type: object
       properties:
-        user_agent:
+        cursor:
           type: string
-          description: The user agent of the user's browser.
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 100 results. If your query returns more than 100 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor`, repeat the request with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make requests until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          description: The number of results to return per page. The default limit is 10. A maximum of 100 results can be returned by a single get request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+      description: Request type
+    api_fraud_v1_fraud_rules_SetRequest:
+      type: object
+      properties:
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
+          description: 'The action that should be returned by a fingerprint lookup for that identifier with a `RULE_MATCH` reason. The following values are valid: `ALLOW`, `BLOCK`, `CHALLENGE`, or `NONE`. For country codes, `ALLOW` actions are not allowed. If a `NONE` action is specified, it will clear the stored rule.'
+        visitor_id:
+          type: string
+          description: The visitor ID we want to set a rule for. Only one identifier can be specified in the request.
+        browser_id:
+          type: string
+          description: The browser ID we want to set a rule for. Only one identifier can be specified in the request.
+        visitor_fingerprint:
+          type: string
+          description: The visitor fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        browser_fingerprint:
+          type: string
+          description: The browser fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        hardware_fingerprint:
+          type: string
+          description: The hardware fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        network_fingerprint:
+          type: string
+          description: The network fingerprint we want to set a rule for. Only one identifier can be specified in the request.
+        expires_in_minutes:
+          type: integer
+          format: int32
+          description: The number of minutes until this rule expires. If no `expires_in_minutes` is specified, then the rule is kept permanently.
+        description:
+          type: string
+          description: An optional description for the rule.
+        cidr_block:
+          type: string
+          description: The CIDR block we want to set a rule for. You may pass either an IP address or a CIDR block. The CIDR block prefix must be between 16 and 32, inclusive. If an end user's IP address is within this CIDR block, this rule will be applied. Only one identifier can be specified in the request.
+        country_code:
+          type: string
+          description: The country code we want to set a rule for. The country code must be a valid ISO 3166-1 alpha-2 code. You may not set `ALLOW` rules for country codes. Only one identifier can be specified in the request.
+        asn:
+          type: string
+          description: The ASN we want to set a rule for. The ASN must be the string representation of an integer between 0 and 4294967295, inclusive. Only one identifier can be specified in the request.
+      description: Request type
       required:
-      - user_agent
-    api_fraud_v1_VerdictReasonActionAction:
-      type: string
-      enum:
-      - ALLOW
-      - CHALLENGE
-      - BLOCK
+      - action
+    api_fraud_v1_fraud_verdict_reasons_OverrideRequest:
+      type: object
+      properties:
+        verdict_reason:
+          type: string
+          description: The verdict reason that you wish to override. For a list of possible reasons to override, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons). You may not override the `RULE_MATCH` reason.
+        override_action:
+          $ref: '#/components/schemas/api_fraud_v1_OverrideRequestAction'
+          description: The action that you want to be returned for the specified verdict reason. The override action must be one of `ALLOW`, `BLOCK`, or `CHALLENGE`.
+        override_description:
+          type: string
+          description: An optional description for the verdict reason override.
+      description: Request type
+      required:
+      - verdict_reason
+      - override_action
     api_fraud_v1_fraud_verdict_reasons_ListRequest:
       type: object
       properties:
@@ -797,74 +842,32 @@ components:
           type: boolean
           description: Whether to return only verdict reasons that have overrides set. Defaults to false.
       description: Request type
-    api_fraud_v1_VerdictReasonOverride:
+    api_fraud_v1_IPGeoProperties:
       type: object
       properties:
-        verdict_reason:
+        city:
           type: string
-          description: The verdict reason that was overridden.
-        override_action:
-          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonOverrideAction'
-          description: The action that was applied for the given verdict reason.
+          description: The city where the IP is located.
+        region:
+          type: string
+          description: The region where the IP is located.
+        country:
+          type: string
+          description: The country where the IP is located.
       required:
-      - verdict_reason
-      - override_action
-    api_fraud_v1_RuleType:
-      type: string
-      enum:
-      - VISITOR_ID
-      - BROWSER_ID
-      - VISITOR_FINGERPRINT
-      - BROWSER_FINGERPRINT
-      - HARDWARE_FINGERPRINT
-      - NETWORK_FINGERPRINT
-      - CIDR_BLOCK
-      - ASN
-      - COUNTRY_CODE
-    api_fraud_v1_RuleAction:
-      type: string
-      enum:
-      - ALLOW
-      - CHALLENGE
-      - BLOCK
-      - NONE
-    api_fraud_v1_OverrideRequestAction:
-      type: string
-      enum:
-      - ALLOW
-      - CHALLENGE
-      - BLOCK
-      - NONE
-    api_fraud_v1_fraud_email_RiskResponse:
+      - city
+      - region
+      - country
+    api_fraud_v1_Properties:
       type: object
       properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        address_information:
-          $ref: '#/components/schemas/api_fraud_v1_AddressInformation'
-          description: Information about the email address.
-        domain_information:
-          $ref: '#/components/schemas/api_fraud_v1_DomainInformation'
-          description: Information about the email domain.
-        action:
-          $ref: '#/components/schemas/api_fraud_v1_RiskResponseAction'
-          description: "The suggested action based on the attributes of the email address. The available actions are:\n  * `ALLOW` - This email is most likely safe to send to and not fraudulent.\n  * `BLOCK` - This email is invalid or exhibits signs of fraud. We recommend blocking the end user.\n  * `CHALLENGE` - This email has some potentially fraudulent attributes. We recommend increased friction such as 2FA or other forms of extended user verification before allowing the privileged action to proceed.\n  "
-        risk_score:
-          type: integer
-          format: int32
-          description: A score from 0 to 100 indicating how risky the email is. 100 is the most risky.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        network_properties:
+          $ref: '#/components/schemas/api_fraud_v1_NetworkProperties'
+        browser_properties:
+          $ref: '#/components/schemas/api_fraud_v1_BrowserProperties'
       required:
-      - request_id
-      - address_information
-      - domain_information
-      - action
-      - risk_score
-      - status_code
+      - network_properties
+      - browser_properties
     api_fraud_v1_fraud_fingerprint_LookupRequest:
       type: object
       properties:
@@ -877,30 +880,7 @@ components:
       description: Request type
       required:
       - telemetry_id
-    api_fraud_v1_fraud_rules_ListResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        next_cursor:
-          type: string
-          description: The `next_cursor` string is returned when your result contains more than one page of results. This value is passed into your next request in the `cursor` field.
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_fraud_v1_Rule'
-          description: A list of rules for the project
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - next_cursor
-      - rules
-      - status_code
-    api_fraud_v1_VerdictReasonOverrideAction:
+    api_fraud_v1_VerdictReasonActionAction:
       type: string
       enum:
       - ALLOW
@@ -958,6 +938,32 @@ components:
       - rule_type
       - action
       - created_at
+    api_fraud_v1_RuleAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+      - NONE
+    api_fraud_v1_fraud_verdict_reasons_ListResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        verdict_reason_actions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_fraud_v1_VerdictReasonAction'
+          description: Information about verdict reasons and any overrides that were set on them.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - verdict_reason_actions
+      - status_code
     api_fraud_v1_fraud_email_RiskRequest:
       type: object
       properties:
@@ -983,48 +989,123 @@ components:
       - asn
       - name
       - network
-    api_fraud_v1_Fingerprints:
+    api_fraud_v1_DomainInformation:
       type: object
       properties:
-        network_fingerprint:
-          type: string
-          description: 'Combination of signals associated with a specific network commonly known as TLS fingerprinting. '
-        hardware_fingerprint:
-          type: string
-          description: Combinations of signals to identify an operating system and architecture.
-        browser_fingerprint:
-          type: string
-          description: Combination of signals to identify a browser and its specific version.
-        visitor_fingerprint:
-          type: string
-          description: Cookie-less way of identifying a unique user.
-        visitor_id:
-          type: string
-          description: The cookie stored on the user's device that uniquely identifies them.
-        browser_id:
-          type: string
-          description: Combination of VisitorID and NetworkFingerprint to create a clear identifier of a browser.
+        has_mx_or_a_record:
+          type: boolean
+          description: Whether the email has appropriate DNS records to deliver a message.
+        is_disposable_domain:
+          type: boolean
+          description: Whether the email domain is known to be disposable.
       required:
-      - network_fingerprint
-      - hardware_fingerprint
-      - browser_fingerprint
-      - visitor_fingerprint
-    api_fraud_v1_fraud_verdict_reasons_OverrideRequest:
+      - has_mx_or_a_record
+      - is_disposable_domain
+    api_fraud_v1_OverrideRequestAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+      - NONE
+    api_fraud_v1_VerdictReasonAction:
       type: object
       properties:
         verdict_reason:
           type: string
-          description: The verdict reason that you wish to override. For a list of possible reasons to override, see [Warning Flags (Verdict Reasons)](https://stytch.com/docs/docs/fraud/guides/device-fingerprinting/reference/warning-flags-verdict-reasons). You may not override the `RULE_MATCH` reason.
+          description: The verdict reason.
+        default_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
+          description: The default action returned for the specified verdict reason in a fingerprint lookup when no overrides are specified.
         override_action:
-          $ref: '#/components/schemas/api_fraud_v1_OverrideRequestAction'
-          description: The action that you want to be returned for the specified verdict reason. The override action must be one of `ALLOW`, `BLOCK`, or `CHALLENGE`.
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonActionAction'
+          description: If not null, this action will be returned for the specified verdict reason in a fingerprint lookup, in place of the default action.
+        override_created_at:
+          type: string
+          description: The time when the override was created, if one exists. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
         override_description:
           type: string
-          description: An optional description for the verdict reason override.
-      description: Request type
+          description: A description of the override, if one exists.
+      required:
+      - verdict_reason
+      - default_action
+    api_fraud_v1_VerdictReasonOverride:
+      type: object
+      properties:
+        verdict_reason:
+          type: string
+          description: The verdict reason that was overridden.
+        override_action:
+          $ref: '#/components/schemas/api_fraud_v1_VerdictReasonOverrideAction'
+          description: The action that was applied for the given verdict reason.
       required:
       - verdict_reason
       - override_action
+    api_fraud_v1_RiskResponseAction:
+      type: string
+      enum:
+      - ALLOW
+      - CHALLENGE
+      - BLOCK
+    api_fraud_v1_Metadata:
+      type: object
+      properties:
+        external_id:
+          type: string
+          description: An external ID, such as a user ID, that you wish to associate with the telemetry ID.
+        organization_id:
+          type: string
+          description: The organization ID you wish to associate with the telemetry ID.
+        user_action:
+          type: string
+          description: The user action, such as 'login', that you wish to associate with the telemetry ID.
+    api_fraud_v1_fraud_rules_SetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        action:
+          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
+          description: The action that will be returned for the specified identifier.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        visitor_id:
+          type: string
+          description: The visitor ID that a rule was set for.
+        browser_id:
+          type: string
+          description: The browser ID that a rule was set for.
+        visitor_fingerprint:
+          type: string
+          description: The visitor fingerprint that a rule was set for.
+        browser_fingerprint:
+          type: string
+          description: The browser fingerprint that a rule was set for.
+        hardware_fingerprint:
+          type: string
+          description: The hardware fingerprint that a rule was set for.
+        network_fingerprint:
+          type: string
+          description: The network fingerprint that a rule was set for.
+        expires_at:
+          type: string
+          description: The timestamp when the rule expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        cidr_block:
+          type: string
+          description: The CIDR block that a rule was set for. If an end user's IP address is within this CIDR block, this rule will be applied.
+        country_code:
+          type: string
+          description: The country code that a rule was set for.
+        asn:
+          type: string
+          description: The ASN that a rule was set for.
+      required:
+      - request_id
+      - action
+      - status_code
     api_fraud_v1_fraud_fingerprint_LookupResponse:
       type: object
       properties:
@@ -1069,61 +1150,6 @@ components:
       - created_at
       - expires_at
       - status_code
-    api_fraud_v1_DomainInformation:
-      type: object
-      properties:
-        has_mx_or_a_record:
-          type: boolean
-          description: Whether the email has appropriate DNS records to deliver a message.
-        is_disposable_domain:
-          type: boolean
-          description: Whether the email domain is known to be disposable.
-      required:
-      - has_mx_or_a_record
-      - is_disposable_domain
-    api_fraud_v1_fraud_rules_SetRequest:
-      type: object
-      properties:
-        action:
-          $ref: '#/components/schemas/api_fraud_v1_RuleAction'
-          description: 'The action that should be returned by a fingerprint lookup for that identifier with a `RULE_MATCH` reason. The following values are valid: `ALLOW`, `BLOCK`, `CHALLENGE`, or `NONE`. For country codes, `ALLOW` actions are not allowed. If a `NONE` action is specified, it will clear the stored rule.'
-        visitor_id:
-          type: string
-          description: The visitor ID we want to set a rule for. Only one identifier can be specified in the request.
-        browser_id:
-          type: string
-          description: The browser ID we want to set a rule for. Only one identifier can be specified in the request.
-        visitor_fingerprint:
-          type: string
-          description: The visitor fingerprint we want to set a rule for. Only one identifier can be specified in the request.
-        browser_fingerprint:
-          type: string
-          description: The browser fingerprint we want to set a rule for. Only one identifier can be specified in the request.
-        hardware_fingerprint:
-          type: string
-          description: The hardware fingerprint we want to set a rule for. Only one identifier can be specified in the request.
-        network_fingerprint:
-          type: string
-          description: The network fingerprint we want to set a rule for. Only one identifier can be specified in the request.
-        expires_in_minutes:
-          type: integer
-          format: int32
-          description: The number of minutes until this rule expires. If no `expires_in_minutes` is specified, then the rule is kept permanently.
-        description:
-          type: string
-          description: An optional description for the rule.
-        cidr_block:
-          type: string
-          description: The CIDR block we want to set a rule for. You may pass either an IP address or a CIDR block. The CIDR block prefix must be between 16 and 32, inclusive. If an end user's IP address is within this CIDR block, this rule will be applied. Only one identifier can be specified in the request.
-        country_code:
-          type: string
-          description: The country code we want to set a rule for. The country code must be a valid ISO 3166-1 alpha-2 code. You may not set `ALLOW` rules for country codes. Only one identifier can be specified in the request.
-        asn:
-          type: string
-          description: The ASN we want to set a rule for. The ASN must be the string representation of an integer between 0 and 4294967295, inclusive. Only one identifier can be specified in the request.
-      description: Request type
-      required:
-      - action
     api_fraud_v1_fraud_verdict_reasons_OverrideResponse:
       type: object
       properties:
@@ -1141,32 +1167,6 @@ components:
       - request_id
       - verdict_reason_action
       - status_code
-    api_fraud_v1_IPGeoProperties:
-      type: object
-      properties:
-        city:
-          type: string
-          description: The city where the IP is located.
-        region:
-          type: string
-          description: The region where the IP is located.
-        country:
-          type: string
-          description: The country where the IP is located.
-      required:
-      - city
-      - region
-      - country
-    api_fraud_v1_Properties:
-      type: object
-      properties:
-        network_properties:
-          $ref: '#/components/schemas/api_fraud_v1_NetworkProperties'
-        browser_properties:
-          $ref: '#/components/schemas/api_fraud_v1_BrowserProperties'
-      required:
-      - network_properties
-      - browser_properties
   securitySchemes:
     basicAuth:
       type: http

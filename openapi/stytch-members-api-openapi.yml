@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application Members API
+  title: Stytch B2B Authentication Members API
   version: 2.0.0
   description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
   contact:
@@ -627,85 +627,6 @@ paths:
         source: "# POST /v1/b2b/organizations/{organization_id}/members/{member_id}/connected_apps/{connected_app_id}/revoke\ncurl --request POST \\\n  --url https://test.stytch.com/v1/b2b/organizations/${organizationId}/members/${memberId}/connected_apps/${exampleConnectedAppClientID}/revoke \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
 components:
   schemas:
-    api_organization_v1_organizations_members_oauth_providers_MicrosoftResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        access_token:
-          type: string
-          description: The `access_token` that you may use to access the User's data in the provider's API.
-        access_token_expires_in:
-          type: integer
-          format: int32
-          description: The number of seconds until the access token expires.
-        id_token:
-          type: string
-          description: The `id_token` returned by the OAuth provider. ID Tokens are JWTs that contain structured information about a user. The exact content of each ID Token varies from provider to provider. ID Tokens are returned from OAuth providers that conform to the [OpenID Connect](https://openid.net/foundation/) specification, which is based on OAuth.
-        scopes:
-          type: array
-          items:
-            type: string
-          description: The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        refresh_token:
-          type: string
-          description: The `refresh_token` that you may use to obtain a new `access_token` for the User within the provider's API.
-      required:
-      - request_id
-      - provider_type
-      - provider_subject
-      - access_token
-      - access_token_expires_in
-      - id_token
-      - scopes
-      - status_code
-    api_organization_v1_GithubProviderInfo:
-      type: object
-      properties:
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        provider_tenant_ids:
-          type: array
-          items:
-            type: string
-          description: All tenant IDs returned by the OAuth provider. These is typically used to identify organizations or groups within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the Workspace ID, and in GitHub this is an organization ID. Some OAuth providers do not return tenant IDs, some providers are guaranteed to return one, and some may return multiple. This field will always be populated if at least one tenant ID was returned from the OAuth provider and developers should prefer this field over `provider_tenant_id`.
-        access_token:
-          type: string
-          description: The `access_token` that you may use to access the User's data in the provider's API.
-        scopes:
-          type: array
-          items:
-            type: string
-          description: The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes.
-      required:
-      - provider_subject
-      - provider_tenant_ids
-      - access_token
-      - scopes
-    api_organization_v1_organizations_members_connected_apps_RevokeResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - status_code
     api_organization_v1_organizations_members_oauth_providers_GoogleResponse:
       type: object
       properties:
@@ -747,35 +668,29 @@ components:
       - id_token
       - scopes
       - status_code
-    api_organization_v1_HubspotProviderInfo:
+    api_organization_v1_GithubProviderInfo:
       type: object
       properties:
         provider_subject:
           type: string
           description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        provider_tenant_id:
-          type: string
-          description: The tenant ID returned by the OAuth provider. This is typically used to identify an organization or group within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the Workspace ID, and in GitHub this is an organization ID. This field will only be populated if exactly one tenant ID is returned from a successful OAuth authentication and developers should prefer `provider_tenant_ids` over this since it accounts for the possibility of an OAuth provider yielding multiple tenant IDs.
+        provider_tenant_ids:
+          type: array
+          items:
+            type: string
+          description: All tenant IDs returned by the OAuth provider. These is typically used to identify organizations or groups within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the Workspace ID, and in GitHub this is an organization ID. Some OAuth providers do not return tenant IDs, some providers are guaranteed to return one, and some may return multiple. This field will always be populated if at least one tenant ID was returned from the OAuth provider and developers should prefer this field over `provider_tenant_id`.
         access_token:
           type: string
           description: The `access_token` that you may use to access the User's data in the provider's API.
-        access_token_expires_in:
-          type: integer
-          format: int32
-          description: The number of seconds until the access token expires.
         scopes:
           type: array
           items:
             type: string
           description: The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes.
-        refresh_token:
-          type: string
-          description: The `refresh_token` that you may use to obtain a new `access_token` for the User within the provider's API.
       required:
       - provider_subject
-      - provider_tenant_id
+      - provider_tenant_ids
       - access_token
-      - access_token_expires_in
       - scopes
     api_organization_v1_organizations_members_oauth_providers_SlackResponse:
       type: object
@@ -790,29 +705,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/api_organization_v1_SlackProviderInfo'
-          description: A list of tokens the member is registered with.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - provider_type
-      - registrations
-      - status_code
-    api_organization_v1_organizations_members_oauth_providers_HubspotResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
-        registrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_organization_v1_HubspotProviderInfo'
           description: A list of tokens the member is registered with.
         status_code:
           type: integer
@@ -859,6 +751,59 @@ components:
       - scopes
       - bot_access_token
       - bot_scopes
+    api_organization_v1_HubspotProviderInfo:
+      type: object
+      properties:
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        provider_tenant_id:
+          type: string
+          description: The tenant ID returned by the OAuth provider. This is typically used to identify an organization or group within the provider's domain. For example, in HubSpot this is a Hub ID, in Slack this is the Workspace ID, and in GitHub this is an organization ID. This field will only be populated if exactly one tenant ID is returned from a successful OAuth authentication and developers should prefer `provider_tenant_ids` over this since it accounts for the possibility of an OAuth provider yielding multiple tenant IDs.
+        access_token:
+          type: string
+          description: The `access_token` that you may use to access the User's data in the provider's API.
+        access_token_expires_in:
+          type: integer
+          format: int32
+          description: The number of seconds until the access token expires.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes.
+        refresh_token:
+          type: string
+          description: The `refresh_token` that you may use to obtain a new `access_token` for the User within the provider's API.
+      required:
+      - provider_subject
+      - provider_tenant_id
+      - access_token
+      - access_token_expires_in
+      - scopes
+    api_organization_v1_organizations_members_oauth_providers_HubspotResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
+        registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_HubspotProviderInfo'
+          description: A list of tokens the member is registered with.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - provider_type
+      - registrations
+      - status_code
     api_organization_v1_organizations_members_oauth_providers_GithubResponse:
       type: object
       properties:
@@ -881,6 +826,61 @@ components:
       - request_id
       - provider_type
       - registrations
+      - status_code
+    api_organization_v1_organizations_members_oauth_providers_MicrosoftResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        access_token:
+          type: string
+          description: The `access_token` that you may use to access the User's data in the provider's API.
+        access_token_expires_in:
+          type: integer
+          format: int32
+          description: The number of seconds until the access token expires.
+        id_token:
+          type: string
+          description: The `id_token` returned by the OAuth provider. ID Tokens are JWTs that contain structured information about a user. The exact content of each ID Token varies from provider to provider. ID Tokens are returned from OAuth providers that conform to the [OpenID Connect](https://openid.net/foundation/) specification, which is based on OAuth.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: The OAuth scopes included for a given provider. See each provider's section above to see which scopes are included by default and how to add custom scopes.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        refresh_token:
+          type: string
+          description: The `refresh_token` that you may use to obtain a new `access_token` for the User within the provider's API.
+      required:
+      - request_id
+      - provider_type
+      - provider_subject
+      - access_token
+      - access_token_expires_in
+      - id_token
+      - scopes
+      - status_code
+    api_organization_v1_organizations_members_connected_apps_RevokeResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
       - status_code
   securitySchemes:
     basicAuth:

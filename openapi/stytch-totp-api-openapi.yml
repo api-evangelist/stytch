@@ -1,8 +1,8 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Stytch B2B Authentication Application TOTP API
+  title: Stytch Consumer Authentication TOTP API
   version: 2.0.0
-  description: Stytch's B2B API for multi-tenant authentication. Supports Organizations, Members, SSO (SAML/OIDC), Magic Links, OTP, OAuth, Discovery, Sessions, B2B RBAC, SCIM, TOTP, Recovery Codes, Passwords, Impersonation, and the B2B IDP.
+  description: Stytch's Consumer API for passwordless and password-based authentication. Supports Magic Links, SMS/email/WhatsApp OTP, OAuth social login, TOTP, WebAuthn/Passkeys, Crypto Wallets, Sessions, Users, M2M tokens, Fraud / Device Fingerprinting, Connected Apps (OAuth provider / MCP), Impersonation, IDP, and Consumer RBAC.
   contact:
     name: Stytch
     url: https://stytch.com/docs
@@ -350,7 +350,207 @@ paths:
         source: "# POST /v1/totps/recover\ncurl --request POST \\\n  --url https://test.stytch.com/v1/totps/recover \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"user_id\": \"${userId}\",\n    \"recovery_code\": \"${exampleTotpRecoveryCode}\",\n    \"session_duration_minutes\": 60\n  }'"
 components:
   schemas:
-    api_session_v1_SlackOAuthFactor:
+    api_session_v1_AuthenticationFactorDeliveryMethod:
+      type: string
+      enum:
+      - email
+      - sms
+      - whatsapp
+      - embedded
+      - oauth_google
+      - oauth_microsoft
+      - oauth_apple
+      - webauthn_registration
+      - authenticator_app
+      - oauth_github
+      - recovery_code
+      - oauth_facebook
+      - crypto_wallet
+      - oauth_amazon
+      - oauth_bitbucket
+      - oauth_coinbase
+      - oauth_discord
+      - oauth_figma
+      - oauth_gitlab
+      - oauth_instagram
+      - oauth_linkedin
+      - oauth_shopify
+      - oauth_slack
+      - oauth_snapchat
+      - oauth_spotify
+      - oauth_steam
+      - oauth_tiktok
+      - oauth_twitch
+      - oauth_twitter
+      - knowledge
+      - biometric
+      - sso_saml
+      - sso_oidc
+      - oauth_salesforce
+      - oauth_yahoo
+      - oauth_hubspot
+      - imported_auth0
+      - oauth_exchange_slack
+      - oauth_exchange_hubspot
+      - oauth_exchange_github
+      - oauth_exchange_google
+      - impersonation
+      - oauth_access_token_exchange
+      - trusted_token_exchange
+    api_session_v1_OAuthAccessTokenExchangeFactor:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the Connected App client.
+      required:
+      - client_id
+    api_user_v1_BiometricRegistration:
+      type: object
+      properties:
+        biometric_registration_id:
+          type: string
+          description: The unique ID for a biometric registration.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - biometric_registration_id
+      - verified
+    api_session_v1_InstagramOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_SteamOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_GitLabOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_totp_v1_CreateRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
+        expiration_minutes:
+          type: integer
+          format: int32
+          description: The expiration for the TOTP instance. If the newly created TOTP is not authenticated within this time frame the TOTP will be unusable. Defaults to 1440 (1 day) with a minimum of 5 and a maximum of 1440.
+      description: Request type
+      required:
+      - user_id
+    api_session_v1_SAMLSSOFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an SSO Registration.
+        provider_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SAML Connection.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+      required:
+      - id
+      - provider_id
+      - external_id
+    api_session_v1_LinkedInOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_BitbucketOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_ImpersonatedFactor:
+      type: object
+      properties:
+        impersonator_id:
+          type: string
+          description: For impersonated sessions initiated via the Stytch Dashboard, the `impersonator_id` will be the impersonator's Stytch Dashboard `member_id`.
+        impersonator_email_address:
+          type: string
+          description: The email address of the impersonator.
+      required:
+      - impersonator_id
+      - impersonator_email_address
+    api_session_v1_AppleOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_GoogleOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_session_v1_FigmaOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_MicrosoftOAuthFactor:
       type: object
       properties:
         id:
@@ -365,21 +565,30 @@ components:
       required:
       - id
       - provider_subject
-    api_session_v1_HubspotOAuthFactor:
+    api_user_v1_OAuthProvider:
       type: object
       properties:
-        id:
+        provider_type:
           type: string
-          description: The unique ID of an OAuth registration.
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
         provider_subject:
           type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        email_id:
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
+        profile_picture_url:
           type: string
-          description: The globally unique UUID of the Member's email.
+          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
+        oauth_user_registration_id:
+          type: string
+          description: The unique ID for an OAuth registration.
       required:
-      - id
+      - provider_type
       - provider_subject
+      - profile_picture_url
+      - locale
+      - oauth_user_registration_id
     api_totp_v1_CreateResponse:
       type: object
       properties:
@@ -431,380 +640,45 @@ components:
       required:
       - id
       - provider_subject
-    api_session_v1_EmbeddableMagicLinkFactor:
+    api_session_v1_Session:
       type: object
       properties:
-        embedded_id:
+        session_id:
           type: string
-      required:
-      - embedded_id
-    api_session_v1_EmailFactor:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-        email_address:
-          type: string
-          description: The email address of the Member.
-      required:
-      - email_id
-      - email_address
-    api_device_history_v1_DeviceInfo:
-      type: object
-      properties:
-        visitor_id:
-          type: string
-          description: The `visitor_id` (a unique identifier) of the user's device. See the [Device Fingerprinting documentation](https://stytch.com/docs/fraud/guides/device-fingerprinting/fingerprints) for more details on the `visitor_id`.
-        visitor_id_details:
-          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
-          description: Information about the `visitor_id`.
-        ip_address:
-          type: string
-          description: The IP address of the user's device.
-        ip_address_details:
-          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
-          description: Information about the `ip_address`.
-        ip_geo_city:
-          type: string
-          description: The city where the IP address is located.
-        ip_geo_region:
-          type: string
-          description: The region where the IP address is located.
-        ip_geo_country:
-          type: string
-          description: The country code where the IP address is located.
-        ip_geo_country_details:
-          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
-          description: Information about the `ip_geo_country`.
-      required:
-      - visitor_id
-    api_session_v1_SteamOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_user_v1_BiometricRegistration:
-      type: object
-      properties:
-        biometric_registration_id:
-          type: string
-          description: The unique ID for a biometric registration.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - biometric_registration_id
-      - verified
-    api_session_v1_BitbucketOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_totp_v1_AuthenticateRequest:
-      type: object
-      properties:
+          description: A unique identifier for a specific Session.
         user_id:
           type: string
-          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
-        totp_code:
+          description: The unique ID of the affected User.
+        authentication_factors:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_session_v1_AuthenticationFactor'
+          description: An array of different authentication factors that comprise a Session.
+        roles:
+          type: array
+          items:
+            type: string
+        started_at:
           type: string
-          description: The TOTP code to authenticate. The TOTP code should consist of 6 digits.
-        session_token:
+          description: The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        last_accessed_at:
           type: string
-          description: The `session_token` associated with a User's existing Session.
-        session_duration_minutes:
-          type: integer
-          format: int32
-          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created."
-        session_jwt:
+          description: The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        expires_at:
           type: string
-          description: The `session_jwt` associated with a User's existing Session.
-        session_custom_claims:
+          description: The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
+        attributes:
+          $ref: '#/components/schemas/api_attribute_v1_Attributes'
+          description: Provided attributes help with fraud detection.
+        custom_claims:
           type: object
           additionalProperties: true
-          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key, supply a null value.\n\n  Custom claims made with reserved claims (\"iss\", \"sub\", \"aud\", \"exp\", \"nbf\", \"iat\", \"jti\") will be ignored. Total custom claims size cannot exceed four kilobytes."
-        telemetry_id:
-          type: string
-          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the User. Your workspace must be enabled for Device Fingerprinting to use this feature.
-      description: Request type
+          description: The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate call.
       required:
+      - session_id
       - user_id
-      - totp_code
-    api_session_v1_OAuthAccessTokenExchangeFactor:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The ID of the Connected App client.
-      required:
-      - client_id
-    api_session_v1_DiscordOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_TrustedAuthTokenFactor:
-      type: object
-      properties:
-        token_id:
-          type: string
-          description: The ID of the trusted auth token.
-      required:
-      - token_id
-    api_session_v1_AppleOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_ShopifyOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_SalesforceOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_AmazonOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_attribute_v1_Attributes:
-      type: object
-      properties:
-        ip_address:
-          type: string
-          description: The IP address of the user.
-        user_agent:
-          type: string
-          description: The user agent of the User.
-    api_session_v1_YahooOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_TwitterOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_AuthenticationFactorDeliveryMethod:
-      type: string
-      enum:
-      - email
-      - sms
-      - whatsapp
-      - embedded
-      - oauth_google
-      - oauth_microsoft
-      - oauth_apple
-      - webauthn_registration
-      - authenticator_app
-      - oauth_github
-      - recovery_code
-      - oauth_facebook
-      - crypto_wallet
-      - oauth_amazon
-      - oauth_bitbucket
-      - oauth_coinbase
-      - oauth_discord
-      - oauth_figma
-      - oauth_gitlab
-      - oauth_instagram
-      - oauth_linkedin
-      - oauth_shopify
-      - oauth_slack
-      - oauth_snapchat
-      - oauth_spotify
-      - oauth_steam
-      - oauth_tiktok
-      - oauth_twitch
-      - oauth_twitter
-      - knowledge
-      - biometric
-      - sso_saml
-      - sso_oidc
-      - oauth_salesforce
-      - oauth_yahoo
-      - oauth_hubspot
-      - imported_auth0
-      - oauth_exchange_slack
-      - oauth_exchange_hubspot
-      - oauth_exchange_github
-      - oauth_exchange_google
-      - impersonation
-      - oauth_access_token_exchange
-      - trusted_token_exchange
-    api_session_v1_AuthenticationFactorType:
-      type: string
-      enum:
-      - magic_link
-      - otp
-      - oauth
-      - webauthn
-      - totp
-      - crypto
-      - password
-      - signature_challenge
-      - sso
-      - imported
-      - recovery_codes
-      - email_otp
-      - impersonated
-      - trusted_auth_token
-    api_user_v1_TOTP:
-      type: object
-      properties:
-        totp_id:
-          type: string
-          description: The unique ID for a TOTP instance.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - totp_id
-      - verified
-    api_session_v1_GoogleOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique ID of an OAuth registration.
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - id
-      - provider_subject
-    api_user_v1_Name:
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: The first name of the user.
-        middle_name:
-          type: string
-          description: The middle name(s) of the user.
-        last_name:
-          type: string
-          description: The last name of the user.
-    api_user_v1_PhoneNumber:
-      type: object
-      properties:
-        phone_id:
-          type: string
-          description: The unique ID for the phone number.
-        phone_number:
-          type: string
-          description: The phone number.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - phone_id
-      - phone_number
-      - verified
-    api_session_v1_SpotifyOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_user_v1_CryptoWallet:
-      type: object
-      properties:
-        crypto_wallet_id:
-          type: string
-          description: The unique ID for a crypto wallet
-        crypto_wallet_address:
-          type: string
-          description: The actual blockchain address of the User's crypto wallet.
-        crypto_wallet_type:
-          type: string
-          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - crypto_wallet_id
-      - crypto_wallet_address
-      - crypto_wallet_type
-      - verified
+      - authentication_factors
+      - roles
     api_user_v1_User:
       type: object
       properties:
@@ -895,6 +769,339 @@ components:
       - biometric_registrations
       - is_locked
       - roles
+    api_totp_v1_AuthenticateRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
+        totp_code:
+          type: string
+          description: The TOTP code to authenticate. The TOTP code should consist of 6 digits.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_duration_minutes:
+          type: integer
+          format: int32
+          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created."
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        session_custom_claims:
+          type: object
+          additionalProperties: true
+          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key, supply a null value.\n\n  Custom claims made with reserved claims (\"iss\", \"sub\", \"aud\", \"exp\", \"nbf\", \"iat\", \"jti\") will be ignored. Total custom claims size cannot exceed four kilobytes."
+        telemetry_id:
+          type: string
+          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the User. Your workspace must be enabled for Device Fingerprinting to use this feature.
+      description: Request type
+      required:
+      - user_id
+      - totp_code
+    api_totp_v1_AuthenticateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        session_token:
+          type: string
+          description: A secret token for a given Stytch Session.
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        session_jwt:
+          type: string
+          description: The JSON Web Token (JWT) for a given Stytch Session.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        session:
+          $ref: '#/components/schemas/api_session_v1_Session'
+          description: "If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll receive a full Session object in the response.\n\n  See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.\n  "
+        user_device:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceInfo'
+          description: If a valid `telemetry_id` was passed in the request and the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) returned results, the `user_device` response field will contain information about the user's device attributes.
+      required:
+      - request_id
+      - user_id
+      - session_token
+      - totp_id
+      - session_jwt
+      - user
+      - status_code
+    api_session_v1_HubspotOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_totp_v1_RecoverRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
+        recovery_code:
+          type: string
+          description: The recovery code to authenticate.
+        session_token:
+          type: string
+          description: The `session_token` associated with a User's existing Session.
+        session_duration_minutes:
+          type: integer
+          format: int32
+          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created."
+        session_jwt:
+          type: string
+          description: The `session_jwt` associated with a User's existing Session.
+        session_custom_claims:
+          type: object
+          additionalProperties: true
+          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key, supply a null value.\n\n  Custom claims made with reserved claims (\"iss\", \"sub\", \"aud\", \"exp\", \"nbf\", \"iat\", \"jti\") will be ignored. Total custom claims size cannot exceed four kilobytes."
+        telemetry_id:
+          type: string
+          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the User. Your workspace must be enabled for Device Fingerprinting to use this feature.
+      description: Request type
+      required:
+      - user_id
+      - recovery_code
+    api_session_v1_ShopifyOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_SnapchatOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_SlackOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_session_v1_SlackOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_session_v1_CoinbaseOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_RecoveryCodeFactor:
+      type: object
+      properties:
+        totp_recovery_code_id:
+          type: string
+      required:
+      - totp_recovery_code_id
+    api_session_v1_YahooOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_TrustedAuthTokenFactor:
+      type: object
+      properties:
+        token_id:
+          type: string
+          description: The ID of the trusted auth token.
+      required:
+      - token_id
+    api_session_v1_SalesforceOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_AuthenticationFactorType:
+      type: string
+      enum:
+      - magic_link
+      - otp
+      - oauth
+      - webauthn
+      - totp
+      - crypto
+      - password
+      - signature_challenge
+      - sso
+      - imported
+      - recovery_codes
+      - email_otp
+      - impersonated
+      - trusted_auth_token
+    api_session_v1_OIDCSSOFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an SSO Registration.
+        provider_id:
+          type: string
+          description: Globally unique UUID that identifies a specific OIDC Connection.
+        external_id:
+          type: string
+          description: The ID of the member given by the identity provider.
+      required:
+      - id
+      - provider_id
+      - external_id
+    api_session_v1_WebAuthnFactor:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+        domain:
+          type: string
+        user_agent:
+          type: string
+      required:
+      - webauthn_registration_id
+      - domain
+    api_session_v1_HubspotOAuthExchangeFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - email_id
+    api_session_v1_AuthenticatorAppFactor:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: Globally unique UUID that identifies a TOTP instance.
+      required:
+      - totp_id
+    api_session_v1_GithubOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique ID of an OAuth registration.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+      required:
+      - id
+      - provider_subject
+    api_session_v1_SpotifyOAuthFactor:
+      type: object
+      properties:
+        id:
+          type: string
+        provider_subject:
+          type: string
+        email_id:
+          type: string
+      required:
+      - id
+      - provider_subject
+    api_session_v1_EmailFactor:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The globally unique UUID of the Member's email.
+        email_address:
+          type: string
+          description: The email address of the Member.
+      required:
+      - email_id
+      - email_address
+    api_totp_v1_RecoveryCodesRequest:
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
+      description: Request type
+      required:
+      - user_id
     api_totp_v1_TOTP:
       type: object
       properties:
@@ -913,7 +1120,36 @@ components:
       - totp_id
       - verified
       - recovery_codes
-    api_session_v1_GitLabOAuthFactor:
+    api_device_history_v1_DeviceInfo:
+      type: object
+      properties:
+        visitor_id:
+          type: string
+          description: The `visitor_id` (a unique identifier) of the user's device. See the [Device Fingerprinting documentation](https://stytch.com/docs/fraud/guides/device-fingerprinting/fingerprints) for more details on the `visitor_id`.
+        visitor_id_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `visitor_id`.
+        ip_address:
+          type: string
+          description: The IP address of the user's device.
+        ip_address_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `ip_address`.
+        ip_geo_city:
+          type: string
+          description: The city where the IP address is located.
+        ip_geo_region:
+          type: string
+          description: The region where the IP address is located.
+        ip_geo_country:
+          type: string
+          description: The country code where the IP address is located.
+        ip_geo_country_details:
+          $ref: '#/components/schemas/api_device_history_v1_DeviceAttributeDetails'
+          description: Information about the `ip_geo_country`.
+      required:
+      - visitor_id
+    api_session_v1_DiscordOAuthFactor:
       type: object
       properties:
         id:
@@ -925,34 +1161,90 @@ components:
       required:
       - id
       - provider_subject
-    api_session_v1_SAMLSSOFactor:
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_user_v1_WebAuthnRegistration:
+      type: object
+      properties:
+        webauthn_registration_id:
+          type: string
+          description: The unique ID for the Passkey or WebAuthn registration.
+        domain:
+          type: string
+          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
+        user_agent:
+          type: string
+          description: The user agent of the User.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+        authenticator_type:
+          type: string
+          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
+        name:
+          type: string
+          description: The `name` of the Passkey or WebAuthn registration.
+      required:
+      - webauthn_registration_id
+      - domain
+      - user_agent
+      - verified
+      - authenticator_type
+      - name
+    api_session_v1_GoogleOAuthFactor:
       type: object
       properties:
         id:
           type: string
-          description: The unique ID of an SSO Registration.
-        provider_id:
+          description: The unique ID of an OAuth registration.
+        provider_subject:
           type: string
-          description: Globally unique UUID that identifies a specific SAML Connection.
-        external_id:
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
+        email_id:
           type: string
-          description: The ID of the member given by the identity provider.
+          description: The globally unique UUID of the Member's email.
       required:
       - id
-      - provider_id
-      - external_id
-    api_user_v1_Password:
+      - provider_subject
+    api_session_v1_AmazonOAuthFactor:
       type: object
       properties:
-        password_id:
+        id:
           type: string
-          description: The unique ID of a specific password
-        requires_reset:
-          type: boolean
-          description: Indicates whether this password requires a password reset
+        provider_subject:
+          type: string
+        email_id:
+          type: string
       required:
-      - password_id
-      - requires_reset
+      - id
+      - provider_subject
+    api_attribute_v1_Attributes:
+      type: object
+      properties:
+        ip_address:
+          type: string
+          description: The IP address of the user.
+        user_agent:
+          type: string
+          description: The user agent of the User.
     api_session_v1_CryptoWalletFactor:
       type: object
       properties:
@@ -966,45 +1258,57 @@ components:
       - crypto_wallet_id
       - crypto_wallet_address
       - crypto_wallet_type
-    api_session_v1_Session:
+    api_session_v1_PhoneNumberFactor:
       type: object
       properties:
-        session_id:
+        phone_id:
           type: string
-          description: A unique identifier for a specific Session.
+          description: The globally unique UUID of the Member's phone number.
+        phone_number:
+          type: string
+          description: The phone number of the Member.
+      required:
+      - phone_id
+      - phone_number
+    api_totp_v1_RecoveryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         user_id:
           type: string
           description: The unique ID of the affected User.
-        authentication_factors:
+        totps:
           type: array
           items:
-            $ref: '#/components/schemas/api_session_v1_AuthenticationFactor'
-          description: An array of different authentication factors that comprise a Session.
-        roles:
-          type: array
-          items:
-            type: string
-        started_at:
-          type: string
-          description: The timestamp when the Session was created. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        last_accessed_at:
-          type: string
-          description: The timestamp when the Session was last accessed. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        expires_at:
-          type: string
-          description: The timestamp when the Session expires. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
-        attributes:
-          $ref: '#/components/schemas/api_attribute_v1_Attributes'
-          description: Provided attributes help with fraud detection.
-        custom_claims:
-          type: object
-          additionalProperties: true
-          description: The custom claims map for a Session. Claims can be added to a session during a Sessions authenticate call.
+            $ref: '#/components/schemas/api_totp_v1_TOTP'
+          description: An array containing a list of all TOTP instances (along with their recovery codes) for a given User in the Stytch API.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
       required:
-      - session_id
+      - request_id
       - user_id
-      - authentication_factors
-      - roles
+      - totps
+      - status_code
+    api_user_v1_Email:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        email:
+          type: string
+          description: The email address.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - email_id
+      - email
+      - verified
     api_session_v1_AuthenticationFactor:
       type: object
       properties:
@@ -1125,30 +1429,14 @@ components:
       required:
       - type
       - delivery_method
-    api_session_v1_PhoneNumberFactor:
+    api_session_v1_GithubOAuthExchangeFactor:
       type: object
       properties:
-        phone_id:
-          type: string
-          description: The globally unique UUID of the Member's phone number.
-        phone_number:
-          type: string
-          description: The phone number of the Member.
-      required:
-      - phone_id
-      - phone_number
-    api_session_v1_FigmaOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
         email_id:
           type: string
+          description: The globally unique UUID of the Member's email.
       required:
-      - id
-      - provider_subject
+      - email_id
     api_device_history_v1_DeviceAttributeDetails:
       type: object
       properties:
@@ -1163,34 +1451,6 @@ components:
           description: When this `ip_geo_country` was last seen for this user. Values conform to the RFC 3339 standard and are expressed in UTC, e.g. `2021-12-29T12:33:09Z`.
       required:
       - is_new
-    api_session_v1_ImpersonatedFactor:
-      type: object
-      properties:
-        impersonator_id:
-          type: string
-          description: For impersonated sessions initiated via the Stytch Dashboard, the `impersonator_id` will be the impersonator's Stytch Dashboard `member_id`.
-        impersonator_email_address:
-          type: string
-          description: The email address of the impersonator.
-      required:
-      - impersonator_id
-      - impersonator_email_address
-    api_session_v1_OIDCSSOFactor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique ID of an SSO Registration.
-        provider_id:
-          type: string
-          description: Globally unique UUID that identifies a specific OIDC Connection.
-        external_id:
-          type: string
-          description: The ID of the member given by the identity provider.
-      required:
-      - id
-      - provider_id
-      - external_id
     api_session_v1_TikTokOAuthFactor:
       type: object
       properties:
@@ -1203,93 +1463,49 @@ components:
       required:
       - id
       - provider_subject
-    api_user_v1_Email:
+    api_user_v1_Name:
       type: object
       properties:
-        email_id:
+        first_name:
           type: string
-          description: The unique ID of a specific email address.
-        email:
+          description: The first name of the user.
+        middle_name:
           type: string
-          description: The email address.
+          description: The middle name(s) of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+    api_session_v1_EmbeddableMagicLinkFactor:
+      type: object
+      properties:
+        embedded_id:
+          type: string
+      required:
+      - embedded_id
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
         verified:
           type: boolean
           description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
       required:
-      - email_id
-      - email
+      - phone_id
+      - phone_number
       - verified
-    api_session_v1_SnapchatOAuthFactor:
+    api_session_v1_BiometricFactor:
       type: object
       properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
+        biometric_registration_id:
           type: string
       required:
-      - id
-      - provider_subject
-    api_session_v1_RecoveryCodeFactor:
-      type: object
-      properties:
-        totp_recovery_code_id:
-          type: string
-      required:
-      - totp_recovery_code_id
-    api_totp_v1_CreateRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
-        expiration_minutes:
-          type: integer
-          format: int32
-          description: The expiration for the TOTP instance. If the newly created TOTP is not authenticated within this time frame the TOTP will be unusable. Defaults to 1440 (1 day) with a minimum of 5 and a maximum of 1440.
-      description: Request type
-      required:
-      - user_id
-    api_totp_v1_RecoverRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
-        recovery_code:
-          type: string
-          description: The recovery code to authenticate.
-        session_token:
-          type: string
-          description: The `session_token` associated with a User's existing Session.
-        session_duration_minutes:
-          type: integer
-          format: int32
-          description: "Set the session lifetime to be this many minutes from now. This will start a new session if one doesn't already exist,\n  returning both an opaque `session_token` and `session_jwt` for this session. Remember that the `session_jwt` will have a fixed lifetime of\n  five minutes regardless of the underlying session duration, and will need to be refreshed over time.\n\n  This value must be a minimum of 5 and a maximum of 527040 minutes (366 days).\n\n  If a `session_token` or `session_jwt` is provided then a successful authentication will continue to extend the session this many minutes.\n\n  If the `session_duration_minutes` parameter is not specified, a Stytch session will not be created."
-        session_jwt:
-          type: string
-          description: The `session_jwt` associated with a User's existing Session.
-        session_custom_claims:
-          type: object
-          additionalProperties: true
-          description: "Add a custom claims map to the Session being authenticated. Claims are only created if a Session is initialized by providing a value in `session_duration_minutes`. Claims will be included on the Session object and in the JWT. To update a key in an existing Session, supply a new value. To delete a key, supply a null value.\n\n  Custom claims made with reserved claims (\"iss\", \"sub\", \"aud\", \"exp\", \"nbf\", \"iat\", \"jti\") will be ignored. Total custom claims size cannot exceed four kilobytes."
-        telemetry_id:
-          type: string
-          description: If the `telemetry_id` is passed, as part of this request, Stytch will call the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) and store the associated fingerprints and IPGEO information for the User. Your workspace must be enabled for Device Fingerprinting to use this feature.
-      description: Request type
-      required:
-      - user_id
-      - recovery_code
-    api_session_v1_GithubOAuthExchangeFactor:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - email_id
-    api_session_v1_LinkedInOAuthFactor:
+      - biometric_registration_id
+    api_session_v1_FacebookOAuthFactor:
       type: object
       properties:
         id:
@@ -1340,243 +1556,27 @@ components:
       - session_jwt
       - user
       - status_code
-    api_session_v1_CoinbaseOAuthFactor:
+    api_user_v1_TOTP:
       type: object
       properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_session_v1_InstagramOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_user_v1_OAuthProvider:
-      type: object
-      properties:
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
-        profile_picture_url:
-          type: string
-          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
-        locale:
-          type: string
-          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
-        oauth_user_registration_id:
-          type: string
-          description: The unique ID for an OAuth registration.
-      required:
-      - provider_type
-      - provider_subject
-      - profile_picture_url
-      - locale
-      - oauth_user_registration_id
-    api_session_v1_GithubOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The unique ID of an OAuth registration.
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - id
-      - provider_subject
-    api_session_v1_GoogleOAuthExchangeFactor:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - email_id
-    api_session_v1_HubspotOAuthExchangeFactor:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - email_id
-    api_session_v1_WebAuthnFactor:
-      type: object
-      properties:
-        webauthn_registration_id:
-          type: string
-        domain:
-          type: string
-        user_agent:
-          type: string
-      required:
-      - webauthn_registration_id
-      - domain
-    api_totp_v1_RecoveryCodesResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        totps:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_totp_v1_TOTP'
-          description: An array containing a list of all TOTP instances (along with their recovery codes) for a given User in the Stytch API.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - user_id
-      - totps
-      - status_code
-    api_session_v1_FacebookOAuthFactor:
-      type: object
-      properties:
-        id:
-          type: string
-        provider_subject:
-          type: string
-        email_id:
-          type: string
-      required:
-      - id
-      - provider_subject
-    api_user_v1_WebAuthnRegistration:
-      type: object
-      properties:
-        webauthn_registration_id:
-          type: string
-          description: The unique ID for the Passkey or WebAuthn registration.
-        domain:
-          type: string
-          description: The `domain` on which Passkey or WebAuthn registration was started. This will be the domain of your app.
-        user_agent:
-          type: string
-          description: The user agent of the User.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-        authenticator_type:
-          type: string
-          description: The `authenticator_type` string displays the requested authenticator type of the Passkey or WebAuthn device. The two valid types are "platform" and "cross-platform". If no value is present, the Passkey or WebAuthn device was created without an authenticator type preference.
-        name:
-          type: string
-          description: The `name` of the Passkey or WebAuthn registration.
-      required:
-      - webauthn_registration_id
-      - domain
-      - user_agent
-      - verified
-      - authenticator_type
-      - name
-    api_totp_v1_AuthenticateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        session_token:
-          type: string
-          description: A secret token for a given Stytch Session.
         totp_id:
           type: string
           description: The unique ID for a TOTP instance.
-        session_jwt:
-          type: string
-          description: The JSON Web Token (JWT) for a given Stytch Session.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        session:
-          $ref: '#/components/schemas/api_session_v1_Session'
-          description: "If you initiate a Session, by including `session_duration_minutes` in your authenticate call, you'll receive a full Session object in the response.\n\n  See [Session object](https://stytch.com/docs/api/session-object) for complete response fields.\n  "
-        user_device:
-          $ref: '#/components/schemas/api_device_history_v1_DeviceInfo'
-          description: If a valid `telemetry_id` was passed in the request and the [Fingerprint Lookup API](https://stytch.com/docs/fraud/api/fingerprint-lookup) returned results, the `user_device` response field will contain information about the user's device attributes.
-      required:
-      - request_id
-      - user_id
-      - session_token
-      - totp_id
-      - session_jwt
-      - user
-      - status_code
-    api_session_v1_BiometricFactor:
-      type: object
-      properties:
-        biometric_registration_id:
-          type: string
-      required:
-      - biometric_registration_id
-    api_session_v1_AuthenticatorAppFactor:
-      type: object
-      properties:
-        totp_id:
-          type: string
-          description: Globally unique UUID that identifies a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
       required:
       - totp_id
-    api_session_v1_SlackOAuthExchangeFactor:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The globally unique UUID of the Member's email.
-      required:
-      - email_id
-    api_totp_v1_RecoveryCodesRequest:
-      type: object
-      properties:
-        user_id:
-          type: string
-          description: The `user_id` of an active user the TOTP registration should be tied to. You may use an `external_id` here if one is set for the user.
-      description: Request type
-      required:
-      - user_id
-    api_session_v1_MicrosoftOAuthFactor:
+      - verified
+    api_session_v1_TwitterOAuthFactor:
       type: object
       properties:
         id:
           type: string
-          description: The unique ID of an OAuth registration.
         provider_subject:
           type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the `sub` or "Subject field" in OAuth protocols.
         email_id:
           type: string
-          description: The globally unique UUID of the Member's email.
       required:
       - id
       - provider_subject
