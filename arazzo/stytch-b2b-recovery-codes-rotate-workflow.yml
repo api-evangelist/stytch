@@ -12,8 +12,8 @@ info:
     as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchB2bApi
-  url: ../openapi/stytch-b2b-openapi.yml
+- name: b2bRecoveryCodesApi
+  url: ../openapi/stytch-b2b-recovery-codes-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: recovery-codes-rotate

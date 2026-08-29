@@ -12,8 +12,11 @@ info:
     as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchB2bApi
-  url: ../openapi/stytch-b2b-openapi.yml
+- name: organizationApi
+  url: ../openapi/stytch-organization-api-openapi.yml
+  type: openapi
+- name: organizationsApi
+  url: ../openapi/stytch-organizations-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: org-create-member

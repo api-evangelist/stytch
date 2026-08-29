@@ -12,8 +12,11 @@ info:
     project_id as the username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchConsumerApi
-  url: ../openapi/stytch-consumer-openapi.yml
+- name: magicLinksApi
+  url: ../openapi/stytch-magic-links-api-openapi.yml
+  type: openapi
+- name: userApi
+  url: ../openapi/stytch-user-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-user-magic-link

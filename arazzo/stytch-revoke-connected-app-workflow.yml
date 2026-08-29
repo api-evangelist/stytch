@@ -13,8 +13,8 @@ info:
     username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchConsumerApi
-  url: ../openapi/stytch-consumer-openapi.yml
+- name: userApi
+  url: ../openapi/stytch-user-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: revoke-connected-app

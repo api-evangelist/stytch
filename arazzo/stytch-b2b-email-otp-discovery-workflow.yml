@@ -13,8 +13,11 @@ info:
     auth using your Stytch project_id as the username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchB2bApi
-  url: ../openapi/stytch-b2b-openapi.yml
+- name: discoveryApi
+  url: ../openapi/stytch-discovery-api-openapi.yml
+  type: openapi
+- name: emailApi
+  url: ../openapi/stytch-email-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: email-otp-discovery

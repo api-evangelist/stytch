@@ -13,8 +13,8 @@ info:
     as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchConsumerApi
-  url: ../openapi/stytch-consumer-openapi.yml
+- name: cryptoWalletApi
+  url: ../openapi/stytch-crypto-wallet-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: crypto-wallet-auth

@@ -12,8 +12,8 @@ info:
     username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchB2bApi
-  url: ../openapi/stytch-b2b-openapi.yml
+- name: b2bOtpApi
+  url: ../openapi/stytch-b2b-otp-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: sms-otp-mfa

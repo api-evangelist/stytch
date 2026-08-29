@@ -12,8 +12,11 @@ info:
     using your Stytch project_id as the username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchConsumerApi
-  url: ../openapi/stytch-consumer-openapi.yml
+- name: otpApi
+  url: ../openapi/stytch-otp-api-openapi.yml
+  type: openapi
+- name: sessionApi
+  url: ../openapi/stytch-session-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: email-otp-login

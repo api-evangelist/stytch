@@ -12,8 +12,8 @@ info:
     project_id as the username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchConsumerApi
-  url: ../openapi/stytch-consumer-openapi.yml
+- name: sessionApi
+  url: ../openapi/stytch-session-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: session-authenticate-revoke

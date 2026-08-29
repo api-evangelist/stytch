@@ -12,8 +12,11 @@ info:
     username and secret as the password.
   version: 1.0.0
 sourceDescriptions:
-- name: stytchB2bApi
-  url: ../openapi/stytch-b2b-openapi.yml
+- name: b2bMagicLinksApi
+  url: ../openapi/stytch-b2b-magic-links-api-openapi.yml
+  type: openapi
+- name: organizationApi
+  url: ../openapi/stytch-organization-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-org-invite-member
