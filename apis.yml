@@ -1271,7 +1271,7 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
-  - Rbac
+  - RBAC
   tags_raw:
   - Rbac
   properties:
@@ -1341,7 +1341,7 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
-  - Sdk
+  - SDK
   tags_raw:
   - Sdk
   properties:
