@@ -989,42 +989,6 @@ apis:
     url: https://github.com/stytchauth/stytch-management-go
   - type: SDKs
     url: https://github.com/stytchauth/stytch-management-python
-- aid: stytch:stytch-oauth-api
-  name: Stytch OAuth API
-  description: The OAuth API from Stytch — 2 operation(s) for oauth.
-  humanURL: https://stytch.com/docs/api
-  baseURL: https://api.stytch.com
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth
-  properties:
-  - type: OpenAPI
-    url: openapi/stytch-oauth-api-openapi.yml
-  - type: Documentation
-    url: https://stytch.com/docs/api
-  - type: APIReference
-    url: https://stytch.com/docs/api/reference/library/overview
-  - type: OpenAPISource
-    url: https://github.com/stytchauth/stytch-openapi
-  - type: GraphQL
-    url: graphql/stytch-graphql.md
-  - type: Documentation
-    url: https://stytch.com/docs/b2b
-  - type: APIReference
-    url: https://stytch.com/docs/b2b/api/overview
-  - type: Documentation
-    url: https://stytch.com/docs/workspace-management-api
-  - type: OpenAPISource
-    url: https://github.com/stytchauth/stytch-management-openapi
-  - type: TerraformProvider
-    url: https://github.com/stytchauth/terraform-provider-stytch
-  - type: SDKs
-    url: https://github.com/stytchauth/stytch-management-node
-  - type: SDKs
-    url: https://github.com/stytchauth/stytch-management-go
-  - type: SDKs
-    url: https://github.com/stytchauth/stytch-management-python
 - aid: stytch:stytch-organization-api
   name: Stytch Organization API
   description: The Organization API from Stytch — 7 operation(s) for organization.
@@ -1585,6 +1549,40 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/stytch-webauthn-api-openapi.yml
+  - type: Documentation
+    url: https://stytch.com/docs/api
+  - type: APIReference
+    url: https://stytch.com/docs/api/reference/library/overview
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-openapi
+  - type: GraphQL
+    url: graphql/stytch-graphql.md
+  - type: Documentation
+    url: https://stytch.com/docs/b2b
+  - type: APIReference
+    url: https://stytch.com/docs/b2b/api/overview
+  - type: Documentation
+    url: https://stytch.com/docs/workspace-management-api
+  - type: OpenAPISource
+    url: https://github.com/stytchauth/stytch-management-openapi
+  - type: TerraformProvider
+    url: https://github.com/stytchauth/terraform-provider-stytch
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-node
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-go
+  - type: SDKs
+    url: https://github.com/stytchauth/stytch-management-python
+- aid: stytch:stytch-o-auth-api
+  name: Stytch O Auth API
+  description: The O Auth API from Stytch — 2 operation(s) for o auth.
+  humanURL: https://stytch.com/docs/api
+  baseURL: https://api.stytch.com
+  tags:
+  - O Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/stytch-o-auth-api-openapi.yml
   - type: Documentation
     url: https://stytch.com/docs/api
   - type: APIReference
