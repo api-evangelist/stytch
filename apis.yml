@@ -1620,6 +1620,7 @@ tags:
 - MCP
 - AI Agents
 - Developer Tools
+- Identity Federation
 kind: contract
 deliveryModel:
   model: saas
@@ -1650,16 +1651,14 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/stytch.png
 access: 3rd-Party
 created: '2024-11-15'
-modified: '2026-05-22'
+modified: '2026-09-16'
 position: Consuming
-description: Stytch is an authentication and identity infrastructure provider. Its
-  Consumer and B2B APIs cover passwordless authentication (Magic Links, OTP, OAuth,
-  WebAuthn / Passkeys, TOTP), enterprise SSO (SAML / OIDC) and SCIM, sessions, M2M
-  client-credentials tokens, and Device Fingerprinting / fraud defense. Connected
-  Apps lets a Stytch-secured product act as an OAuth 2.0 / OIDC Authorization Server
-  for third-party integrations, desktop apps, AI agents, and MCP servers — a posture
-  Stytch describes as "agent-ready". A separate Management API plus a Terraform provider
-  handle workspace configuration as code.
+description: Stytch is an authentication and identity infrastructure provider. Its Consumer and B2B APIs
+  cover passwordless authentication (Magic Links, OTP, OAuth, WebAuthn / Passkeys, TOTP), enterprise SSO
+  (SAML / OIDC) and SCIM, sessions, M2M client-credentials tokens, and Device Fingerprinting / fraud defense.
+  Connected Apps lets a Stytch-secured product act as an OAuth 2.0 / OIDC Authorization Server for third-party
+  integrations, desktop apps, AI agents, and MCP servers — a posture Stytch describes as "agent-ready".
+  A separate Management API plus a Terraform provider handle workspace configuration as code.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -1884,27 +1883,25 @@ common:
   url: finops/stytch-finops.yml
 - type: Features
   data:
-  - One integration for authentication, authorization, and security, making your app
-    "enterprise-ready and agent-ready" (stytch.com)
-  - Consumer Authentication API (Magic Links, OTP, OAuth, Passwords, TOTP, WebAuthn
-    / Passkeys, Crypto Wallets, Sessions, Users)
-  - B2B Authentication API (Organizations, Members, SSO SAML/OIDC, SCIM, Discovery,
-    RBAC, Magic Links, OTP, OAuth, Sessions)
-  - Connected Apps — turn your product into an OAuth 2.0 / OIDC Authorization Server
-    for third-party integrations, AI agents, and MCP servers
-  - MCP server demos (mcp-stytch-consumer-todo-list, stytch-connected-apps-b2b-demo,
-    mcp-stytch-b2b-okr-manager) on the GitHub org
+  - One integration for authentication, authorization, and security, making your app "enterprise-ready
+    and agent-ready" (stytch.com)
+  - Consumer Authentication API (Magic Links, OTP, OAuth, Passwords, TOTP, WebAuthn / Passkeys, Crypto
+    Wallets, Sessions, Users)
+  - B2B Authentication API (Organizations, Members, SSO SAML/OIDC, SCIM, Discovery, RBAC, Magic Links,
+    OTP, OAuth, Sessions)
+  - Connected Apps — turn your product into an OAuth 2.0 / OIDC Authorization Server for third-party integrations,
+    AI agents, and MCP servers
+  - MCP server demos (mcp-stytch-consumer-todo-list, stytch-connected-apps-b2b-demo, mcp-stytch-b2b-okr-manager)
+    on the GitHub org
   - is-agent SDK for detecting AI agents / bots client-side
   - M2M client credentials with short-lived JWTs and secret rotation
   - Device Fingerprinting (DFP), verdict reasons, adaptive MFA, fraud rules
   - Workspace Management API (management.stytch.com) and Terraform provider for config-as-code
-  - SDKs for Node, Python, Go, Ruby, Java/Kotlin, PHP, .NET, Rust, iOS, Android, Browser,
-    Mobile
+  - SDKs for Node, Python, Go, Ruby, Java/Kotlin, PHP, .NET, Rust, iOS, Android, Browser, Mobile
   - SAML Shield open-source library to harden SAML assertion validation
-  - Pay-as-you-go pricing — $0 base, 10K MAUs + AI agents included, 5 SSO/SCIM included
-    ($125/mo additional), 1K M2M tokens, 10K fingerprints free ($0.005 thereafter)
-  - Enterprise tier — 99.99% SLA, HIPAA/BAA, dedicated Slack support, custom volume
-    pricing
+  - Pay-as-you-go pricing — $0 base, 10K MAUs + AI agents included, 5 SSO/SCIM included ($125/mo additional),
+    1K M2M tokens, 10K fingerprints free ($0.005 thereafter)
+  - Enterprise tier — 99.99% SLA, HIPAA/BAA, dedicated Slack support, custom volume pricing
   - Webhooks for auth events
   - Default API rate limit ~100 req/sec/project
   sources:
