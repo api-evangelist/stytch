@@ -1573,16 +1573,16 @@ apis:
     url: https://github.com/stytchauth/stytch-management-go
   - type: SDKs
     url: https://github.com/stytchauth/stytch-management-python
-- aid: stytch:stytch-o-auth-api
+- aid: stytch:stytch-oauth-api
   name: Stytch O Auth API
-  description: The O Auth API from Stytch — 2 operation(s) for o auth.
+  description: The OAuth API from Stytch — 2 operation(s) for oauth.
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
-  - O Auth
+  - OAuth
   properties:
   - type: OpenAPI
-    url: openapi/stytch-o-auth-api-openapi.yml
+    url: openapi/stytch-oauth-api-openapi.yml
   - type: Documentation
     url: https://stytch.com/docs/api
   - type: APIReference
