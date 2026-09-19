@@ -1375,6 +1375,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - Sessions
+  tags_raw:
   - Session
   properties:
   - type: OpenAPI
@@ -1579,6 +1581,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - Authentication
+  tags_raw:
   - OAuth
   properties:
   - type: OpenAPI
