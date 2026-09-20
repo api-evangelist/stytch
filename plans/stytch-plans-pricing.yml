@@ -1,121 +1,41 @@
-specification: API Commons Plans
-specificationVersion: '0.1'
-schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
-provider: Stytch
-providerId: stytch
-created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-22'
-reconciled: true
-tags:
-  - Identity
-  - Authentication
-  - Fraud Prevention
-description: 'Stytch pay-as-you-go: 10K MAU free + 5 SSO/SCIM connections + 1K M2M tokens included.'
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-09-20'
+method: searched
+source: https://stytch.com/pricing
 sources:
-  - https://stytch.com/pricing
+- https://stytch.com/pricing
+provenance:
+  tool: planning/api-economics/harvest_pricing.py
+  run: 20260920T120546
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+published: true
+note: Pay-as-you-go tier with free usage allotments and per-unit overage rates; Enterprise is quote-based.
+plan_count: 3
+currency: USD
 plans:
-  - id: stytch-payg
-    name: Pay As You Go
-    type: usage-based
-    description: $0/month base; 10K MAUs included.
-    entries:
-      - label: Base
-        name: base
-        type: subscription
-        metric: month
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: MAUs included
-        name: mau_free
-        type: quota
-        metric: MAU
-        limit: 10000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: SSO / SCIM connections included
-        name: conns_free
-        type: quota
-        metric: connection
-        limit: 5
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: M2M tokens included
-        name: m2m_free
-        type: quota
-        metric: token
-        limit: 1000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-      - label: Additional connection
-        name: conn_extra
-        type: metered
-        metric: connection
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '125.00'
-        userMultiplied: false
-      - label: Fraud prevention per fingerprint
-        name: fingerprint
-        type: metered
-        metric: fingerprint
-        limit: -1
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.005'
-        userMultiplied: false
-      - label: Fraud prevention free
-        name: fingerprint_free
-        type: quota
-        metric: fingerprint
-        limit: 10000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Full auth suite
-      - name: Volume discounts on MAU
-      - name: Brand customization $99 one-time
-  - id: stytch-enterprise
-    name: Enterprise
-    type: enterprise
-    description: Custom pricing.
-    entries:
-      - label: Annual (custom)
-        name: annual
-        type: subscription
-        metric: year
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: Discounted volume rates
-      - name: 99.99% uptime SLA
-      - name: Dedicated Slack support
-      - name: HIPAA/BAA
-      - name: Advanced fraud protection
-      - name: Migration support
-      - name: Enterprise SLA
+- name: Pay as you go
+  price_text: 'Starting at: $0 / Month'
+  price: 0
+  currency: USD
+  period: month
+  unit: monthly active user
+  included_quota: 'Always free: 10,000 monthly active users and AI agents, Unlimited Organizations, 5
+    SSO or SCIM Connections, 1,000 M2M Tokens, 10,000 fingerprints'
+  overage: $125/connection for additional SSO or SCIM connections; $.005/fingerprint
+- name: Enterprise
+  price_text: 'Starting at: Custom'
+  period: none
+  included_quota: Discounted Rates, Enterprise Support SLA, private Slack, migration support, 99.99% uptime
+    SLA, HIPAA/BAA, advanced fraud protection
+  overage: Volume discounts
+- name: Full email customization and Stytch brand removal (add-on)
+  price_text: $99
+  price: 99
+  currency: USD
+  period: one-time
+  unit: one fixed fee, available for all projects
+rate_limit_statements:
+- Intelligent rate limiting
+- Our pricing does not include any hard caps or pricing cliffs.
