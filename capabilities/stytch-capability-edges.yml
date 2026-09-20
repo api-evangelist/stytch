@@ -1,0 +1,308 @@
+slug: stytch
+provider: Stytch
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 30
+edges:
+- tag: Magic Links
+  spec_file: stytch-magic-links-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/magic_links/email/login_or_create Loginorcreate; POST /v1/magic_links/authenticate
+    Authenticate
+  reason: Passwordless login link issuance and authentication is squarely user authentication — Identity
+    & Access Management.
+- tag: OAuth
+  spec_file: stytch-oauth-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/oauth/authenticate Authenticate; POST /v1/oauth/attach Attach; api_session_v1_SAMLSSOFactor
+  reason: OAuth authentication and identity attachment producing session authentication factors is federated
+    authentication — Identity & Access Management.
+- tag: OTP
+  spec_file: stytch-otp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/otps/sms/send Send; POST /v1/otps/email/login_or_create Loginorcreate; POST /v1/otps/authenticate
+  reason: One-time passcode delivery and verification for login is user authentication / MFA — Identity
+    & Access Management.
+- tag: Organizations
+  spec_file: stytch-organizations-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: DELETE /v1/b2b/organizations/{organization_id}/members/{member_id}; DELETE .../members/{member_id}/totp
+    Deletetotp; DELETE .../members/passwords/{member_password_id}
+  reason: Member create/update/deactivate/reactivate plus removal of MFA phone, TOTP and password credentials
+    is joiner-mover-leaver user and credential administration — Identity & Access Management.
+- tag: Password
+  spec_file: stytch-password-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/passwords/strength_check Strengthcheck; POST /v1/passwords/migrate Migrate; POST
+    /v1/passwords/authenticate
+  reason: Password creation, hash migration, strength policy configuration and authentication are credential
+    management operations — Identity & Access Management.
+- tag: Passwords
+  spec_file: stytch-passwords-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.9
+  evidence: POST /v1/passwords/email/reset/start Resetstart; POST /v1/passwords/existing_password/reset
+  reason: Password reset flows via email, existing password and session are credential lifecycle operations
+    — Identity & Access Management.
+- tag: B2B Magic Links
+  spec_file: stytch-b2b-magic-links-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/b2b/magic_links/email/login_or_signup  Loginorsignup
+  reason: Passwordless email login/signup and invite flows with authentication factors — user authentication,
+    squarely Identity & Access Management.
+- tag: B2B OAuth
+  spec_file: stytch-b2b-oauth-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/b2b/oauth/authenticate  api_b2b_oauth_v1_Authenticate
+  reason: Authenticates users via third-party OAuth providers (Google, Microsoft, GitHub factors) — federated
+    login, Identity & Access Management.
+- tag: B2B OTP
+  spec_file: stytch-b2b-otp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/b2b/otps/sms/send ... POST /v1/b2b/otps/email/authenticate
+  reason: One-time-passcode send and authenticate operations — user authentication / MFA, Identity & Access
+    Management.
+- tag: B2B Passwords
+  spec_file: stytch-b2b-passwords-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/b2b/passwords/email/reset/start ... POST /v1/b2b/passwords/existing_password/reset
+  reason: Password reset, forced reset and credential authentication operations — credential lifecycle
+    within Identity & Access Management.
+- tag: B2B RBAC
+  spec_file: stytch-b2b-rbac-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /v1/b2b/rbac/policy ... api_b2b_rbac_v1_PolicyRolePermission
+  reason: Role/permission policy retrieval and per-organization policy setting — authorization policy
+    administration, part of Identity & Access Management.
+- tag: Consumer RBAC
+  spec_file: stytch-consumer-rbac-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: GET /v1/rbac/policy; schemas api_consumer_rbac_v1_PolicyRolePermission, api_consumer_rbac_v1_PolicyResource,
+    api_consumer_rbac_v1_PolicyRole
+  reason: The single operation returns the RBAC policy of roles, resources and permissions — role-based
+    authorization, i.e. access management. No other reading of role/permission/resource schemas fits.
+- tag: Crypto Wallet
+  spec_file: stytch-crypto-wallet-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/crypto_wallets/authenticate/start  Authenticatestart; schemas api_crypto_wallet_v1_SIWEParams,
+    api_session_v1_AuthenticationFactorType
+  reason: Operations start and complete a Sign-In-With-Ethereum authentication flow producing a session
+    authentication factor. Despite the 'Crypto Wallet' noun this is an authentication method (a login
+    factor), not any digital-asset custody or payments capability, so it realises identity and access
+    management.
+- tag: WebAuthn
+  spec_file: stytch-webauthn-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.85
+  evidence: POST /v1/webauthn/register  api_webauthn_v1_Register; POST /v1/webauthn/authenticate; schema
+    api_webauthn_v1_WebAuthnCredential
+  reason: Passkey/WebAuthn credential registration and authentication is a strong-authentication mechanism,
+    squarely Identity & Access Management. No plausible alternative reading.
+- tag: B2B TOTP
+  spec_file: stytch-b2b-totp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.82
+  evidence: POST /v1/b2b/totp/authenticate  api_b2b_totp_v1_Authenticate
+  reason: TOTP enrolment, authentication and migration — multi-factor authentication, Identity & Access
+    Management.
+- tag: B2B IDP
+  spec_file: stytch-b2b-idp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/b2b/idp/oauth/authorize/start ... api_b2b_idp_v1_b2b_idp_oauth_Authorize
+  reason: OAuth/OIDC authorization endpoints letting the product act as an identity provider — authentication
+    and access token issuance, i.e. Identity & Access Management.
+- tag: Email
+  spec_file: stytch-email-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/b2b/magic_links/email/discovery/send  Send; POST /v1/b2b/otps/email/discovery/authenticate  Authenticate
+  reason: Despite the generic 'Email' tag the operations send magic links / one-time passcodes and authenticate
+    them, returning Member and Organization objects. This is passwordless login, i.e. access management
+    — not marketing email or communications.
+- tag: Members
+  spec_file: stytch-members-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: GET /v1/b2b/organizations/{organization_id}/members/{member_id}/oauth_providers/google; POST
+    .../connected_apps/{connected_app_id}/revoke
+  reason: Operations retrieve a member's linked OAuth identity provider info and revoke connected-app
+    access — identity linkage and access revocation, i.e. IAM, not HR member records.
+- tag: Rbac
+  spec_file: stytch-rbac-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: PUT .../rbac_policy  pwa_rbac_v3_Set; schemas pwa_rbac_v3_Role, pwa_rbac_v3_Permission, pwa_rbac_v3_Resource,
+    pwa_rbac_v3_Scope
+  reason: Get/Set of an RBAC policy composed of Roles, Permissions, Resources and Scopes is plainly authorisation
+    model management, which sits under Identity & Access Management. Not a homograph risk — the schema
+    names name the concept directly.
+- tag: Session
+  spec_file: stytch-session-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/b2b/sessions/authenticate; POST /v1/b2b/sessions/revoke; GET /v1/b2b/sessions/jwks/{project_id}
+  reason: Authenticating, exchanging and revoking user sessions plus JWKS publication is core access management.
+    Schemas such as api_session_v1_AuthenticationFactor confirm the auth reading; no other capability
+    fits.
+- tag: TOTP
+  spec_file: stytch-totp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: POST /v1/totps/authenticate  api_totp_v1_Authenticate; POST /v1/totps/recovery_codes
+  reason: TOTP enrolment, authentication and recovery codes are multi-factor authentication mechanics
+    — Identity & Access Management. Unambiguous given the operation names.
+- tag: B2B Recovery Codes
+  spec_file: stytch-b2b-recovery-codes-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /v1/b2b/recovery_codes/recover ... POST /v1/b2b/recovery_codes/rotate
+  reason: MFA recovery-code issuance, rotation and recovery for members — authentication credential management
+    under IAM.
+- tag: Discovery
+  spec_file: stytch-discovery-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.78
+  evidence: POST /v1/b2b/discovery/intermediate_sessions/exchange  Exchange; POST /v1/b2b/passwords/discovery/email/reset  Reset
+  reason: Operations resolve which organizations a authenticating user belongs to, exchange intermediate
+    sessions into full sessions, and reset passwords — login/session and credential lifecycle mechanics.
+    This is identity and access management, not customer onboarding in a commercial sense.
+- tag: IDP
+  spec_file: stytch-idp-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v1/idp/oauth/authorize/start  Authorizestart; schemas api_idp_v1_ScopeResult, api_connectedapps_v1_ConnectedAppPublic
+  reason: The operations implement the OAuth authorization endpoint — consenting to scopes for a connected
+    app and issuing authorization for a user. Acting as an identity provider / authorization server is
+    federation and access management.
+- tag: Impersonation
+  spec_file: stytch-impersonation-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v1/impersonation/authenticate ... api_impersonation_v1_AuthenticateResponse, with api_session_v1_AuthenticationFactorType
+    schemas
+  reason: Operation authenticates an impersonation token producing a session with authentication factors
+    — an identity/access mechanism (admin acting as a user), so Identity & Access Management is the honest
+    reading rather than any business-domain capability.
+- tag: User
+  spec_file: stytch-user-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.75
+  evidence: POST /v1/users  api_user_v1_Create; DELETE /v1/users/webauthn_registrations/{webauthn_registration_id};
+    DELETE /v1/users/totps/{totp_id}
+  reason: The user record here is an authentication identity — emails, phone numbers, passwords, WebAuthn
+    and TOTP registrations attached to it — so this is identity lifecycle management, not customer master
+    data. Slight discount because 'User' CRUD could also be read as end-user profile data management.
+- tag: B2B Impersonation
+  spec_file: stytch-b2b-impersonation-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.72
+  evidence: POST /v1/b2b/impersonation/authenticate  api_b2b_impersonation_v1_Authenticate
+  reason: Authenticates an impersonation token to assume a member's session — privileged access/session
+    handling within Identity & Access Management.
+- tag: Clients
+  spec_file: stytch-clients-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v1/m2m/clients/{client_id}/secrets/rotate  api_m2m_v1_m2m_clients_secrets_Rotate
+  reason: Rotation lifecycle of client secrets for M2M and connected-app OAuth clients — machine credential
+    stewardship, best read as Identity & Access Management (could also be read as developer credential
+    management).
+- tag: Event Log Streaming
+  spec_file: stytch-event-log-streaming-api-openapi.yml
+  capability_id: BC-4220.20
+  capability_id_l1: BC-4220
+  capability_name: Observability Management
+  confidence: 0.7
+  evidence: POST /pwa/v3/projects/:project_slug/environments/:environment_slug/event_log_streaming; schemas
+    pwa_event_log_streaming_v3_DatadogConfig, pwa_event_log_streaming_v3_GrafanaLokiConfig
+  reason: Operations configure, enable and disable streaming of event logs to observability destinations
+    (Datadog, Grafana Loki). Log shipping to monitoring backends is observability management; 'Event'
+    here is a log record, not a business event or webhook subscription.
+- tag: M2M
+  spec_file: stytch-m2m-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.7
+  evidence: POST /v1/m2m/clients Create ... schema api_m2m_v1_M2MClientWithClientSecret
+  reason: CRUD over machine-to-machine OAuth clients and their secrets is service-identity/credential
+    issuance, i.e. Identity & Access Management. Could alternatively be read as developer credential management,
+    hence moderate confidence.
