@@ -96,6 +96,14 @@ paths:
         source: "# GET /v1/projects/metrics\ncurl --request GET \\\n  --url https://test.stytch.com/v1/projects/metrics \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
 components:
   schemas:
+    api_project_v1_ProjectMetricMetricType:
+      type: string
+      enum:
+      - UNKNOWN
+      - USER_COUNT
+      - ORGANIZATION_COUNT
+      - MEMBER_COUNT
+      - M2M_CLIENT_COUNT
     api_project_v1_ProjectMetric:
       type: object
       properties:
@@ -127,14 +135,6 @@ components:
       - project_id
       - metrics
       - status_code
-    api_project_v1_ProjectMetricMetricType:
-      type: string
-      enum:
-      - UNKNOWN
-      - USER_COUNT
-      - ORGANIZATION_COUNT
-      - MEMBER_COUNT
-      - M2M_CLIENT_COUNT
   securitySchemes:
     basicAuth:
       type: http

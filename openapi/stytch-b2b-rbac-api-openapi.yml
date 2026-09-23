@@ -28,12 +28,12 @@ paths:
         When using the backend SDKs, the RBAC Policy will be cached to allow for local evaluations, eliminating the need for an extra request to Stytch. The policy will be refreshed if an authorization check is requested and the RBAC policy was last updated more than 5 minutes ago.
 
 
-        Resources and Roles can be created and managed within the [RBAC page](https://stytch.com/dashboard/rbac) in the Dashboard.
+        Resources and Roles can be created and managed within the RBAC page in the Dashboard.
 
-        Additionally, [Role assignment](https://stytch.com/docs/b2b/guides/rbac/role-assignment) can be programmatically managed through certain Stytch API endpoints.
+        Additionally, Role assignment can be programmatically managed through certain Stytch API endpoints.
 
 
-        Check out the [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview) to learn more about Stytch''s RBAC permissioning model.'
+        Check out the RBAC overview to learn more about Stytch''s RBAC permissioning model.'
       responses:
         '200':
           description: Successful response
@@ -112,9 +112,7 @@ paths:
       operationId: api_b2b_rbac_v1_b2b_rbac_organizations_GetOrgPolicy
       tags:
       - B2B RBAC
-      description: '
-
-        The organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.
+      description: 'The organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.
 
 
         Get the active RBAC Policy for a specific Organization within your Stytch Project. An Organization RBAC Policy contains the roles that have been defined specifically for that organization, allowing for organization-specific permissioning models.
@@ -129,7 +127,7 @@ paths:
         Organization-specific roles can be created and managed through this API endpoint, providing fine-grained control over permissions at the organization level.
 
 
-        Check out the [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview) to learn more about Stytch''s RBAC permissioning model and organization-scoped policies.'
+        Check out the RBAC overview to learn more about Stytch''s RBAC permissioning model and organization-scoped policies.'
       parameters:
       - name: organization_id
         in: path
@@ -213,9 +211,7 @@ paths:
       operationId: api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicy
       tags:
       - B2B RBAC
-      description: '
-
-        The organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.
+      description: 'The organization RBAC policy feature is currently in private beta and must be enabled for your Workspace. Please contact Stytch support at support@stytch.com to request access.
 
 
         Set the RBAC Policy for a specific Organization within your Stytch Project. An Organization RBAC Policy allows you to define roles that are specific to that organization, providing fine-grained control over permissions at the organization level.
@@ -245,7 +241,7 @@ paths:
         - Different organizational hierarchies requiring unique role definitions
 
 
-        Check out the [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview) to learn more about Stytch''s RBAC permissioning model and organization-scoped policies.'
+        Check out the RBAC overview to learn more about Stytch''s RBAC permissioning model and organization-scoped policies.'
       requestBody:
         required: true
         content:
@@ -332,20 +328,6 @@ paths:
         source: "# PUT /v1/b2b/rbac/organizations/{organization_id}\ncurl --request PUT \\\n  --url https://test.stytch.com/v1/b2b/rbac/organizations/${organizationId} \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"org_policy\": TODO_MISSING_EXAMPLE_VALUE\n  }'"
 components:
   schemas:
-    api_b2b_rbac_v1_PolicyScopePermission:
-      type: object
-      properties:
-        resource_id:
-          type: string
-          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
-        actions:
-          type: array
-          items:
-            type: string
-          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
-      required:
-      - resource_id
-      - actions
     api_b2b_rbac_v1_OrgPolicy:
       type: object
       properties:
@@ -356,57 +338,6 @@ components:
           description: An array of [Role objects](https://stytch.com/docs/b2b/api/rbac-role-object).
       required:
       - roles
-    api_b2b_rbac_v1_PolicyScope:
-      type: object
-      properties:
-        scope:
-          type: string
-          description: The unique identifier of the RBAC Scope, provided by the developer and intended to be human-readable.
-        description:
-          type: string
-          description: The description of the RBAC Scope.
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyScopePermission'
-          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
-      required:
-      - scope
-      - description
-      - permissions
-    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        org_policy:
-          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
-          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - org_policy
-      - status_code
-    api_b2b_rbac_v1_PolicyResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-        policy:
-          $ref: '#/components/schemas/api_b2b_rbac_v1_Policy'
-          description: The RBAC Policy document that contains all defined Roles and Resources – which are managed in the [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
-      required:
-      - request_id
-      - status_code
     api_b2b_rbac_v1_PolicyRolePermission:
       type: object
       properties:
@@ -421,33 +352,20 @@ components:
       required:
       - resource_id
       - actions
-    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyRequest:
+    api_b2b_rbac_v1_PolicyScopePermission:
       type: object
       properties:
-        org_policy:
-          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
-          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
-      description: Request type
-      required:
-      - org_policy
-    api_b2b_rbac_v1_PolicyRole:
-      type: object
-      properties:
-        role_id:
+        resource_id:
           type: string
-          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
-        description:
-          type: string
-          description: The description of the RBAC Role.
-        permissions:
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s. These include:\n\n  * `stytch.organization`\n  * `stytch.member`\n  * `stytch.sso`\n  * `stytch.self`\n\n  Check out the [guide on Stytch default Resources](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        actions:
           type: array
           items:
-            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRolePermission'
-          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
+            type: string
+          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
       required:
-      - role_id
-      - description
-      - permissions
+      - resource_id
+      - actions
     api_b2b_rbac_v1_Policy:
       type: object
       properties:
@@ -470,7 +388,85 @@ components:
       - roles
       - resources
       - scopes
+    api_b2b_rbac_v1_PolicyResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        policy:
+          $ref: '#/components/schemas/api_b2b_rbac_v1_Policy'
+          description: The RBAC Policy document that contains all defined Roles and Resources – which are managed in the [Dashboard](https://stytch.com/dashboard/rbac). Read more about these entities and how they work in our [RBAC overview](https://stytch.com/docs/b2b/guides/rbac/overview).
+      required:
+      - request_id
+      - status_code
+    api_b2b_rbac_v1_PolicyScope:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: The unique identifier of the RBAC Scope, provided by the developer and intended to be human-readable.
+        description:
+          type: string
+          description: The description of the RBAC Scope.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyScopePermission'
+          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
+      required:
+      - scope
+      - description
+      - permissions
+    api_b2b_rbac_v1_PolicyRole:
+      type: object
+      properties:
+        role_id:
+          type: string
+          description: "The unique identifier of the RBAC Role, provided by the developer and intended to be human-readable.\n\n  Reserved `role_id`s that are predefined by Stytch include:\n\n  * `stytch_member`\n  * `stytch_admin`\n\n  Check out the [guide on Stytch default Roles](https://stytch.com/docs/b2b/guides/rbac/stytch-default) for a more detailed explanation.\n\n  "
+        description:
+          type: string
+          description: The description of the RBAC Role.
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_b2b_rbac_v1_PolicyRolePermission'
+          description: A list of permissions that link a [Resource](https://stytch.com/docs/b2b/api/rbac-resource-object) to a list of actions.
+      required:
+      - role_id
+      - description
+      - permissions
     api_b2b_rbac_v1_b2b_rbac_organizations_GetOrgPolicyResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        org_policy:
+          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
+          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - org_policy
+      - status_code
+    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyRequest:
+      type: object
+      properties:
+        org_policy:
+          $ref: '#/components/schemas/api_b2b_rbac_v1_OrgPolicy'
+          description: The organization-specific RBAC Policy that contains roles defined for this organization. Organization policies supplement the project-level RBAC policy with additional roles that are specific to the organization.
+      description: Request type
+      required:
+      - org_policy
+    api_b2b_rbac_v1_b2b_rbac_organizations_SetOrgPolicyResponse:
       type: object
       properties:
         request_id:

@@ -289,17 +289,19 @@ components:
       - request_id
       - project
       - status_code
-    pwa_application_v3_CreateRequest:
+    pwa_application_v3_Project:
       type: object
       properties:
+        project_slug:
+          type: string
         name:
           type: string
         vertical:
           $ref: '#/components/schemas/api_attribute_v1_Vertical'
-        project_slug:
+        created_at:
           type: string
-      description: Request type
       required:
+      - project_slug
       - name
     pwa_application_v3_CreateResponse:
       type: object
@@ -316,23 +318,26 @@ components:
       - request_id
       - project
       - status_code
-    api_attribute_v1_Vertical:
-      type: string
-      enum:
-      - ALL
-      - CONSUMER
-      - B2B
-    pwa_application_v3_DeleteResponse:
+    pwa_application_v3_UpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      description: Request type
+    pwa_application_v3_GetResponse:
       type: object
       properties:
         request_id:
           type: string
+        project:
+          $ref: '#/components/schemas/pwa_application_v3_Project'
         status_code:
           type: integer
           format: int32
       description: Response type
       required:
       - request_id
+      - project
       - status_code
     pwa_application_v3_GetAllResponse:
       type: object
@@ -351,41 +356,36 @@ components:
       - request_id
       - projects
       - status_code
-    pwa_application_v3_UpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-      description: Request type
-    pwa_application_v3_Project:
-      type: object
-      properties:
-        project_slug:
-          type: string
-        name:
-          type: string
-        vertical:
-          $ref: '#/components/schemas/api_attribute_v1_Vertical'
-        created_at:
-          type: string
-      required:
-      - project_slug
-      - name
-    pwa_application_v3_GetResponse:
+    pwa_application_v3_DeleteResponse:
       type: object
       properties:
         request_id:
           type: string
-        project:
-          $ref: '#/components/schemas/pwa_application_v3_Project'
         status_code:
           type: integer
           format: int32
       description: Response type
       required:
       - request_id
-      - project
       - status_code
+    pwa_application_v3_CreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        vertical:
+          $ref: '#/components/schemas/api_attribute_v1_Vertical'
+        project_slug:
+          type: string
+      description: Request type
+      required:
+      - name
+    api_attribute_v1_Vertical:
+      type: string
+      enum:
+      - ALL
+      - CONSUMER
+      - B2B
   securitySchemes:
     basicAuth:
       type: http

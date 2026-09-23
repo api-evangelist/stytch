@@ -22,7 +22,40 @@ paths:
       operationId: api_idp_v1_idp_oauth_AuthorizeStart
       tags:
       - IDP
-      description: "Initiates a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request. \nThis endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns\nrelevant information for rendering an OAuth Consent Screen.\n\nThis endpoint returns:\n- A public representation of the Connected App requesting authorization\n- Whether _explicit_ user consent must be granted before proceeding with the authorization\n- A list of scopes the user has the ability to grant the Connected App\n\nUse this response to prompt the user for consent (if necessary) before calling the [Submit OAuth Authorization](https://stytch.com/docs/api/connected-apps-oauth-authorize) endpoint.\n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow."
+      description: 'Initiates a request for authorization of a Connected App to access a User''s account.
+
+
+        Call this endpoint using the query parameters from an OAuth Authorization request.
+
+        This endpoint validates various fields (`scope`, `client_id`, `redirect_uri`, `prompt`, etc...) are correct and returns
+
+        relevant information for rendering an OAuth Consent Screen.
+
+
+        This endpoint returns:
+
+        - A public representation of the Connected App requesting authorization
+
+        - Whether _explicit_ user consent must be granted before proceeding with the authorization
+
+        - A list of scopes the user has the ability to grant the Connected App
+
+
+        Use this response to prompt the user for consent (if necessary) before calling the Submit OAuth Authorization endpoint.
+
+
+        Exactly one of the following must be provided to identify the user granting authorization:
+
+        - `user_id`
+
+        - `session_token`
+
+        - `session_jwt`
+
+
+        If a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user''s session for tracking purposes.
+
+        One of these fields must be used if the Connected App intends to complete the Exchange Access Token flow.'
       requestBody:
         required: true
         content:
@@ -105,7 +138,35 @@ paths:
       operationId: api_idp_v1_idp_oauth_Authorize
       tags:
       - IDP
-      description: "Completes a request for authorization of a Connected App to access a User's account.\n\nCall this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the\n[Preflight Check](https://stytch.com/docs/api/connected-apps-oauth-authorize-start) API.\nNote that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.\n\nIf the authorization was successful, the `redirect_uri` will contain a valid `authorization_code` embedded as a query parameter.\nIf the authorization was unsuccessful, the `redirect_uri` will contain an OAuth2.1 `error_code`.\nIn both cases, redirect the user to the location for the response to be consumed by the Connected App. \n\nExactly one of the following must be provided to identify the user granting authorization:\n- `user_id`\n- `session_token`\n- `session_jwt`\n\nIf a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user's session for tracking purposes.\nOne of these fields must be used if the Connected App intends to complete the [Exchange Access Token](https://stytch.com/docs/api/connected-app-access-token-exchange) flow."
+      description: 'Completes a request for authorization of a Connected App to access a User''s account.
+
+
+        Call this endpoint using the query parameters from an OAuth Authorization request, after previously validating those parameters using the
+
+        Preflight Check API.
+
+        Note that this endpoint takes in a few additional parameters the preflight check does not- `state`, `nonce`, and `code_challenge`.
+
+
+        If the authorization was successful, the `redirect_uri` will contain a valid `authorization_code` embedded as a query parameter.
+
+        If the authorization was unsuccessful, the `redirect_uri` will contain an OAuth2.1 `error_code`.
+
+        In both cases, redirect the user to the location for the response to be consumed by the Connected App.
+
+
+        Exactly one of the following must be provided to identify the user granting authorization:
+
+        - `user_id`
+
+        - `session_token`
+
+        - `session_jwt`
+
+
+        If a `session_token` or `session_jwt` is passed, the OAuth Authorization will be linked to the user''s session for tracking purposes.
+
+        One of these fields must be used if the Connected App intends to complete the Exchange Access Token flow.'
       requestBody:
         required: true
         content:
@@ -184,58 +245,6 @@ paths:
         source: "# POST /v1/idp/oauth/authorize\ncurl --request POST \\\n  --url https://test.stytch.com/v1/idp/oauth/authorize \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"consent_granted\": true,\n    \"scopes\": [\"openid\"],\n    \"client_id\": \"${exampleConnectedAppClientID}\",\n    \"redirect_uri\": \"https://app.example/oauth/callback\",\n    \"response_type\": \"code\"\n  }'"
 components:
   schemas:
-    api_user_v1_BiometricRegistration:
-      type: object
-      properties:
-        biometric_registration_id:
-          type: string
-          description: The unique ID for a biometric registration.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - biometric_registration_id
-      - verified
-    api_user_v1_OAuthProvider:
-      type: object
-      properties:
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
-        provider_subject:
-          type: string
-          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
-        profile_picture_url:
-          type: string
-          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
-        locale:
-          type: string
-          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
-        oauth_user_registration_id:
-          type: string
-          description: The unique ID for an OAuth registration.
-      required:
-      - provider_type
-      - provider_subject
-      - profile_picture_url
-      - locale
-      - oauth_user_registration_id
-    api_user_v1_Email:
-      type: object
-      properties:
-        email_id:
-          type: string
-          description: The unique ID of a specific email address.
-        email:
-          type: string
-          description: The email address.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - email_id
-      - email
-      - verified
     api_user_v1_User:
       type: object
       properties:
@@ -326,18 +335,6 @@ components:
       - biometric_registrations
       - is_locked
       - roles
-    api_user_v1_Name:
-      type: object
-      properties:
-        first_name:
-          type: string
-          description: The first name of the user.
-        middle_name:
-          type: string
-          description: The middle name(s) of the user.
-        last_name:
-          type: string
-          description: The last name of the user.
     api_idp_v1_idp_oauth_AuthorizeStartRequest:
       type: object
       properties:
@@ -438,115 +435,6 @@ components:
       - verified
       - authenticator_type
       - name
-    api_user_v1_CryptoWallet:
-      type: object
-      properties:
-        crypto_wallet_id:
-          type: string
-          description: The unique ID for a crypto wallet
-        crypto_wallet_address:
-          type: string
-          description: The actual blockchain address of the User's crypto wallet.
-        crypto_wallet_type:
-          type: string
-          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - crypto_wallet_id
-      - crypto_wallet_address
-      - crypto_wallet_type
-      - verified
-    api_user_v1_PhoneNumber:
-      type: object
-      properties:
-        phone_id:
-          type: string
-          description: The unique ID for the phone number.
-        phone_number:
-          type: string
-          description: The phone number.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - phone_id
-      - phone_number
-      - verified
-    api_user_v1_Password:
-      type: object
-      properties:
-        password_id:
-          type: string
-          description: The unique ID of a specific password
-        requires_reset:
-          type: boolean
-          description: Indicates whether this password requires a password reset
-      required:
-      - password_id
-      - requires_reset
-    api_idp_v1_idp_oauth_AuthorizeStartResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        user_id:
-          type: string
-          description: The unique ID of the affected User.
-        user:
-          $ref: '#/components/schemas/api_user_v1_User'
-          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
-        client:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppPublic'
-        consent_required:
-          type: boolean
-          description: Whether the user must provide explicit consent for the authorization request.
-        scope_results:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_idp_v1_ScopeResult'
-          description: Details about each requested scope.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - user_id
-      - user
-      - client
-      - consent_required
-      - scope_results
-      - status_code
-    api_user_v1_TOTP:
-      type: object
-      properties:
-        totp_id:
-          type: string
-          description: The unique ID for a TOTP instance.
-        verified:
-          type: boolean
-          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
-      required:
-      - totp_id
-      - verified
-    api_idp_v1_ScopeResult:
-      type: object
-      properties:
-        scope:
-          type: string
-          description: The name of the scope.
-        description:
-          type: string
-          description: A human-readable description of the scope, taken from the RBAC Policy.
-        is_grantable:
-          type: boolean
-          description: Indicates whether the scope can be granted. Users can only grant scopes if they have the required permissions.
-      required:
-      - scope
-      - description
-      - is_grantable
     api_idp_v1_idp_oauth_AuthorizeRequest:
       type: object
       properties:
@@ -599,6 +487,179 @@ components:
       - client_id
       - redirect_uri
       - response_type
+    api_user_v1_Email:
+      type: object
+      properties:
+        email_id:
+          type: string
+          description: The unique ID of a specific email address.
+        email:
+          type: string
+          description: The email address.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - email_id
+      - email
+      - verified
+    api_idp_v1_idp_oauth_AuthorizeStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        user_id:
+          type: string
+          description: The unique ID of the affected User.
+        user:
+          $ref: '#/components/schemas/api_user_v1_User'
+          description: The `user` object affected by this API call. See the [Get user endpoint](https://stytch.com/docs/api/get-user) for complete response field details.
+        client:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppPublic'
+        consent_required:
+          type: boolean
+          description: Whether the user must provide explicit consent for the authorization request.
+        scope_results:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_idp_v1_ScopeResult'
+          description: Details about each requested scope.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - user_id
+      - user
+      - client
+      - consent_required
+      - scope_results
+      - status_code
+    api_user_v1_BiometricRegistration:
+      type: object
+      properties:
+        biometric_registration_id:
+          type: string
+          description: The unique ID for a biometric registration.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - biometric_registration_id
+      - verified
+    api_user_v1_CryptoWallet:
+      type: object
+      properties:
+        crypto_wallet_id:
+          type: string
+          description: The unique ID for a crypto wallet
+        crypto_wallet_address:
+          type: string
+          description: The actual blockchain address of the User's crypto wallet.
+        crypto_wallet_type:
+          type: string
+          description: The blockchain that the User's crypto wallet operates on, e.g. Ethereum, Solana, etc.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - crypto_wallet_id
+      - crypto_wallet_address
+      - crypto_wallet_type
+      - verified
+    api_idp_v1_ScopeResult:
+      type: object
+      properties:
+        scope:
+          type: string
+          description: The name of the scope.
+        description:
+          type: string
+          description: A human-readable description of the scope, taken from the RBAC Policy.
+        is_grantable:
+          type: boolean
+          description: Indicates whether the scope can be granted. Users can only grant scopes if they have the required permissions.
+      required:
+      - scope
+      - description
+      - is_grantable
+    api_user_v1_TOTP:
+      type: object
+      properties:
+        totp_id:
+          type: string
+          description: The unique ID for a TOTP instance.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - totp_id
+      - verified
+    api_user_v1_Password:
+      type: object
+      properties:
+        password_id:
+          type: string
+          description: The unique ID of a specific password
+        requires_reset:
+          type: boolean
+          description: Indicates whether this password requires a password reset
+      required:
+      - password_id
+      - requires_reset
+    api_user_v1_Name:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The first name of the user.
+        middle_name:
+          type: string
+          description: The middle name(s) of the user.
+        last_name:
+          type: string
+          description: The last name of the user.
+    api_user_v1_PhoneNumber:
+      type: object
+      properties:
+        phone_id:
+          type: string
+          description: The unique ID for the phone number.
+        phone_number:
+          type: string
+          description: The phone number.
+        verified:
+          type: boolean
+          description: The verified boolean denotes whether or not this send method, e.g. phone number, email address, etc., has been successfully authenticated by the User.
+      required:
+      - phone_id
+      - phone_number
+      - verified
+    api_user_v1_OAuthProvider:
+      type: object
+      properties:
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Facebook, GitHub etc.
+        provider_subject:
+          type: string
+          description: The unique identifier for the User within a given OAuth provider. Also commonly called the "sub" or "Subject field" in OAuth protocols.
+        profile_picture_url:
+          type: string
+          description: If available, the `profile_picture_url` is a url of the User's profile picture set in OAuth identity the provider that the User has authenticated with, e.g. Facebook profile picture.
+        locale:
+          type: string
+          description: If available, the `locale` is the User's locale set in the OAuth identity provider that the user has authenticated with.
+        oauth_user_registration_id:
+          type: string
+          description: The unique ID for an OAuth registration.
+      required:
+      - provider_type
+      - provider_subject
+      - profile_picture_url
+      - locale
+      - oauth_user_registration_id
   securitySchemes:
     basicAuth:
       type: http

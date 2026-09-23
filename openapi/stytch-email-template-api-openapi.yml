@@ -481,6 +481,46 @@ components:
       enum:
       - LEFT
       - CENTER
+    pwa_email_template_v3_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        email_template:
+          $ref: '#/components/schemas/pwa_email_template_v3_EmailTemplate'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - email_template
+      - status_code
+    pwa_email_template_v3_SetDefaultRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+      description: Request type
+      required:
+      - template_id
+    pwa_email_template_v3_GetAllResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        email_templates:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_email_template_v3_EmailTemplate'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - email_templates
+      - status_code
     pwa_email_template_v3_CustomHTMLCustomization:
       type: object
       properties:
@@ -492,6 +532,58 @@ components:
           type: string
         subject:
           type: string
+    pwa_email_template_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_email_template_v3_TemplateType:
+      type: string
+      enum:
+      - LOGIN
+      - SIGNUP
+      - INVITE
+      - RESET_PASSWORD
+      - ONE_TIME_PASSCODE
+      - ONE_TIME_PASSCODE_SIGNUP
+      - VERIFY_EMAIL_PASSWORD_RESET
+      - UNLOCK
+      - PREBUILT
+    pwa_email_template_v3_SenderInformation:
+      type: object
+      properties:
+        from_local_part:
+          type: string
+        from_domain:
+          type: string
+        from_name:
+          type: string
+        reply_to_local_part:
+          type: string
+        reply_to_name:
+          type: string
+    pwa_email_template_v3_EmailTemplate:
+      type: object
+      properties:
+        template_id:
+          type: string
+        name:
+          type: string
+        sender_information:
+          $ref: '#/components/schemas/pwa_email_template_v3_SenderInformation'
+        prebuilt_customization:
+          $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
+        custom_html_customization:
+          $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
+      required:
+      - template_id
     pwa_email_template_v3_CreateResponse:
       type: object
       properties:
@@ -507,54 +599,6 @@ components:
       - request_id
       - email_template
       - status_code
-    pwa_email_template_v3_FontFamily:
-      type: string
-      enum:
-      - ARIAL
-      - BRUSH_SCRIPT_MT
-      - COURIER_NEW
-      - GEORGIA
-      - HELVETICA
-      - TAHOMA
-      - TIMES_NEW_ROMAN
-      - TREBUCHET_MS
-      - VERDANA
-    pwa_email_template_v3_SetDefaultResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_email_template_v3_SetDefaultRequest:
-      type: object
-      properties:
-        template_id:
-          type: string
-      description: Request type
-      required:
-      - template_id
-    pwa_email_template_v3_CreateRequest:
-      type: object
-      properties:
-        template_id:
-          type: string
-        name:
-          type: string
-        sender_information:
-          $ref: '#/components/schemas/pwa_email_template_v3_SenderInformation'
-        prebuilt_customization:
-          $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
-        custom_html_customization:
-          $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
-      description: Request type
-      required:
-      - template_id
     pwa_email_template_v3_PrebuiltCustomization:
       type: object
       properties:
@@ -593,39 +637,7 @@ components:
         custom_html_customization:
           $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
       description: Request type
-    pwa_email_template_v3_GetAllResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        email_templates:
-          type: array
-          items:
-            $ref: '#/components/schemas/pwa_email_template_v3_EmailTemplate'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - email_templates
-      - status_code
-    pwa_email_template_v3_GetDefaultResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        template_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - template_id
-      - status_code
-    pwa_email_template_v3_DeleteResponse:
+    pwa_email_template_v3_SetDefaultResponse:
       type: object
       properties:
         request_id:
@@ -652,47 +664,34 @@ components:
       - request_id
       - email_template
       - status_code
-    pwa_email_template_v3_TemplateType:
+    pwa_email_template_v3_FontFamily:
       type: string
       enum:
-      - LOGIN
-      - SIGNUP
-      - INVITE
-      - RESET_PASSWORD
-      - ONE_TIME_PASSCODE
-      - ONE_TIME_PASSCODE_SIGNUP
-      - VERIFY_EMAIL_PASSWORD_RESET
-      - UNLOCK
-      - PREBUILT
-    pwa_email_template_v3_SenderInformation:
-      type: object
-      properties:
-        from_local_part:
-          type: string
-        from_domain:
-          type: string
-        from_name:
-          type: string
-        reply_to_local_part:
-          type: string
-        reply_to_name:
-          type: string
-    pwa_email_template_v3_UpdateResponse:
+      - ARIAL
+      - BRUSH_SCRIPT_MT
+      - COURIER_NEW
+      - GEORGIA
+      - HELVETICA
+      - TAHOMA
+      - TIMES_NEW_ROMAN
+      - TREBUCHET_MS
+      - VERDANA
+    pwa_email_template_v3_GetDefaultResponse:
       type: object
       properties:
         request_id:
           type: string
-        email_template:
-          $ref: '#/components/schemas/pwa_email_template_v3_EmailTemplate'
+        template_id:
+          type: string
         status_code:
           type: integer
           format: int32
       description: Response type
       required:
       - request_id
-      - email_template
+      - template_id
       - status_code
-    pwa_email_template_v3_EmailTemplate:
+    pwa_email_template_v3_CreateRequest:
       type: object
       properties:
         template_id:
@@ -705,6 +704,7 @@ components:
           $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
         custom_html_customization:
           $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
+      description: Request type
       required:
       - template_id
   securitySchemes:

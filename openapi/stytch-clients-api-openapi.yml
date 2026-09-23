@@ -302,7 +302,7 @@ paths:
       operationId: api_m2m_v1_m2m_clients_secrets_RotateStart
       tags:
       - Clients
-      description: 'Initiate the rotation of an M2M client secret. After this endpoint is called, both the client''s `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the [Rotate Secret Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret)[Rotate Secret Endpoint](https://stytch.com/docs/api/m2m-rotate-secret) to complete the flow.Secret rotation can be cancelled using the [Rotate Cancel Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-cancel)[Rotate Cancel Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-cancel).
+      description: 'Initiate the rotation of an M2M client secret. After this endpoint is called, both the client''s `client_secret` and `next_client_secret` will be valid. To complete the secret rotation flow, update all usages of `client_secret` to `next_client_secret` and call the Rotate Secret EndpointRotate Secret Endpoint to complete the flow.Secret rotation can be cancelled using the Rotate Cancel EndpointRotate Cancel Endpoint.
 
 
         **Important:** This is the only time you will be able to view the generated `next_client_secret` in the API response. Stytch stores a hash of the `next_client_secret` and cannot recover the value if lost. Be sure to persist the `next_client_secret` in a secure location. If the `next_client_secret` is lost, you will need to trigger a secret rotation flow to receive another one.'
@@ -396,7 +396,7 @@ paths:
       operationId: api_m2m_v1_m2m_clients_secrets_RotateCancel
       tags:
       - Clients
-      description: 'Cancel the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).
+      description: 'Cancel the rotation of an M2M client secret started with the Start Secret Rotation Endpoint Start Secret Rotation Endpoint.
 
         After this endpoint is called, the client''s `next_client_secret` is discarded and only the original `client_secret` will be valid.'
       requestBody:
@@ -489,7 +489,7 @@ paths:
       operationId: api_m2m_v1_m2m_clients_secrets_Rotate
       tags:
       - Clients
-      description: 'Complete the rotation of an M2M client secret started with the [Start Secret Rotation Endpoint](https://stytch.com/docs/b2b/api/m2m-rotate-secret-start) [Start Secret Rotation Endpoint](https://stytch.com/docs/api/m2m-rotate-secret-start).
+      description: 'Complete the rotation of an M2M client secret started with the Start Secret Rotation Endpoint Start Secret Rotation Endpoint.
 
         After this endpoint is called, the client''s `next_client_secret` becomes its `client_secret` and the previous `client_secret` will no longer be valid.'
       requestBody:
@@ -578,14 +578,6 @@ paths:
         source: "# POST /v1/m2m/clients/{client_id}/secrets/rotate\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients/${exampleM2MClientID}/secrets/rotate \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
 components:
   schemas:
-    api_m2m_v1_m2m_clients_secrets_RotateRequest:
-      type: object
-      properties: {}
-      description: Request type
-    api_m2m_v1_m2m_clients_secrets_RotateStartRequest:
-      type: object
-      properties: {}
-      description: Request type
     api_connectedapps_v1_ConnectedAppWithNextClientSecret:
       type: object
       properties:
@@ -653,6 +645,31 @@ components:
       - access_token_template_content
       - post_logout_redirect_urls
       - bypass_consent_for_offline_access
+    api_m2m_v1_m2m_clients_secrets_RotateRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_m2m_clients_secrets_RotateStartRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
     api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelRequest:
       type: object
       properties: {}
@@ -665,6 +682,119 @@ components:
           description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         m2m_client:
           $ref: '#/components/schemas/api_m2m_v1_M2MClientWithNextClientSecret'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppWithNextClientSecret'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_m2m_clients_secrets_RotateCancelResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - m2m_client
+      - status_code
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        connected_app:
+          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
+          description: The Connected App affected by this operation.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - connected_app
+      - status_code
+    api_m2m_v1_M2MClient:
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: The ID of the client.
+        client_name:
+          type: string
+          description: A human-readable name for the client.
+        client_description:
+          type: string
+          description: A human-readable description for the client.
+        status:
+          type: string
+          description: The status of the client - either `active` or `inactive`.
+        scopes:
+          type: array
+          items:
+            type: string
+          description: An array of scopes assigned to the client.
+        client_secret_last_four:
+          type: string
+          description: The last four characters of the client secret.
+        trusted_metadata:
+          type: object
+          additionalProperties: true
+          description: An arbitrary JSON object for storing application-specific data.
+        next_client_secret_last_four:
+          type: string
+          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
+      required:
+      - client_id
+      - client_name
+      - client_description
+      - status
+      - scopes
+      - client_secret_last_four
+    api_m2m_v1_m2m_clients_secrets_RotateCancelRequest:
+      type: object
+      properties: {}
+      description: Request type
+    api_m2m_v1_m2m_clients_secrets_RotateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        m2m_client:
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
           description: The M2M Client affected by this operation.
         status_code:
           type: integer
@@ -740,64 +870,10 @@ components:
       - post_logout_redirect_urls
       - bypass_consent_for_offline_access
       - creation_method
-    api_connectedapps_v1_connected_apps_clients_secrets_RotateRequest:
+    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartRequest:
       type: object
       properties: {}
       description: Request type
-    api_m2m_v1_M2MClient:
-      type: object
-      properties:
-        client_id:
-          type: string
-          description: The ID of the client.
-        client_name:
-          type: string
-          description: A human-readable name for the client.
-        client_description:
-          type: string
-          description: A human-readable description for the client.
-        status:
-          type: string
-          description: The status of the client - either `active` or `inactive`.
-        scopes:
-          type: array
-          items:
-            type: string
-          description: An array of scopes assigned to the client.
-        client_secret_last_four:
-          type: string
-          description: The last four characters of the client secret.
-        trusted_metadata:
-          type: object
-          additionalProperties: true
-          description: An arbitrary JSON object for storing application-specific data.
-        next_client_secret_last_four:
-          type: string
-          description: The last four characters of the `next_client_secret`. Null if no `next_client_secret` exists.
-      required:
-      - client_id
-      - client_name
-      - client_description
-      - status
-      - scopes
-      - client_secret_last_four
-    api_m2m_v1_m2m_clients_secrets_RotateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        m2m_client:
-          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
-          description: The M2M Client affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - m2m_client
-      - status_code
     api_m2m_v1_M2MClientWithNextClientSecret:
       type: object
       properties:
@@ -839,82 +915,6 @@ components:
       - status
       - scopes
       - client_secret_last_four
-    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartRequest:
-      type: object
-      properties: {}
-      description: Request type
-    api_connectedapps_v1_connected_apps_clients_secrets_RotateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_app:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
-          description: The Connected App affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_app
-      - status_code
-    api_connectedapps_v1_connected_apps_clients_secrets_RotateStartResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_app:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedAppWithNextClientSecret'
-          description: The Connected App affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_app
-      - status_code
-    api_m2m_v1_m2m_clients_secrets_RotateCancelResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        m2m_client:
-          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
-          description: The M2M Client affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - m2m_client
-      - status_code
-    api_connectedapps_v1_connected_apps_clients_secrets_RotateCancelResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_app:
-          $ref: '#/components/schemas/api_connectedapps_v1_ConnectedApp'
-          description: The Connected App affected by this operation.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - connected_app
-      - status_code
-    api_m2m_v1_m2m_clients_secrets_RotateCancelRequest:
-      type: object
-      properties: {}
-      description: Request type
   securitySchemes:
     basicAuth:
       type: http

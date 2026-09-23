@@ -111,7 +111,7 @@ paths:
 
         **Important:** Deactivating an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.
 
-        To protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).'
+        To protect more-sensitive routes, pass a lower `max_token_age` value whenauthenticating the tokenauthenticating the token.'
       requestBody:
         required: true
         content:
@@ -206,7 +206,7 @@ paths:
 
         **Important:** Deleting an M2M Client will not invalidate any existing JWTs issued to the client, only prevent it from receiving new ones.
 
-        To protect more-sensitive routes, pass a lower `max_token_age` value when[authenticating the token](https://stytch.com/docs/b2b/api/authenticate-m2m-token)[authenticating the token](https://stytch.com/docs/api/authenticate-m2m-token).'
+        To protect more-sensitive routes, pass a lower `max_token_age` value whenauthenticating the tokenauthenticating the token.'
       parameters:
       - name: client_id
         in: path
@@ -465,6 +465,11 @@ paths:
         source: "# POST /v1/m2m/clients\ncurl --request POST \\\n  --url https://test.stytch.com/v1/m2m/clients \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -d '{\n    \"scopes\": [\"read:users\", \"write:users\"],\n    \"client_name\": \"My Sample Client\",\n    \"client_description\": \"My sample client for testing out M2M authentication.\"\n  }'"
 components:
   schemas:
+    api_m2m_v1_M2MSearchQueryOperator:
+      type: string
+      enum:
+      - OR
+      - AND
     api_m2m_v1_M2MClientWithClientSecret:
       type: object
       properties:
@@ -563,11 +568,6 @@ components:
       - request_id
       - client_id
       - status_code
-    api_m2m_v1_M2MSearchQueryOperator:
-      type: string
-      enum:
-      - OR
-      - AND
     api_m2m_v1_m2m_clients_CreateRequest:
       type: object
       properties:
@@ -595,6 +595,23 @@ components:
       description: Request type
       required:
       - scopes
+    api_m2m_v1_UpdateRequestStatus:
+      type: string
+      enum:
+      - active
+      - inactive
+    api_m2m_v1_ResultsMetadata:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - total
     api_m2m_v1_m2m_clients_UpdateRequest:
       type: object
       properties:
@@ -617,27 +634,15 @@ components:
           additionalProperties: true
           description: The `trusted_metadata` field contains an arbitrary JSON object of application-specific data. See the [Metadata](https://stytch.com/docs/api/metadata) reference for complete field behavior details.
       description: Request type
-    api_m2m_v1_ResultsMetadata:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
-        next_cursor:
-          type: string
-          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
-      required:
-      - total
-    api_m2m_v1_m2m_clients_GetResponse:
+    api_m2m_v1_m2m_clients_CreateResponse:
       type: object
       properties:
         request_id:
           type: string
           description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         m2m_client:
-          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
-          description: The M2M Client affected by this operation.
+          $ref: '#/components/schemas/api_m2m_v1_M2MClientWithClientSecret'
+          description: The M2M Client created by this API call.
         status_code:
           type: integer
           format: int32
@@ -646,26 +651,6 @@ components:
       - request_id
       - m2m_client
       - status_code
-    api_m2m_v1_UpdateRequestStatus:
-      type: string
-      enum:
-      - active
-      - inactive
-    api_m2m_v1_m2m_clients_SearchRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-        limit:
-          type: integer
-          format: int32
-          minimum: 0
-          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
-        query:
-          $ref: '#/components/schemas/api_m2m_v1_M2MSearchQuery'
-          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
-      description: Request type
     api_m2m_v1_M2MClient:
       type: object
       properties:
@@ -703,15 +688,15 @@ components:
       - status
       - scopes
       - client_secret_last_four
-    api_m2m_v1_m2m_clients_CreateResponse:
+    api_m2m_v1_m2m_clients_GetResponse:
       type: object
       properties:
         request_id:
           type: string
           description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
         m2m_client:
-          $ref: '#/components/schemas/api_m2m_v1_M2MClientWithClientSecret'
-          description: The M2M Client created by this API call.
+          $ref: '#/components/schemas/api_m2m_v1_M2MClient'
+          description: The M2M Client affected by this operation.
         status_code:
           type: integer
           format: int32
@@ -720,6 +705,21 @@ components:
       - request_id
       - m2m_client
       - status_code
+    api_m2m_v1_m2m_clients_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_m2m_v1_M2MSearchQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all results with no filtering applied.
+      description: Request type
     api_m2m_v1_M2MSearchQuery:
       type: object
       properties:

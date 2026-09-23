@@ -259,6 +259,31 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
+    pwa_public_token_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_public_token_v3_CreateRequest:
+      type: object
+      properties: {}
+      description: Request type
+    pwa_public_token_v3_PublicToken:
+      type: object
+      properties:
+        public_token:
+          type: string
+        created_at:
+          type: string
+      required:
+      - public_token
     pwa_public_token_v3_GetAllResponse:
       type: object
       properties:
@@ -276,20 +301,7 @@ components:
       - request_id
       - public_tokens
       - status_code
-    pwa_public_token_v3_CreateRequest:
-      type: object
-      properties: {}
-      description: Request type
-    pwa_public_token_v3_PublicToken:
-      type: object
-      properties:
-        public_token:
-          type: string
-        created_at:
-          type: string
-      required:
-      - public_token
-    pwa_public_token_v3_GetResponse:
+    pwa_public_token_v3_CreateResponse:
       type: object
       properties:
         request_id:
@@ -304,19 +316,7 @@ components:
       - request_id
       - public_token
       - status_code
-    pwa_public_token_v3_DeleteResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_public_token_v3_CreateResponse:
+    pwa_public_token_v3_GetResponse:
       type: object
       properties:
         request_id:
