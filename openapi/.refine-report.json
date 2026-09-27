@@ -54,9 +54,7 @@
     "stytch-secret-api-openapi.yml",
     "stytch-trusted-token-profile-api-openapi.yml"
   ],
-  "archived": [
-    "deleted 1 superseded output(s) from the previous generation"
-  ],
+  "archived": [],
   "errors": [],
   "warnings": [],
   "notes": [
@@ -90,8 +88,7 @@
     "stytch-management-openapi.yml: declared missing tag: Trusted Token Profile",
     "tag 'Password' spans 3 source specs (stytch-b2b-openapi.yml, stytch-consumer-openapi.yml, stytch-management-openapi.yml): per-path servers applied",
     "tag 'Session' spans 2 source specs (stytch-b2b-openapi.yml, stytch-consumer-openapi.yml): per-path servers applied",
-    "superseded outputs removed: stytch-o-auth-api-openapi.yml",
-    "apis.yml register: written (+1 apis, 47 total)"
+    "apis.yml register: already-registered"
   ],
   "skipped": [
     "stytch-application-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -123,7 +120,7 @@
     "stytch-m2m-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "stytch-magic-links-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "stytch-members-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "stytch-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "stytch-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "stytch-organization-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "stytch-organizations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "stytch-otp-api-openapi.yml: previously refined output, superseded by openapi/_original/",

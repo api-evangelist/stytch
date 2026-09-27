@@ -157,11 +157,6 @@ components:
       required:
       - template_content
       - custom_audience
-    account_manager_project_v1_JWTTemplateType:
-      type: string
-      enum:
-      - SESSION
-      - M2M
     pwa_jwt_template_v3_JWTTemplate:
       type: object
       properties:
@@ -204,6 +199,11 @@ components:
       - request_id
       - jwt_template
       - status_code
+    account_manager_project_v1_JWTTemplateType:
+      type: string
+      enum:
+      - SESSION
+      - M2M
   securitySchemes:
     basicAuth:
       type: http

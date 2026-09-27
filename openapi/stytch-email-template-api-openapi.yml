@@ -476,11 +476,96 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
+    pwa_email_template_v3_SetDefaultResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_email_template_v3_CustomHTMLCustomization:
+      type: object
+      properties:
+        template_type:
+          $ref: '#/components/schemas/pwa_email_template_v3_TemplateType'
+        html_content:
+          type: string
+        plaintext_content:
+          type: string
+        subject:
+          type: string
+    pwa_email_template_v3_UpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        sender_information:
+          $ref: '#/components/schemas/pwa_email_template_v3_SenderInformation'
+        prebuilt_customization:
+          $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
+        custom_html_customization:
+          $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
+      description: Request type
+    pwa_email_template_v3_UnsetDefaultResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
     pwa_email_template_v3_TextAlignment:
       type: string
       enum:
       - LEFT
       - CENTER
+    pwa_email_template_v3_PrebuiltCustomization:
+      type: object
+      properties:
+        button_border_radius:
+          type: number
+          format: float
+        button_color:
+          type: string
+        button_text_color:
+          type: string
+        font_family:
+          $ref: '#/components/schemas/pwa_email_template_v3_FontFamily'
+        text_alignment:
+          $ref: '#/components/schemas/pwa_email_template_v3_TextAlignment'
+    pwa_email_template_v3_TemplateType:
+      type: string
+      enum:
+      - LOGIN
+      - SIGNUP
+      - INVITE
+      - RESET_PASSWORD
+      - ONE_TIME_PASSCODE
+      - ONE_TIME_PASSCODE_SIGNUP
+      - VERIFY_EMAIL_PASSWORD_RESET
+      - UNLOCK
+      - PREBUILT
+    pwa_email_template_v3_FontFamily:
+      type: string
+      enum:
+      - ARIAL
+      - BRUSH_SCRIPT_MT
+      - COURIER_NEW
+      - GEORGIA
+      - HELVETICA
+      - TAHOMA
+      - TIMES_NEW_ROMAN
+      - TREBUCHET_MS
+      - VERDANA
     pwa_email_template_v3_UpdateResponse:
       type: object
       properties:
@@ -496,14 +581,18 @@ components:
       - request_id
       - email_template
       - status_code
-    pwa_email_template_v3_SetDefaultRequest:
+    pwa_email_template_v3_DeleteResponse:
       type: object
       properties:
-        template_id:
+        request_id:
           type: string
-      description: Request type
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
       required:
-      - template_id
+      - request_id
+      - status_code
     pwa_email_template_v3_GetAllResponse:
       type: object
       properties:
@@ -521,69 +610,6 @@ components:
       - request_id
       - email_templates
       - status_code
-    pwa_email_template_v3_CustomHTMLCustomization:
-      type: object
-      properties:
-        template_type:
-          $ref: '#/components/schemas/pwa_email_template_v3_TemplateType'
-        html_content:
-          type: string
-        plaintext_content:
-          type: string
-        subject:
-          type: string
-    pwa_email_template_v3_DeleteResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_email_template_v3_TemplateType:
-      type: string
-      enum:
-      - LOGIN
-      - SIGNUP
-      - INVITE
-      - RESET_PASSWORD
-      - ONE_TIME_PASSCODE
-      - ONE_TIME_PASSCODE_SIGNUP
-      - VERIFY_EMAIL_PASSWORD_RESET
-      - UNLOCK
-      - PREBUILT
-    pwa_email_template_v3_SenderInformation:
-      type: object
-      properties:
-        from_local_part:
-          type: string
-        from_domain:
-          type: string
-        from_name:
-          type: string
-        reply_to_local_part:
-          type: string
-        reply_to_name:
-          type: string
-    pwa_email_template_v3_EmailTemplate:
-      type: object
-      properties:
-        template_id:
-          type: string
-        name:
-          type: string
-        sender_information:
-          $ref: '#/components/schemas/pwa_email_template_v3_SenderInformation'
-        prebuilt_customization:
-          $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
-        custom_html_customization:
-          $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
-      required:
-      - template_id
     pwa_email_template_v3_CreateResponse:
       type: object
       properties:
@@ -599,35 +625,11 @@ components:
       - request_id
       - email_template
       - status_code
-    pwa_email_template_v3_PrebuiltCustomization:
+    pwa_email_template_v3_EmailTemplate:
       type: object
       properties:
-        button_border_radius:
-          type: number
-          format: float
-        button_color:
+        template_id:
           type: string
-        button_text_color:
-          type: string
-        font_family:
-          $ref: '#/components/schemas/pwa_email_template_v3_FontFamily'
-        text_alignment:
-          $ref: '#/components/schemas/pwa_email_template_v3_TextAlignment'
-    pwa_email_template_v3_UnsetDefaultResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_email_template_v3_UpdateRequest:
-      type: object
-      properties:
         name:
           type: string
         sender_information:
@@ -636,19 +638,21 @@ components:
           $ref: '#/components/schemas/pwa_email_template_v3_PrebuiltCustomization'
         custom_html_customization:
           $ref: '#/components/schemas/pwa_email_template_v3_CustomHTMLCustomization'
-      description: Request type
-    pwa_email_template_v3_SetDefaultResponse:
+      required:
+      - template_id
+    pwa_email_template_v3_SenderInformation:
       type: object
       properties:
-        request_id:
+        from_local_part:
           type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
+        from_domain:
+          type: string
+        from_name:
+          type: string
+        reply_to_local_part:
+          type: string
+        reply_to_name:
+          type: string
     pwa_email_template_v3_GetResponse:
       type: object
       properties:
@@ -663,33 +667,6 @@ components:
       required:
       - request_id
       - email_template
-      - status_code
-    pwa_email_template_v3_FontFamily:
-      type: string
-      enum:
-      - ARIAL
-      - BRUSH_SCRIPT_MT
-      - COURIER_NEW
-      - GEORGIA
-      - HELVETICA
-      - TAHOMA
-      - TIMES_NEW_ROMAN
-      - TREBUCHET_MS
-      - VERDANA
-    pwa_email_template_v3_GetDefaultResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        template_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - template_id
       - status_code
     pwa_email_template_v3_CreateRequest:
       type: object
@@ -707,6 +684,29 @@ components:
       description: Request type
       required:
       - template_id
+    pwa_email_template_v3_SetDefaultRequest:
+      type: object
+      properties:
+        template_id:
+          type: string
+      description: Request type
+      required:
+      - template_id
+    pwa_email_template_v3_GetDefaultResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        template_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - template_id
+      - status_code
   securitySchemes:
     basicAuth:
       type: http

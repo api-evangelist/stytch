@@ -96,6 +96,25 @@ paths:
         source: "# GET /v1/projects/metrics\ncurl --request GET \\\n  --url https://test.stytch.com/v1/projects/metrics \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
 components:
   schemas:
+    api_project_v1_MetricsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        project_id:
+          type: string
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_project_v1_ProjectMetric'
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - project_id
+      - metrics
+      - status_code
     api_project_v1_ProjectMetricMetricType:
       type: string
       enum:
@@ -116,25 +135,6 @@ components:
       required:
       - metric_type
       - count
-    api_project_v1_MetricsResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        project_id:
-          type: string
-        metrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_project_v1_ProjectMetric'
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - project_id
-      - metrics
-      - status_code
   securitySchemes:
     basicAuth:
       type: http

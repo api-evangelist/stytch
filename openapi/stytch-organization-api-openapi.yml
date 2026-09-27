@@ -836,69 +836,6 @@ paths:
         source: "# DELETE /v1/b2b/organizations/{organization_id}/external_id\ncurl --request DELETE \\\n  --url https://test.stytch.com/v1/b2b/organizations/TODO_MISSING_EXAMPLE_VALUE/external_id \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json' \\\n  -H \"X-Stytch-Member-Session: ${sessionToken}\""
 components:
   schemas:
-    api_organization_v1_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        organization:
-          $ref: '#/components/schemas/api_organization_v1_Organization'
-          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - organization
-      - status_code
-    api_organization_v1_MetricsResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        member_count:
-          type: integer
-          format: int32
-          minimum: 0
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - member_count
-      - status_code
-    api_organization_v1_SearchRequest:
-      type: object
-      properties:
-        cursor:
-          type: string
-          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
-        limit:
-          type: integer
-          format: int32
-          minimum: 0
-          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
-        query:
-          $ref: '#/components/schemas/api_organization_v1_SearchQuery'
-          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all Organizations with no filtering applied.
-      description: Request type
-    api_organization_v1_ActiveSSOConnection:
-      type: object
-      properties:
-        connection_id:
-          type: string
-          description: Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
-        display_name:
-          type: string
-          description: A human-readable display name for the connection.
-        identity_provider:
-          type: string
-      required:
-      - connection_id
-      - display_name
-      - identity_provider
     api_organization_v1_CreateRequest:
       type: object
       properties:
@@ -987,6 +924,107 @@ components:
       description: Request type
       required:
       - organization_name
+    api_organization_v1_ResultsMetadata:
+      type: object
+      properties:
+        total:
+          type: integer
+          format: int32
+          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
+        next_cursor:
+          type: string
+          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
+      required:
+      - total
+    api_organization_v1_OrganizationConnectedAppActiveMember:
+      type: object
+      properties:
+        member_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Member.
+        granted_scopes:
+          type: array
+          items:
+            type: string
+          description: Scopes that were granted at the completion of the last authorization flow.
+      required:
+      - member_id
+      - granted_scopes
+    api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization_id:
+          type: string
+          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization_id
+      - status_code
+    api_organization_v1_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_CustomRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+        actions:
+          type: array
+          items:
+            type: string
+      required:
+      - resource_id
+      - actions
     api_organization_v1_UpdateRequest:
       type: object
       properties:
@@ -1096,76 +1134,6 @@ components:
             type: string
           description: An array of third party Connected App IDs that are allowed for the Organization. Only used when the Organization's `third_party_connected_apps_allowed_type` is `RESTRICTED`.
       description: Request type
-    api_organization_v1_CustomRolePermission:
-      type: object
-      properties:
-        resource_id:
-          type: string
-        actions:
-          type: array
-          items:
-            type: string
-      required:
-      - resource_id
-      - actions
-    api_organization_v1_OrganizationConnectedAppActiveMember:
-      type: object
-      properties:
-        member_id:
-          type: string
-          description: Globally unique UUID that identifies a specific Member.
-        granted_scopes:
-          type: array
-          items:
-            type: string
-          description: Scopes that were granted at the completion of the last authorization flow.
-      required:
-      - member_id
-      - granted_scopes
-    api_organization_v1_SearchQuery:
-      type: object
-      properties:
-        operator:
-          $ref: '#/components/schemas/api_organization_v1_SearchQueryOperator'
-          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
-        operands:
-          type: array
-          items:
-            type: object
-            additionalProperties: true
-          description: An array of operand objects that contains all of the filters and values to apply to your search query.
-      required:
-      - operator
-      - operands
-    api_organization_v1_ResultsMetadata:
-      type: object
-      properties:
-        total:
-          type: integer
-          format: int32
-          description: The total number of results returned by your search query. If totals have been disabled for your Stytch Workspace to improve search performance, the value will always be -1.
-        next_cursor:
-          type: string
-          description: The `next_cursor` string is returned when your search result contains more than one page of results. This value is passed into your next search call in the `cursor` field.
-      required:
-      - total
-    api_organization_v1_CreateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        organization:
-          $ref: '#/components/schemas/api_organization_v1_Organization'
-          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - organization
-      - status_code
     api_organization_v1_SearchResponse:
       type: object
       properties:
@@ -1189,12 +1157,21 @@ components:
       - organizations
       - results_metadata
       - status_code
-    api_organization_v1_UpdateRequestThirdPartyConnectedAppsAllowedType:
-      type: string
-      enum:
-      - ALL_ALLOWED
-      - RESTRICTED
-      - NOT_ALLOWED
+    api_organization_v1_SearchRequest:
+      type: object
+      properties:
+        cursor:
+          type: string
+          description: The `cursor` field allows you to paginate through your results. Each result array is limited to 1000 results. If your query returns more than 1000 results, you will need to paginate the responses using the `cursor`. If you receive a response that includes a non-null `next_cursor` in the `results_metadata` object, repeat the search call with the `next_cursor` value set to the `cursor` field to retrieve the next page of results. Continue to make search calls until the `next_cursor` in the response is null.
+        limit:
+          type: integer
+          format: int32
+          minimum: 0
+          description: The number of search results to return per page. The default limit is 100. A maximum of 1000 results can be returned by a single search request. If the total size of your result set is greater than one page size, you must paginate the response. See the `cursor` field.
+        query:
+          $ref: '#/components/schemas/api_organization_v1_SearchQuery'
+          description: The optional query object contains the operator, i.e. `AND` or `OR`, and the operands that will filter your results. Only an operator is required. If you include no operands, no filtering will be applied. If you include no query object, it will return all Organizations with no filtering applied.
+      description: Request type
     api_organization_v1_CustomRole:
       type: object
       properties:
@@ -1210,34 +1187,6 @@ components:
       - role_id
       - description
       - permissions
-    api_organization_v1_ConnectedAppsResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        connected_apps:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_organization_v1_OrganizationConnectedApp'
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - connected_apps
-      - status_code
-    api_organization_v1_SearchQueryOperator:
-      type: string
-      enum:
-      - OR
-      - AND
-    api_organization_v1_CreateRequestFirstPartyConnectedAppsAllowedType:
-      type: string
-      enum:
-      - ALL_ALLOWED
-      - RESTRICTED
-      - NOT_ALLOWED
     api_organization_v1_Organization:
       type: object
       properties:
@@ -1376,29 +1325,24 @@ components:
       - third_party_connected_apps_allowed_type
       - allowed_third_party_connected_apps
       - custom_roles
-    api_organization_v1_CreateRequestThirdPartyConnectedAppsAllowedType:
-      type: string
-      enum:
-      - ALL_ALLOWED
-      - RESTRICTED
-      - NOT_ALLOWED
-    api_organization_v1_UpdateResponse:
+    api_organization_v1_OrganizationConnectedApp:
       type: object
       properties:
-        request_id:
+        connected_app_id:
           type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        organization:
-          $ref: '#/components/schemas/api_organization_v1_Organization'
-          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+        name:
+          type: string
+        description:
+          type: string
+        client_type:
+          type: string
+        logo_url:
+          type: string
       required:
-      - request_id
-      - organization
-      - status_code
+      - connected_app_id
+      - name
+      - description
+      - client_type
     api_organization_v1_DeleteExternalIdResponse:
       type: object
       properties:
@@ -1425,6 +1369,83 @@ components:
       required:
       - domain
       - role_id
+    api_organization_v1_UpdateRequestFirstPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        organization:
+          $ref: '#/components/schemas/api_organization_v1_Organization'
+          description: The [Organization object](https://stytch.com/docs/b2b/api/organization-object).
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - organization
+      - status_code
+    api_organization_v1_UpdateRequestThirdPartyConnectedAppsAllowedType:
+      type: string
+      enum:
+      - ALL_ALLOWED
+      - RESTRICTED
+      - NOT_ALLOWED
+    api_organization_v1_MetricsResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        member_count:
+          type: integer
+          format: int32
+          minimum: 0
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - member_count
+      - status_code
+    api_organization_v1_ActiveSCIMConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: The ID of the SCIM connection.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        bearer_token_last_four:
+          type: string
+        bearer_token_expires_at:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - bearer_token_last_four
+    api_organization_v1_SearchQuery:
+      type: object
+      properties:
+        operator:
+          $ref: '#/components/schemas/api_organization_v1_SearchQueryOperator'
+          description: "The action to perform on the operands. The accepted values are:\n\n  `AND` – all the operand values provided must match.\n\n  `OR` – **[DEPRECATED]** the operator will return any matches to at least one of the operand values you supply. This parameter is retained for legacy use cases only and is no longer supported. We strongly recommend breaking down complex queries into multiple search queries instead."
+        operands:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+          description: An array of operand objects that contains all of the filters and values to apply to your search query.
+      required:
+      - operator
+      - operands
     api_organization_v1_GetConnectedAppResponse:
       type: object
       properties:
@@ -1457,64 +1478,43 @@ components:
       - client_type
       - active_members
       - status_code
-    api_organization_v1_UpdateRequestFirstPartyConnectedAppsAllowedType:
+    api_organization_v1_SearchQueryOperator:
       type: string
       enum:
-      - ALL_ALLOWED
-      - RESTRICTED
-      - NOT_ALLOWED
-    api_organization_v1_OrganizationConnectedApp:
-      type: object
-      properties:
-        connected_app_id:
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        client_type:
-          type: string
-        logo_url:
-          type: string
-      required:
-      - connected_app_id
-      - name
-      - description
-      - client_type
-    api_organization_v1_ActiveSCIMConnection:
-      type: object
-      properties:
-        connection_id:
-          type: string
-          description: The ID of the SCIM connection.
-        display_name:
-          type: string
-          description: A human-readable display name for the connection.
-        bearer_token_last_four:
-          type: string
-        bearer_token_expires_at:
-          type: string
-      required:
-      - connection_id
-      - display_name
-      - bearer_token_last_four
-    api_organization_v1_DeleteResponse:
+      - OR
+      - AND
+    api_organization_v1_ConnectedAppsResponse:
       type: object
       properties:
         request_id:
           type: string
           description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        organization_id:
-          type: string
-          description: Globally unique UUID that identifies a specific Organization. The `organization_id` is critical to perform operations on an Organization, so be sure to preserve this value.
+        connected_apps:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_OrganizationConnectedApp'
         status_code:
           type: integer
           format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
       required:
       - request_id
-      - organization_id
+      - connected_apps
       - status_code
+    api_organization_v1_ActiveSSOConnection:
+      type: object
+      properties:
+        connection_id:
+          type: string
+          description: Globally unique UUID that identifies a specific SSO `connection_id` for a Member.
+        display_name:
+          type: string
+          description: A human-readable display name for the connection.
+        identity_provider:
+          type: string
+      required:
+      - connection_id
+      - display_name
+      - identity_provider
   securitySchemes:
     basicAuth:
       type: http

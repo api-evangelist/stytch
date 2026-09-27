@@ -713,6 +713,8 @@ apis:
   humanURL: https://stytch.com/docs/api
   baseURL: https://api.stytch.com
   tags:
+  - Fraud Prevention
+  tags_raw:
   - Fraud
   properties:
   - type: OpenAPI

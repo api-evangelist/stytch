@@ -255,7 +255,7 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesResponse:
+    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse:
       type: object
       properties:
         request_id:
@@ -272,6 +272,16 @@ components:
       - request_id
       - country_codes
       - status_code
+    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesRequest:
+      type: object
+      properties:
+        country_codes:
+          type: array
+          items:
+            type: string
+      description: Request type
+      required:
+      - country_codes
     pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesResponse:
       type: object
       properties:
@@ -289,7 +299,24 @@ components:
       - request_id
       - country_codes
       - status_code
-    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse:
+    pwa_country_code_allowlist_v3_SetAllowedWhatsAppCountryCodesResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        country_codes:
+          type: array
+          items:
+            type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - country_codes
+      - status_code
+    pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse:
       type: object
       properties:
         request_id:
@@ -316,33 +343,6 @@ components:
       description: Request type
       required:
       - country_codes
-    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesRequest:
-      type: object
-      properties:
-        country_codes:
-          type: array
-          items:
-            type: string
-      description: Request type
-      required:
-      - country_codes
-    pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        country_codes:
-          type: array
-          items:
-            type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - country_codes
-      - status_code
   securitySchemes:
     basicAuth:
       type: http
