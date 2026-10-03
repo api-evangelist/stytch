@@ -255,7 +255,7 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse:
+    pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse:
       type: object
       properties:
         request_id:
@@ -282,7 +282,7 @@ components:
       description: Request type
       required:
       - country_codes
-    pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesResponse:
+    pwa_country_code_allowlist_v3_SetAllowedSMSCountryCodesResponse:
       type: object
       properties:
         request_id:
@@ -316,7 +316,7 @@ components:
       - request_id
       - country_codes
       - status_code
-    pwa_country_code_allowlist_v3_GetAllowedWhatsAppCountryCodesResponse:
+    pwa_country_code_allowlist_v3_GetAllowedSMSCountryCodesResponse:
       type: object
       properties:
         request_id:

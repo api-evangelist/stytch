@@ -675,10 +675,64 @@ components:
       - provider_tenant_ids
       - access_token
       - scopes
-    api_organization_v1_organizations_members_connected_apps_RevokeRequest:
+    api_organization_v1_organizations_members_connected_apps_RevokeResponse:
       type: object
-      properties: {}
-      description: Request type
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        status_code:
+          type: integer
+          format: int32
+      required:
+      - request_id
+      - status_code
+    api_organization_v1_organizations_members_oauth_providers_GithubResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
+        registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_GithubProviderInfo'
+          description: A list of tokens the member is registered with.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - provider_type
+      - registrations
+      - status_code
+    api_organization_v1_organizations_members_oauth_providers_SlackResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
+        provider_type:
+          type: string
+          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
+        registrations:
+          type: array
+          items:
+            $ref: '#/components/schemas/api_organization_v1_SlackProviderInfo'
+          description: A list of tokens the member is registered with.
+        status_code:
+          type: integer
+          format: int32
+          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
+      required:
+      - request_id
+      - provider_type
+      - registrations
+      - status_code
     api_organization_v1_organizations_members_oauth_providers_MicrosoftResponse:
       type: object
       properties:
@@ -722,41 +776,6 @@ components:
       - id_token
       - scopes
       - status_code
-    api_organization_v1_organizations_members_oauth_providers_SlackResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
-        registrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_organization_v1_SlackProviderInfo'
-          description: A list of tokens the member is registered with.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - provider_type
-      - registrations
-      - status_code
-    api_organization_v1_organizations_members_connected_apps_RevokeResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        status_code:
-          type: integer
-          format: int32
-      required:
-      - request_id
-      - status_code
     api_organization_v1_HubspotProviderInfo:
       type: object
       properties:
@@ -787,29 +806,10 @@ components:
       - access_token
       - access_token_expires_in
       - scopes
-    api_organization_v1_organizations_members_oauth_providers_GithubResponse:
+    api_organization_v1_organizations_members_connected_apps_RevokeRequest:
       type: object
-      properties:
-        request_id:
-          type: string
-          description: Globally unique UUID that is returned with every API call. This value is important to log for debugging purposes; we may ask for this value to help identify a specific API call when helping you debug an issue.
-        provider_type:
-          type: string
-          description: Denotes the OAuth identity provider that the user has authenticated with, e.g. Google, Microsoft, GitHub etc.
-        registrations:
-          type: array
-          items:
-            $ref: '#/components/schemas/api_organization_v1_GithubProviderInfo'
-          description: A list of tokens the member is registered with.
-        status_code:
-          type: integer
-          format: int32
-          description: The HTTP status code of the response. Stytch follows standard HTTP response status code patterns, e.g. 2XX values equate to success, 3XX values are redirects, 4XX are client errors, and 5XX are server errors.
-      required:
-      - request_id
-      - provider_type
-      - registrations
-      - status_code
+      properties: {}
+      description: Request type
     api_organization_v1_organizations_members_oauth_providers_HubspotResponse:
       type: object
       properties:

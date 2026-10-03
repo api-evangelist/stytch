@@ -331,44 +331,6 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_redirect_url_v3_UrlType:
-      type: object
-      properties:
-        is_default:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/pwa_redirect_url_v3_RedirectUrlType'
-      required:
-      - is_default
-    pwa_redirect_url_v3_CreateRequest:
-      type: object
-      properties:
-        url:
-          type: string
-        valid_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/pwa_redirect_url_v3_UrlType'
-        do_not_promote_defaults:
-          type: boolean
-      description: Request type
-      required:
-      - url
-    pwa_redirect_url_v3_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        redirect_url:
-          $ref: '#/components/schemas/pwa_redirect_url_v3_RedirectUrl'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - redirect_url
-      - status_code
     pwa_redirect_url_v3_CreateResponse:
       type: object
       properties:
@@ -384,6 +346,16 @@ components:
       - request_id
       - redirect_url
       - status_code
+    pwa_redirect_url_v3_UpdateRequest:
+      type: object
+      properties:
+        valid_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_redirect_url_v3_UrlType'
+        do_not_promote_defaults:
+          type: boolean
+      description: Request type
     pwa_redirect_url_v3_RedirectUrl:
       type: object
       properties:
@@ -396,6 +368,15 @@ components:
       required:
       - url
       - valid_types
+    pwa_redirect_url_v3_UrlType:
+      type: object
+      properties:
+        is_default:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/pwa_redirect_url_v3_RedirectUrlType'
+      required:
+      - is_default
     pwa_redirect_url_v3_DeleteResponse:
       type: object
       properties:
@@ -408,6 +389,20 @@ components:
       required:
       - request_id
       - status_code
+    pwa_redirect_url_v3_CreateRequest:
+      type: object
+      properties:
+        url:
+          type: string
+        valid_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_redirect_url_v3_UrlType'
+        do_not_promote_defaults:
+          type: boolean
+      description: Request type
+      required:
+      - url
     pwa_redirect_url_v3_GetAllResponse:
       type: object
       properties:
@@ -425,6 +420,14 @@ components:
       - request_id
       - redirect_urls
       - status_code
+    pwa_redirect_url_v3_RedirectUrlType:
+      type: string
+      enum:
+      - LOGIN
+      - INVITE
+      - SIGNUP
+      - RESET_PASSWORD
+      - DISCOVERY
     pwa_redirect_url_v3_UpdateResponse:
       type: object
       properties:
@@ -440,24 +443,21 @@ components:
       - request_id
       - redirect_url
       - status_code
-    pwa_redirect_url_v3_RedirectUrlType:
-      type: string
-      enum:
-      - LOGIN
-      - INVITE
-      - SIGNUP
-      - RESET_PASSWORD
-      - DISCOVERY
-    pwa_redirect_url_v3_UpdateRequest:
+    pwa_redirect_url_v3_GetResponse:
       type: object
       properties:
-        valid_types:
-          type: array
-          items:
-            $ref: '#/components/schemas/pwa_redirect_url_v3_UrlType'
-        do_not_promote_defaults:
-          type: boolean
-      description: Request type
+        request_id:
+          type: string
+        redirect_url:
+          $ref: '#/components/schemas/pwa_redirect_url_v3_RedirectUrl'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - redirect_url
+      - status_code
   securitySchemes:
     basicAuth:
       type: http

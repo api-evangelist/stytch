@@ -169,21 +169,11 @@ components:
       required:
       - template_content
       - custom_audience
-    pwa_jwt_template_v3_SetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        jwt_template:
-          $ref: '#/components/schemas/pwa_jwt_template_v3_JWTTemplate'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - jwt_template
-      - status_code
+    account_manager_project_v1_JWTTemplateType:
+      type: string
+      enum:
+      - SESSION
+      - M2M
     pwa_jwt_template_v3_GetResponse:
       type: object
       properties:
@@ -199,11 +189,21 @@ components:
       - request_id
       - jwt_template
       - status_code
-    account_manager_project_v1_JWTTemplateType:
-      type: string
-      enum:
-      - SESSION
-      - M2M
+    pwa_jwt_template_v3_SetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        jwt_template:
+          $ref: '#/components/schemas/pwa_jwt_template_v3_JWTTemplate'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - jwt_template
+      - status_code
   securitySchemes:
     basicAuth:
       type: http
