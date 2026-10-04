@@ -259,55 +259,7 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_public_token_v3_CreateRequest:
-      type: object
-      properties: {}
-      description: Request type
-    pwa_public_token_v3_DeleteResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_public_token_v3_GetAllResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        public_tokens:
-          type: array
-          items:
-            $ref: '#/components/schemas/pwa_public_token_v3_PublicToken'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - public_tokens
-      - status_code
     pwa_public_token_v3_CreateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        public_token:
-          $ref: '#/components/schemas/pwa_public_token_v3_PublicToken'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - public_token
-      - status_code
-    pwa_public_token_v3_GetResponse:
       type: object
       properties:
         request_id:
@@ -331,6 +283,54 @@ components:
           type: string
       required:
       - public_token
+    pwa_public_token_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
+    pwa_public_token_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        public_token:
+          $ref: '#/components/schemas/pwa_public_token_v3_PublicToken'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - public_token
+      - status_code
+    pwa_public_token_v3_CreateRequest:
+      type: object
+      properties: {}
+      description: Request type
+    pwa_public_token_v3_GetAllResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        public_tokens:
+          type: array
+          items:
+            $ref: '#/components/schemas/pwa_public_token_v3_PublicToken'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - public_tokens
+      - status_code
   securitySchemes:
     basicAuth:
       type: http

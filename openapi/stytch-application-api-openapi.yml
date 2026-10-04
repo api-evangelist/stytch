@@ -274,12 +274,33 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    api_attribute_v1_Vertical:
-      type: string
-      enum:
-      - ALL
-      - CONSUMER
-      - B2B
+    pwa_application_v3_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        project:
+          $ref: '#/components/schemas/pwa_application_v3_Project'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - project
+      - status_code
+    pwa_application_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
     pwa_application_v3_CreateResponse:
       type: object
       properties:
@@ -295,6 +316,39 @@ components:
       - request_id
       - project
       - status_code
+    pwa_application_v3_UpdateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+      description: Request type
+    pwa_application_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        project:
+          $ref: '#/components/schemas/pwa_application_v3_Project'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - project
+      - status_code
+    pwa_application_v3_CreateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        vertical:
+          $ref: '#/components/schemas/api_attribute_v1_Vertical'
+        project_slug:
+          type: string
+      description: Request type
+      required:
+      - name
     pwa_application_v3_Project:
       type: object
       properties:
@@ -309,36 +363,12 @@ components:
       required:
       - project_slug
       - name
-    pwa_application_v3_DeleteResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_application_v3_UpdateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-      description: Request type
-    pwa_application_v3_CreateRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        vertical:
-          $ref: '#/components/schemas/api_attribute_v1_Vertical'
-        project_slug:
-          type: string
-      description: Request type
-      required:
-      - name
+    api_attribute_v1_Vertical:
+      type: string
+      enum:
+      - ALL
+      - CONSUMER
+      - B2B
     pwa_application_v3_GetAllResponse:
       type: object
       properties:
@@ -355,36 +385,6 @@ components:
       required:
       - request_id
       - projects
-      - status_code
-    pwa_application_v3_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        project:
-          $ref: '#/components/schemas/pwa_application_v3_Project'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - project
-      - status_code
-    pwa_application_v3_UpdateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        project:
-          $ref: '#/components/schemas/pwa_application_v3_Project'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - project
       - status_code
   securitySchemes:
     basicAuth:
