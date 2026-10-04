@@ -1531,6 +1531,7 @@ tags:
 - AI Agents
 - Developer Tools
 - Identity Federation
+- OpenID Connect
 kind: contract
 deliveryModel:
   model: saas
