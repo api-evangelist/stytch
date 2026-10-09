@@ -44,3 +44,35 @@ plans:
 rate_limit_statements:
 - Intelligent rate limiting
 - Our pricing does not include any hard caps or pricing cliffs.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  units:
+  - seat
+  plans:
+  - name: Pay as you go
+    access: other
+    model: metered
+    model_how: derived
+    units:
+    - seat
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Full email customization and Stytch brand removal (add-on)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - one-time
