@@ -358,87 +358,6 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
-    pwa_environment_v3_GetMetricsResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        metrics:
-          $ref: '#/components/schemas/pwa_environment_v3_Metrics'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - metrics
-      - status_code
-    pwa_environment_v3_Metrics:
-      type: object
-      properties:
-        user_count:
-          type: integer
-          format: int32
-          minimum: 0
-        organization_count:
-          type: integer
-          format: int32
-          minimum: 0
-        member_count:
-          type: integer
-          format: int32
-          minimum: 0
-        m2m_client_count:
-          type: integer
-          format: int32
-          minimum: 0
-      required:
-      - user_count
-      - organization_count
-      - member_count
-      - m2m_client_count
-    pwa_environment_v3_GetResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        environment:
-          $ref: '#/components/schemas/pwa_environment_v3_Environment'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - environment
-      - status_code
-    pwa_environment_v3_DeleteResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - status_code
-    pwa_environment_v3_UpdateResponse:
-      type: object
-      properties:
-        request_id:
-          type: string
-        environment:
-          $ref: '#/components/schemas/pwa_environment_v3_Environment'
-        status_code:
-          type: integer
-          format: int32
-      description: Response type
-      required:
-      - request_id
-      - environment
-      - status_code
     pwa_environment_v3_UpdateRequest:
       type: object
       properties:
@@ -467,6 +386,36 @@ components:
         idp_dynamic_client_registration_access_token_template_content:
           type: string
       description: Request type
+    pwa_environment_v3_GetResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
+    pwa_environment_v3_CreateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
     pwa_environment_v3_Environment:
       type: object
       properties:
@@ -522,6 +471,33 @@ components:
       - idp_dynamic_client_registration_enabled
       - idp_dynamic_client_registration_access_token_template_content
       - project_id
+    pwa_environment_v3_UpdateResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        environment:
+          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - environment
+      - status_code
+    pwa_environment_v3_DeleteResponse:
+      type: object
+      properties:
+        request_id:
+          type: string
+        status_code:
+          type: integer
+          format: int32
+      description: Response type
+      required:
+      - request_id
+      - status_code
     pwa_environment_v3_GetAllResponse:
       type: object
       properties:
@@ -544,6 +520,30 @@ components:
       enum:
       - LIVE
       - TEST
+    pwa_environment_v3_Metrics:
+      type: object
+      properties:
+        user_count:
+          type: integer
+          format: int32
+          minimum: 0
+        organization_count:
+          type: integer
+          format: int32
+          minimum: 0
+        member_count:
+          type: integer
+          format: int32
+          minimum: 0
+        m2m_client_count:
+          type: integer
+          format: int32
+          minimum: 0
+      required:
+      - user_count
+      - organization_count
+      - member_count
+      - m2m_client_count
     pwa_environment_v3_CreateRequest:
       type: object
       properties:
@@ -576,20 +576,20 @@ components:
       description: Request type
       required:
       - name
-    pwa_environment_v3_CreateResponse:
+    pwa_environment_v3_GetMetricsResponse:
       type: object
       properties:
         request_id:
           type: string
-        environment:
-          $ref: '#/components/schemas/pwa_environment_v3_Environment'
+        metrics:
+          $ref: '#/components/schemas/pwa_environment_v3_Metrics'
         status_code:
           type: integer
           format: int32
       description: Response type
       required:
       - request_id
-      - environment
+      - metrics
       - status_code
   securitySchemes:
     basicAuth:

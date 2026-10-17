@@ -104,6 +104,18 @@ components:
       - ORGANIZATION_COUNT
       - MEMBER_COUNT
       - M2M_CLIENT_COUNT
+    api_project_v1_ProjectMetric:
+      type: object
+      properties:
+        metric_type:
+          $ref: '#/components/schemas/api_project_v1_ProjectMetricMetricType'
+        count:
+          type: integer
+          format: int32
+          minimum: 0
+      required:
+      - metric_type
+      - count
     api_project_v1_MetricsResponse:
       type: object
       properties:
@@ -123,18 +135,6 @@ components:
       - project_id
       - metrics
       - status_code
-    api_project_v1_ProjectMetric:
-      type: object
-      properties:
-        metric_type:
-          $ref: '#/components/schemas/api_project_v1_ProjectMetricMetricType'
-        count:
-          type: integer
-          format: int32
-          minimum: 0
-      required:
-      - metric_type
-      - count
   securitySchemes:
     basicAuth:
       type: http

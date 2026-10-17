@@ -110,6 +110,34 @@ paths:
         source: "# GET /v1/rbac/policy\ncurl --request GET \\\n  --url https://test.stytch.com/v1/rbac/policy \\\n  -u '${projectId}:${secret}' \\\n  -H 'Content-Type: application/json'"
 components:
   schemas:
+    api_consumer_rbac_v1_PolicyScopePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
+    api_consumer_rbac_v1_PolicyRolePermission:
+      type: object
+      properties:
+        resource_id:
+          type: string
+          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        actions:
+          type: array
+          items:
+            type: string
+          description: 'A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*` as a wildcard to grant a Role permission to use all possible actions related to the Resource. '
+      required:
+      - resource_id
+      - actions
     api_consumer_rbac_v1_PolicyRole:
       type: object
       properties:
@@ -128,19 +156,23 @@ components:
       - role_id
       - description
       - permissions
-    api_consumer_rbac_v1_PolicyScopePermission:
+    api_consumer_rbac_v1_PolicyResource:
       type: object
       properties:
         resource_id:
           type: string
           description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
+        description:
+          type: string
+          description: The description of the RBAC Resource.
         actions:
           type: array
           items:
             type: string
-          description: 'A list of permitted actions the Scope is required to take with the provided Resource. You can use `*` as a wildcard to require a Scope permission to use all possible actions related to the Resource. '
+          description: A list of all possible actions for a provided Resource.
       required:
       - resource_id
+      - description
       - actions
     api_consumer_rbac_v1_PolicyScope:
       type: object
@@ -198,38 +230,6 @@ components:
       - roles
       - resources
       - scopes
-    api_consumer_rbac_v1_PolicyResource:
-      type: object
-      properties:
-        resource_id:
-          type: string
-          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
-        description:
-          type: string
-          description: The description of the RBAC Resource.
-        actions:
-          type: array
-          items:
-            type: string
-          description: A list of all possible actions for a provided Resource.
-      required:
-      - resource_id
-      - description
-      - actions
-    api_consumer_rbac_v1_PolicyRolePermission:
-      type: object
-      properties:
-        resource_id:
-          type: string
-          description: "A unique identifier of the RBAC Resource, provided by the developer and intended to be human-readable.\n\n  A `resource_id` is not allowed to start with `stytch`, which is a special prefix used for Stytch default Resources with reserved `resource_id`s.\n  "
-        actions:
-          type: array
-          items:
-            type: string
-          description: 'A list of permitted actions the Role is authorized to take with the provided Resource. You can use `*` as a wildcard to grant a Role permission to use all possible actions related to the Resource. '
-      required:
-      - resource_id
-      - actions
   securitySchemes:
     basicAuth:
       type: http

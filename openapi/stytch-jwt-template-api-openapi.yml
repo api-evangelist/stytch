@@ -146,6 +146,11 @@ paths:
                 error_url: https://stytch.com/docs/api/errors/500
 components:
   schemas:
+    account_manager_project_v1_JWTTemplateType:
+      type: string
+      enum:
+      - SESSION
+      - M2M
     pwa_jwt_template_v3_JWTTemplate:
       type: object
       properties:
@@ -169,7 +174,7 @@ components:
       required:
       - template_content
       - custom_audience
-    pwa_jwt_template_v3_GetResponse:
+    pwa_jwt_template_v3_SetResponse:
       type: object
       properties:
         request_id:
@@ -184,12 +189,7 @@ components:
       - request_id
       - jwt_template
       - status_code
-    account_manager_project_v1_JWTTemplateType:
-      type: string
-      enum:
-      - SESSION
-      - M2M
-    pwa_jwt_template_v3_SetResponse:
+    pwa_jwt_template_v3_GetResponse:
       type: object
       properties:
         request_id:
