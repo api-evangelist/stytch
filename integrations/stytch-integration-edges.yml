@@ -29,6 +29,33 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Index Ventures
+  partner: index-ventures
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.indexventures.com/companies/stytch/
+  category: vc portfolio participation
+  contract_reference:
+    register: Index Ventures companies (indexventures.com/companies/)
+    standard: null
+    spec_file: null
+    role: vc-portfolio-company
+    registered_name: Stytch
+    register_id: https://www.indexventures.com/companies/stytch/
+    register_country: north-america
+    register_website: https://www.stytch.com/
+    matched_domain: stytch.com
+    matched_by: domain
+    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
+      an ownership and participation record, not conformance or certification'
+    detected_by: sweep-vc-portfolios.py
+    detected: '2026-10-21'
+    sector: security
+  detected_by: sweep-vc-portfolios.py
+  first_seen: '2026-10-21'
 - partner_name: OpenTofu (opentofu-registry)
   partner: opentofu
   partner_match: mirror
@@ -67,33 +94,25 @@ edges:
   category: infrastructure-as-code provider registry listing
   badges:
   - Verified publisher (GitHub domain-verified organization)
-- partner_name: Index Ventures
-  partner: index-ventures
-  partner_match: register
-  type: register
-  channel: standard-directory
-  relationship: standard-participant
-  direction: partner-built
-  evidence: https://www.indexventures.com/companies/stytch/
-  category: vc portfolio participation
-  contract_reference:
-    register: Index Ventures companies (indexventures.com/companies/)
-    standard: null
-    spec_file: null
-    role: vc-portfolio-company
-    registered_name: Stytch
-    register_id: https://www.indexventures.com/companies/stytch/
-    register_country: north-america
-    register_website: https://www.stytch.com/
-    matched_domain: stytch.com
-    matched_by: domain
-    signal_note: 'participation only: the venture firm''s own published portfolio lists the company (investment);
-      an ownership and participation record, not conformance or certification'
-    detected_by: sweep-vc-portfolios.py
-    detected: '2026-10-21'
-    sector: security
-  detected_by: sweep-vc-portfolios.py
-  first_seen: '2026-10-21'
+- partner_name: Netlify (own)
+  partner: netlify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.netlify.com/integrations/stytch/
+  mirror_of: netlify/integrations/netlify-integration-edges.yml
+  apps:
+  - Stytch
+  - Stytch Starter
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Search
+  partner_tier: listing
 generated: '2026-10-18'
 method: searched
 source:
@@ -120,3 +139,4 @@ checked:
 - https://www.indexventures.com/companies/
 - https://www.sequoiacap.com/our-companies/
 - https://www.sequoiacap.com/sitemap.xml
+- netlify/integrations/netlify-integration-edges.yml
